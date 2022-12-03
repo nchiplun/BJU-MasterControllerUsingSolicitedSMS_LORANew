@@ -1,0 +1,37 @@
+Operations
+
+0x00-0
+0x01-1 System Authenticated/Idle Mode
+0x02-2 New SMS Received
+0x03-3 Read SMS Action
+0x04-4 EEPROM Memory Read Operation
+0x05-5 ADC Action
+0x06-6
+0x07-7
+0x08-8
+0x09-9 Delete SMS
+0x0A-c checkSignalStrength
+0x0B-] getDateFromGSM
+0x0C-u BCD Indication for Valve in Action
+0x0D-Ç Encryption Action
+0x0E-t RTC Clock feed Action
+0x0F- " "  <Blank> Flash
+
+Errors
+
+0x00-0. Out SMS Action
+0x01-1. Authentication Error
+0x02-2. RTC Battery Low Error
+0x03-3. Phase Failure Error
+0x04-4. EEPROM Memory Write Operation
+0x05-5. Incorrect SMS Format Error
+0x06-6. Unknown sms from registered user
+0x07-7. SMS from non gsm no.
+0x08-8. Incorrect SMS storage no.
+0x09-9. Moisture Sensor Failure Error
+0x0A-c. configureGSM
+0x0B-]. setGsmToLocalTime 
+0x0C-u. Dry Run Detected Error
+0x0D-Ç. Decryption Action
+0x0E-t. RTC Clock fetch Action
+0x0F- "."  <Blank><.> All Modules are Normal, System running in Normal operation

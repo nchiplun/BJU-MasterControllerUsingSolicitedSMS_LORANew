@@ -1,0 +1,1 @@
+Configure valve :- c <valveno> <onperiod> <interval> <Motor On Hr> <Motor Off Min> <dry threshold> <wet threshold> 
