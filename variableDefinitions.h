@@ -214,8 +214,7 @@ const unsigned int eepromAddress[16] = {0x0000, 0x0020, 0x0040, 0x0060, 0x0080, 
 /***************************** Global variables definition#start *********************/
 /************* Booleans definition#start *********************************/ 
 _Bool systemAuthenticated = false;              // To check if system is initialized by user for first time.
-_Bool newSMSRcvd = false;                       // To check if communication is first initialized by GSM. 
-_Bool checkMoistureSensor = false;              // To check status of Moisture sensor
+_Bool newSMSRcvd = false;                       // To check if communication is first initialized by GSM.
 _Bool moistureSensorFailed = false;             // status of Moisture sensor
 _Bool controllerCommandExecuted = false;        // To check response to system cmd.
 _Bool currentDateCalled = false;                // To avoid repetitive fetching of date through GSM
@@ -230,12 +229,17 @@ _Bool dueValveChecked = false;					// To indicate valve due is checked at latest
 _Bool correctDate = false;          			// To indicate received date is correct
 _Bool phaseFailureDetected = false;             // To indicate phase failure
 _Bool lowRTCBatteryDetected = false;            // To store RTC Battery level Status
-_Bool rtcBatteryLevelChecked = false;             // To indicate condition to check RTC battery level
+_Bool rtcBatteryLevelChecked = false;           // To indicate condition to check RTC battery level
 _Bool phaseFailureActionTaken = false;          // To indicate action taken after phase failure detection
 _Bool filtrationEnabled = false;                // To store tank filtration operation status    
-_Bool cmtiCmd = false;                           // Set to indicate cmti command received
+_Bool cmtiCmd = false;                          // Set to indicate cmti command received
 _Bool DeviceBurnStatus = false;                 // To store Device program status
 _Bool gsmSetToLocalTime = false;                // To indicate if gsm set to local timezone
+_Bool off = false;                              // To indicate if down with power
+_Bool cmdRceived = false;                       // Set to indicate lora command received
+_Bool checkLoraConnection = false;
+_Bool LoraConnectionFailed = false;
+_Bool wetSensor = false;                        // To indicate if sensor is wet
 /************* BOOLeans definition#end ***********************************/
 
 /************* Strings definition#start **********************************/
@@ -286,6 +290,17 @@ unsigned static char countryCode[4] = "+91"; //Country code for GSM
 /***** SMS prototype definition#end ***************************/
 
 
+/***** LORA prototype definition#start *************************/
+unsigned static char slaveOnOK[10] = "ON01SLAVE"; //
+unsigned static char slaveOffOK[11] = "OFF01SLAVE"; //
+unsigned static char slave[6] = "SLAVE"; // 
+unsigned static char ack[4] = "ACK"; // 
+unsigned static char idle[5] = "IDLE"; // 
+unsigned static char masterError[12] = "MASTERERROR"; //
+unsigned static char slaveError[11] = "SLAVEERROR"; //
+
+/***** LORA prototype definition#end ***************************/
+
 /***** SMS strings definition#start *************************/
 const char SmsAU1[23] = "Admin set successfully"; // Acknowledge user about successful Admin Registration
 const char SmsAU2[51] = "You are no more Admin now. New Admin is set to\r\n"; //To notify old Admin about new Admin.
@@ -303,7 +318,8 @@ const char SmsIrr3[40] = "Irrigation not configured for field no."; // Acknowled
 const char SmsIrr4[33] = "Irrigation started for field no."; // Acknowledge user about successful Irrigation started action
 const char SmsIrr5[33] = "Irrigation stopped for field no."; // Acknowledge user about successful Irrigation stopped action
 const char SmsIrr6[60] = "Wet field detected.\r\nIrrigation not started for field no."; // Acknowledge user about sIrrigation not started due to wet field detection
-const char SmsIrr7[15] = "Irrigation No:"; 
+const char SmsIrr7[51] = "Irrigation skipped with no response from field no:"; 
+const char SmsIrr8[51] = "Irrigation stopped without response from field no."; // Acknowledge user about successful Irrigation stopped action
 
 const char SmsFert1[64] = "Irrigation is not Active. Fertigation not enabled for field no."; // Acknowledge user about Fertigation not configured due to disabled irrigation
 const char SmsFert2[56] = "Incorrect values. Fertigation not enabled for field no."; // Acknowledge user about Fertigation not configured due to incorrect values
@@ -381,6 +397,7 @@ unsigned char static cmti[14] = "+CMTI: \"SM\",x"; // This cmd is received from 
 /************* Strings definition#end ************************************/
 
 /************* Variables definition#start ********************************/
+unsigned char loraAttempt = CLEAR;
 unsigned char timer3Count = CLEAR; // To store timer 0 overflow count
 unsigned char rxCharacter = CLEAR; // To store received 1 byte character from GSM through RX pin
 unsigned char msgIndex = CLEAR; // To point received character position in Message

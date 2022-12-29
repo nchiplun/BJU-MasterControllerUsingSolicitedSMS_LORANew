@@ -24426,11 +24426,12 @@ int toupper_l(int, locale_t);
 
  __asm("\tpsect eeprom_data,class=EEDATA,noexec"); __asm("\tdb\t" "0x00" "," "0x00" "," "0x00" "," "0x00" "," "0x00" "," "0x00" "," "0x00" "," "0x00");
  __asm("\tpsect eeprom_data,class=EEDATA,noexec"); __asm("\tdb\t" "0x00" "," "0x00" "," "0x00" "," "0x00" "," "0x00" "," "0x00" "," "0x00" "," "0x00");
-# 14 "main_1.c" 2
+# 13 "main_1.c" 2
+
 # 1 "./variableDefinitions.h" 1
 # 43 "./variableDefinitions.h"
 # 1 "./congfigBits.h" 1
-# 44 "./variableDefinitions.h" 2
+# 43 "./variableDefinitions.h" 2
 # 144 "./variableDefinitions.h"
 struct FIELDVALVE {
     unsigned int dryValue;
@@ -24463,7 +24464,6 @@ const unsigned int eepromAddress[16] = {0x0000, 0x0020, 0x0040, 0x0060, 0x0080, 
 # 216 "./variableDefinitions.h"
 _Bool systemAuthenticated = 0;
 _Bool newSMSRcvd = 0;
-_Bool checkMoistureSensor = 0;
 _Bool moistureSensorFailed = 0;
 _Bool controllerCommandExecuted = 0;
 _Bool currentDateCalled = 0;
@@ -24484,6 +24484,11 @@ _Bool filtrationEnabled = 0;
 _Bool cmtiCmd = 0;
 _Bool DeviceBurnStatus = 0;
 _Bool gsmSetToLocalTime = 0;
+_Bool off = 0;
+_Bool cmdRceived = 0;
+_Bool checkLoraConnection = 0;
+_Bool LoraConnectionFailed = 0;
+_Bool wetSensor = 0;
 
 
 
@@ -24535,6 +24540,17 @@ unsigned static char countryCode[4] = "+91";
 
 
 
+unsigned static char slaveOnOK[10] = "ON01SLAVE";
+unsigned static char slaveOffOK[11] = "OFF01SLAVE";
+unsigned static char slave[6] = "SLAVE";
+unsigned static char ack[4] = "ACK";
+unsigned static char idle[5] = "IDLE";
+unsigned static char masterError[12] = "MASTERERROR";
+unsigned static char slaveError[11] = "SLAVEERROR";
+
+
+
+
 const char SmsAU1[23] = "Admin set successfully";
 const char SmsAU2[51] = "You are no more Admin now. New Admin is set to\r\n";
 const char SmsAU3[22] = "Authentication failed";
@@ -24551,7 +24567,8 @@ const char SmsIrr3[40] = "Irrigation not configured for field no.";
 const char SmsIrr4[33] = "Irrigation started for field no.";
 const char SmsIrr5[33] = "Irrigation stopped for field no.";
 const char SmsIrr6[60] = "Wet field detected.\r\nIrrigation not started for field no.";
-const char SmsIrr7[15] = "Irrigation No:";
+const char SmsIrr7[51] = "Irrigation skipped with no response from field no:";
+const char SmsIrr8[51] = "Irrigation stopped without response from field no.";
 
 const char SmsFert1[64] = "Irrigation is not Active. Fertigation not enabled for field no.";
 const char SmsFert2[56] = "Incorrect values. Fertigation not enabled for field no.";
@@ -24629,6 +24646,7 @@ unsigned char static cmti[14] = "+CMTI: \"SM\",x";
 
 
 
+unsigned char loraAttempt = 0;
 unsigned char timer3Count = 0;
 unsigned char rxCharacter = 0;
 unsigned char msgIndex = 0;
@@ -24674,7 +24692,8 @@ unsigned int const zero = 0;
 
 #pragma idata fieldValve
 struct FIELDVALVE fieldValve[12] = {0};
-# 15 "main_1.c" 2
+# 14 "main_1.c" 2
+
 # 1 "./controllerActions.h" 1
 # 20 "./controllerActions.h"
 void myMsDelay(unsigned int);
@@ -24713,7 +24732,8 @@ void randomPasswordGeneration(void);
 void deleteGsmResponse(void);
 void deleteStringToDecode(void);
 void deleteDecodedString(void);
-# 16 "main_1.c" 2
+# 15 "main_1.c" 2
+
 # 1 "./eeprom.h" 1
 # 15 "./eeprom.h"
 void eepromWrite(unsigned int, unsigned char);
@@ -24747,7 +24767,8 @@ void saveFactryPswrdIntoEeprom(void);
 void readFactryPswrdFromEeprom(void);
 void saveMotorLoadValuesIntoEeprom(void);
 void readMotorLoadValuesFromEeprom(void);
-# 17 "main_1.c" 2
+# 16 "main_1.c" 2
+
 # 1 "./gsm.h" 1
 # 15 "./gsm.h"
 unsigned char rxByte(void);
@@ -24760,13 +24781,17 @@ void sendSms(const char*, unsigned char[], unsigned char);
 void configureGSM(void);
 void deleteMsgFromSIMStorage(void);
 void checkSignalStrength(void);
-# 18 "main_1.c" 2
+# 17 "main_1.c" 2
+
 # 1 "./lora.h" 1
 # 15 "./lora.h"
+unsigned char rxByteLora(void);
 void txByteLora(unsigned char);
 void transmitStringToLora(const char *);
 void transmitNumberToLora(unsigned char*, unsigned char);
-# 19 "main_1.c" 2
+void sendCmdToLora(unsigned char, unsigned char);
+_Bool isLoraResponseAck(unsigned char, unsigned char);
+# 18 "main_1.c" 2
 # 36 "main_1.c"
 void __attribute__((picinterrupt(("high_priority"))))rxANDiocInterrupt_handler(void) {
 
@@ -24835,6 +24860,32 @@ void __attribute__((picinterrupt(("high_priority"))))rxANDiocInterrupt_handler(v
         PORTGbits.RG0 = 1;
         PIR4bits.RC3IF= 0;
     }
+    else if (PIR3bits.RC1IF) {
+        PORTGbits.RG3 = 0;
+        rxCharacter = rxByteLora();
+
+        if (RC1STAbits.OERR) {
+            RC1STAbits.CREN = 0;
+            __nop();
+            RC1STAbits.CREN = 1;
+        }
+        if (rxCharacter == '#') {
+            msgIndex = 0;
+            decodedString[msgIndex] = rxCharacter;
+            msgIndex++;
+        }
+        else if (msgIndex < 50) {
+            decodedString[msgIndex] = rxCharacter;
+            msgIndex++;
+
+            if (rxCharacter == '$') {
+                msgIndex = 0;
+                controllerCommandExecuted = 1;
+            }
+        }
+        PORTGbits.RG0 = 1;
+        PIR3bits.RC1IF= 0;
+    }
 
     else if (PIR0bits.IOCIF) {
         PORTGbits.RG3 = 0;
@@ -24859,7 +24910,7 @@ void __attribute__((picinterrupt(("high_priority"))))rxANDiocInterrupt_handler(v
         PIR0bits.IOCIF = 0;
     }
 }
-# 136 "main_1.c"
+# 162 "main_1.c"
 void __attribute__((picinterrupt(("low_priority")))) timerInterrupt_handler(void) {
 
     if (PIR0bits.TMR0IF) {
@@ -24914,13 +24965,7 @@ void __attribute__((picinterrupt(("low_priority")))) timerInterrupt_handler(void
             Timer0Overflow = 0;
         }
     }
-
-    if (PIR5bits.TMR1IF) {
-        PORTGbits.RG3 = 0;
-        Timer1Overflow++;
-        PIR5bits.TMR1IF = 0;
-    }
-
+# 224 "main_1.c"
     if (PIR5bits.TMR3IF) {
         PORTGbits.RG3 = 0;
         PIR5bits.TMR3IF = 0;
@@ -24932,8 +24977,8 @@ void __attribute__((picinterrupt(("low_priority")))) timerInterrupt_handler(void
             controllerCommandExecuted = 1;
             Timer3Overflow = 0;
             T3CONbits.TMR3ON = 0;
-            if(checkMoistureSensor) {
-                moistureSensorFailed = 1;
+            if(checkLoraConnection) {
+                LoraConnectionFailed = 1;
             }
         }
         else if (controllerCommandExecuted) {
@@ -24982,7 +25027,7 @@ nxtVlv: if (!valveDue && !phaseFailureDetected && !lowPhaseCurrentDetected) {
             valveExecuted = 0;
 
             sendSms(SmsMotor1, userMobileNo, 0);
-# 266 "main_1.c"
+# 293 "main_1.c"
             startFieldNo = 0;
 
         }
@@ -24990,46 +25035,48 @@ nxtVlv: if (!valveDue && !phaseFailureDetected && !lowPhaseCurrentDetected) {
         if (onHold) {
             sleepCount = 0;
         }
+        if(!LoraConnectionFailed || !wetSensor) {
 
-        deepSleep();
-# 283 "main_1.c"
-        if (newSMSRcvd) {
-
-
-
-
-
-            setBCDdigit(0x02,1);
-            myMsDelay(500);
-            newSMSRcvd = 0;
-            extractReceivedSms();
-            setBCDdigit(0x0F,0);
-            myMsDelay(500);
-            deleteMsgFromSIMStorage();
+            deepSleep();
+# 311 "main_1.c"
+            if (newSMSRcvd) {
 
 
 
 
 
-        }
-
-        else {
-
-
-
-
-
-            actionsOnSleepCountFinish();
+                setBCDdigit(0x02,1);
+                myMsDelay(500);
+                newSMSRcvd = 0;
+                extractReceivedSms();
+                setBCDdigit(0x0F,0);
+                myMsDelay(500);
+                deleteMsgFromSIMStorage();
 
 
 
 
 
-            if (isRTCBatteryDrained() && !rtcBatteryLevelChecked){
+            }
 
-                sendSms(SmsRTC1, userMobileNo, 0);
-                rtcBatteryLevelChecked = 1;
-# 327 "main_1.c"
+            else {
+
+
+
+
+
+                actionsOnSleepCountFinish();
+
+
+
+
+
+                if (isRTCBatteryDrained() && !rtcBatteryLevelChecked){
+
+                    sendSms(SmsRTC1, userMobileNo, 0);
+                    rtcBatteryLevelChecked = 1;
+# 355 "main_1.c"
+                }
             }
         }
     }

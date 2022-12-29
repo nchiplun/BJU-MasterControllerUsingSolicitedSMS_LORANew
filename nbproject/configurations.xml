@@ -50,7 +50,7 @@
         <targetDevice>PIC18F66K40</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>PICkit3PlatformTool</platformTool>
+        <platformTool>Simulator</platformTool>
         <languageToolchain>XC8</languageToolchain>
         <languageToolchainVersion>2.35</languageToolchainVersion>
         <platform>3</platform>

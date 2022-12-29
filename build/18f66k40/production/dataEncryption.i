@@ -24428,7 +24428,7 @@ int toupper_l(int, locale_t);
 
  __asm("\tpsect eeprom_data,class=EEDATA,noexec"); __asm("\tdb\t" "0x00" "," "0x00" "," "0x00" "," "0x00" "," "0x00" "," "0x00" "," "0x00" "," "0x00");
  __asm("\tpsect eeprom_data,class=EEDATA,noexec"); __asm("\tdb\t" "0x00" "," "0x00" "," "0x00" "," "0x00" "," "0x00" "," "0x00" "," "0x00" "," "0x00");
-# 44 "./variableDefinitions.h" 2
+# 43 "./variableDefinitions.h" 2
 # 144 "./variableDefinitions.h"
 struct FIELDVALVE {
     unsigned int dryValue;
@@ -24461,7 +24461,6 @@ const unsigned int eepromAddress[16] = {0x0000, 0x0020, 0x0040, 0x0060, 0x0080, 
 # 216 "./variableDefinitions.h"
 _Bool systemAuthenticated = 0;
 _Bool newSMSRcvd = 0;
-_Bool checkMoistureSensor = 0;
 _Bool moistureSensorFailed = 0;
 _Bool controllerCommandExecuted = 0;
 _Bool currentDateCalled = 0;
@@ -24482,6 +24481,11 @@ _Bool filtrationEnabled = 0;
 _Bool cmtiCmd = 0;
 _Bool DeviceBurnStatus = 0;
 _Bool gsmSetToLocalTime = 0;
+_Bool off = 0;
+_Bool cmdRceived = 0;
+_Bool checkLoraConnection = 0;
+_Bool LoraConnectionFailed = 0;
+_Bool wetSensor = 0;
 
 
 
@@ -24533,6 +24537,17 @@ unsigned static char countryCode[4] = "+91";
 
 
 
+unsigned static char slaveOnOK[10] = "ON01SLAVE";
+unsigned static char slaveOffOK[11] = "OFF01SLAVE";
+unsigned static char slave[6] = "SLAVE";
+unsigned static char ack[4] = "ACK";
+unsigned static char idle[5] = "IDLE";
+unsigned static char masterError[12] = "MASTERERROR";
+unsigned static char slaveError[11] = "SLAVEERROR";
+
+
+
+
 const char SmsAU1[23] = "Admin set successfully";
 const char SmsAU2[51] = "You are no more Admin now. New Admin is set to\r\n";
 const char SmsAU3[22] = "Authentication failed";
@@ -24549,7 +24564,8 @@ const char SmsIrr3[40] = "Irrigation not configured for field no.";
 const char SmsIrr4[33] = "Irrigation started for field no.";
 const char SmsIrr5[33] = "Irrigation stopped for field no.";
 const char SmsIrr6[60] = "Wet field detected.\r\nIrrigation not started for field no.";
-const char SmsIrr7[15] = "Irrigation No:";
+const char SmsIrr7[51] = "Irrigation skipped with no response from field no:";
+const char SmsIrr8[51] = "Irrigation stopped without response from field no.";
 
 const char SmsFert1[64] = "Irrigation is not Active. Fertigation not enabled for field no.";
 const char SmsFert2[56] = "Incorrect values. Fertigation not enabled for field no.";
@@ -24627,6 +24643,7 @@ unsigned char static cmti[14] = "+CMTI: \"SM\",x";
 
 
 
+unsigned char loraAttempt = 0;
 unsigned char timer3Count = 0;
 unsigned char rxCharacter = 0;
 unsigned char msgIndex = 0;

@@ -1,35 +1,33 @@
 ### HEXMate logfile and output summary ###
 
 ### Command-line arguments ###
- dist/18f66k40/production\AutoIrrigation_LoraNcDevBranch.X.production.hex
- -Odist/18f66k40/production\AutoIrrigation_LoraNcDevBranch.X.production.hex
- -logfile=dist/18f66k40/production\AutoIrrigation_LoraNcDevBranch.X.production.hxl
+ dist/18f66k40/production\BJU-MasterControllerUsingSolicitedSMS_LORANew.production.hex
+ -Odist/18f66k40/production\BJU-MasterControllerUsingSolicitedSMS_LORANew.production.hex
+ -logfile=dist/18f66k40/production\BJU-MasterControllerUsingSolicitedSMS_LORANew.production.hxl
  -addressing=1
  -break=300000
 
 ### Memory Usage ###
  Intel Hex-file ranges:
-  0h - 3h		(dist/18f66k40/production\AutoIrrigation_LoraNcDevBranch.X.production.hex)
-  8h - Dh		(dist/18f66k40/production\AutoIrrigation_LoraNcDevBranch.X.production.hex)
-  18h - B93Ch		(dist/18f66k40/production\AutoIrrigation_LoraNcDevBranch.X.production.hex)
-  B93Eh - BFABh		(dist/18f66k40/production\AutoIrrigation_LoraNcDevBranch.X.production.hex)
-  F216h - FFFFh		(dist/18f66k40/production\AutoIrrigation_LoraNcDevBranch.X.production.hex)
-  200000h - 20000Fh		(dist/18f66k40/production\AutoIrrigation_LoraNcDevBranch.X.production.hex)
-  300000h - 30000Bh		(dist/18f66k40/production\AutoIrrigation_LoraNcDevBranch.X.production.hex)
-  310000h - 3103EFh		(dist/18f66k40/production\AutoIrrigation_LoraNcDevBranch.X.production.hex)
+  0h - 3h		(dist/18f66k40/production\BJU-MasterControllerUsingSolicitedSMS_LORANew.production.hex)
+  8h - Dh		(dist/18f66k40/production\BJU-MasterControllerUsingSolicitedSMS_LORANew.production.hex)
+  18h - C013h		(dist/18f66k40/production\BJU-MasterControllerUsingSolicitedSMS_LORANew.production.hex)
+  F194h - FFFEh		(dist/18f66k40/production\BJU-MasterControllerUsingSolicitedSMS_LORANew.production.hex)
+  200000h - 20000Fh		(dist/18f66k40/production\BJU-MasterControllerUsingSolicitedSMS_LORANew.production.hex)
+  300000h - 30000Bh		(dist/18f66k40/production\BJU-MasterControllerUsingSolicitedSMS_LORANew.production.hex)
+  310000h - 3103EFh		(dist/18f66k40/production\BJU-MasterControllerUsingSolicitedSMS_LORANew.production.hex)
  Unused ranges:
   4h - 7h
   Eh - 17h
-  B93Dh - B93Dh
-  BFACh - F215h
-  10000h - 1FFFFFh
+  C014h - F193h
+  FFFFh - 1FFFFFh
   200010h - 2FFFFFh
   30000Ch - 30FFFFh
 
 ### Hex Memory Map ###
  Legend:
   -- = Unused memory
-  H1 = Intel Hex-file         (dist/18f66k40/production\AutoIrrigation_LoraNcDevBranch.X.production.hex)
+  H1 = Intel Hex-file         (dist/18f66k40/production\BJU-MasterControllerUsingSolicitedSMS_LORANew.production.hex)
 ----------------------------------------------------------
          | 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E 0F
 ----------------------------------------------------------
@@ -2996,7 +2994,7 @@
 0000B900 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
 0000B910 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
 0000B920 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
-0000B930 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 -- H1 H1
+0000B930 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
 0000B940 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
 0000B950 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
 0000B960 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
@@ -3099,9 +3097,24 @@
 0000BF70 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
 0000BF80 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
 0000BF90 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
-0000BFA0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 -- -- -- --
+0000BFA0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+0000BFB0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+0000BFC0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+0000BFD0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+0000BFE0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+0000BFF0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+0000C000 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+0000C010 | H1 H1 H1 H1 -- -- -- -- -- -- -- -- -- -- -- --
 ----------------------------------------------------------
-0000F210 | -- -- -- -- -- -- H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+0000F190 | -- -- -- -- H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+0000F1A0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+0000F1B0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+0000F1C0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+0000F1D0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+0000F1E0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+0000F1F0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+0000F200 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+0000F210 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
 0000F220 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
 0000F230 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
 0000F240 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
@@ -3323,7 +3336,7 @@
 0000FFC0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
 0000FFD0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
 0000FFE0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
-0000FFF0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+0000FFF0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 --
 ----------------------------------------------------------
 00200000 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
 ----------------------------------------------------------
