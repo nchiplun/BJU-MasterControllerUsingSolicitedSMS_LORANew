@@ -128,7 +128,7 @@ The purpose of this function is to receive local time stamp from GSM module
  **************************************************************************************************************************/
 void getDateFromGSM(void) {
     unsigned char index = 0;
-    timer3Count = 30;
+    timer3Count = 15;  // 15 sec window
     #ifdef DEBUG_MODE_ON_H
     //********Debug log#start************//
     transmitStringToDebug("getDateFromGSM_IN\r\n");
@@ -136,7 +136,7 @@ void getDateFromGSM(void) {
     #endif
     controllerCommandExecuted = false;
     msgIndex = CLEAR;
-    T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if GSM fails to respond within 5 min
+    T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if GSM fails to respond within 15 sec
     setBCDdigit(0x0B,1);  // (]) BCD indication for getDateFromGSM action
     while (!controllerCommandExecuted) {
         transmitStringToGSM("AT+CCLK?\r\n"); // To get local time stamp  +CCLK: "18/05/26,12:00:06+22"   ok
@@ -667,7 +667,7 @@ The Action is decided upon Type of message received.
 void extractReceivedSms(void) {
     unsigned char count = CLEAR, onHour = CLEAR, onMinute = CLEAR;
     unsigned int digit = CLEAR;
-    timer3Count = 30;
+    timer3Count = 15;  // 15 sec window
     #ifdef DEBUG_MODE_ON_H
     //********Debug log#start************//
     transmitStringToDebug("extractReceivedSms_IN\r\n");
@@ -677,7 +677,7 @@ void extractReceivedSms(void) {
     if (temporaryBytesArray[0] > '0' && temporaryBytesArray[0] <= '9') {
         controllerCommandExecuted = false;
         msgIndex = CLEAR;
-        T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if GSM fails to respond within 5 min
+        T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if GSM fails to respond within 15 sec
         setBCDdigit(0x03,1);  // (3) BCD indication for Read Sms Action
         while (!controllerCommandExecuted) {
             transmitStringToGSM("AT+CMGR=");
@@ -1528,7 +1528,7 @@ void extractReceivedSms(void) {
                 else if (strncmp(decodedString, getfreq, 7) == 0) {
                     iterator = fetchFieldNo(7);
                     myMsDelay(100);
-                    isFieldMoistureSensorWet(iterator);
+                    isFieldMoistureSensorWetLora(iterator);
                     /***************************/
                     // for field no. 01 to 09
                     if (iterator<9){
@@ -1884,13 +1884,391 @@ Here Timer1 is used to count frequency of pulses by measuring timer count for 1 
 
  **************************************************************************************************************************/
 _Bool isFieldMoistureSensorWet(unsigned char FieldNo) {
+    unsigned long moistureLevelAvg = CLEAR;
+    unsigned long timer1Value = CLEAR; // To store 16 bit SFR Timer1 Register value
+    unsigned long constant = 160000; // Constant to calculate frequency in Hz ~16MHz 
+    unsigned char itr = CLEAR, avg = 20;
+    
+    moistureLevel = CLEAR; // To store moisture level in Hz
+    
+    #ifdef DEBUG_MODE_ON_H
+    //********Debug log#start************//
+    /***************************/
+    // for field no. 01 to 09
+    if (FieldNo<9){
+        temporaryBytesArray[0] = 48; // To store field no. of valve in action 
+        temporaryBytesArray[1] = FieldNo + 49; // To store field no. of valve in action 
+    }// for field no. 10 to 12
+    else if (FieldNo > 8 && FieldNo < 12) {
+        temporaryBytesArray[0] = 49; // To store field no. of valve in action 
+        temporaryBytesArray[1] = FieldNo + 39; // To store field no. of valve in action 
+    }
+    else {
+        temporaryBytesArray[0] = 57; // To store field no. of valve in action 
+        temporaryBytesArray[1] = 57; // To store field no. of valve in action 
+    
+    }
+    /***************************/
+    transmitStringToDebug("isFieldMoistureSensorWet_IN : ");
+    transmitNumberToDebug(temporaryBytesArray, 2);
+    transmitStringToDebug("\r\n");
+    //********Debug log#end**************//
+    #endif
+    
+    setBCDdigit(0x09,0); // (9.) BCD indication for Moisture Sensor Failure Error
+    moistureLevel = LOW;
+    checkMoistureSensor = true;
+    moistureSensorFailed = false;
+    timer3Count = 15; // 15 second window
+    // Averaging measured pulse width
+    for (itr = 1; itr <= avg && !moistureSensorFailed; itr++) {
+        T1CONbits.TMR1ON = OFF;
+        TMR1H = CLEAR;
+        TMR1L = CLEAR;
+        Timer1Overflow = CLEAR;
+        // check field moisture of valve in action
+        switch (FieldNo) {
+        case 0:
+            #ifdef DEBUG_MODE_ON_H
+            //********Debug log#start************//
+            transmitStringToDebug("MoistureSensor1 == HIGH\r\n");
+            //********Debug log#end**************//
+            #endif
+            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 15 sec    
+            controllerCommandExecuted = false;
+            while (MoistureSensor1 == HIGH && controllerCommandExecuted == false);
+            #ifdef DEBUG_MODE_ON_H
+            //********Debug log#start************//
+            transmitStringToDebug("MoistureSensor1 == LOW\r\n");
+            //********Debug log#end**************//
+            #endif
+            while (MoistureSensor1 == LOW && controllerCommandExecuted == false); // Wait for rising edge
+            T1CONbits.TMR1ON = ON; // Start Timer after rising edge detected
+            while (MoistureSensor1 == HIGH && controllerCommandExecuted == false); // Wait for falling edge
+            if (!controllerCommandExecuted) {
+                controllerCommandExecuted = true;
+                PIR5bits.TMR3IF = SET; //Stop timer thread 
+            }
+            break;
+        case 1:
+            #ifdef DEBUG_MODE_ON_H
+            //********Debug log#start************//
+            transmitStringToDebug("MoistureSensor2 == HIGH\r\n");
+            //********Debug log#end**************//
+            #endif
+            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 15 sec    
+            controllerCommandExecuted = false;
+            while (MoistureSensor2 == HIGH && controllerCommandExecuted == false);
+            #ifdef DEBUG_MODE_ON_H
+            //********Debug log#start************//
+            transmitStringToDebug("MoistureSensor2 == LOW\r\n");
+            //********Debug log#end**************//
+            #endif
+            while (MoistureSensor2 == LOW && controllerCommandExecuted == false); // Wait for rising edge
+            T1CONbits.TMR1ON = ON; // Start Timer after rising edge detected
+            while (MoistureSensor2 == HIGH && controllerCommandExecuted == false); // Wait for falling edge
+            if (!controllerCommandExecuted) {
+                controllerCommandExecuted = true;
+                PIR5bits.TMR3IF = SET; //Stop timer thread 
+            }
+            break;
+        case 2:
+            #ifdef DEBUG_MODE_ON_H
+            //********Debug log#start************//
+            transmitStringToDebug("MoistureSensor3 == HIGH\r\n");
+            //********Debug log#end**************//
+            #endif
+            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 15 sec    
+            controllerCommandExecuted = false;
+            while (MoistureSensor3 == HIGH && controllerCommandExecuted == false);
+            #ifdef DEBUG_MODE_ON_H
+            //********Debug log#start************//
+            transmitStringToDebug("MoistureSensor3 == LOW\r\n");
+            //********Debug log#end**************//
+            #endif
+            while (MoistureSensor3 == LOW && controllerCommandExecuted == false); // Wait for rising edge
+            T1CONbits.TMR1ON = ON; // Start Timer after rising edge detected
+            while (MoistureSensor3 == HIGH && controllerCommandExecuted == false); // Wait for falling edge
+            if (!controllerCommandExecuted) {
+                controllerCommandExecuted = true;
+                PIR5bits.TMR3IF = SET; //Stop timer thread 
+            }
+            break;
+        case 3:
+            #ifdef DEBUG_MODE_ON_H
+            //********Debug log#start************//
+            transmitStringToDebug("MoistureSensor4 == HIGH\r\n");
+            //********Debug log#end**************//
+            #endif
+            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 15 sec     
+            controllerCommandExecuted = false;
+            while (MoistureSensor4 == HIGH && controllerCommandExecuted == false);
+            #ifdef DEBUG_MODE_ON_H
+            //********Debug log#start************//
+            transmitStringToDebug("MoistureSensor4 == LOW\r\n");
+            //********Debug log#end**************//
+            #endif
+            while (MoistureSensor4 == LOW && controllerCommandExecuted == false); // Wait for rising edge
+            T1CONbits.TMR1ON = ON; // Start Timer after rising edge detected
+            while (MoistureSensor4 == HIGH && controllerCommandExecuted == false); // Wait for falling edge
+            if (!controllerCommandExecuted) {
+                controllerCommandExecuted = true;
+                PIR5bits.TMR3IF = SET; //Stop timer thread 
+            }
+            break;
+        case 4:
+            #ifdef DEBUG_MODE_ON_H
+            //********Debug log#start************//
+            transmitStringToDebug("MoistureSensor5 == HIGH\r\n");
+            //********Debug log#end**************//
+            #endif
+            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 15 sec     
+            controllerCommandExecuted = false;
+            while (MoistureSensor5 == HIGH && controllerCommandExecuted == false);
+            #ifdef DEBUG_MODE_ON_H
+            //********Debug log#start************//
+            transmitStringToDebug("MoistureSensor5 == LOW\r\n");
+            //********Debug log#end**************//
+            #endif
+            while (MoistureSensor5 == LOW && controllerCommandExecuted == false); // Wait for rising edge
+            T1CONbits.TMR1ON = ON; // Start Timer after rising edge detected
+            while (MoistureSensor5 == HIGH && controllerCommandExecuted == false); // Wait for falling edge
+            if (!controllerCommandExecuted) {
+                controllerCommandExecuted = true;
+                PIR5bits.TMR3IF = SET; //Stop timer thread 
+            }
+            break;
+        case 5:
+            #ifdef DEBUG_MODE_ON_H
+            //********Debug log#start************//
+            transmitStringToDebug("MoistureSensor6 == HIGH\r\n");
+            //********Debug log#end**************//
+            #endif
+            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 15 sec    
+            controllerCommandExecuted = false;
+            while (MoistureSensor6 == HIGH && controllerCommandExecuted == false);
+            #ifdef DEBUG_MODE_ON_H
+            //********Debug log#start************//
+            transmitStringToDebug("MoistureSensor6 == LOW\r\n");
+            //********Debug log#end**************//
+            #endif
+            while (MoistureSensor6 == LOW && controllerCommandExecuted == false); // Wait for rising edge
+            T1CONbits.TMR1ON = ON; // Start Timer after rising edge detected
+            while (MoistureSensor6 == HIGH && controllerCommandExecuted == false); // Wait for falling edge
+            if (!controllerCommandExecuted) {
+                controllerCommandExecuted = true;
+                PIR5bits.TMR3IF = SET; //Stop timer thread 
+            }
+            break;
+        case 6:
+            #ifdef DEBUG_MODE_ON_H
+            //********Debug log#start************//
+            transmitStringToDebug("MoistureSensor7 == HIGH\r\n");
+            //********Debug log#end**************//
+            #endif
+            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 15 sec    
+            controllerCommandExecuted = false;
+            while (MoistureSensor7 == HIGH && controllerCommandExecuted == false);
+            #ifdef DEBUG_MODE_ON_H
+            //********Debug log#start************//
+            transmitStringToDebug("MoistureSensor7 == LOW\r\n");
+            //********Debug log#end**************//
+            #endif
+            while (MoistureSensor7 == LOW && controllerCommandExecuted == false); // Wait for rising edge
+            T1CONbits.TMR1ON = ON; // Start Timer after rising edge detected
+            while (MoistureSensor7 == HIGH && controllerCommandExecuted == false); // Wait for falling edge
+            if (!controllerCommandExecuted) {
+                controllerCommandExecuted = true;
+                PIR5bits.TMR3IF = SET; //Stop timer thread 
+            }
+            break;
+        case 7:
+            #ifdef DEBUG_MODE_ON_H
+            //********Debug log#start************//
+            transmitStringToDebug("MoistureSensor8 == HIGH\r\n");
+            //********Debug log#end**************//
+            #endif
+            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 15 sec    
+            controllerCommandExecuted = false;
+            while (MoistureSensor8 == HIGH && controllerCommandExecuted == false);
+            #ifdef DEBUG_MODE_ON_H
+            //********Debug log#start************//
+            transmitStringToDebug("MoistureSensor8 == LOW\r\n");
+            //********Debug log#end**************//
+            #endif
+            while (MoistureSensor8 == LOW && controllerCommandExecuted == false); // Wait for rising edge
+            T1CONbits.TMR1ON = ON; // Start Timer after rising edge detected
+            while (MoistureSensor8 == HIGH && controllerCommandExecuted == false); // Wait for falling edge
+            if (!controllerCommandExecuted) {
+                controllerCommandExecuted = true;
+                PIR5bits.TMR3IF = SET; //Stop timer thread 
+            }
+            break;
+        case 8:
+            #ifdef DEBUG_MODE_ON_H
+            //********Debug log#start************//
+            transmitStringToDebug("MoistureSensor9 == HIGH\r\n");
+            //********Debug log#end**************//
+            #endif
+            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 15 sec    
+            controllerCommandExecuted = false;
+            while (MoistureSensor9 == HIGH && controllerCommandExecuted == false);
+            #ifdef DEBUG_MODE_ON_H
+            //********Debug log#start************//
+            transmitStringToDebug("MoistureSensor9 == LOW\r\n");
+            //********Debug log#end**************//
+            #endif
+            while (MoistureSensor9 == LOW && controllerCommandExecuted == false); // Wait for rising edge
+            T1CONbits.TMR1ON = ON; // Start Timer after rising edge detected
+            while (MoistureSensor9 == HIGH && controllerCommandExecuted == false); // Wait for falling edge
+            if (!controllerCommandExecuted) {
+                controllerCommandExecuted = true;
+                PIR5bits.TMR3IF = SET; //Stop timer thread 
+            }
+            break;
+        case 9:
+            #ifdef DEBUG_MODE_ON_H
+            //********Debug log#start************//
+            transmitStringToDebug("MoistureSensor10 == HIGH\r\n");
+            //********Debug log#end**************//
+            #endif
+            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 15 sec   
+            controllerCommandExecuted = false;
+            while (MoistureSensor10 == HIGH && controllerCommandExecuted == false);
+            #ifdef DEBUG_MODE_ON_H
+            //********Debug log#start************//
+            transmitStringToDebug("MoistureSensor10 == LOW\r\n");
+            //********Debug log#end**************//
+            #endif
+            while (MoistureSensor10 == LOW && controllerCommandExecuted == false); // Wait for rising edge
+            T1CONbits.TMR1ON = ON; // Start Timer after rising edge detected
+            while (MoistureSensor10 == HIGH && controllerCommandExecuted == false); // Wait for falling edge
+            if (!controllerCommandExecuted) {
+                controllerCommandExecuted = true;
+                PIR5bits.TMR3IF = SET; //Stop timer thread 
+            }
+            break;
+        case 10:
+            #ifdef DEBUG_MODE_ON_H
+            //********Debug log#start************//
+            transmitStringToDebug("MoistureSensor11 == HIGH\r\n");
+            //********Debug log#end**************//
+            #endif
+            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 15 sec   
+            controllerCommandExecuted = false;
+            while (MoistureSensor11 == HIGH && controllerCommandExecuted == false);
+            #ifdef DEBUG_MODE_ON_H
+            //********Debug log#start************//
+            transmitStringToDebug("MoistureSensor11 == LOW\r\n");
+            //********Debug log#end**************//
+            #endif
+            while (MoistureSensor11 == LOW && controllerCommandExecuted == false); // Wait for rising edge
+            T1CONbits.TMR1ON = ON; // Start Timer after rising edge detected
+            while (MoistureSensor11 == HIGH && controllerCommandExecuted == false); // Wait for falling edge
+            if (!controllerCommandExecuted) {
+                controllerCommandExecuted = true;
+                PIR5bits.TMR3IF = SET; //Stop timer thread 
+            }
+            break;
+        case 11:
+            #ifdef DEBUG_MODE_ON_H
+            //********Debug log#start************//
+            transmitStringToDebug("MoistureSensor12 == HIGH\r\n");
+            //********Debug log#end**************//
+            #endif
+            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 15 sec   
+            controllerCommandExecuted = false;
+            while (MoistureSensor12 == HIGH && controllerCommandExecuted == false);
+            #ifdef DEBUG_MODE_ON_H
+            //********Debug log#start************//
+            transmitStringToDebug("MoistureSensor12 == LOW\r\n");
+            //********Debug log#end**************//
+            #endif
+            while (MoistureSensor12 == LOW && controllerCommandExecuted == false); // Wait for rising edge
+            T1CONbits.TMR1ON = ON; // Start Timer after rising edge detected
+            while (MoistureSensor12 == HIGH && controllerCommandExecuted == false); // Wait for falling edge
+            if (!controllerCommandExecuted) {
+                controllerCommandExecuted = true;
+                PIR5bits.TMR3IF = SET; //Stop timer thread 
+            }
+            break;
+        }
+        T1CONbits.TMR1ON = OFF; // Stop timer after falling edge detected
+        timer1Value = TMR1L;    // Store lower byte of 16 bit timer
+        timer1Value|=((unsigned int)TMR1H) << 8;    // Get higher and lower byte of  timer1 register
+        moistureLevelAvg = (Timer1Overflow * 65536) + timer1Value;
+        moistureLevelAvg *= 2; // Entire cycle width
+        moistureLevelAvg = (constant / moistureLevelAvg); // Frequency = 16Mhz/ Pulse Width
+        if (itr == 1) {
+            moistureLevel = (unsigned int)moistureLevelAvg;
+        }
+        moistureLevel = moistureLevel/2;
+        moistureLevelAvg = moistureLevelAvg/2;
+        moistureLevel = moistureLevel + (unsigned int)moistureLevelAvg;
+        if(moistureSensorFailed) {
+            moistureLevel = 0;
+        }
+    }
+    checkMoistureSensor = false;
+    setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
+    if (FieldNo == 11) {
+        if (moistureLevel >= 150) {
+            #ifdef DEBUG_MODE_ON_H
+            //********Debug log#start************//
+            transmitStringToDebug("isFertigationSensorWet_Yes_Out\r\n");
+            //********Debug log#end**************//
+            #endif
+            return true;
+        }
+        else {
+            #ifdef DEBUG_MODE_ON_H
+            //********Debug log#start************//
+            transmitStringToDebug("isFertigationSensorWet_No_Out\r\n");
+            //********Debug log#end**************//
+            #endif
+            return false;            
+        }
+    }
+    if (moistureLevel >= fieldValve[FieldNo].wetValue) { //Field is full wet, no need to switch ON valve and motor, estimate new due dates
+        #ifdef DEBUG_MODE_ON_H
+        //********Debug log#start************//
+        transmitStringToDebug("isFieldMoistureSensorWet_Yes_Out\r\n");
+        //********Debug log#end**************//
+        #endif
+        return true;
+    } 
+    else {
+        #ifdef DEBUG_MODE_ON_H
+        //********Debug log#start************//
+        transmitStringToDebug("isFieldMoistureSensorWet_No_Out\r\n");
+        //********Debug log#end**************//
+        #endif
+        return false;
+    }
+}
+
+
+
+/*********** Moisture sensor measurement at Lora Slave #Start********/
+
+/*************************************************************************************************************************
+
+This function is called to send command to lora slave to measure soil moisture of given field and indicate if wet field found .
+The Moisture level is measured in terms of frequency of square wave generated by IC555 based on Senor resistance.
+The Sensor resistance is high and low for Dry and Wet condition respectively.
+This leads the output of IC555 with high and low pulse width.
+For Dry condition pulse width is high and for wet condition pulse width is low.
+i.e. for Dry condition pulse occurrence is low and for wet condition pulse occurrence is high
+Here Timer1 is used to count frequency of pulses by measuring timer count for 1 pulse width and averaging it for 10 pulses.
+
+ **************************************************************************************************************************/
+_Bool isFieldMoistureSensorWetLora(unsigned char FieldNo) {
     unsigned int digit = CLEAR;
     unsigned char action;
     loraAttempt = 0;
     action = 0x02;
     moistureLevel = CLEAR; // To store moisture level in Hz
     setBCDdigit(0x09,0); // (9.) BCD indication for Moisture Sensor Failure Error
-    moistureLevel = CLEAR;
     moistureSensorFailed = false;
     // Averaging measured pulse width
     
@@ -1912,7 +2290,7 @@ _Bool isFieldMoistureSensorWet(unsigned char FieldNo) {
     
     }
     /***************************/
-    transmitStringToDebug("isFieldMoistureSensorWet_IN : ");
+    transmitStringToDebug("isFieldMoistureSensorWetLora_IN : ");
     transmitNumberToDebug(temporaryBytesArray, 2);
     transmitStringToDebug("\r\n");
     //********Debug log#end**************//
@@ -1948,7 +2326,7 @@ _Bool isFieldMoistureSensorWet(unsigned char FieldNo) {
     if (moistureLevel >= fieldValve[FieldNo].wetValue) { //Field is full wet, no need to switch ON valve and motor, estimate new due dates
         #ifdef DEBUG_MODE_ON_H
         //********Debug log#start************//
-        transmitStringToDebug("isFieldMoistureSensorWet_Yes_Out\r\n");
+        transmitStringToDebug("isFieldMoistureSensorWetLora_Yes_Out\r\n");
         //********Debug log#end**************//
         #endif
         return true;
@@ -1956,7 +2334,7 @@ _Bool isFieldMoistureSensorWet(unsigned char FieldNo) {
     else {
         #ifdef DEBUG_MODE_ON_H
         //********Debug log#start************//
-        transmitStringToDebug("isFieldMoistureSensorWet_No_Out\r\n");
+        transmitStringToDebug("isFieldMoistureSensorWetLorat_No_Out\r\n");
         //********Debug log#end**************//
         #endif
         return false;
@@ -1980,7 +2358,7 @@ _Bool isFieldMoistureSensorWet(unsigned char FieldNo) {
     
     }
     /***************************/
-    transmitStringToDebug("isFieldMoistureSensorWet_OUT : ");
+    transmitStringToDebug("isFieldMoistureSensorWetLora_OUT : ");
     transmitNumberToDebug(temporaryBytesArray, 2);
     transmitStringToDebug("\r\n");
     //********Debug log#end**************//
@@ -2778,6 +3156,7 @@ void powerOffMotor(void) {
 
 /*********** Motor Power Off#End********/
 
+
 /*********** Field Valve Activation#Start********/
 
 /*************************************************************************************************************************
@@ -2882,7 +3261,7 @@ void activateValve(unsigned char FieldNo) {
         /***************************/
 
         /***************************/
-        sendSms(SmsIrr7, userMobileNo, fieldNoRequired); // Acknowledge user about Irrigation not started due to Lora connection failure						
+        sendSms(SmsIrr8, userMobileNo, fieldNoRequired); // Acknowledge user about Irrigation not started due to Lora connection failure						
         #ifdef SMS_DELIVERY_REPORT_ON_H
         sleepCount = 2; // Load sleep count for SMS transmission action
         sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
@@ -2956,7 +3335,7 @@ void deActivateValve(unsigned char FieldNo) {
     }
     else {   
         /***************************/
-        sendSms(SmsIrr8, userMobileNo, fieldNoRequired); // Acknowledge user about Irrigation stopped with Lora connection failure						
+        sendSms(SmsIrr9, userMobileNo, fieldNoRequired); // Acknowledge user about Irrigation stopped with Lora connection failure						
         #ifdef SMS_DELIVERY_REPORT_ON_H
         sleepCount = 2; // Load sleep count for SMS transmission action
         sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
@@ -3158,7 +3537,7 @@ void configureController(void) {
     TMR1H = CLEAR; // Clear Timer1 Register Higher Byte
     TMR1L = CLEAR; // Clear Timer1 Register Lower Byte
     PIR5bits.TMR1IF = CLEAR; // Clear Timer1 Overflow Interrupt at start
-    PIE5bits.TMR1IE = DISABLED; // Enables the Timer1 Overflow Interrupt
+    PIE5bits.TMR1IE = ENABLED; // Enables the Timer1 Overflow Interrupt
     IPR5bits.TMR1IP = LOW; // Low Timer1 Overflow Interrupt Priority
     
     //-----------Timer3_Config (1 sec) used if command fails to respond within timer limit----------------------//
@@ -3174,13 +3553,13 @@ void configureController(void) {
 
     //-----------UART1_Config PRODUCTION LORA-----------------------//
     TX1STA = 0b00100100; // 8 Bit Transmission Enabled with High Baud Rate
-    RC1STA = 0b10000000; // 8 Bit Serial Port Enabled with Reception Disabled
+    RC1STA = 0b10010000; // 8 Bit Reception Enabled with Continuous Reception
     BAUD1CON = 0b00001000; // 16 Bit Baud Rate Register used
     SP1BRG = 0x0681; // XTAL=16MHz, Fosc=64Mhz for SYNC=0 BRGH=1 BRG16=1 (Asynchronous high 16 bit baud rate)
     RC7PPS = 0x17; //EUSART1 Receive
     RC6PPS = 0x0C; //EUSART1 Transmit
     temp = RC1REG; // Empty buffer
-    PIE3bits.RC1IE = DISABLED; // Disables the EUSART Receive Interrupt
+    PIE3bits.RC1IE = ENABLED; // Enables the EUSART Receive Interrupt
     PIE3bits.TX1IE = DISABLED; // Disables the EUSART Transmit Interrupt
     IPR3bits.RC1IP = HIGH; // EUSART Receive Interrupt Priority
 
@@ -3620,40 +3999,6 @@ void actionsOnSystemReset(void) {
             setBCDdigit(0x01,0); // (1.) BCD Indication for Authentication Error 
             strncpy(pwd, factryPswrd, 6); // consider factory password
             sleepCount = 65500; // Set Default Sleep count until next sleep count is calculated
-            /****************************************Check Lora Communication*************************************************/
-            transmitStringToLora("#STATUSMASTER$\r\n");
-            setBCDdigit(0x01,1);
-            //transmitStringToDebug("#STATUSMASTER$\r\n");
-            myMsDelay(50000);
-            transmitStringToLora("#STATUSSLAVE01$\r\n");
-            setBCDdigit(0x02,1);
-            //transmitStringToDebug("#STATUSSLAVE01$\r\n");
-            myMsDelay(50000);
-            transmitStringToLora("#GETSENSOR01SLAVE01$\r\n");
-            setBCDdigit(0x03,1);
-            //transmitStringToDebug("#GETSENSOR01SLAVE01$");
-            myMsDelay(50000);
-            transmitStringToLora("#ON01SLAVE01$\r\n");
-            setBCDdigit(0x04,1);
-            //transmitStringToDebug("#ON01SLAVE01$\r\n");
-            myMsDelay(50000);
-            transmitStringToLora("#GETVALVESTATUS01SLAVE01$\r\n");
-            setBCDdigit(0x05,1);
-            //transmitStringToDebug("#GETVALVESTATUS01SLAVE01$\r\n");
-            myMsDelay(50000);
-            transmitStringToLora("#OFF01SLAVE01$\r\n");
-            setBCDdigit(0x06,1);
-            //transmitStringToDebug("#OFF01SLAVE01$\r\n");
-            myMsDelay(50000);
-            transmitStringToLora("#GETVALVESTATUS01SLAVE01$\r\n");
-            setBCDdigit(0x07,1);
-            //transmitStringToDebug("#GETVALVESTATUS01SLAVE01$\r\n");
-            myMsDelay(50000);
-            transmitStringToLora("#GARBAGE$\r\n");
-            setBCDdigit(0x08,1);
-            //transmitStringToDebug("#GARBAGE$\r\n");
-            myMsDelay(50000);
-            /****************************************Check Lora Communication*************************************************/
             deepSleep(); // Sleep with default sleep count until system is configured
             // check if Sleep count executed with interrupt occurred due to new SMS command reception
             if (newSMSRcvd) {
@@ -3821,19 +4166,50 @@ void actionsOnSleepCountFinish(void) {
                     temporaryBytesArray[1] = field_No + 39; // To store field no. of valve in action 
                 }
                 /***************************/
-
-                /***************************/
-                sendSms(SmsFert6, userMobileNo, fieldNoRequired); // Acknowledge user about successful Fertigation stopped action
-                #ifdef SMS_DELIVERY_REPORT_ON_H
-                sleepCount = 2; // Load sleep count for SMS transmission action
-                sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
-                setBCDdigit(0x05,0);
-                deepSleep(); // Sleep until message transmission acknowledge SMS is received from service provider 
-                setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
-                #endif
-                /***************************/
-                /*Send sms*/
-                break;
+				if (fertigationDry) { // Fertigation executed with low fertigation level  detection
+                    fertigationDry = false;
+                    /***************************/
+                    sendSms(SmsFert8, userMobileNo, fieldNoRequired); // Acknowledge user about successful Fertigation stopped action
+                    #ifdef SMS_DELIVERY_REPORT_ON_H
+                    sleepCount = 2; // Load sleep count for SMS transmission action
+                    sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
+                    setBCDdigit(0x05,0);
+                    deepSleep(); // Sleep until message transmission acknowledge SMS is received from service provider 
+                    setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
+                    #endif
+                    /***************************/
+                    /*Send sms*/
+                    break;
+                }
+                else if (moistureSensorFailed) { // Fertigation executed with level sensor failure
+                    moistureSensorFailed = false;
+                    /***************************/
+                    sendSms(SmsFert7, userMobileNo, fieldNoRequired); // Acknowledge user about successful Fertigation stopped action
+                    #ifdef SMS_DELIVERY_REPORT_ON_H
+                    sleepCount = 2; // Load sleep count for SMS transmission action
+                    sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
+                    setBCDdigit(0x05,0);
+                    deepSleep(); // Sleep until message transmission acknowledge SMS is received from service provider 
+                    setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
+                    #endif
+                    /***************************/
+                    /*Send sms*/
+                    break;
+                }
+                else {  // Fertigation executed without low level detection and without level sensor failure
+                    /***************************/
+                    sendSms(SmsFert6, userMobileNo, fieldNoRequired); // Acknowledge user about successful Fertigation stopped action
+                    #ifdef SMS_DELIVERY_REPORT_ON_H
+                    sleepCount = 2; // Load sleep count for SMS transmission action
+                    sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
+                    setBCDdigit(0x05,0);
+                    deepSleep(); // Sleep until message transmission acknowledge SMS is received from service provider 
+                    setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
+                    #endif
+                    /***************************/
+                    /*Send sms*/
+                    break;
+                }
             }
             // upon completing entire field valve on period switch off field valve
             else if (fieldValve[field_No].status == ON) {
@@ -3929,7 +4305,7 @@ void actionsOnDueValve(unsigned char field_No) {
     unsigned char last_Field_No = CLEAR;
     wetSensor = false;
     // Check if Field is wet
-    if (isFieldMoistureSensorWet(field_No)) {  //Skip current valve execution and go for next
+    if (isFieldMoistureSensorWetLora(field_No)) {  //Skip current valve execution and go for next
         wetSensor = true;
         valveDue = false;
         fieldValve[field_No].status = OFF;

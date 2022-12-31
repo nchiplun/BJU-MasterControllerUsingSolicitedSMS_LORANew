@@ -167,13 +167,25 @@ void __interrupt(low_priority) timerInterrupt_handler(void) {
         TMR0H = 0xE3; // Load Timer0 Register Higher Byte 
         TMR0L = 0xB0; // Load Timer0 Register Lower Byte
         Timer0Overflow++;
-        // Control sleep count decrement for each one minute interrupt when motor is on 
+        // Control sleep count decrement for each one minute interrupt when Motor is ON i.e. Valve ON period 
         if (sleepCount > 0 && MotorControl == ON) {
             sleepCount--;
             if (dryRunCheckCount == 0 || dryRunCheckCount < 3) {
                 dryRunCheckCount++;
             }
         } 
+		// Check Fertigation Level for each one minute interrupt when Fertigation Motor is ON during Valve ON period 
+        if (fertigationValveControl == ON) {
+            fertigationDry = false;
+            if (!moistureSensorFailed) {  // to avoid repeated fertigation level check after sensor failure detected
+                if (isFieldMoistureSensorWet(11)==false) {
+                    if (!moistureSensorFailed) { // to avoid sensor dry detection due to sensor failure
+                        fertigationValveControl = OFF;
+                        fertigationDry = true;
+                    }
+                }
+            }
+        }																											 
         //*To follow filtration  cycle sequence*/
         if (filtrationCycleSequence == 1 && Timer0Overflow == filtrationDelay1 ) { // 10 minute off
             Timer0Overflow = 0;
@@ -214,13 +226,12 @@ void __interrupt(low_priority) timerInterrupt_handler(void) {
         }
     }
 /*To measure pulse width of moisture sensor output*/
-/*
     if (PIR5bits.TMR1IF) {
         Run_led = GLOW; // Led Indication for system in Operational Mode
         Timer1Overflow++;
         PIR5bits.TMR1IF = CLEAR;
     }
-*/
+
     if (PIR5bits.TMR3IF) {
         Run_led = GLOW; // Led Indication for system in Operational Mode
         PIR5bits.TMR3IF = CLEAR;
@@ -232,8 +243,11 @@ void __interrupt(low_priority) timerInterrupt_handler(void) {
             controllerCommandExecuted = true; // Unlock key
             Timer3Overflow = 0;
             T3CONbits.TMR3ON = OFF; // Stop timer
-            if(checkLoraConnection) {
+            if (checkLoraConnection) {
                 LoraConnectionFailed = true;
+            }
+			else if (checkMoistureSensor) {
+                moistureSensorFailed = true;
             }
         } 
         else if (controllerCommandExecuted) {
@@ -255,6 +269,8 @@ void __interrupt(low_priority) timerInterrupt_handler(void) {
     actionsOnSystemReset();
     while (1) {
 nxtVlv: if (!valveDue && !phaseFailureDetected && !lowPhaseCurrentDetected) {
+            LoraConnectionFailed = false;  // reset slave lora connection failed status for first  field
+            wetSensor = false; // reset wet sensor for first wet field detection
             myMsDelay(50);
             scanValveScheduleAndGetSleepCount(); // get sleep count for next valve action
             myMsDelay(50);
@@ -276,6 +292,8 @@ nxtVlv: if (!valveDue && !phaseFailureDetected && !lowPhaseCurrentDetected) {
         }
         // DeActivate last valve and switch off motor pump
         else if (valveExecuted) {
+            LoraConnectionFailed = false;  // reset slave lora connection failed status for last  field
+            wetSensor = false; // reset wet sensor for last wet field detection
             powerOffMotor();
             last_Field_No = readFieldIrrigationValveNoFromEeprom();
             deActivateValve(last_Field_No);      // Successful Deactivate valve

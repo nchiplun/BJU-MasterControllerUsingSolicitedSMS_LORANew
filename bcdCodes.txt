@@ -6,7 +6,7 @@ Operations
 0x03-3 Read SMS Action
 0x04-4 EEPROM Memory Read Operation
 0x05-5 ADC Action
-0x06-6
+0x06-6 lora connection check
 0x07-7
 0x08-8
 0x09-9 Delete SMS

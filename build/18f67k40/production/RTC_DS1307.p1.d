@@ -3,5 +3,4 @@ RTC_DS1307.c  \
 congfigBits.h  \
 variableDefinitions.h  \
 controllerActions.h  \
-RTC_DS1307.h  \
-serialMonitor.h 
+RTC_DS1307.h 

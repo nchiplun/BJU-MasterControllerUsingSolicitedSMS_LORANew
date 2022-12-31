@@ -11,6 +11,9 @@
 #include "congfigBits.h"
 #include "controllerActions.h"
 #include "lora.h"
+#ifdef DEBUG_MODE_ON_H
+#include "serialMonitor.h"
+#endif
 
 
 //***************** Lora Serial communication function_Start****************//
@@ -81,7 +84,9 @@ void sendCmdToLora(unsigned char Action, unsigned char FieldNo) {
     transmitStringToDebug("sendCmdToLora_IN\r\n");
     //********Debug log#end**************//
 #endif
+    setBCDdigit(0x06,1);  // (6) BCD indication for sendCmdToLora action
     checkLoraConnection = true;
+    LoraConnectionFailed = false;
     // for field no. 01 to 09
     if (FieldNo<9){
         temporaryBytesArray[0] = 48; // To store field no. of valve in action 
@@ -97,6 +102,8 @@ void sendCmdToLora(unsigned char Action, unsigned char FieldNo) {
     T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if GSM fails to respond within 5 min
     switch (Action) {
     case 0x00:
+        //transmitStringToLora("#ON01SLAVE");
+        //*
         transmitStringToLora("#ON01TIME");
         temporaryBytesArray[2]=fieldValve[FieldNo].onPeriod%10;
         temporaryBytesArray[3]=fieldValve[FieldNo].onPeriod/10;
@@ -104,6 +111,7 @@ void sendCmdToLora(unsigned char Action, unsigned char FieldNo) {
         temporaryBytesArray[4]=fieldValve[FieldNo].onPeriod/100;
         transmitNumberToLora(temporaryBytesArray+2,3);
         transmitStringToLora("SLAVE");
+        //*/
         transmitNumberToLora(temporaryBytesArray,2);
         transmitStringToLora("$");
         myMsDelay(100);
@@ -123,16 +131,19 @@ void sendCmdToLora(unsigned char Action, unsigned char FieldNo) {
     }
     while (!controllerCommandExecuted); // wait until lora responds to send cmd action
     checkLoraConnection = false;
-    if (LoraConnectionFailed) {
+    if (LoraConnectionFailed) {  // No response from lora slave
         loraAttempt++;
+        //transmitStringToDebug("LoraConnectionFailed\r\n");
     }
-    else if (isLoraResponseAck(Action,FieldNo)) {
+    else if (isLoraResponseAck(Action,FieldNo)) {  // response from lora slave
         LoraConnectionFailed = false;
         loraAttempt = 99;
+        //transmitStringToDebug("isLoraResponseAck(Action,FieldNo)\r\n");
     }
-    else if (isLoraResponseAck(Action,FieldNo)== off) {
+    else if (isLoraResponseAck(Action,FieldNo)== false) {  // error response from lora slave
         LoraConnectionFailed = true;
         loraAttempt++;
+        //transmitStringToDebug("isLoraResponseAck(Action,FieldNo)== off\r\n");
     }
     PIR5bits.TMR3IF = SET; //Stop timer thread
     setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
@@ -161,26 +172,26 @@ _Bool isLoraResponseAck(unsigned char Action, unsigned char FieldNo) {
     switch (Action) {
     case 0x00:
         field = fetchFieldNo(10);
-        if(strncmp(decodedString+1, slaveOnOK, 9) == 0 && strncmp(decodedString+9, ack, 3) == 0 && field == FieldNo) {
+        if(strncmp(decodedString+1, on, 2) == 0 && strncmp(decodedString+12, ack, 3) == 0 && field == FieldNo) {  //#ON01SLAVE01ACK$
             return true;
         }
         break;
     case 0x01:
         field = fetchFieldNo(11);
-        if(strncmp(decodedString+1, slaveOffOK, 10) == 0 && strncmp(decodedString+10, ack, 3) == 0 && field == FieldNo) {
+        if(strncmp(decodedString+1, off, 3) == 0 && strncmp(decodedString+13, ack, 3) == 0 && field == FieldNo) {  //#OFF01SLAVE01ACK$
             return true;
         }
         break;
     case 0x02:
         field = fetchFieldNo(11);
-        if(strncmp(decodedString+6, slave, 5) == 0 && field == FieldNo) {
+        if(strncmp(decodedString+6, slave, 5) == 0 && field == FieldNo) {  //"#65535SLAVE01$"
             return true;
         }
     }
-    if(strncmp(decodedString+1, masterError, 11) == 0) {
+    if(strncmp(decodedString+1, master, 6) == 0 && strncmp(decodedString+7, error, 5) == 0) { //#MASTERERROR$
         return false;
     }
-    else if(strncmp(decodedString+1, slaveError, 10) == 0) {
+    else if(strncmp(decodedString+1, slave, 5) == 0 && strncmp(decodedString+6, error, 5) == 0) {  //#SLAVEERROR$
         return false;
     }
     return false;

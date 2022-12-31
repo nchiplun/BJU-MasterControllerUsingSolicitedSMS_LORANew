@@ -24464,6 +24464,7 @@ const unsigned int eepromAddress[16] = {0x0000, 0x0020, 0x0040, 0x0060, 0x0080, 
 # 216 "./variableDefinitions.h"
 _Bool systemAuthenticated = 0;
 _Bool newSMSRcvd = 0;
+_Bool checkMoistureSensor = 0;
 _Bool moistureSensorFailed = 0;
 _Bool controllerCommandExecuted = 0;
 _Bool currentDateCalled = 0;
@@ -24484,11 +24485,11 @@ _Bool filtrationEnabled = 0;
 _Bool cmtiCmd = 0;
 _Bool DeviceBurnStatus = 0;
 _Bool gsmSetToLocalTime = 0;
-_Bool off = 0;
 _Bool cmdRceived = 0;
 _Bool checkLoraConnection = 0;
 _Bool LoraConnectionFailed = 0;
 _Bool wetSensor = 0;
+_Bool fertigationDry = 0;
 
 
 
@@ -24540,13 +24541,13 @@ unsigned static char countryCode[4] = "+91";
 
 
 
-unsigned static char slaveOnOK[10] = "ON01SLAVE";
-unsigned static char slaveOffOK[11] = "OFF01SLAVE";
+unsigned static char on[3] = "ON";
+unsigned static char off[4] = "OFF";
 unsigned static char slave[6] = "SLAVE";
 unsigned static char ack[4] = "ACK";
 unsigned static char idle[5] = "IDLE";
-unsigned static char masterError[12] = "MASTERERROR";
-unsigned static char slaveError[11] = "SLAVEERROR";
+unsigned static char master[7] = "MASTER";
+unsigned static char error[6] = "ERROR";
 
 
 
@@ -24567,8 +24568,9 @@ const char SmsIrr3[40] = "Irrigation not configured for field no.";
 const char SmsIrr4[33] = "Irrigation started for field no.";
 const char SmsIrr5[33] = "Irrigation stopped for field no.";
 const char SmsIrr6[60] = "Wet field detected.\r\nIrrigation not started for field no.";
-const char SmsIrr7[51] = "Irrigation skipped with no response from field no:";
-const char SmsIrr8[51] = "Irrigation stopped without response from field no.";
+const char SmsIrr7[15] = "Irrigation No:";
+const char SmsIrr8[51] = "Irrigation skipped with no response from field no:";
+const char SmsIrr9[51] = "Irrigation stopped without response from field no.";
 
 const char SmsFert1[64] = "Irrigation is not Active. Fertigation not enabled for field no.";
 const char SmsFert2[56] = "Incorrect values. Fertigation not enabled for field no.";
@@ -24576,6 +24578,8 @@ const char SmsFert3[34] = "Fertigation enabled for field no.";
 const char SmsFert4[35] = "Fertigation disabled for field no.";
 const char SmsFert5[34] = "Fertigation started for field no.";
 const char SmsFert6[34] = "Fertigation stopped for field no.";
+const char SmsFert7[71] = "Fertigation stopped with fertilizer level sensor failure for field no.";
+const char SmsFert8[60] = "Fertigation stopped with low fertilizer level for field no.";
 
 const char SmsFilt1[27] = "Water filtration activated";
 const char SmsFilt2[29] = "Water filtration deactivated";
@@ -24711,6 +24715,7 @@ void activateValve(unsigned char);
 void deActivateValve(unsigned char);
 void powerOnMotor(void);
 void powerOffMotor(void);
+_Bool isFieldMoistureSensorWetLora(unsigned char);
 _Bool isFieldMoistureSensorWet(unsigned char);
 _Bool isMotorInNoLoad(void);
 void calibrateMotorCurrent(unsigned char, unsigned char);
@@ -24927,6 +24932,18 @@ void __attribute__((picinterrupt(("low_priority")))) timerInterrupt_handler(void
             }
         }
 
+        if (PORTFbits.RF6 == 1) {
+            fertigationDry = 0;
+            if (!moistureSensorFailed) {
+                if (isFieldMoistureSensorWet(11)==0) {
+                    if (!moistureSensorFailed) {
+                        PORTFbits.RF6 = 0;
+                        fertigationDry = 1;
+                    }
+                }
+            }
+        }
+
         if (filtrationCycleSequence == 1 && Timer0Overflow == filtrationDelay1 ) {
             Timer0Overflow = 0;
             PORTGbits.RG7 = 1;
@@ -24965,7 +24982,13 @@ void __attribute__((picinterrupt(("low_priority")))) timerInterrupt_handler(void
             Timer0Overflow = 0;
         }
     }
-# 224 "main_1.c"
+
+    if (PIR5bits.TMR1IF) {
+        PORTGbits.RG3 = 0;
+        Timer1Overflow++;
+        PIR5bits.TMR1IF = 0;
+    }
+
     if (PIR5bits.TMR3IF) {
         PORTGbits.RG3 = 0;
         PIR5bits.TMR3IF = 0;
@@ -24977,8 +25000,11 @@ void __attribute__((picinterrupt(("low_priority")))) timerInterrupt_handler(void
             controllerCommandExecuted = 1;
             Timer3Overflow = 0;
             T3CONbits.TMR3ON = 0;
-            if(checkLoraConnection) {
+            if (checkLoraConnection) {
                 LoraConnectionFailed = 1;
+            }
+   else if (checkMoistureSensor) {
+                moistureSensorFailed = 1;
             }
         }
         else if (controllerCommandExecuted) {
@@ -25000,6 +25026,8 @@ void __attribute__((picinterrupt(("low_priority")))) timerInterrupt_handler(void
     actionsOnSystemReset();
     while (1) {
 nxtVlv: if (!valveDue && !phaseFailureDetected && !lowPhaseCurrentDetected) {
+            LoraConnectionFailed = 0;
+            wetSensor = 0;
             myMsDelay(50);
             scanValveScheduleAndGetSleepCount();
             myMsDelay(50);
@@ -25021,13 +25049,15 @@ nxtVlv: if (!valveDue && !phaseFailureDetected && !lowPhaseCurrentDetected) {
         }
 
         else if (valveExecuted) {
+            LoraConnectionFailed = 0;
+            wetSensor = 0;
             powerOffMotor();
             last_Field_No = readFieldIrrigationValveNoFromEeprom();
             deActivateValve(last_Field_No);
             valveExecuted = 0;
 
             sendSms(SmsMotor1, userMobileNo, 0);
-# 293 "main_1.c"
+# 311 "main_1.c"
             startFieldNo = 0;
 
         }
@@ -25038,7 +25068,7 @@ nxtVlv: if (!valveDue && !phaseFailureDetected && !lowPhaseCurrentDetected) {
         if(!LoraConnectionFailed || !wetSensor) {
 
             deepSleep();
-# 311 "main_1.c"
+# 329 "main_1.c"
             if (newSMSRcvd) {
 
 
@@ -25075,7 +25105,7 @@ nxtVlv: if (!valveDue && !phaseFailureDetected && !lowPhaseCurrentDetected) {
 
                     sendSms(SmsRTC1, userMobileNo, 0);
                     rtcBatteryLevelChecked = 1;
-# 355 "main_1.c"
+# 373 "main_1.c"
                 }
             }
         }

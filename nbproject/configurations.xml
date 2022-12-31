@@ -31,6 +31,7 @@
       <itemPath>main_1.c</itemPath>
       <itemPath>serailMonitor.c</itemPath>
       <itemPath>lora.c</itemPath>
+      <itemPath>main_1_Test.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -272,6 +273,18 @@
         <property key="user-pack-device-support" value=""/>
         <property key="wpo-lto" value="false"/>
       </XC8-config-global>
+      <item path="main_1.c" ex="false" overriding="false">
+        <HI-TECH-COMP>
+        </HI-TECH-COMP>
+        <HI-TECH-LINK>
+        </HI-TECH-LINK>
+        <XC8-CO>
+        </XC8-CO>
+        <XC8-config-global>
+        </XC8-config-global>
+      </item>
+      <item path="main_1_Test.c" ex="true" overriding="false">
+      </item>
     </conf>
     <conf name="18f67k40" type="2">
       <toolsSet>

@@ -215,6 +215,7 @@ const unsigned int eepromAddress[16] = {0x0000, 0x0020, 0x0040, 0x0060, 0x0080, 
 /************* Booleans definition#start *********************************/ 
 _Bool systemAuthenticated = false;              // To check if system is initialized by user for first time.
 _Bool newSMSRcvd = false;                       // To check if communication is first initialized by GSM.
+_Bool checkMoistureSensor = false;              // To check status of Moisture sensor																					 
 _Bool moistureSensorFailed = false;             // status of Moisture sensor
 _Bool controllerCommandExecuted = false;        // To check response to system cmd.
 _Bool currentDateCalled = false;                // To avoid repetitive fetching of date through GSM
@@ -235,11 +236,11 @@ _Bool filtrationEnabled = false;                // To store tank filtration oper
 _Bool cmtiCmd = false;                          // Set to indicate cmti command received
 _Bool DeviceBurnStatus = false;                 // To store Device program status
 _Bool gsmSetToLocalTime = false;                // To indicate if gsm set to local timezone
-_Bool off = false;                              // To indicate if down with power
 _Bool cmdRceived = false;                       // Set to indicate lora command received
 _Bool checkLoraConnection = false;
 _Bool LoraConnectionFailed = false;
 _Bool wetSensor = false;                        // To indicate if sensor is wet
+_Bool fertigationDry = false;                   // To indicate fertigation level																				
 /************* BOOLeans definition#end ***********************************/
 
 /************* Strings definition#start **********************************/
@@ -291,13 +292,13 @@ unsigned static char countryCode[4] = "+91"; //Country code for GSM
 
 
 /***** LORA prototype definition#start *************************/
-unsigned static char slaveOnOK[10] = "ON01SLAVE"; //
-unsigned static char slaveOffOK[11] = "OFF01SLAVE"; //
+unsigned static char on[3] = "ON"; //
+unsigned static char off[4] = "OFF"; //
 unsigned static char slave[6] = "SLAVE"; // 
 unsigned static char ack[4] = "ACK"; // 
 unsigned static char idle[5] = "IDLE"; // 
-unsigned static char masterError[12] = "MASTERERROR"; //
-unsigned static char slaveError[11] = "SLAVEERROR"; //
+unsigned static char master[7] = "MASTER"; //
+unsigned static char error[6] = "ERROR"; //
 
 /***** LORA prototype definition#end ***************************/
 
@@ -317,9 +318,10 @@ const char SmsIrr2[48] = "Irrigation configuration disabled for field no."; // A
 const char SmsIrr3[40] = "Irrigation not configured for field no."; // Acknowledge user about  Irrigation not configured
 const char SmsIrr4[33] = "Irrigation started for field no."; // Acknowledge user about successful Irrigation started action
 const char SmsIrr5[33] = "Irrigation stopped for field no."; // Acknowledge user about successful Irrigation stopped action
-const char SmsIrr6[60] = "Wet field detected.\r\nIrrigation not started for field no."; // Acknowledge user about sIrrigation not started due to wet field detection
-const char SmsIrr7[51] = "Irrigation skipped with no response from field no:"; 
-const char SmsIrr8[51] = "Irrigation stopped without response from field no."; // Acknowledge user about successful Irrigation stopped action
+const char SmsIrr6[60] = "Wet field detected.\r\nIrrigation not started for field no."; // Acknowledge user about Irrigation not started due to wet field detection
+const char SmsIrr7[15] = "Irrigation No:"; // Send diagnostic data fro irrigation
+const char SmsIrr8[51] = "Irrigation skipped with no response from field no:"; // Acknowledge user about Irrigation skipped due to no response
+const char SmsIrr9[51] = "Irrigation stopped without response from field no."; // Acknowledge user about Irrigation stopped without response
 
 const char SmsFert1[64] = "Irrigation is not Active. Fertigation not enabled for field no."; // Acknowledge user about Fertigation not configured due to disabled irrigation
 const char SmsFert2[56] = "Incorrect values. Fertigation not enabled for field no."; // Acknowledge user about Fertigation not configured due to incorrect values
@@ -327,6 +329,8 @@ const char SmsFert3[34] = "Fertigation enabled for field no."; // Acknowledge us
 const char SmsFert4[35] = "Fertigation disabled for field no."; // Acknowledge user about successful Fertigation disabled action
 const char SmsFert5[34] = "Fertigation started for field no."; // Acknowledge user about successful Fertigation started action
 const char SmsFert6[34] = "Fertigation stopped for field no."; // Acknowledge user about successful Fertigation stopped action
+const char SmsFert7[71] = "Fertigation stopped with fertilizer level sensor failure for field no."; // Acknowledge user about Fertigation stopped action with sensor failure
+const char SmsFert8[60] = "Fertigation stopped with low fertilizer level for field no."; // Acknowledge user about Fertigation stopped action with low fertilizer level 
 
 const char SmsFilt1[27] = "Water filtration activated";
 const char SmsFilt2[29] = "Water filtration deactivated"; 

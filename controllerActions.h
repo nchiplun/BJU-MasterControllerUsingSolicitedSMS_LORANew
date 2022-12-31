@@ -32,7 +32,8 @@ void activateValve(unsigned char);              // Trigger valve
 void deActivateValve(unsigned char);            // Stop valve
 void powerOnMotor(void);						// Start motor
 void powerOffMotor(void);						// Stop motor
-_Bool isFieldMoistureSensorWet(unsigned char);	// Measure moisture level for field 1 
+_Bool isFieldMoistureSensorWetLora(unsigned char);	// Measure moisture level for selected field through lora 
+_Bool isFieldMoistureSensorWet(unsigned char);	// Measure moisture level for selected field through onboard sensor 
 _Bool isMotorInNoLoad(void);                    // Measure motor ct current
 void calibrateMotorCurrent(unsigned char, unsigned char);      // Calibrate Motor rated current
 void doDryRunAction(void);                      // Take action after detecting Dry Run
