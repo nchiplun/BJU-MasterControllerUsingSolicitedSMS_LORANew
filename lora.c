@@ -98,20 +98,30 @@ void sendCmdToLora(unsigned char Action, unsigned char FieldNo) {
     }
     myMsDelay(100);
     controllerCommandExecuted = false;
-    timer3Count = 15; // 15 second window
+    timer3Count = 10; // 10 second window
     T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if GSM fails to respond within 5 min
     switch (Action) {
     case 0x00:
-        //transmitStringToLora("#ON01SLAVE");
-        //*
         transmitStringToLora("#ON01TIME");
-        temporaryBytesArray[2]=fieldValve[FieldNo].onPeriod%10;
-        temporaryBytesArray[3]=fieldValve[FieldNo].onPeriod/10;
-        temporaryBytesArray[3]=temporaryBytesArray[3]%10;
-        temporaryBytesArray[4]=fieldValve[FieldNo].onPeriod/100;
-        transmitNumberToLora(temporaryBytesArray+2,3);
+        myMsDelay(10);
+        if (fieldValve[FieldNo].onPeriod > 0 && fieldValve[FieldNo].onPeriod < 995) {
+            lower8bits = fieldValve[FieldNo].onPeriod + 5; // 5 count extra to lora auto timeout // fieldValve[FieldNo].onPeriod  Need to calculate on period for interrupted valve
+        }
+        else {
+            lower8bits = fieldValve[FieldNo].onPeriod;
+        }
+        //temporaryBytesArray[2] = (unsigned char) ((lower8bits / 10000) + 48);
+        //lower8bits = lower8bits % 10000;
+        //temporaryBytesArray[3] = (unsigned char) ((lower8bits / 1000) + 48);
+        //lower8bits = lower8bits % 1000;
+        // Only last three digits i.e. 001 to 999
+        temporaryBytesArray[4] = (unsigned char) ((lower8bits / 100) + 48);
+        lower8bits = lower8bits % 100;
+        temporaryBytesArray[5] = (unsigned char) ((lower8bits / 10) + 48);
+        lower8bits = lower8bits % 10;
+        temporaryBytesArray[6] = (unsigned char) (lower8bits + 48);
+        transmitNumberToLora(temporaryBytesArray+4,3);
         transmitStringToLora("SLAVE");
-        //*/
         transmitNumberToLora(temporaryBytesArray,2);
         transmitStringToLora("$");
         myMsDelay(100);
@@ -130,22 +140,35 @@ void sendCmdToLora(unsigned char Action, unsigned char FieldNo) {
         break;
     }
     while (!controllerCommandExecuted); // wait until lora responds to send cmd action
+    PIR5bits.TMR3IF = SET; //Stop timer thread
     checkLoraConnection = false;
     if (LoraConnectionFailed) {  // No response from lora slave
         loraAttempt++;
-        //transmitStringToDebug("LoraConnectionFailed\r\n");
+        #ifdef DEBUG_MODE_ON_H
+        //********Debug log#start************//
+        transmitStringToDebug("No Response from Lora\r\n");
+        //********Debug log#end**************//
+        #endif   
     }
-    else if (isLoraResponseAck(Action,FieldNo)) {  // response from lora slave
+    else if (isLoraResponseAck(Action,FieldNo)) {  // correct response from lora slave
         LoraConnectionFailed = false;
         loraAttempt = 99;
-        //transmitStringToDebug("isLoraResponseAck(Action,FieldNo)\r\n");
+        #ifdef DEBUG_MODE_ON_H
+        //********Debug log#start************//
+        transmitStringToDebug("isLoraResponseAck(Action,FieldNo)== true\r\n");
+        //********Debug log#end**************//
+        #endif
     }
-    else if (isLoraResponseAck(Action,FieldNo)== false) {  // error response from lora slave
+    else {  // error response from lora slave
         LoraConnectionFailed = true;
         loraAttempt++;
-        //transmitStringToDebug("isLoraResponseAck(Action,FieldNo)== off\r\n");
+        #ifdef DEBUG_MODE_ON_H
+        //********Debug log#start************//
+        transmitStringToDebug("isLoraResponseAck(Action,FieldNo)== off\r\n");
+        //********Debug log#end**************//
+        #endif
     }
-    PIR5bits.TMR3IF = SET; //Stop timer thread
+    deleteDecodedString(); // delete received lora response after processing
     setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
     myMsDelay(500);
     
@@ -168,25 +191,51 @@ _Bool isLoraResponseAck(unsigned char Action, unsigned char FieldNo) {
     //********Debug log#end**************//
 #endif
     unsigned char field = 99;
+    unsigned char index = 6;   //default index for "#65535SLAVE01$"
     myMsDelay(100);
     switch (Action) {
-    case 0x00:
+    case 0x00:    // check for Valve ON ack response
         field = fetchFieldNo(10);
         if(strncmp(decodedString+1, on, 2) == 0 && strncmp(decodedString+12, ack, 3) == 0 && field == FieldNo) {  //#ON01SLAVE01ACK$
             return true;
         }
         break;
-    case 0x01:
+    case 0x01:    // check for Valve OFF ack response
         field = fetchFieldNo(11);
         if(strncmp(decodedString+1, off, 3) == 0 && strncmp(decodedString+13, ack, 3) == 0 && field == FieldNo) {  //#OFF01SLAVE01ACK$
             return true;
         }
         break;
-    case 0x02:
-        field = fetchFieldNo(11);
-        if(strncmp(decodedString+6, slave, 5) == 0 && field == FieldNo) {  //"#65535SLAVE01$"
+    case 0x02:   // check for SENSOR measurement reading response
+        moistureLevel = CLEAR;
+        for ( msgIndex = 1; msgIndex < 6 ; msgIndex++) {
+            //is number
+            if (isNumber(decodedString[msgIndex])) {
+                if (decodedString[msgIndex + 1] == 'S') { // to fetch position of S  and then read value in "#65535SLAVE01$" since freq. value can vary fro 1 to 5 digits
+                    decodedString[msgIndex] = decodedString[msgIndex] - 48;
+                    moistureLevel = moistureLevel + decodedString[msgIndex];
+                    index = msgIndex + 1;
+                    msgIndex = 99; // break
+                } 
+                else {
+                    decodedString[msgIndex] = decodedString[msgIndex] - 48;
+                    decodedString[msgIndex] = decodedString[msgIndex] * 10;
+                    moistureLevel = moistureLevel * 10;
+                    moistureLevel = moistureLevel + decodedString[msgIndex];
+                }
+            }
+            else {
+                break;
+            }
+        }
+        field = fetchFieldNo(index+5);
+        if(strncmp(decodedString+index, slave, 5) == 0 && field == FieldNo) {  //"#65535SLAVE01$"
             return true;
         }
+        else if(strncmp(decodedString+1, sensor, 6) == 0 && strncmp(decodedString+7, error, 5) == 0 && strncmp(decodedString+12, slave, 5) == 0) {  //"#SENSORERRORSLAVE01$"
+            moistureSensorFailed = true;
+            return true;
+        } 
     }
     if(strncmp(decodedString+1, master, 6) == 0 && strncmp(decodedString+7, error, 5) == 0) { //#MASTERERROR$
         return false;

@@ -24432,19 +24432,31 @@ int toupper_l(int, locale_t);
 # 43 "./variableDefinitions.h"
 # 1 "./congfigBits.h" 1
 # 43 "./variableDefinitions.h" 2
-# 144 "./variableDefinitions.h"
+# 147 "./variableDefinitions.h"
 struct FIELDVALVE {
     unsigned int dryValue;
     unsigned int wetValue;
-    unsigned char onPeriod;
+    unsigned int onPeriod;
+    unsigned int fertigationDelay;
+    unsigned int fertigationONperiod;
+    unsigned int injector1OnPeriod;
+    unsigned int injector2OnPeriod;
+    unsigned int injector3OnPeriod;
+    unsigned int injector4OnPeriod;
+    unsigned int injector1OffPeriod;
+    unsigned int injector2OffPeriod;
+    unsigned int injector3OffPeriod;
+    unsigned int injector4OffPeriod;
+    unsigned char injector1Cycle;
+    unsigned char injector2Cycle;
+    unsigned char injector3Cycle;
+    unsigned char injector4Cycle;
     unsigned char offPeriod;
     unsigned char motorOnTimeHour;
     unsigned char motorOnTimeMinute;
     unsigned char nextDueDD;
     unsigned char nextDueMM;
     unsigned char nextDueYY;
-    unsigned char fertigationDelay;
-    unsigned char fertigationONperiod;
     unsigned char fertigationInstance;
  unsigned char priority;
     unsigned char fertigationStage;
@@ -24458,48 +24470,88 @@ struct FIELDVALVE {
 
 
 
+#pragma idata fieldValve
+struct FIELDVALVE fieldValve[12] = {0};
+
+
+
 
 #pragma idata eepromAddress
-const unsigned int eepromAddress[16] = {0x0000, 0x0020, 0x0040, 0x0060, 0x0080, 0x00A0, 0x00C0, 0x00E0, 0x0100, 0x0120, 0x0140, 0x0160, 0x0180, 0x0190, 0x01A0, 0x1B0};
-# 216 "./variableDefinitions.h"
-_Bool systemAuthenticated = 0;
-_Bool newSMSRcvd = 0;
-_Bool moistureSensorFailed = 0;
-_Bool controllerCommandExecuted = 0;
-_Bool currentDateCalled = 0;
-_Bool sleepCountChangedDueToInterrupt = 0;
-_Bool inSleepMode = 0;
-_Bool dryRunDetected = 0;
-_Bool lowPhaseCurrentDetected = 0;
-_Bool valveDue = 0;
-_Bool valveExecuted = 0;
-_Bool onHold = 0;
-_Bool dueValveChecked = 0;
-_Bool correctDate = 0;
-_Bool phaseFailureDetected = 0;
-_Bool lowRTCBatteryDetected = 0;
-_Bool rtcBatteryLevelChecked = 0;
-_Bool phaseFailureActionTaken = 0;
-_Bool filtrationEnabled = 0;
-_Bool cmtiCmd = 0;
-_Bool DeviceBurnStatus = 0;
-_Bool gsmSetToLocalTime = 0;
-_Bool off = 0;
-_Bool cmdRceived = 0;
-_Bool checkLoraConnection = 0;
-_Bool LoraConnectionFailed = 0;
-_Bool wetSensor = 0;
-
-
-
-
+const unsigned int eepromAddress[16] = {0x0000, 0x0030, 0x0060, 0x0090, 0x00C0, 0x00F0, 0x0120, 0x0150, 0x0180, 0x01B0, 0x01E0, 0x0210, 0x0240, 0x0270, 0x02A0, 0x2D0};
+# 234 "./variableDefinitions.h"
+unsigned int filtrationSeperationTime = 0;
+unsigned int dueDD = 0;
+unsigned int sleepCount = 0;
+unsigned int remainingFertigationOnPeriod = 0;
+unsigned int lower8bits = 0;
+unsigned int higher8bits = 0;
+unsigned int moistureLevel = 0;
+unsigned int injector1OnPeriod = 0;
+unsigned int injector2OnPeriod = 0;
+unsigned int injector3OnPeriod = 0;
+unsigned int injector4OnPeriod = 0;
+unsigned int injector1OnPeriodCnt = 0;
+unsigned int injector2OnPeriodCnt = 0;
+unsigned int injector3OnPeriodCnt = 0;
+unsigned int injector4OnPeriodCnt = 0;
+unsigned int injector1OffPeriod = 0;
+unsigned int injector2OffPeriod = 0;
+unsigned int injector3OffPeriod = 0;
+unsigned int injector4OffPeriod = 0;
+unsigned int injector1OffPeriodCnt = 0;
+unsigned int injector2OffPeriodCnt = 0;
+unsigned int injector3OffPeriodCnt = 0;
+unsigned int injector4OffPeriodCnt = 0;
+unsigned int noLoadCutOff = 0;
+unsigned int fullLoadCutOff = 0;
 unsigned char userMobileNo[11] = "";
 unsigned char temporaryBytesArray[20] = "";
 unsigned char null[11] = {'\0'};
 unsigned char pwd[7] = "";
 unsigned char factryPswrd[7] = "";
-unsigned int noLoadCutOff = 0;
-unsigned int fullLoadCutOff = 0;
+unsigned char injector1Cycle = 0;
+unsigned char injector2Cycle = 0;
+unsigned char injector3Cycle = 0;
+unsigned char injector4Cycle = 0;
+unsigned char injector1CycleCnt = 0;
+unsigned char injector2CycleCnt = 0;
+unsigned char injector3CycleCnt = 0;
+unsigned char injector4CycleCnt = 0;
+unsigned char loraAliveCount = 0;
+unsigned char loraAliveCountCheck = 0;
+unsigned char loraAttempt = 0;
+unsigned char timer3Count = 0;
+unsigned char rxCharacter = 0;
+unsigned char msgIndex = 0;
+unsigned char temp = 0;
+unsigned char iterator = 0;
+unsigned char fieldCount = 12;
+unsigned char resetCount = 0;
+unsigned char startFieldNo = 0;
+unsigned char space = 0x20;
+unsigned char terminateSms = 0x1A;
+unsigned char enter = 0x0D;
+unsigned char newLine = 0x0A;
+unsigned char hundredsDigit = 0;
+unsigned char tensDigit = 0;
+unsigned char unitsDigit = 0;
+unsigned char Timer0Overflow = 0;
+unsigned char Timer1Overflow = 0;
+unsigned char Timer3Overflow = 0;
+unsigned char filtrationCycleSequence = 0;
+unsigned char currentYY = 0;
+unsigned char currentMM = 0;
+unsigned char currentDD = 0;
+unsigned char currentHour = 0;
+unsigned char currentMinutes = 0;
+unsigned char currentSeconds = 0;
+unsigned char dueYY = 0;
+unsigned char dueMM = 0;
+unsigned char filtrationDelay1 = 0;
+unsigned char filtrationDelay2 = 0;
+unsigned char filtrationDelay3 = 0;
+unsigned char filtrationOnTime = 0;
+unsigned char dryRunCheckCount = 0;
 
 
 
@@ -24539,15 +24591,15 @@ unsigned static char countryCode[4] = "+91";
 
 
 
-
-unsigned static char slaveOnOK[10] = "ON01SLAVE";
-unsigned static char slaveOffOK[11] = "OFF01SLAVE";
+unsigned static char on[3] = "ON";
+unsigned static char off[4] = "OFF";
 unsigned static char slave[6] = "SLAVE";
 unsigned static char ack[4] = "ACK";
 unsigned static char idle[5] = "IDLE";
-unsigned static char masterError[12] = "MASTERERROR";
-unsigned static char slaveError[11] = "SLAVEERROR";
-
+unsigned static char master[7] = "MASTER";
+unsigned static char error[6] = "ERROR";
+unsigned static char alive[6] = "ALIVE";
+unsigned static char sensor[7] = "SENSOR";
 
 
 
@@ -24555,7 +24607,6 @@ const char SmsAU1[23] = "Admin set successfully";
 const char SmsAU2[51] = "You are no more Admin now. New Admin is set to\r\n";
 const char SmsAU3[22] = "Authentication failed";
 const char SmsAU4[64] = "System Authenticated with Phase failure, suspending all actions";
-
 
 const char SmsPwd1[32] = "Login code changed successfully";
 const char SmsPwd2[23] = "Login code not changed";
@@ -24577,6 +24628,8 @@ const char SmsFert3[34] = "Fertigation enabled for field no.";
 const char SmsFert4[35] = "Fertigation disabled for field no.";
 const char SmsFert5[34] = "Fertigation started for field no.";
 const char SmsFert6[34] = "Fertigation stopped for field no.";
+const char SmsFert7[71] = "Fertigation stopped with fertilizer level sensor failure for field no.";
+const char SmsFert8[60] = "Fertigation stopped with low fertilizer level for field no.";
 
 const char SmsFilt1[27] = "Water filtration activated";
 const char SmsFilt2[29] = "Water filtration deactivated";
@@ -24647,52 +24700,34 @@ unsigned char static cmti[14] = "+CMTI: \"SM\",x";
 
 
 
-unsigned char loraAttempt = 0;
-unsigned char timer3Count = 0;
-unsigned char rxCharacter = 0;
-unsigned char msgIndex = 0;
-unsigned char temp = 0;
-unsigned char iterator = 0;
-unsigned char fieldCount = 12;
-unsigned char resetCount = 0;
-unsigned char startFieldNo = 0;
-unsigned char space = 0x20;
-unsigned char terminateSms = 0x1A;
-unsigned char enter = 0x0D;
-unsigned char newLine = 0x0A;
-unsigned char hundredsDigit = 0;
-unsigned char tensDigit = 0;
-unsigned char unitsDigit = 0;
-unsigned char Timer0Overflow = 0;
-unsigned char Timer1Overflow = 0;
-unsigned char Timer3Overflow = 0;
-unsigned char filtrationCycleSequence = 0;
-unsigned char currentYY = 0;
-unsigned char currentMM = 0;
-unsigned char currentDD = 0;
-unsigned char currentHour = 0;
-unsigned char currentMinutes = 0;
-unsigned char currentSeconds = 0;
-unsigned char dueYY = 0;
-unsigned char dueMM = 0;
-unsigned char filtrationDelay1 = 0;
-unsigned char filtrationDelay2 = 0;
-unsigned char filtrationDelay3 = 0;
-unsigned char filtrationOnTime = 0;
-unsigned char filtrationSeperationTime = 0;
-unsigned char dryRunCheckCount = 0;
-unsigned int dueDD = 0;
-unsigned int sleepCount = 0;
-unsigned int remainingFertigationOnPeriod = 0;
-unsigned int lower8bits = 0;
-unsigned int higher8bits = 0;
-unsigned int moistureLevel = 0;
-unsigned int const zero = 0;
-
-
-
-#pragma idata fieldValve
-struct FIELDVALVE fieldValve[12] = {0};
+_Bool systemAuthenticated = 0;
+_Bool newSMSRcvd = 0;
+_Bool checkMoistureSensor = 0;
+_Bool moistureSensorFailed = 0;
+_Bool controllerCommandExecuted = 0;
+_Bool currentDateCalled = 0;
+_Bool sleepCountChangedDueToInterrupt = 0;
+_Bool inSleepMode = 0;
+_Bool dryRunDetected = 0;
+_Bool lowPhaseCurrentDetected = 0;
+_Bool valveDue = 0;
+_Bool valveExecuted = 0;
+_Bool onHold = 0;
+_Bool dueValveChecked = 0;
+_Bool correctDate = 0;
+_Bool phaseFailureDetected = 0;
+_Bool lowRTCBatteryDetected = 0;
+_Bool rtcBatteryLevelChecked = 0;
+_Bool phaseFailureActionTaken = 0;
+_Bool filtrationEnabled = 0;
+_Bool cmtiCmd = 0;
+_Bool DeviceBurnStatus = 0;
+_Bool gsmSetToLocalTime = 0;
+_Bool cmdRceived = 0;
+_Bool checkLoraConnection = 0;
+_Bool LoraConnectionFailed = 0;
+_Bool wetSensor = 0;
+_Bool fertigationDry = 0;
 # 14 "main_1.c" 2
 
 # 1 "./controllerActions.h" 1
@@ -24702,7 +24737,7 @@ void configureController(void);
 void deepSleep(void);
 _Bool isSystemReady(void);
 _Bool isNumber(unsigned char);
-_Bool isBase64String(char *);
+_Bool isBase64String(unsigned char *);
 void extractReceivedSms(void);
 unsigned int days(unsigned char, unsigned char);
 void getDateFromGSM(void);
@@ -24712,6 +24747,7 @@ void activateValve(unsigned char);
 void deActivateValve(unsigned char);
 void powerOnMotor(void);
 void powerOffMotor(void);
+_Bool isFieldMoistureSensorWetLora(unsigned char);
 _Bool isFieldMoistureSensorWet(unsigned char);
 _Bool isMotorInNoLoad(void);
 void calibrateMotorCurrent(unsigned char, unsigned char);
@@ -24875,7 +24911,7 @@ void __attribute__((picinterrupt(("high_priority"))))rxANDiocInterrupt_handler(v
             decodedString[msgIndex] = rxCharacter;
             msgIndex++;
         }
-        else if (msgIndex < 50) {
+        else if (msgIndex > 0 && msgIndex < 25) {
             decodedString[msgIndex] = rxCharacter;
             msgIndex++;
 
@@ -24923,15 +24959,120 @@ void __attribute__((picinterrupt(("low_priority")))) timerInterrupt_handler(void
 
         if (sleepCount > 0 && PORTFbits.RF7 == 1) {
             sleepCount--;
+            loraAliveCountCheck++;
             if (dryRunCheckCount == 0 || dryRunCheckCount < 3) {
                 dryRunCheckCount++;
             }
+            if (strncmp((char*)(decodedString+1),(char*)(alive),(5)) == 0 && strncmp((char*)(decodedString+6),(char*)(slave),(5)) == 0) {
+                deleteDecodedString();
+                loraAliveCount++;
+            }
+            if (loraAliveCountCheck <= loraAliveCount+1) {
+
+
+
+
+
+            }
+            else {
+
+
+
+
+
+            }
+        }
+# 210 "main_1.c"
+        if (PORTFbits.RF6 == 1) {
+            if (PORTFbits.RF2 == 1) {
+                if(injector1OnPeriodCnt == injector1OnPeriod) {
+                    PORTFbits.RF2 = 0;
+                    injector1OnPeriodCnt = 0;
+                    injector1OffPeriodCnt++;
+                    injector1CycleCnt++;
+                }
+                else injector1OnPeriodCnt++;
+            }
+            else if (PORTFbits.RF2 == 0) {
+                if(injector1OffPeriodCnt == injector1OffPeriod) {
+                    if (injector1CycleCnt < injector1Cycle) {
+                        PORTFbits.RF2 = 1;
+                        injector1OnPeriodCnt++;
+                        injector1OffPeriodCnt = 0;
+                    }
+                    else injector1OffPeriodCnt = injector1OffPeriod + 1;
+                }
+                else injector1OffPeriodCnt++;
+            }
+            if (PORTFbits.RF3 == 1) {
+                if(injector2OnPeriodCnt == injector2OnPeriod) {
+                    PORTFbits.RF3 = 0;
+                    injector2OnPeriodCnt = 0;
+                    injector2OffPeriodCnt++;
+                    injector2CycleCnt++;
+                }
+                else injector2OnPeriodCnt++;
+            }
+            else if (PORTFbits.RF3 == 0) {
+                if(injector2OffPeriodCnt == injector2OffPeriod) {
+                    if (injector2CycleCnt < injector2Cycle) {
+                        PORTFbits.RF3 = 1;
+                        injector2OnPeriodCnt++;
+                        injector2OffPeriodCnt = 0;
+                    }
+                    else injector2OffPeriodCnt = injector2OffPeriod + 1;
+                }
+                else injector2OffPeriodCnt++;
+            }
+            if (PORTFbits.RF4 == 1) {
+                if(injector3OnPeriodCnt == injector3OnPeriod) {
+                    PORTFbits.RF4 = 0;
+                    injector3OnPeriodCnt = 0;
+                    injector3OffPeriodCnt++;
+                    injector3CycleCnt++;
+                }
+                else injector3OnPeriodCnt++;
+            }
+            else if (PORTFbits.RF4 == 0) {
+                if(injector3OffPeriodCnt == injector3OffPeriod) {
+                    if (injector3CycleCnt < injector3Cycle) {
+                        PORTFbits.RF4 = 1;
+                        injector3OnPeriodCnt++;
+                        injector3OffPeriodCnt = 0;
+                    }
+                    else injector3OffPeriodCnt = injector3OffPeriod + 1;
+                }
+                else injector3OffPeriodCnt++;
+            }
+            if (PORTFbits.RF5 == 1) {
+                if(injector4OnPeriodCnt == injector4OnPeriod) {
+                    PORTFbits.RF5 = 0;
+                    injector4OnPeriodCnt = 0;
+                    injector4OffPeriodCnt++;
+                    injector4CycleCnt++;
+                }
+                else injector4OnPeriodCnt++;
+            }
+            else if (PORTFbits.RF5 == 0) {
+                if(injector4OffPeriodCnt == injector4OffPeriod) {
+                    if (injector4CycleCnt < injector4Cycle) {
+                        PORTFbits.RF5 = 1;
+                        injector4OnPeriodCnt++;
+                        injector4OffPeriodCnt = 0;
+                    }
+                    else injector4OffPeriodCnt = injector4OffPeriod + 1;
+                }
+                else injector4OffPeriodCnt++;
+            }
         }
 
-        if (filtrationCycleSequence == 1 && Timer0Overflow == filtrationDelay1 ) {
+        if (filtrationCycleSequence == 99) {
             Timer0Overflow = 0;
-            PORTGbits.RG7 = 1;
-            filtrationCycleSequence = 2;
+        }
+        else if (filtrationCycleSequence == 1 && Timer0Overflow == filtrationDelay1 ) {
+                Timer0Overflow = 0;
+                PORTGbits.RG7 = 1;
+                filtrationCycleSequence = 2;
         }
         else if (filtrationCycleSequence == 2 && Timer0Overflow == filtrationOnTime ) {
             Timer0Overflow = 0;
@@ -24962,11 +25103,14 @@ void __attribute__((picinterrupt(("low_priority")))) timerInterrupt_handler(void
             Timer0Overflow = 0;
             filtrationCycleSequence = 1;
         }
-        else if (filtrationCycleSequence == 99) {
-            Timer0Overflow = 0;
-        }
     }
-# 224 "main_1.c"
+
+    if (PIR5bits.TMR1IF) {
+        PORTGbits.RG3 = 0;
+        Timer1Overflow++;
+        PIR5bits.TMR1IF = 0;
+    }
+
     if (PIR5bits.TMR3IF) {
         PORTGbits.RG3 = 0;
         PIR5bits.TMR3IF = 0;
@@ -24978,8 +25122,11 @@ void __attribute__((picinterrupt(("low_priority")))) timerInterrupt_handler(void
             controllerCommandExecuted = 1;
             Timer3Overflow = 0;
             T3CONbits.TMR3ON = 0;
-            if(checkLoraConnection) {
+            if (checkLoraConnection) {
                 LoraConnectionFailed = 1;
+            }
+   else if (checkMoistureSensor) {
+                moistureSensorFailed = 1;
             }
         }
         else if (controllerCommandExecuted) {
@@ -25032,7 +25179,7 @@ nxtVlv: if (!valveDue && !phaseFailureDetected && !lowPhaseCurrentDetected) {
             valveExecuted = 0;
 
             sendSms(SmsMotor1, userMobileNo, 0);
-# 297 "main_1.c"
+# 414 "main_1.c"
             startFieldNo = 0;
 
         }
@@ -25040,10 +25187,10 @@ nxtVlv: if (!valveDue && !phaseFailureDetected && !lowPhaseCurrentDetected) {
         if (onHold) {
             sleepCount = 0;
         }
-        if(!LoraConnectionFailed || !wetSensor) {
+        if(!LoraConnectionFailed && !wetSensor) {
 
             deepSleep();
-# 315 "main_1.c"
+# 432 "main_1.c"
             if (newSMSRcvd) {
 
 
@@ -25080,7 +25227,7 @@ nxtVlv: if (!valveDue && !phaseFailureDetected && !lowPhaseCurrentDetected) {
 
                     sendSms(SmsRTC1, userMobileNo, 0);
                     rtcBatteryLevelChecked = 1;
-# 359 "main_1.c"
+# 476 "main_1.c"
                 }
             }
         }

@@ -65,9 +65,13 @@
 #define fertigationValveControl PORTFbits.RF6       // To control fertigation valve
 #define MotorControl PORTFbits.RF7                  // To control Motor Pump  -- DOL Red (Stop) Button (NO Relay connection)) // Deactivate DOL Manual Red button 
 #define motorPowerTorque PORTGbits.RG6              // To control Capacitor Relay -- motorPowerTorque -- DOL (Start) Green Button (NO Relay connection))
-#define filtration1ValveControl PORTGbits.RG7           // To control filtration1 valve
-#define filtration2ValveControl PORTEbits.RE2           // To control filtration2 valve
-#define filtration3ValveControl PORTEbits.RE3           // To control filtration3 valve
+#define filtration1ValveControl PORTGbits.RG7       // To control filtration1 valve
+#define filtration2ValveControl PORTEbits.RE2       // To control filtration2 valve
+#define filtration3ValveControl PORTEbits.RE3       // To control filtration3 valve
+#define injector1Control PORTFbits.RF2              // To control injector1 valve
+#define injector2Control PORTFbits.RF3              // To control injector2 valve
+#define injector3Control PORTFbits.RF4              // To control injector3 valve
+#define injector4Control PORTFbits.RF5              // To control injector4 valve
 
 #define MoistureSensor1 PORTBbits.RB0           // Field1 moisture sensor measurement
 #define MoistureSensor2 PORTBbits.RB1           // Field2 moisture sensor measurement
@@ -139,36 +143,52 @@
 #define GLOW 0
 /***************************** Boolean definition#end ****************/
 
-
 /***************************** Field Valve structure declaration#start ***************/
 struct FIELDVALVE {
-    unsigned int dryValue;              // 16 BIT  --2 LOCATIONS 0,1
-    unsigned int wetValue;              // 16 BIT  --2 LOCATIONS 2,3
-    unsigned char onPeriod;             //  8 BIT  --1 LOCATION 4
-    unsigned char offPeriod;            //  8 BIT  --1 LOCATION 5
-    unsigned char motorOnTimeHour;      //  8 BIT  --1 LOCATION 6
-    unsigned char motorOnTimeMinute;    //  8 BIT  --1 LOCATION 7
-    unsigned char nextDueDD;            //  8 BIT  --1 LOCATION 8
-    unsigned char nextDueMM;            //  8 BIT  --1 LOCATION 9
-    unsigned char nextDueYY;            //  8 BIT  --1 LOCATION 10
-    unsigned char fertigationDelay;     //  8 BIT  --1 LOCATION 11
-    unsigned char fertigationONperiod;  //  8 BIT  --1 LOCATION 12
-    unsigned char fertigationInstance;  //  8 BIT  --1 LOCATION 13
-	unsigned char priority;             //  8 BIT  --1 LOCATION 14
-    unsigned char fertigationStage;     //  8 BIT  --1 LOCATION 15
-    unsigned char cycles;               //  8 BIT  --1 LOCATION 16
-    unsigned char cyclesExecuted;       //  8 BIT  --1 LOCATION 17
-    _Bool status;                       //  8 BIT  --1 LOCATION 18
-    _Bool isConfigured;                 //  8 BIT  --1 LOCATION 19
-    _Bool isFertigationEnabled;         //  8 BIT  --1 LOCATION 20
-    _Bool fertigationValveInterrupted;  //  8 BIT  --1 LOCATION 21
+    unsigned int dryValue;              // 16 BIT  --2 LOCATION 0,1
+    unsigned int wetValue;              // 16 BIT  --2 LOCATION 2,3
+    unsigned int onPeriod;             	// 16 BIT  --2 LOCATION 4,5
+    unsigned int fertigationDelay;      // 16 BIT  --2 LOCATION 6,7
+    unsigned int fertigationONperiod;   // 16 BIT  --2 LOCATION 8,9
+    unsigned int injector1OnPeriod;     // 16 BIT  --2 LOCATION 10,11
+    unsigned int injector2OnPeriod;     // 16 BIT  --2 LOCATION 12,13
+    unsigned int injector3OnPeriod;     // 16 BIT  --2 LOCATION 14,15
+    unsigned int injector4OnPeriod;     // 16 BIT  --2 LOCATION 16,17
+    unsigned int injector1OffPeriod;    // 16 BIT  --2 LOCATION 18,19  
+    unsigned int injector2OffPeriod;    // 16 BIT  --2 LOCATION 20,21
+    unsigned int injector3OffPeriod;    // 16 BIT  --2 LOCATION 22,23
+    unsigned int injector4OffPeriod;    // 16 BIT  --2 LOCATION 24,25
+    unsigned char injector1Cycle;       //  8 BIT  --1 LOCATION 26
+    unsigned char injector2Cycle;       //  8 BIT  --1 LOCATION 27
+    unsigned char injector3Cycle;       //  8 BIT  --1 LOCATION 28
+    unsigned char injector4Cycle;       //  8 BIT  --1 LOCATION 29
+    unsigned char offPeriod;            //  8 BIT  --1 LOCATION 30
+    unsigned char motorOnTimeHour;      //  8 BIT  --1 LOCATION 31
+    unsigned char motorOnTimeMinute;    //  8 BIT  --1 LOCATION 32
+    unsigned char nextDueDD;            //  8 BIT  --1 LOCATION 33
+    unsigned char nextDueMM;            //  8 BIT  --1 LOCATION 34
+    unsigned char nextDueYY;            //  8 BIT  --1 LOCATION 35
+    unsigned char fertigationInstance;  //  8 BIT  --1 LOCATION 36
+	unsigned char priority;             //  8 BIT  --1 LOCATION 37
+    unsigned char fertigationStage;     //  8 BIT  --1 LOCATION 38
+    unsigned char cycles;               //  8 BIT  --1 LOCATION 39
+    unsigned char cyclesExecuted;       //  8 BIT  --1 LOCATION 40
+    _Bool status;                       //  8 BIT  --1 LOCATION 41
+    _Bool isConfigured;                 //  8 BIT  --1 LOCATION 42
+    _Bool isFertigationEnabled;         //  8 BIT  --1 LOCATION 43
+    _Bool fertigationValveInterrupted;  //  8 BIT  --1 LOCATION 44
 };
 /***************************** Field Valve structure declaration#end *****************/
+
+/************* statically allocated initialized user variables#start *****/
+#pragma idata fieldValve
+struct FIELDVALVE fieldValve[12] = {0}; //Initialize field valve structure to zero
+/************* statically allocated initialized user variables#end *******/
 
 /***************************** EEPROM Address definition#start ***********************/
 /** statically allocated initialized user variables#start **/
 #pragma idata eepromAddress
-const unsigned int eepromAddress[16] = {0x0000, 0x0020, 0x0040, 0x0060, 0x0080, 0x00A0, 0x00C0, 0x00E0, 0x0100, 0x0120, 0x0140, 0x0160, 0x0180, 0x0190, 0x01A0, 0x1B0}; //EEPROM Address locations from 0x00 t0 0x3FF ~1024KB
+const unsigned int eepromAddress[16] = {0x0000, 0x0030, 0x0060, 0x0090, 0x00C0, 0x00F0, 0x0120, 0x0150, 0x0180, 0x01B0, 0x01E0, 0x0210, 0x0240, 0x0270, 0x02A0, 0x2D0}; //EEPROM Address locations from 0x00 t0 0x3FF ~1024KB
 /*** statically allocated initialized user variables#end ***/
 /***************************** EEPROM Address definition#end *************************/
 
@@ -197,7 +217,6 @@ const unsigned int eepromAddress[16] = {0x0000, 0x0020, 0x0040, 0x0060, 0x0080, 
 #define flushPeriod 3
 /***************************** Macros for Fertigation stages #end ****************/
 
-
 /***************************** Macros for Additional Info in SMS #start ****************/
 #define noInfo 0                // No additional info required
 #define newAdmin 1              // To check if password is successfully reset by another user.
@@ -210,48 +229,81 @@ const unsigned int eepromAddress[16] = {0x0000, 0x0020, 0x0040, 0x0060, 0x0080, 
 #define filtrationData 8       // To give Filtration values
 /***************************** Macros for Additional Info in SMS #end ****************/
 
-
 /***************************** Global variables definition#start *********************/
-/************* Booleans definition#start *********************************/ 
-_Bool systemAuthenticated = false;              // To check if system is initialized by user for first time.
-_Bool newSMSRcvd = false;                       // To check if communication is first initialized by GSM.
-_Bool checkMoistureSensor = false;              // To check status of Moisture sensor																					 
-_Bool moistureSensorFailed = false;             // status of Moisture sensor
-_Bool controllerCommandExecuted = false;        // To check response to system cmd.
-_Bool currentDateCalled = false;                // To avoid repetitive fetching of date through GSM
-_Bool sleepCountChangedDueToInterrupt = false;  // TO check if sleep count need to calculate again if change due to GSM interrupt
-_Bool inSleepMode = false;                      // To check if system is in sleep mode
-_Bool dryRunDetected = false;                   // To state water level of tank --true for Low and --false for Full
-_Bool lowPhaseCurrentDetected = false;          // To state motor not started due to low phase current
-_Bool valveDue = false;                         // To indicate if any valve is due for operation after checking
-_Bool valveExecuted = false;                    // To indicate if valve executed
-_Bool onHold = false;                           // To indicate Field valve hold status
-_Bool dueValveChecked = false;					// To indicate valve due is checked at latest 
-_Bool correctDate = false;          			// To indicate received date is correct
-_Bool phaseFailureDetected = false;             // To indicate phase failure
-_Bool lowRTCBatteryDetected = false;            // To store RTC Battery level Status
-_Bool rtcBatteryLevelChecked = false;           // To indicate condition to check RTC battery level
-_Bool phaseFailureActionTaken = false;          // To indicate action taken after phase failure detection
-_Bool filtrationEnabled = false;                // To store tank filtration operation status    
-_Bool cmtiCmd = false;                          // Set to indicate cmti command received
-_Bool DeviceBurnStatus = false;                 // To store Device program status
-_Bool gsmSetToLocalTime = false;                // To indicate if gsm set to local timezone
-_Bool cmdRceived = false;                       // Set to indicate lora command received
-_Bool checkLoraConnection = false;
-_Bool LoraConnectionFailed = false;
-_Bool wetSensor = false;                        // To indicate if sensor is wet
-_Bool fertigationDry = false;                   // To indicate fertigation level																				
-/************* BOOLeans definition#end ***********************************/
-
-/************* Strings definition#start **********************************/
 /***** System Config definition#start *************************/
+unsigned int filtrationSeperationTime = CLEAR; // To store filtration SeperationTime1 in minutes
+unsigned int dueDD = CLEAR; // To store calculated due day in DD format
+unsigned int sleepCount = CLEAR; // To store sleep count -- max 65550
+unsigned int remainingFertigationOnPeriod = CLEAR; //To store remaining sleep count for interrupted fertigation valve
+unsigned int lower8bits = CLEAR; // To store lower 8 bits for 16 bit operations
+unsigned int higher8bits = CLEAR; // To store higher 8 bits for 16 bit operations
+unsigned int moistureLevel = CLEAR; // To store moisture level in Hz
+unsigned int injector1OnPeriod = CLEAR; // to store injector 1 on period
+unsigned int injector2OnPeriod = CLEAR; // to store injector 2 on period
+unsigned int injector3OnPeriod = CLEAR; // to store injector 3 on period
+unsigned int injector4OnPeriod = CLEAR; // to store injector 4 on period
+unsigned int injector1OnPeriodCnt = CLEAR; // to store injector 1 on period count
+unsigned int injector2OnPeriodCnt = CLEAR; // to store injector 2 on period count
+unsigned int injector3OnPeriodCnt = CLEAR; // to store injector 3 on period count
+unsigned int injector4OnPeriodCnt = CLEAR; // to store injector 4 on period count
+unsigned int injector1OffPeriod = CLEAR; // to store injector 1 on period
+unsigned int injector2OffPeriod = CLEAR; // to store injector 2 on period
+unsigned int injector3OffPeriod = CLEAR; // to store injector 3 on period
+unsigned int injector4OffPeriod = CLEAR; // to store injector 4 on period
+unsigned int injector1OffPeriodCnt = CLEAR; // to store injector 1 on period count
+unsigned int injector2OffPeriodCnt = CLEAR; // to store injector 2 on period count
+unsigned int injector3OffPeriodCnt = CLEAR; // to store injector 3 on period count
+unsigned int injector4OffPeriodCnt = CLEAR; // to store injector 4 on period count
+unsigned int noLoadCutOff = CLEAR;
+unsigned int fullLoadCutOff = CLEAR;
 unsigned char userMobileNo[11] = ""; // To store 10 byte user mobile no.
 unsigned char temporaryBytesArray[20] = ""; // To store 20 byte buffer.
 unsigned char null[11] = {'\0'}; // Null.
 unsigned char pwd[7] = ""; // To store 6 byte user set password.
 unsigned char factryPswrd[7] = ""; // To store 6 byte factory password until authentication
-unsigned int noLoadCutOff = 0;
-unsigned int fullLoadCutOff = 0;
+unsigned char injector1Cycle = CLEAR;
+unsigned char injector2Cycle = CLEAR;
+unsigned char injector3Cycle = CLEAR;
+unsigned char injector4Cycle = CLEAR;
+unsigned char injector1CycleCnt = CLEAR;
+unsigned char injector2CycleCnt = CLEAR;
+unsigned char injector3CycleCnt = CLEAR;
+unsigned char injector4CycleCnt = CLEAR;
+unsigned char loraAliveCount = CLEAR;
+unsigned char loraAliveCountCheck = CLEAR;
+unsigned char loraAttempt = CLEAR;
+unsigned char timer3Count = CLEAR; // To store timer 0 overflow count
+unsigned char rxCharacter = CLEAR; // To store received 1 byte character from GSM through RX pin
+unsigned char msgIndex = CLEAR; // To point received character position in Message
+unsigned char temp = CLEAR; // Temporary buffer
+unsigned char iterator = CLEAR; // To navigate through iteration in for loop
+unsigned char fieldCount = 12;   // To Store no. of fields to configure
+unsigned char resetCount = CLEAR; // To store count of reset occurred by MCLR Reset for menu option
+unsigned char startFieldNo = 0;  // To indicate starting field irrigation valve no. for scanning
+unsigned char space = 0x20; // Represents space Ascii
+unsigned char terminateSms = 0x1A; // Represents Ctrl+z to indicate end of SMS
+unsigned char enter = 0x0D; // Represents Enter Key ASCII
+unsigned char newLine = 0x0A; // Represents New Line Key ASCII
+unsigned char hundredsDigit = CLEAR; // To store hundred's digit no. "1XX"
+unsigned char tensDigit = CLEAR; // To store ten's digit no. "X1X"
+unsigned char unitsDigit = CLEAR; // To store unit's digit no. "XX1"
+unsigned char Timer0Overflow = CLEAR; // To store timer0 overflow count
+unsigned char Timer1Overflow = CLEAR; // To store timer1 overflow count
+unsigned char Timer3Overflow = CLEAR; // To store timer1 overflow count
+unsigned char filtrationCycleSequence = CLEAR; // To store filtration  cycle sequence
+unsigned char currentYY = CLEAR; // To store extracted year from received date from GSM in YYYY format
+unsigned char currentMM = CLEAR; // To store extracted month from received date from GSM in MM format
+unsigned char currentDD = CLEAR; // To store extracted day from received date from GSM in DD format
+unsigned char currentHour = CLEAR; // To store extracted hour time from received date from GSM in hr format
+unsigned char currentMinutes = CLEAR; // To store extracted minutes time from received date from GSM in mm format
+unsigned char currentSeconds = CLEAR; // To store extracted seconds time from received date from GSM in mm format
+unsigned char dueYY = CLEAR; // To store calculated due year in YYYY format
+unsigned char dueMM = CLEAR; // To store calculated due month in MM format
+unsigned char filtrationDelay1 = CLEAR; // To store filtration Delay1 in minutes
+unsigned char filtrationDelay2 = CLEAR; // To store filtration Delay2 in minutes
+unsigned char filtrationDelay3 = CLEAR; // To store filtration Delay3 in minutes
+unsigned char filtrationOnTime = CLEAR; // To store filtration OnTime in minutes
+unsigned char dryRunCheckCount = CLEAR; // To store dry run check count
 /***** System Config definition#end *************************/
 
 /******Data Encryption and Decryption#start *****************/
@@ -290,7 +342,6 @@ unsigned static char getfreq[8] = "GETFREQ"; // get ct values
 unsigned static char countryCode[4] = "+91"; //Country code for GSM
 /***** SMS prototype definition#end ***************************/
 
-
 /***** LORA prototype definition#start *************************/
 unsigned static char on[3] = "ON"; //
 unsigned static char off[4] = "OFF"; //
@@ -299,7 +350,8 @@ unsigned static char ack[4] = "ACK"; //
 unsigned static char idle[5] = "IDLE"; // 
 unsigned static char master[7] = "MASTER"; //
 unsigned static char error[6] = "ERROR"; //
-
+unsigned static char alive[6] = "ALIVE";
+unsigned static char sensor[7] = "SENSOR";
 /***** LORA prototype definition#end ***************************/
 
 /***** SMS strings definition#start *************************/
@@ -307,7 +359,6 @@ const char SmsAU1[23] = "Admin set successfully"; // Acknowledge user about succ
 const char SmsAU2[51] = "You are no more Admin now. New Admin is set to\r\n"; //To notify old Admin about new Admin.
 const char SmsAU3[22] = "Authentication failed"; // Acknowledge user about Authentication failed
 const char SmsAU4[64] = "System Authenticated with Phase failure, suspending all actions"; // Acknowledge user about System Authenticated with Phase failure
-
 
 const char SmsPwd1[32] = "Login code changed successfully"; // Acknowledge user about successful password update
 const char SmsPwd2[23] = "Login code not changed";
@@ -400,54 +451,36 @@ unsigned char static cmti[14] = "+CMTI: \"SM\",x"; // This cmd is received from 
 /***** statically allocated initialized user variables#end ****/
 /************* Strings definition#end ************************************/
 
-/************* Variables definition#start ********************************/
-unsigned char loraAttempt = CLEAR;
-unsigned char timer3Count = CLEAR; // To store timer 0 overflow count
-unsigned char rxCharacter = CLEAR; // To store received 1 byte character from GSM through RX pin
-unsigned char msgIndex = CLEAR; // To point received character position in Message
-unsigned char temp = CLEAR; // Temporary buffer
-unsigned char iterator = CLEAR; // To navigate through iteration in for loop
-unsigned char fieldCount = 12;   // To Store no. of fields to configure
-unsigned char resetCount = CLEAR; // To store count of reset occurred by MCLR Reset for menu option
-unsigned char startFieldNo = 0;  // To indicate starting field irrigation valve no. for scanning
-unsigned char space = 0x20; // Represents space Ascii
-unsigned char terminateSms = 0x1A; // Represents Ctrl+z to indicate end of SMS
-unsigned char enter = 0x0D; // Represents Enter Key ASCII
-unsigned char newLine = 0x0A; // Represents New Line Key ASCII
-unsigned char hundredsDigit = CLEAR; // To store hundred's digit no. "1XX"
-unsigned char tensDigit = CLEAR; // To store ten's digit no. "X1X"
-unsigned char unitsDigit = CLEAR; // To store unit's digit no. "XX1"
-unsigned char Timer0Overflow = CLEAR; // To store timer0 overflow count
-unsigned char Timer1Overflow = CLEAR; // To store timer1 overflow count
-unsigned char Timer3Overflow = CLEAR; // To store timer1 overflow count
-unsigned char filtrationCycleSequence = CLEAR; // To store filtration  cycle sequence
-unsigned char currentYY = CLEAR; // To store extracted year from received date from GSM in YYYY format
-unsigned char currentMM = CLEAR; // To store extracted month from received date from GSM in MM format
-unsigned char currentDD = CLEAR; // To store extracted day from received date from GSM in DD format
-unsigned char currentHour = CLEAR; // To store extracted hour time from received date from GSM in hr format
-unsigned char currentMinutes = CLEAR; // To store extracted minutes time from received date from GSM in mm format
-unsigned char currentSeconds = CLEAR; // To store extracted seconds time from received date from GSM in mm format
-unsigned char dueYY = CLEAR; // To store calculated due year in YYYY format
-unsigned char dueMM = CLEAR; // To store calculated due month in MM format
-unsigned char filtrationDelay1 = CLEAR; // To store filtration Delay1 in minutes
-unsigned char filtrationDelay2 = CLEAR; // To store filtration Delay2 in minutes
-unsigned char filtrationDelay3 = CLEAR; // To store filtration Delay3 in minutes
-unsigned char filtrationOnTime = CLEAR; // To store filtration OnTime in minutes
-unsigned char filtrationSeperationTime = CLEAR; // To store filtration SeperationTime1 in minutes
-unsigned char dryRunCheckCount = CLEAR; // To store dry run check count
-unsigned int dueDD = CLEAR; // To store calculated due day in DD format
-unsigned int sleepCount = CLEAR; // To store sleep count -- max 65550
-unsigned int remainingFertigationOnPeriod = CLEAR; //To store remaining sleep count for interrupted fertigation valve
-unsigned int lower8bits = CLEAR; // To store lower 8 bits for 16 bit operations
-unsigned int higher8bits = CLEAR; // To store higher 8 bits for 16 bit operations
-unsigned int moistureLevel = CLEAR; // To store moisture level in Hz
-unsigned int const zero = 0;
-/************* Variables definition#end **********************************/
-
-/************* statically allocated initialized user variables#start *****/
-#pragma idata fieldValve
-struct FIELDVALVE fieldValve[12] = {0}; //Initialize field valve structure to zero
-/************* statically allocated initialized user variables#end *******/
+/************* Booleans definition#start *********************************/ 
+_Bool systemAuthenticated = false;              // To check if system is initialized by user for first time.
+_Bool newSMSRcvd = false;                       // To check if communication is first initialized by GSM.
+_Bool checkMoistureSensor = false;              // To check status of Moisture sensor																					 
+_Bool moistureSensorFailed = false;             // status of Moisture sensor
+_Bool controllerCommandExecuted = false;        // To check response to system cmd.
+_Bool currentDateCalled = false;                // To avoid repetitive fetching of date through GSM
+_Bool sleepCountChangedDueToInterrupt = false;  // TO check if sleep count need to calculate again if change due to GSM interrupt
+_Bool inSleepMode = false;                      // To check if system is in sleep mode
+_Bool dryRunDetected = false;                   // To state water level of tank --true for Low and --false for Full
+_Bool lowPhaseCurrentDetected = false;          // To state motor not started due to low phase current
+_Bool valveDue = false;                         // To indicate if any valve is due for operation after checking
+_Bool valveExecuted = false;                    // To indicate if valve executed
+_Bool onHold = false;                           // To indicate Field valve hold status
+_Bool dueValveChecked = false;					// To indicate valve due is checked at latest 
+_Bool correctDate = false;          			// To indicate received date is correct
+_Bool phaseFailureDetected = false;             // To indicate phase failure
+_Bool lowRTCBatteryDetected = false;            // To store RTC Battery level Status
+_Bool rtcBatteryLevelChecked = false;           // To indicate condition to check RTC battery level
+_Bool phaseFailureActionTaken = false;          // To indicate action taken after phase failure detection
+_Bool filtrationEnabled = false;                // To store tank filtration operation status    
+_Bool cmtiCmd = false;                          // Set to indicate cmti command received
+_Bool DeviceBurnStatus = false;                 // To store Device program status
+_Bool gsmSetToLocalTime = false;                // To indicate if gsm set to local timezone
+_Bool cmdRceived = false;                       // Set to indicate lora command received
+_Bool checkLoraConnection = false;
+_Bool LoraConnectionFailed = false;
+_Bool wetSensor = false;                        // To indicate if sensor is wet
+_Bool fertigationDry = false;                   // To indicate fertigation level
+/************* BOOLeans definition#end ***********************************/
 /***************************** Global variables definition#end ***********************/
 
 #endif

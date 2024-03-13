@@ -114,7 +114,7 @@ void __interrupt(high_priority)rxANDiocInterrupt_handler(void) {
             decodedString[msgIndex] = rxCharacter; // Load Received byte into storage buffer
             msgIndex++; // point to next location for storing next received byte
         }
-        else if (msgIndex < 50) {
+        else if (msgIndex > 0 && msgIndex < 25) {
             decodedString[msgIndex] = rxCharacter; // Load received byte into storage buffer
             msgIndex++; // point to next location for storing next received byte
             // check if storage index is reached to last character of CMTI command
@@ -168,61 +168,164 @@ void __interrupt(low_priority) timerInterrupt_handler(void) {
         TMR0L = 0xB0; // Load Timer0 Register Lower Byte
         Timer0Overflow++;
         // Control sleep count decrement for each one minute interrupt when Motor is ON i.e. Valve ON period 
-        if (sleepCount > 0 && MotorControl == ON) {
+        if (sleepCount > 0 && MotorControl == ON) {  // check additional condition of ValveDue
             sleepCount--;
+            loraAliveCountCheck++; // increment for each sleep
             if (dryRunCheckCount == 0 || dryRunCheckCount < 3) {
                 dryRunCheckCount++;
             }
+            if (strncmp(decodedString+1, alive, 5) == 0 && strncmp(decodedString+6, slave, 5) == 0) {
+                deleteDecodedString();
+                loraAliveCount++;  //increment for each alive message               
+            }
+            if (loraAliveCountCheck <= loraAliveCount+1) { // check if alive count for each sleep is incremented
+                #ifdef DEBUG_MODE_ON_H
+                //********Debug log#start************//
+                transmitStringToDebug("Lora is alive\r\n");
+                //********Debug log#end**************//
+                #endif
+            }
+            else {
+                #ifdef DEBUG_MODE_ON_H
+                //********Debug log#start************//
+                transmitStringToDebug("Lora is not alive\r\n");
+                //********Debug log#end**************//
+                #endif
+            }
         } 
 		// Check Fertigation Level for each one minute interrupt when Fertigation Motor is ON during Valve ON period 
+        //if (fertigationValveControl == ON) {
+        //    fertigationDry = false;
+        //    if (!moistureSensorFailed) {  // to avoid repeated fertigation level check after sensor failure detected
+        //        if (isFieldMoistureSensorWet(11)==false) {
+        //            if (!moistureSensorFailed) { // to avoid sensor dry detection due to sensor failure
+        //                fertigationValveControl = OFF;
+        //                fertigationDry = true;
+        //            }
+        //        }
+        //    }
+        //}
+        
+        //To follow fertigation cycle sequence
         if (fertigationValveControl == ON) {
-            fertigationDry = false;
-            if (!moistureSensorFailed) {  // to avoid repeated fertigation level check after sensor failure detected
-                if (isFieldMoistureSensorWet(11)==false) {
-                    if (!moistureSensorFailed) { // to avoid sensor dry detection due to sensor failure
-                        fertigationValveControl = OFF;
-                        fertigationDry = true;
-                    }
+            if (field9ValveControl == ON) {
+                if(injector1OnPeriodCnt == injector1OnPeriod) {
+                    field9ValveControl = OFF;
+                    injector1OnPeriodCnt = CLEAR;
+                    injector1OffPeriodCnt++;
+                    injector1CycleCnt++;
                 }
+                else injector1OnPeriodCnt++;
             }
-        }																											 
-        //*To follow filtration  cycle sequence*/
-        if (filtrationCycleSequence == 1 && Timer0Overflow == filtrationDelay1 ) { // 10 minute off
-            Timer0Overflow = 0;
-            filtration1ValveControl = ON;
-            filtrationCycleSequence = 2;
+            else if (field9ValveControl == OFF) {
+                if(injector1OffPeriodCnt == injector1OffPeriod) {
+                    if (injector1CycleCnt < injector1Cycle) {
+                        field9ValveControl = ON;
+                        injector1OnPeriodCnt++;
+                        injector1OffPeriodCnt = CLEAR;
+                    }
+                    else injector1OffPeriodCnt = injector1OffPeriod + 1;
+                }
+                else injector1OffPeriodCnt++;
+            }
+            if (field10ValveControl == ON) {
+                if(injector2OnPeriodCnt == injector2OnPeriod) {
+                    field10ValveControl = OFF;
+                    injector2OnPeriodCnt = CLEAR;
+                    injector2OffPeriodCnt++;
+                    injector2CycleCnt++;
+                }
+                else injector2OnPeriodCnt++;
+            }
+            else if (field10ValveControl == OFF) {
+                if(injector2OffPeriodCnt == injector2OffPeriod) {
+                    if (injector2CycleCnt < injector2Cycle) {
+                        field10ValveControl = ON;
+                        injector2OnPeriodCnt++;
+                        injector2OffPeriodCnt = CLEAR;
+                    }
+                    else injector2OffPeriodCnt = injector2OffPeriod + 1;
+                }
+                else injector2OffPeriodCnt++;
+            }
+            if (field11ValveControl == ON) {
+                if(injector3OnPeriodCnt == injector3OnPeriod) {
+                    field11ValveControl = OFF;
+                    injector3OnPeriodCnt = CLEAR;
+                    injector3OffPeriodCnt++;
+                    injector3CycleCnt++;
+                }
+                else injector3OnPeriodCnt++;
+            }
+            else if (field11ValveControl == OFF) {
+                if(injector3OffPeriodCnt == injector3OffPeriod) {
+                    if (injector3CycleCnt < injector3Cycle) {
+                        field11ValveControl = ON;
+                        injector3OnPeriodCnt++;
+                        injector3OffPeriodCnt = CLEAR;
+                    }
+                    else injector3OffPeriodCnt = injector3OffPeriod + 1;
+                }
+                else injector3OffPeriodCnt++;
+            }
+            if (field12ValveControl == ON) {
+                if(injector4OnPeriodCnt == injector4OnPeriod) {
+                    field12ValveControl = OFF;
+                    injector4OnPeriodCnt = CLEAR;
+                    injector4OffPeriodCnt++;
+                    injector4CycleCnt++;
+                }
+                else injector4OnPeriodCnt++;
+            }
+            else if (field12ValveControl == OFF) {
+                if(injector4OffPeriodCnt == injector4OffPeriod) {
+                    if (injector4CycleCnt < injector4Cycle) {
+                        field12ValveControl = ON;
+                        injector4OnPeriodCnt++;
+                        injector4OffPeriodCnt = CLEAR;
+                    }
+                    else injector4OffPeriodCnt = injector4OffPeriod + 1;
+                }
+                else injector4OffPeriodCnt++;
+            }
         }
-        else if (filtrationCycleSequence == 2 && Timer0Overflow == filtrationOnTime ) {  // 1 minute on
+        //*To follow filtration  cycle sequence*/
+        if (filtrationCycleSequence == 99) {    // Filtration is disabled
+            Timer0Overflow = 0;
+        }
+        else if (filtrationCycleSequence == 1 && Timer0Overflow == filtrationDelay1 ) { // Filtration1 Start Delay
+                Timer0Overflow = 0;
+                filtration1ValveControl = ON;
+                filtrationCycleSequence = 2;
+        }
+        else if (filtrationCycleSequence == 2 && Timer0Overflow == filtrationOnTime ) {  // Filtration1 On Period
             Timer0Overflow = 0;
             filtration1ValveControl = OFF;
             filtrationCycleSequence = 3;
         }
-        else if (filtrationCycleSequence == 3 && Timer0Overflow == filtrationDelay2 ) { // 1 minute off
+        else if (filtrationCycleSequence == 3 && Timer0Overflow == filtrationDelay2 ) { // Filtration2 Start Delay
             Timer0Overflow = 0;
             filtration2ValveControl = ON;
             filtrationCycleSequence = 4;
         }
-        else if (filtrationCycleSequence == 4 && Timer0Overflow == filtrationOnTime ) { // 1 minute on
+        else if (filtrationCycleSequence == 4 && Timer0Overflow == filtrationOnTime ) { // Filtration2 On Period
             Timer0Overflow = 0;
             filtration2ValveControl = OFF;
             filtrationCycleSequence = 5;
         }
-        else if (filtrationCycleSequence == 5 && Timer0Overflow == filtrationDelay2 ) { // 1 minute off 
+        else if (filtrationCycleSequence == 5 && Timer0Overflow == filtrationDelay2 ) { // Filtration3 Start Delay
             Timer0Overflow = 0;
             filtration3ValveControl = ON;
             filtrationCycleSequence = 6;
         }
-        else if (filtrationCycleSequence == 6 && Timer0Overflow == filtrationOnTime ) { // 1 minute on
+        else if (filtrationCycleSequence == 6 && Timer0Overflow == filtrationOnTime ) { // Filtration3 On Period
             Timer0Overflow = 0;
             filtration3ValveControl = OFF;
             filtrationCycleSequence = 7;
         }
-        else if (filtrationCycleSequence == 7 && Timer0Overflow == filtrationSeperationTime ) { // 30 minutes all off
+        else if (filtrationCycleSequence == 7 && Timer0Overflow == filtrationSeperationTime ) { //Filtration Repeat Delay
             Timer0Overflow = 0;
             filtrationCycleSequence = 1;
-        }
-        else if (filtrationCycleSequence == 99) {
-            Timer0Overflow = 0;
         }
     }
 /*To measure pulse width of moisture sensor output*/
@@ -315,7 +418,7 @@ nxtVlv: if (!valveDue && !phaseFailureDetected && !lowPhaseCurrentDetected) {
         if (onHold) {
             sleepCount = 0; // Skip Next sleep for performing hold operation
         }
-        if(!LoraConnectionFailed || !wetSensor) {   // Skip next block if Activate valve cmd is failed
+        if(!LoraConnectionFailed && !wetSensor) {   //|| // Skip next block if Activate valve cmd is failed
             /****************************/
             deepSleep(); // sleep for given sleep count (	default/calculated )
             /****************************/

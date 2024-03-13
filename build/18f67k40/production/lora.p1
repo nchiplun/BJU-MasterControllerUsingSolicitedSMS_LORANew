@@ -1,8 +1,8 @@
 Version 4.0 HI-TECH Software Intermediate Code
-"144 ./variableDefinitions.h
-[; ;./variableDefinitions.h: 144: struct FIELDVALVE {
-[s S2016 `ui 1 `ui 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `a 1 `a 1 `a 1 `a 1 ]
-[n S2016 FIELDVALVE dryValue wetValue onPeriod offPeriod motorOnTimeHour motorOnTimeMinute nextDueDD nextDueMM nextDueYY fertigationDelay fertigationONperiod fertigationInstance priority fertigationStage cycles cyclesExecuted status isConfigured isFertigationEnabled fertigationValveInterrupted ]
+"147 ./variableDefinitions.h
+[; ;./variableDefinitions.h: 147: struct FIELDVALVE {
+[s S2016 `ui 1 `ui 1 `ui 1 `ui 1 `ui 1 `ui 1 `ui 1 `ui 1 `ui 1 `ui 1 `ui 1 `ui 1 `ui 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `a 1 `a 1 `a 1 `a 1 ]
+[n S2016 FIELDVALVE dryValue wetValue onPeriod fertigationDelay fertigationONperiod injector1OnPeriod injector2OnPeriod injector3OnPeriod injector4OnPeriod injector1OffPeriod injector2OffPeriod injector3OffPeriod injector4OffPeriod injector1Cycle injector2Cycle injector3Cycle injector4Cycle offPeriod motorOnTimeHour motorOnTimeMinute nextDueDD nextDueMM nextDueYY fertigationInstance priority fertigationStage cycles cyclesExecuted status isConfigured isFertigationEnabled fertigationValveInterrupted ]
 "5246 C:/Users/nandu/.mchp_packs/Microchip/PIC18F-K_DFP/1.6.125/xc8\pic\include\proc\pic18f67k40.h
 [; ;C:/Users/nandu/.mchp_packs/Microchip/PIC18F-K_DFP/1.6.125/xc8\pic\include\proc\pic18f67k40.h: 5246:     struct {
 [s S294 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
@@ -27,8 +27,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 "20 ./controllerActions.h
 [; ;./controllerActions.h: 20: void myMsDelay(unsigned int);
 [v _myMsDelay `(v ~T0 @X0 0 ef1`ui ]
-"45
-[; ;./controllerActions.h: 45: void setBCDdigit(unsigned char, _Bool);
+"46
+[; ;./controllerActions.h: 46: void setBCDdigit(unsigned char, _Bool);
 [v _setBCDdigit `(v ~T0 @X0 0 ef2`uc`a ]
 "37638 C:/Users/nandu/.mchp_packs/Microchip/PIC18F-K_DFP/1.6.125/xc8\pic\include\proc\pic18f67k40.h
 [; ;C:/Users/nandu/.mchp_packs/Microchip/PIC18F-K_DFP/1.6.125/xc8\pic\include\proc\pic18f67k40.h: 37638:     struct {
@@ -61,10 +61,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 "37671
 [; ;C:/Users/nandu/.mchp_packs/Microchip/PIC18F-K_DFP/1.6.125/xc8\pic\include\proc\pic18f67k40.h: 37671: extern volatile T3CONbits_t T3CONbits __attribute__((address(0xFC9)));
 [v _T3CONbits `VS1826 ~T0 @X0 0 e@4041 ]
-"20 ./lora.h
-[; ;./lora.h: 20: _Bool isLoraResponseAck(unsigned char, unsigned char);
-[v _isLoraResponseAck `(a ~T0 @X0 0 ef2`uc`uc ]
-"5374 C:/Users/nandu/.mchp_packs/Microchip/PIC18F-K_DFP/1.6.125/xc8\pic\include\proc\pic18f67k40.h
+"5374
 [; ;C:/Users/nandu/.mchp_packs/Microchip/PIC18F-K_DFP/1.6.125/xc8\pic\include\proc\pic18f67k40.h: 5374:     struct {
 [s S299 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S299 . TMR1IF TMR2IF TMR3IF TMR4IF TMR5IF TMR6IF TMR7IF TMR8IF ]
@@ -75,12 +72,21 @@ Version 4.0 HI-TECH Software Intermediate Code
 "5385
 [; ;C:/Users/nandu/.mchp_packs/Microchip/PIC18F-K_DFP/1.6.125/xc8\pic\include\proc\pic18f67k40.h: 5385: extern volatile PIR5bits_t PIR5bits __attribute__((address(0xE38)));
 [v _PIR5bits `VS298 ~T0 @X0 0 e@3640 ]
-"42 ./controllerActions.h
-[; ;./controllerActions.h: 42: unsigned char fetchFieldNo(unsigned char);
+"20 ./lora.h
+[; ;./lora.h: 20: _Bool isLoraResponseAck(unsigned char, unsigned char);
+[v _isLoraResponseAck `(a ~T0 @X0 0 ef2`uc`uc ]
+"56 ./controllerActions.h
+[; ;./controllerActions.h: 56: void deleteDecodedString(void);
+[v _deleteDecodedString `(v ~T0 @X0 0 ef ]
+"43
+[; ;./controllerActions.h: 43: unsigned char fetchFieldNo(unsigned char);
 [v _fetchFieldNo `(uc ~T0 @X0 0 ef1`uc ]
 "40 C:\Program Files\Microchip\xc8\v2.35\pic\include\c99\string.h
 [; ;C:\Program Files\Microchip\xc8\v2.35\pic\include\c99\string.h: 40: int strncmp (const char *, const char *, size_t);
 [v _strncmp `(i ~T0 @X0 0 ef3`*Cuc`*Cuc`ui ]
+"24 ./controllerActions.h
+[; ;./controllerActions.h: 24: _Bool isNumber(unsigned char);
+[v _isNumber `(a ~T0 @X0 0 ef1`uc ]
 "55 C:/Users/nandu/.mchp_packs/Microchip/PIC18F-K_DFP/1.6.125/xc8\pic\include\proc\pic18f67k40.h
 [; ;C:/Users/nandu/.mchp_packs/Microchip/PIC18F-K_DFP/1.6.125/xc8\pic\include\proc\pic18f67k40.h: 55: __asm("PPSLOCK equ 0DEFh");
 [; <" PPSLOCK equ 0DEFh ;# ">
@@ -2169,271 +2175,514 @@ Version 4.0 HI-TECH Software Intermediate Code
 "114
 [; <" 	psect eeprom_data,class=EEDATA,noexec ;# ">
 [; <" 	db	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 ;# ">
-"171 ./variableDefinitions.h
+"185 ./variableDefinitions.h
+[v _fieldValve `S2016 ~T0 @X0 -> 12 `i e ]
+[i _fieldValve
+:U ..
+:U ..
+-> -> 0 `i `ui
+..
+..
+]
+"191
 [v _eepromAddress `Cui ~T0 @X0 -> 16 `i e ]
 [i _eepromAddress
 :U ..
 -> -> 0 `i `ui
--> -> 32 `i `ui
--> -> 64 `i `ui
+-> -> 48 `i `ui
 -> -> 96 `i `ui
--> -> 128 `i `ui
--> -> 160 `i `ui
+-> -> 144 `i `ui
 -> -> 192 `i `ui
--> -> 224 `i `ui
--> -> 256 `i `ui
+-> -> 240 `i `ui
 -> -> 288 `i `ui
--> -> 320 `i `ui
--> -> 352 `i `ui
+-> -> 336 `i `ui
 -> -> 384 `i `ui
--> -> 400 `i `ui
--> -> 416 `i `ui
 -> -> 432 `i `ui
+-> -> 480 `i `ui
+-> -> 528 `i `ui
+-> -> 576 `i `ui
+-> -> 624 `i `ui
+-> -> 672 `i `ui
+-> -> 720 `i `ui
 ..
 ]
-"216
-[; ;./variableDefinitions.h: 216: _Bool systemAuthenticated = 0;
-[v _systemAuthenticated `a ~T0 @X0 1 e ]
-[i _systemAuthenticated
--> -> 0 `i `a
-]
-"217
-[; ;./variableDefinitions.h: 217: _Bool newSMSRcvd = 0;
-[v _newSMSRcvd `a ~T0 @X0 1 e ]
-[i _newSMSRcvd
--> -> 0 `i `a
-]
-"218
-[; ;./variableDefinitions.h: 218: _Bool moistureSensorFailed = 0;
-[v _moistureSensorFailed `a ~T0 @X0 1 e ]
-[i _moistureSensorFailed
--> -> 0 `i `a
-]
-"219
-[; ;./variableDefinitions.h: 219: _Bool controllerCommandExecuted = 0;
-[v _controllerCommandExecuted `a ~T0 @X0 1 e ]
-[i _controllerCommandExecuted
--> -> 0 `i `a
-]
-"220
-[; ;./variableDefinitions.h: 220: _Bool currentDateCalled = 0;
-[v _currentDateCalled `a ~T0 @X0 1 e ]
-[i _currentDateCalled
--> -> 0 `i `a
-]
-"221
-[; ;./variableDefinitions.h: 221: _Bool sleepCountChangedDueToInterrupt = 0;
-[v _sleepCountChangedDueToInterrupt `a ~T0 @X0 1 e ]
-[i _sleepCountChangedDueToInterrupt
--> -> 0 `i `a
-]
-"222
-[; ;./variableDefinitions.h: 222: _Bool inSleepMode = 0;
-[v _inSleepMode `a ~T0 @X0 1 e ]
-[i _inSleepMode
--> -> 0 `i `a
-]
-"223
-[; ;./variableDefinitions.h: 223: _Bool dryRunDetected = 0;
-[v _dryRunDetected `a ~T0 @X0 1 e ]
-[i _dryRunDetected
--> -> 0 `i `a
-]
-"224
-[; ;./variableDefinitions.h: 224: _Bool lowPhaseCurrentDetected = 0;
-[v _lowPhaseCurrentDetected `a ~T0 @X0 1 e ]
-[i _lowPhaseCurrentDetected
--> -> 0 `i `a
-]
-"225
-[; ;./variableDefinitions.h: 225: _Bool valveDue = 0;
-[v _valveDue `a ~T0 @X0 1 e ]
-[i _valveDue
--> -> 0 `i `a
-]
-"226
-[; ;./variableDefinitions.h: 226: _Bool valveExecuted = 0;
-[v _valveExecuted `a ~T0 @X0 1 e ]
-[i _valveExecuted
--> -> 0 `i `a
-]
-"227
-[; ;./variableDefinitions.h: 227: _Bool onHold = 0;
-[v _onHold `a ~T0 @X0 1 e ]
-[i _onHold
--> -> 0 `i `a
-]
-"228
-[; ;./variableDefinitions.h: 228: _Bool dueValveChecked = 0;
-[v _dueValveChecked `a ~T0 @X0 1 e ]
-[i _dueValveChecked
--> -> 0 `i `a
-]
-"229
-[; ;./variableDefinitions.h: 229: _Bool correctDate = 0;
-[v _correctDate `a ~T0 @X0 1 e ]
-[i _correctDate
--> -> 0 `i `a
-]
-"230
-[; ;./variableDefinitions.h: 230: _Bool phaseFailureDetected = 0;
-[v _phaseFailureDetected `a ~T0 @X0 1 e ]
-[i _phaseFailureDetected
--> -> 0 `i `a
-]
-"231
-[; ;./variableDefinitions.h: 231: _Bool lowRTCBatteryDetected = 0;
-[v _lowRTCBatteryDetected `a ~T0 @X0 1 e ]
-[i _lowRTCBatteryDetected
--> -> 0 `i `a
-]
-"232
-[; ;./variableDefinitions.h: 232: _Bool rtcBatteryLevelChecked = 0;
-[v _rtcBatteryLevelChecked `a ~T0 @X0 1 e ]
-[i _rtcBatteryLevelChecked
--> -> 0 `i `a
-]
-"233
-[; ;./variableDefinitions.h: 233: _Bool phaseFailureActionTaken = 0;
-[v _phaseFailureActionTaken `a ~T0 @X0 1 e ]
-[i _phaseFailureActionTaken
--> -> 0 `i `a
-]
 "234
-[; ;./variableDefinitions.h: 234: _Bool filtrationEnabled = 0;
-[v _filtrationEnabled `a ~T0 @X0 1 e ]
-[i _filtrationEnabled
--> -> 0 `i `a
+[; ;./variableDefinitions.h: 234: unsigned int filtrationSeperationTime = 0;
+[v _filtrationSeperationTime `ui ~T0 @X0 1 e ]
+[i _filtrationSeperationTime
+-> -> 0 `i `ui
 ]
 "235
-[; ;./variableDefinitions.h: 235: _Bool cmtiCmd = 0;
-[v _cmtiCmd `a ~T0 @X0 1 e ]
-[i _cmtiCmd
--> -> 0 `i `a
+[; ;./variableDefinitions.h: 235: unsigned int dueDD = 0;
+[v _dueDD `ui ~T0 @X0 1 e ]
+[i _dueDD
+-> -> 0 `i `ui
 ]
 "236
-[; ;./variableDefinitions.h: 236: _Bool DeviceBurnStatus = 0;
-[v _DeviceBurnStatus `a ~T0 @X0 1 e ]
-[i _DeviceBurnStatus
--> -> 0 `i `a
+[; ;./variableDefinitions.h: 236: unsigned int sleepCount = 0;
+[v _sleepCount `ui ~T0 @X0 1 e ]
+[i _sleepCount
+-> -> 0 `i `ui
 ]
 "237
-[; ;./variableDefinitions.h: 237: _Bool gsmSetToLocalTime = 0;
-[v _gsmSetToLocalTime `a ~T0 @X0 1 e ]
-[i _gsmSetToLocalTime
--> -> 0 `i `a
+[; ;./variableDefinitions.h: 237: unsigned int remainingFertigationOnPeriod = 0;
+[v _remainingFertigationOnPeriod `ui ~T0 @X0 1 e ]
+[i _remainingFertigationOnPeriod
+-> -> 0 `i `ui
 ]
 "238
-[; ;./variableDefinitions.h: 238: _Bool off = 0;
-[v _off `a ~T0 @X0 1 e ]
-[i _off
--> -> 0 `i `a
+[; ;./variableDefinitions.h: 238: unsigned int lower8bits = 0;
+[v _lower8bits `ui ~T0 @X0 1 e ]
+[i _lower8bits
+-> -> 0 `i `ui
 ]
 "239
-[; ;./variableDefinitions.h: 239: _Bool cmdRceived = 0;
-[v _cmdRceived `a ~T0 @X0 1 e ]
-[i _cmdRceived
--> -> 0 `i `a
+[; ;./variableDefinitions.h: 239: unsigned int higher8bits = 0;
+[v _higher8bits `ui ~T0 @X0 1 e ]
+[i _higher8bits
+-> -> 0 `i `ui
 ]
 "240
-[; ;./variableDefinitions.h: 240: _Bool checkLoraConnection = 0;
-[v _checkLoraConnection `a ~T0 @X0 1 e ]
-[i _checkLoraConnection
--> -> 0 `i `a
+[; ;./variableDefinitions.h: 240: unsigned int moistureLevel = 0;
+[v _moistureLevel `ui ~T0 @X0 1 e ]
+[i _moistureLevel
+-> -> 0 `i `ui
 ]
 "241
-[; ;./variableDefinitions.h: 241: _Bool LoraConnectionFailed = 0;
-[v _LoraConnectionFailed `a ~T0 @X0 1 e ]
-[i _LoraConnectionFailed
--> -> 0 `i `a
+[; ;./variableDefinitions.h: 241: unsigned int injector1OnPeriod = 0;
+[v _injector1OnPeriod `ui ~T0 @X0 1 e ]
+[i _injector1OnPeriod
+-> -> 0 `i `ui
 ]
 "242
-[; ;./variableDefinitions.h: 242: _Bool wetSensor = 0;
-[v _wetSensor `a ~T0 @X0 1 e ]
-[i _wetSensor
--> -> 0 `i `a
+[; ;./variableDefinitions.h: 242: unsigned int injector2OnPeriod = 0;
+[v _injector2OnPeriod `ui ~T0 @X0 1 e ]
+[i _injector2OnPeriod
+-> -> 0 `i `ui
+]
+"243
+[; ;./variableDefinitions.h: 243: unsigned int injector3OnPeriod = 0;
+[v _injector3OnPeriod `ui ~T0 @X0 1 e ]
+[i _injector3OnPeriod
+-> -> 0 `i `ui
+]
+"244
+[; ;./variableDefinitions.h: 244: unsigned int injector4OnPeriod = 0;
+[v _injector4OnPeriod `ui ~T0 @X0 1 e ]
+[i _injector4OnPeriod
+-> -> 0 `i `ui
+]
+"245
+[; ;./variableDefinitions.h: 245: unsigned int injector1OnPeriodCnt = 0;
+[v _injector1OnPeriodCnt `ui ~T0 @X0 1 e ]
+[i _injector1OnPeriodCnt
+-> -> 0 `i `ui
+]
+"246
+[; ;./variableDefinitions.h: 246: unsigned int injector2OnPeriodCnt = 0;
+[v _injector2OnPeriodCnt `ui ~T0 @X0 1 e ]
+[i _injector2OnPeriodCnt
+-> -> 0 `i `ui
 ]
 "247
-[; ;./variableDefinitions.h: 247: unsigned char userMobileNo[11] = "";
+[; ;./variableDefinitions.h: 247: unsigned int injector3OnPeriodCnt = 0;
+[v _injector3OnPeriodCnt `ui ~T0 @X0 1 e ]
+[i _injector3OnPeriodCnt
+-> -> 0 `i `ui
+]
+"248
+[; ;./variableDefinitions.h: 248: unsigned int injector4OnPeriodCnt = 0;
+[v _injector4OnPeriodCnt `ui ~T0 @X0 1 e ]
+[i _injector4OnPeriodCnt
+-> -> 0 `i `ui
+]
+"249
+[; ;./variableDefinitions.h: 249: unsigned int injector1OffPeriod = 0;
+[v _injector1OffPeriod `ui ~T0 @X0 1 e ]
+[i _injector1OffPeriod
+-> -> 0 `i `ui
+]
+"250
+[; ;./variableDefinitions.h: 250: unsigned int injector2OffPeriod = 0;
+[v _injector2OffPeriod `ui ~T0 @X0 1 e ]
+[i _injector2OffPeriod
+-> -> 0 `i `ui
+]
+"251
+[; ;./variableDefinitions.h: 251: unsigned int injector3OffPeriod = 0;
+[v _injector3OffPeriod `ui ~T0 @X0 1 e ]
+[i _injector3OffPeriod
+-> -> 0 `i `ui
+]
+"252
+[; ;./variableDefinitions.h: 252: unsigned int injector4OffPeriod = 0;
+[v _injector4OffPeriod `ui ~T0 @X0 1 e ]
+[i _injector4OffPeriod
+-> -> 0 `i `ui
+]
+"253
+[; ;./variableDefinitions.h: 253: unsigned int injector1OffPeriodCnt = 0;
+[v _injector1OffPeriodCnt `ui ~T0 @X0 1 e ]
+[i _injector1OffPeriodCnt
+-> -> 0 `i `ui
+]
+"254
+[; ;./variableDefinitions.h: 254: unsigned int injector2OffPeriodCnt = 0;
+[v _injector2OffPeriodCnt `ui ~T0 @X0 1 e ]
+[i _injector2OffPeriodCnt
+-> -> 0 `i `ui
+]
+"255
+[; ;./variableDefinitions.h: 255: unsigned int injector3OffPeriodCnt = 0;
+[v _injector3OffPeriodCnt `ui ~T0 @X0 1 e ]
+[i _injector3OffPeriodCnt
+-> -> 0 `i `ui
+]
+"256
+[; ;./variableDefinitions.h: 256: unsigned int injector4OffPeriodCnt = 0;
+[v _injector4OffPeriodCnt `ui ~T0 @X0 1 e ]
+[i _injector4OffPeriodCnt
+-> -> 0 `i `ui
+]
+"257
+[; ;./variableDefinitions.h: 257: unsigned int noLoadCutOff = 0;
+[v _noLoadCutOff `ui ~T0 @X0 1 e ]
+[i _noLoadCutOff
+-> -> 0 `i `ui
+]
+"258
+[; ;./variableDefinitions.h: 258: unsigned int fullLoadCutOff = 0;
+[v _fullLoadCutOff `ui ~T0 @X0 1 e ]
+[i _fullLoadCutOff
+-> -> 0 `i `ui
+]
+"259
+[; ;./variableDefinitions.h: 259: unsigned char userMobileNo[11] = "";
 [v _userMobileNo `uc ~T0 @X0 -> 11 `i e ]
 [i _userMobileNo
 :U ..
 -> 0 `c
 ..
 ]
-"248
-[; ;./variableDefinitions.h: 248: unsigned char temporaryBytesArray[20] = "";
+"260
+[; ;./variableDefinitions.h: 260: unsigned char temporaryBytesArray[20] = "";
 [v _temporaryBytesArray `uc ~T0 @X0 -> 20 `i e ]
 [i _temporaryBytesArray
 :U ..
 -> 0 `c
 ..
 ]
-"249
-[; ;./variableDefinitions.h: 249: unsigned char null[11] = {'\0'};
+"261
+[; ;./variableDefinitions.h: 261: unsigned char null[11] = {'\0'};
 [v _null `uc ~T0 @X0 -> 11 `i e ]
 [i _null
 :U ..
 -> -> 0 `ui `uc
 ..
 ]
-"250
-[; ;./variableDefinitions.h: 250: unsigned char pwd[7] = "";
+"262
+[; ;./variableDefinitions.h: 262: unsigned char pwd[7] = "";
 [v _pwd `uc ~T0 @X0 -> 7 `i e ]
 [i _pwd
 :U ..
 -> 0 `c
 ..
 ]
-"251
-[; ;./variableDefinitions.h: 251: unsigned char factryPswrd[7] = "";
+"263
+[; ;./variableDefinitions.h: 263: unsigned char factryPswrd[7] = "";
 [v _factryPswrd `uc ~T0 @X0 -> 7 `i e ]
 [i _factryPswrd
 :U ..
 -> 0 `c
 ..
 ]
-"252
-[; ;./variableDefinitions.h: 252: unsigned int noLoadCutOff = 0;
-[v _noLoadCutOff `ui ~T0 @X0 1 e ]
-[i _noLoadCutOff
--> -> 0 `i `ui
+"264
+[; ;./variableDefinitions.h: 264: unsigned char injector1Cycle = 0;
+[v _injector1Cycle `uc ~T0 @X0 1 e ]
+[i _injector1Cycle
+-> -> 0 `i `uc
 ]
-"253
-[; ;./variableDefinitions.h: 253: unsigned int fullLoadCutOff = 0;
-[v _fullLoadCutOff `ui ~T0 @X0 1 e ]
-[i _fullLoadCutOff
--> -> 0 `i `ui
+"265
+[; ;./variableDefinitions.h: 265: unsigned char injector2Cycle = 0;
+[v _injector2Cycle `uc ~T0 @X0 1 e ]
+[i _injector2Cycle
+-> -> 0 `i `uc
 ]
-"259
+"266
+[; ;./variableDefinitions.h: 266: unsigned char injector3Cycle = 0;
+[v _injector3Cycle `uc ~T0 @X0 1 e ]
+[i _injector3Cycle
+-> -> 0 `i `uc
+]
+"267
+[; ;./variableDefinitions.h: 267: unsigned char injector4Cycle = 0;
+[v _injector4Cycle `uc ~T0 @X0 1 e ]
+[i _injector4Cycle
+-> -> 0 `i `uc
+]
+"268
+[; ;./variableDefinitions.h: 268: unsigned char injector1CycleCnt = 0;
+[v _injector1CycleCnt `uc ~T0 @X0 1 e ]
+[i _injector1CycleCnt
+-> -> 0 `i `uc
+]
+"269
+[; ;./variableDefinitions.h: 269: unsigned char injector2CycleCnt = 0;
+[v _injector2CycleCnt `uc ~T0 @X0 1 e ]
+[i _injector2CycleCnt
+-> -> 0 `i `uc
+]
+"270
+[; ;./variableDefinitions.h: 270: unsigned char injector3CycleCnt = 0;
+[v _injector3CycleCnt `uc ~T0 @X0 1 e ]
+[i _injector3CycleCnt
+-> -> 0 `i `uc
+]
+"271
+[; ;./variableDefinitions.h: 271: unsigned char injector4CycleCnt = 0;
+[v _injector4CycleCnt `uc ~T0 @X0 1 e ]
+[i _injector4CycleCnt
+-> -> 0 `i `uc
+]
+"272
+[; ;./variableDefinitions.h: 272: unsigned char loraAliveCount = 0;
+[v _loraAliveCount `uc ~T0 @X0 1 e ]
+[i _loraAliveCount
+-> -> 0 `i `uc
+]
+"273
+[; ;./variableDefinitions.h: 273: unsigned char loraAliveCountCheck = 0;
+[v _loraAliveCountCheck `uc ~T0 @X0 1 e ]
+[i _loraAliveCountCheck
+-> -> 0 `i `uc
+]
+"274
+[; ;./variableDefinitions.h: 274: unsigned char loraAttempt = 0;
+[v _loraAttempt `uc ~T0 @X0 1 e ]
+[i _loraAttempt
+-> -> 0 `i `uc
+]
+"275
+[; ;./variableDefinitions.h: 275: unsigned char timer3Count = 0;
+[v _timer3Count `uc ~T0 @X0 1 e ]
+[i _timer3Count
+-> -> 0 `i `uc
+]
+"276
+[; ;./variableDefinitions.h: 276: unsigned char rxCharacter = 0;
+[v _rxCharacter `uc ~T0 @X0 1 e ]
+[i _rxCharacter
+-> -> 0 `i `uc
+]
+"277
+[; ;./variableDefinitions.h: 277: unsigned char msgIndex = 0;
+[v _msgIndex `uc ~T0 @X0 1 e ]
+[i _msgIndex
+-> -> 0 `i `uc
+]
+"278
+[; ;./variableDefinitions.h: 278: unsigned char temp = 0;
+[v _temp `uc ~T0 @X0 1 e ]
+[i _temp
+-> -> 0 `i `uc
+]
+"279
+[; ;./variableDefinitions.h: 279: unsigned char iterator = 0;
+[v _iterator `uc ~T0 @X0 1 e ]
+[i _iterator
+-> -> 0 `i `uc
+]
+"280
+[; ;./variableDefinitions.h: 280: unsigned char fieldCount = 12;
+[v _fieldCount `uc ~T0 @X0 1 e ]
+[i _fieldCount
+-> -> 12 `i `uc
+]
+"281
+[; ;./variableDefinitions.h: 281: unsigned char resetCount = 0;
+[v _resetCount `uc ~T0 @X0 1 e ]
+[i _resetCount
+-> -> 0 `i `uc
+]
+"282
+[; ;./variableDefinitions.h: 282: unsigned char startFieldNo = 0;
+[v _startFieldNo `uc ~T0 @X0 1 e ]
+[i _startFieldNo
+-> -> 0 `i `uc
+]
+"283
+[; ;./variableDefinitions.h: 283: unsigned char space = 0x20;
+[v _space `uc ~T0 @X0 1 e ]
+[i _space
+-> -> 32 `i `uc
+]
+"284
+[; ;./variableDefinitions.h: 284: unsigned char terminateSms = 0x1A;
+[v _terminateSms `uc ~T0 @X0 1 e ]
+[i _terminateSms
+-> -> 26 `i `uc
+]
+"285
+[; ;./variableDefinitions.h: 285: unsigned char enter = 0x0D;
+[v _enter `uc ~T0 @X0 1 e ]
+[i _enter
+-> -> 13 `i `uc
+]
+"286
+[; ;./variableDefinitions.h: 286: unsigned char newLine = 0x0A;
+[v _newLine `uc ~T0 @X0 1 e ]
+[i _newLine
+-> -> 10 `i `uc
+]
+"287
+[; ;./variableDefinitions.h: 287: unsigned char hundredsDigit = 0;
+[v _hundredsDigit `uc ~T0 @X0 1 e ]
+[i _hundredsDigit
+-> -> 0 `i `uc
+]
+"288
+[; ;./variableDefinitions.h: 288: unsigned char tensDigit = 0;
+[v _tensDigit `uc ~T0 @X0 1 e ]
+[i _tensDigit
+-> -> 0 `i `uc
+]
+"289
+[; ;./variableDefinitions.h: 289: unsigned char unitsDigit = 0;
+[v _unitsDigit `uc ~T0 @X0 1 e ]
+[i _unitsDigit
+-> -> 0 `i `uc
+]
+"290
+[; ;./variableDefinitions.h: 290: unsigned char Timer0Overflow = 0;
+[v _Timer0Overflow `uc ~T0 @X0 1 e ]
+[i _Timer0Overflow
+-> -> 0 `i `uc
+]
+"291
+[; ;./variableDefinitions.h: 291: unsigned char Timer1Overflow = 0;
+[v _Timer1Overflow `uc ~T0 @X0 1 e ]
+[i _Timer1Overflow
+-> -> 0 `i `uc
+]
+"292
+[; ;./variableDefinitions.h: 292: unsigned char Timer3Overflow = 0;
+[v _Timer3Overflow `uc ~T0 @X0 1 e ]
+[i _Timer3Overflow
+-> -> 0 `i `uc
+]
+"293
+[; ;./variableDefinitions.h: 293: unsigned char filtrationCycleSequence = 0;
+[v _filtrationCycleSequence `uc ~T0 @X0 1 e ]
+[i _filtrationCycleSequence
+-> -> 0 `i `uc
+]
+"294
+[; ;./variableDefinitions.h: 294: unsigned char currentYY = 0;
+[v _currentYY `uc ~T0 @X0 1 e ]
+[i _currentYY
+-> -> 0 `i `uc
+]
+"295
+[; ;./variableDefinitions.h: 295: unsigned char currentMM = 0;
+[v _currentMM `uc ~T0 @X0 1 e ]
+[i _currentMM
+-> -> 0 `i `uc
+]
+"296
+[; ;./variableDefinitions.h: 296: unsigned char currentDD = 0;
+[v _currentDD `uc ~T0 @X0 1 e ]
+[i _currentDD
+-> -> 0 `i `uc
+]
+"297
+[; ;./variableDefinitions.h: 297: unsigned char currentHour = 0;
+[v _currentHour `uc ~T0 @X0 1 e ]
+[i _currentHour
+-> -> 0 `i `uc
+]
+"298
+[; ;./variableDefinitions.h: 298: unsigned char currentMinutes = 0;
+[v _currentMinutes `uc ~T0 @X0 1 e ]
+[i _currentMinutes
+-> -> 0 `i `uc
+]
+"299
+[; ;./variableDefinitions.h: 299: unsigned char currentSeconds = 0;
+[v _currentSeconds `uc ~T0 @X0 1 e ]
+[i _currentSeconds
+-> -> 0 `i `uc
+]
+"300
+[; ;./variableDefinitions.h: 300: unsigned char dueYY = 0;
+[v _dueYY `uc ~T0 @X0 1 e ]
+[i _dueYY
+-> -> 0 `i `uc
+]
+"301
+[; ;./variableDefinitions.h: 301: unsigned char dueMM = 0;
+[v _dueMM `uc ~T0 @X0 1 e ]
+[i _dueMM
+-> -> 0 `i `uc
+]
+"302
+[; ;./variableDefinitions.h: 302: unsigned char filtrationDelay1 = 0;
+[v _filtrationDelay1 `uc ~T0 @X0 1 e ]
+[i _filtrationDelay1
+-> -> 0 `i `uc
+]
+"303
+[; ;./variableDefinitions.h: 303: unsigned char filtrationDelay2 = 0;
+[v _filtrationDelay2 `uc ~T0 @X0 1 e ]
+[i _filtrationDelay2
+-> -> 0 `i `uc
+]
+"304
+[; ;./variableDefinitions.h: 304: unsigned char filtrationDelay3 = 0;
+[v _filtrationDelay3 `uc ~T0 @X0 1 e ]
+[i _filtrationDelay3
+-> -> 0 `i `uc
+]
+"305
+[; ;./variableDefinitions.h: 305: unsigned char filtrationOnTime = 0;
+[v _filtrationOnTime `uc ~T0 @X0 1 e ]
+[i _filtrationOnTime
+-> -> 0 `i `uc
+]
+"306
+[; ;./variableDefinitions.h: 306: unsigned char dryRunCheckCount = 0;
+[v _dryRunCheckCount `uc ~T0 @X0 1 e ]
+[i _dryRunCheckCount
+-> -> 0 `i `uc
+]
+"312
 [v _encodedString `uc ~T0 @X0 -> 100 `i e ]
 [i _encodedString
 :U ..
 -> -> 0 `ui `uc
 ..
 ]
-"261
+"314
 [v _stringToEncode `uc ~T0 @X0 -> 100 `i e ]
 [i _stringToEncode
 :U ..
 -> -> 0 `ui `uc
 ..
 ]
-"263
+"316
 [v _stringToDecode `uc ~T0 @X0 -> 220 `i e ]
 [i _stringToDecode
 :U ..
 -> -> 0 `ui `uc
 ..
 ]
-"266
+"319
 [v _decodedString `uc ~T0 @X0 -> 220 `i e ]
 [i _decodedString
 :U ..
 -> -> 0 `ui `uc
 ..
 ]
-"270
+"323
 [v _admin `uc ~T0 @X0 -> 3 `i s ]
 [i _admin
 :U ..
@@ -2442,7 +2691,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"271
+"324
 [v _hook `uc ~T0 @X0 -> 5 `i s ]
 [i _hook
 :U ..
@@ -2453,7 +2702,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"272
+"325
 [v _set `uc ~T0 @X0 -> 4 `i s ]
 [i _set
 :U ..
@@ -2463,7 +2712,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"273
+"326
 [v _enable `uc ~T0 @X0 -> 7 `i s ]
 [i _enable
 :U ..
@@ -2476,7 +2725,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"274
+"327
 [v _disable `uc ~T0 @X0 -> 8 `i s ]
 [i _disable
 :U ..
@@ -2490,7 +2739,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"275
+"328
 [v _active `uc ~T0 @X0 -> 7 `i s ]
 [i _active
 :U ..
@@ -2503,7 +2752,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"276
+"329
 [v _dactive `uc ~T0 @X0 -> 8 `i s ]
 [i _dactive
 :U ..
@@ -2517,7 +2766,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"277
+"330
 [v _hold `uc ~T0 @X0 -> 5 `i s ]
 [i _hold
 :U ..
@@ -2528,7 +2777,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"278
+"331
 [v _extract `uc ~T0 @X0 -> 8 `i s ]
 [i _extract
 :U ..
@@ -2542,7 +2791,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"279
+"332
 [v _ok `uc ~T0 @X0 -> 3 `i s ]
 [i _ok
 :U ..
@@ -2551,7 +2800,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"280
+"333
 [v _time `uc ~T0 @X0 -> 5 `i s ]
 [i _time
 :U ..
@@ -2562,7 +2811,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"281
+"334
 [v _feed `uc ~T0 @X0 -> 5 `i s ]
 [i _feed
 :U ..
@@ -2573,7 +2822,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"282
+"335
 [v _fdata `uc ~T0 @X0 -> 6 `i s ]
 [i _fdata
 :U ..
@@ -2585,7 +2834,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"283
+"336
 [v _inject `uc ~T0 @X0 -> 7 `i s ]
 [i _inject
 :U ..
@@ -2598,7 +2847,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"284
+"337
 [v _ct `uc ~T0 @X0 -> 3 `i s ]
 [i _ct
 :U ..
@@ -2607,7 +2856,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"285
+"338
 [v _setct `uc ~T0 @X0 -> 4 `i s ]
 [i _setct
 :U ..
@@ -2617,7 +2866,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"286
+"339
 [v _secret `uc ~T0 @X0 -> 12 `i s ]
 [i _secret
 :U ..
@@ -2635,7 +2884,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"287
+"340
 [v _getct `uc ~T0 @X0 -> 6 `i s ]
 [i _getct
 :U ..
@@ -2647,7 +2896,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"288
+"341
 [v _getfreq `uc ~T0 @X0 -> 8 `i s ]
 [i _getfreq
 :U ..
@@ -2661,7 +2910,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"289
+"342
 [v _countryCode `uc ~T0 @X0 -> 4 `i s ]
 [i _countryCode
 :U ..
@@ -2671,40 +2920,26 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"294
-[v _slaveOnOK `uc ~T0 @X0 -> 10 `i s ]
-[i _slaveOnOK
+"346
+[v _on `uc ~T0 @X0 -> 3 `i s ]
+[i _on
 :U ..
 -> 79 `c
 -> 78 `c
--> 48 `c
--> 49 `c
--> 83 `c
--> 76 `c
--> 65 `c
--> 86 `c
--> 69 `c
 -> 0 `c
 ..
 ]
-"295
-[v _slaveOffOK `uc ~T0 @X0 -> 11 `i s ]
-[i _slaveOffOK
+"347
+[v _off `uc ~T0 @X0 -> 4 `i s ]
+[i _off
 :U ..
 -> 79 `c
 -> 70 `c
 -> 70 `c
--> 48 `c
--> 49 `c
--> 83 `c
--> 76 `c
--> 65 `c
--> 86 `c
--> 69 `c
 -> 0 `c
 ..
 ]
-"296
+"348
 [v _slave `uc ~T0 @X0 -> 6 `i s ]
 [i _slave
 :U ..
@@ -2716,7 +2951,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"297
+"349
 [v _ack `uc ~T0 @X0 -> 4 `i s ]
 [i _ack
 :U ..
@@ -2726,7 +2961,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"298
+"350
 [v _idle `uc ~T0 @X0 -> 5 `i s ]
 [i _idle
 :U ..
@@ -2737,9 +2972,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"299
-[v _masterError `uc ~T0 @X0 -> 12 `i s ]
-[i _masterError
+"351
+[v _master `uc ~T0 @X0 -> 7 `i s ]
+[i _master
 :U ..
 -> 77 `c
 -> 65 `c
@@ -2747,6 +2982,13 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 84 `c
 -> 69 `c
 -> 82 `c
+-> 0 `c
+..
+]
+"352
+[v _error `uc ~T0 @X0 -> 6 `i s ]
+[i _error
+:U ..
 -> 69 `c
 -> 82 `c
 -> 82 `c
@@ -2755,24 +2997,32 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"300
-[v _slaveError `uc ~T0 @X0 -> 11 `i s ]
-[i _slaveError
+"353
+[v _alive `uc ~T0 @X0 -> 6 `i s ]
+[i _alive
 :U ..
--> 83 `c
--> 76 `c
 -> 65 `c
+-> 76 `c
+-> 73 `c
 -> 86 `c
 -> 69 `c
+-> 0 `c
+..
+]
+"354
+[v _sensor `uc ~T0 @X0 -> 7 `i s ]
+[i _sensor
+:U ..
+-> 83 `c
 -> 69 `c
--> 82 `c
--> 82 `c
+-> 78 `c
+-> 83 `c
 -> 79 `c
 -> 82 `c
 -> 0 `c
 ..
 ]
-"305
+"358
 [v _SmsAU1 `Cuc ~T0 @X0 -> 23 `i e ]
 [i _SmsAU1
 :U ..
@@ -2801,7 +3051,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"306
+"359
 [v _SmsAU2 `Cuc ~T0 @X0 -> 51 `i e ]
 [i _SmsAU2
 :U ..
@@ -2856,7 +3106,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"307
+"360
 [v _SmsAU3 `Cuc ~T0 @X0 -> 22 `i e ]
 [i _SmsAU3
 :U ..
@@ -2884,7 +3134,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"308
+"361
 [v _SmsAU4 `Cuc ~T0 @X0 -> 64 `i e ]
 [i _SmsAU4
 :U ..
@@ -2954,7 +3204,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"311
+"363
 [v _SmsPwd1 `Cuc ~T0 @X0 -> 32 `i e ]
 [i _SmsPwd1
 :U ..
@@ -2992,7 +3242,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"312
+"364
 [v _SmsPwd2 `Cuc ~T0 @X0 -> 23 `i e ]
 [i _SmsPwd2
 :U ..
@@ -3021,7 +3271,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"313
+"365
 [v _SmsPwd3 `Cuc ~T0 @X0 -> 23 `i e ]
 [i _SmsPwd3
 :U ..
@@ -3050,7 +3300,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"315
+"367
 [v _SmsIrr1 `Cuc ~T0 @X0 -> 36 `i e ]
 [i _SmsIrr1
 :U ..
@@ -3092,7 +3342,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"316
+"368
 [v _SmsIrr2 `Cuc ~T0 @X0 -> 48 `i e ]
 [i _SmsIrr2
 :U ..
@@ -3146,7 +3396,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"317
+"369
 [v _SmsIrr3 `Cuc ~T0 @X0 -> 40 `i e ]
 [i _SmsIrr3
 :U ..
@@ -3192,7 +3442,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"318
+"370
 [v _SmsIrr4 `Cuc ~T0 @X0 -> 33 `i e ]
 [i _SmsIrr4
 :U ..
@@ -3231,7 +3481,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"319
+"371
 [v _SmsIrr5 `Cuc ~T0 @X0 -> 33 `i e ]
 [i _SmsIrr5
 :U ..
@@ -3270,7 +3520,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"320
+"372
 [v _SmsIrr6 `Cuc ~T0 @X0 -> 60 `i e ]
 [i _SmsIrr6
 :U ..
@@ -3334,7 +3584,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"321
+"373
 [v _SmsIrr7 `Cuc ~T0 @X0 -> 15 `i e ]
 [i _SmsIrr7
 :U ..
@@ -3355,7 +3605,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"322
+"374
 [v _SmsIrr8 `Cuc ~T0 @X0 -> 51 `i e ]
 [i _SmsIrr8
 :U ..
@@ -3412,7 +3662,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"323
+"375
 [v _SmsIrr9 `Cuc ~T0 @X0 -> 51 `i e ]
 [i _SmsIrr9
 :U ..
@@ -3469,7 +3719,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"325
+"377
 [v _SmsFert1 `Cuc ~T0 @X0 -> 64 `i e ]
 [i _SmsFert1
 :U ..
@@ -3539,7 +3789,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"326
+"378
 [v _SmsFert2 `Cuc ~T0 @X0 -> 56 `i e ]
 [i _SmsFert2
 :U ..
@@ -3601,7 +3851,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"327
+"379
 [v _SmsFert3 `Cuc ~T0 @X0 -> 34 `i e ]
 [i _SmsFert3
 :U ..
@@ -3641,7 +3891,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"328
+"380
 [v _SmsFert4 `Cuc ~T0 @X0 -> 35 `i e ]
 [i _SmsFert4
 :U ..
@@ -3682,7 +3932,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"329
+"381
 [v _SmsFert5 `Cuc ~T0 @X0 -> 34 `i e ]
 [i _SmsFert5
 :U ..
@@ -3722,7 +3972,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"330
+"382
 [v _SmsFert6 `Cuc ~T0 @X0 -> 34 `i e ]
 [i _SmsFert6
 :U ..
@@ -3762,7 +4012,150 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"332
+"383
+[v _SmsFert7 `Cuc ~T0 @X0 -> 71 `i e ]
+[i _SmsFert7
+:U ..
+-> 70 `c
+-> 101 `c
+-> 114 `c
+-> 116 `c
+-> 105 `c
+-> 103 `c
+-> 97 `c
+-> 116 `c
+-> 105 `c
+-> 111 `c
+-> 110 `c
+-> 32 `c
+-> 115 `c
+-> 116 `c
+-> 111 `c
+-> 112 `c
+-> 112 `c
+-> 101 `c
+-> 100 `c
+-> 32 `c
+-> 119 `c
+-> 105 `c
+-> 116 `c
+-> 104 `c
+-> 32 `c
+-> 102 `c
+-> 101 `c
+-> 114 `c
+-> 116 `c
+-> 105 `c
+-> 108 `c
+-> 105 `c
+-> 122 `c
+-> 101 `c
+-> 114 `c
+-> 32 `c
+-> 108 `c
+-> 101 `c
+-> 118 `c
+-> 101 `c
+-> 108 `c
+-> 32 `c
+-> 115 `c
+-> 101 `c
+-> 110 `c
+-> 115 `c
+-> 111 `c
+-> 114 `c
+-> 32 `c
+-> 102 `c
+-> 97 `c
+-> 105 `c
+-> 108 `c
+-> 117 `c
+-> 114 `c
+-> 101 `c
+-> 32 `c
+-> 102 `c
+-> 111 `c
+-> 114 `c
+-> 32 `c
+-> 102 `c
+-> 105 `c
+-> 101 `c
+-> 108 `c
+-> 100 `c
+-> 32 `c
+-> 110 `c
+-> 111 `c
+-> 46 `c
+-> 0 `c
+..
+]
+"384
+[v _SmsFert8 `Cuc ~T0 @X0 -> 60 `i e ]
+[i _SmsFert8
+:U ..
+-> 70 `c
+-> 101 `c
+-> 114 `c
+-> 116 `c
+-> 105 `c
+-> 103 `c
+-> 97 `c
+-> 116 `c
+-> 105 `c
+-> 111 `c
+-> 110 `c
+-> 32 `c
+-> 115 `c
+-> 116 `c
+-> 111 `c
+-> 112 `c
+-> 112 `c
+-> 101 `c
+-> 100 `c
+-> 32 `c
+-> 119 `c
+-> 105 `c
+-> 116 `c
+-> 104 `c
+-> 32 `c
+-> 108 `c
+-> 111 `c
+-> 119 `c
+-> 32 `c
+-> 102 `c
+-> 101 `c
+-> 114 `c
+-> 116 `c
+-> 105 `c
+-> 108 `c
+-> 105 `c
+-> 122 `c
+-> 101 `c
+-> 114 `c
+-> 32 `c
+-> 108 `c
+-> 101 `c
+-> 118 `c
+-> 101 `c
+-> 108 `c
+-> 32 `c
+-> 102 `c
+-> 111 `c
+-> 114 `c
+-> 32 `c
+-> 102 `c
+-> 105 `c
+-> 101 `c
+-> 108 `c
+-> 100 `c
+-> 32 `c
+-> 110 `c
+-> 111 `c
+-> 46 `c
+-> 0 `c
+..
+]
+"386
 [v _SmsFilt1 `Cuc ~T0 @X0 -> 27 `i e ]
 [i _SmsFilt1
 :U ..
@@ -3795,7 +4188,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"333
+"387
 [v _SmsFilt2 `Cuc ~T0 @X0 -> 29 `i e ]
 [i _SmsFilt2
 :U ..
@@ -3830,7 +4223,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"334
+"388
 [v _SmsFilt3 `Cuc ~T0 @X0 -> 32 `i e ]
 [i _SmsFilt3
 :U ..
@@ -3868,7 +4261,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"335
+"389
 [v _SmsFilt4 `Cuc ~T0 @X0 -> 27 `i e ]
 [i _SmsFilt4
 :U ..
@@ -3901,7 +4294,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"337
+"391
 [v _SmsSR01 `Cuc ~T0 @X0 -> 60 `i e ]
 [i _SmsSR01
 :U ..
@@ -3967,7 +4360,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"338
+"392
 [v _SmsSR02 `Cuc ~T0 @X0 -> 78 `i e ]
 [i _SmsSR02
 :U ..
@@ -4051,7 +4444,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"339
+"393
 [v _SmsSR03 `Cuc ~T0 @X0 -> 75 `i e ]
 [i _SmsSR03
 :U ..
@@ -4132,7 +4525,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"340
+"394
 [v _SmsSR04 `Cuc ~T0 @X0 -> 77 `i e ]
 [i _SmsSR04
 :U ..
@@ -4215,7 +4608,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"341
+"395
 [v _SmsSR05 `Cuc ~T0 @X0 -> 82 `i e ]
 [i _SmsSR05
 :U ..
@@ -4303,7 +4696,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"342
+"396
 [v _SmsSR06 `Cuc ~T0 @X0 -> 74 `i e ]
 [i _SmsSR06
 :U ..
@@ -4383,7 +4776,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"343
+"397
 [v _SmsSR07 `Cuc ~T0 @X0 -> 74 `i e ]
 [i _SmsSR07
 :U ..
@@ -4463,7 +4856,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"344
+"398
 [v _SmsSR08 `Cuc ~T0 @X0 -> 37 `i e ]
 [i _SmsSR08
 :U ..
@@ -4506,7 +4899,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"345
+"399
 [v _SmsSR09 `Cuc ~T0 @X0 -> 31 `i e ]
 [i _SmsSR09
 :U ..
@@ -4543,7 +4936,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"346
+"400
 [v _SmsSR10 `Cuc ~T0 @X0 -> 36 `i e ]
 [i _SmsSR10
 :U ..
@@ -4585,7 +4978,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"347
+"401
 [v _SmsSR11 `Cuc ~T0 @X0 -> 41 `i e ]
 [i _SmsSR11
 :U ..
@@ -4632,7 +5025,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"348
+"402
 [v _SmsSR12 `Cuc ~T0 @X0 -> 33 `i e ]
 [i _SmsSR12
 :U ..
@@ -4671,7 +5064,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"349
+"403
 [v _SmsSR13 `Cuc ~T0 @X0 -> 33 `i e ]
 [i _SmsSR13
 :U ..
@@ -4710,7 +5103,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"350
+"404
 [v _SmsSR14 `Cuc ~T0 @X0 -> 59 `i e ]
 [i _SmsSR14
 :U ..
@@ -4775,7 +5168,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"351
+"405
 [v _SmsSR15 `Cuc ~T0 @X0 -> 50 `i e ]
 [i _SmsSR15
 :U ..
@@ -4831,7 +5224,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"353
+"407
 [v _SmsRTC1 `Cuc ~T0 @X0 -> 50 `i e ]
 [i _SmsRTC1
 :U ..
@@ -4887,7 +5280,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"354
+"408
 [v _SmsRTC2 `Cuc ~T0 @X0 -> 41 `i e ]
 [i _SmsRTC2
 :U ..
@@ -4934,7 +5327,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"355
+"409
 [v _SmsRTC3 `Cuc ~T0 @X0 -> 56 `i e ]
 [i _SmsRTC3
 :U ..
@@ -4996,7 +5389,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"356
+"410
 [v _SmsRTC4 `Cuc ~T0 @X0 -> 56 `i e ]
 [i _SmsRTC4
 :U ..
@@ -5058,7 +5451,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"358
+"412
 [v _SmsDR1 `Cuc ~T0 @X0 -> 133 `i e ]
 [i _SmsDR1
 :U ..
@@ -5195,7 +5588,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"359
+"413
 [v _SmsDR2 `Cuc ~T0 @X0 -> 120 `i e ]
 [i _SmsDR2
 :U ..
@@ -5319,7 +5712,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"360
+"414
 [v _SmsDR3 `Cuc ~T0 @X0 -> 103 `i e ]
 [i _SmsDR3
 :U ..
@@ -5426,7 +5819,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"361
+"415
 [v _SmsDR4 `Cuc ~T0 @X0 -> 108 `i e ]
 [i _SmsDR4
 :U ..
@@ -5538,7 +5931,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"363
+"417
 [v _SmsT1 `Cuc ~T0 @X0 -> 27 `i e ]
 [i _SmsT1
 :U ..
@@ -5571,7 +5964,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"364
+"418
 [v _SmsT2 `Cuc ~T0 @X0 -> 15 `i e ]
 [i _SmsT2
 :U ..
@@ -5592,7 +5985,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"366
+"420
 [v _SmsMotor1 `Cuc ~T0 @X0 -> 58 `i e ]
 [i _SmsMotor1
 :U ..
@@ -5654,7 +6047,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"367
+"421
 [v _SmsMotor2 `Cuc ~T0 @X0 -> 35 `i e ]
 [i _SmsMotor2
 :U ..
@@ -5695,7 +6088,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"368
+"422
 [v _SmsMotor3 `Cuc ~T0 @X0 -> 47 `i e ]
 [i _SmsMotor3
 :U ..
@@ -5748,7 +6141,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"369
+"423
 [v _SmsMotor4 `Cuc ~T0 @X0 -> 49 `i e ]
 [i _SmsMotor4
 :U ..
@@ -5803,7 +6196,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"371
+"425
 [v _SmsConnect `Cuc ~T0 @X0 -> 17 `i e ]
 [i _SmsConnect
 :U ..
@@ -5826,7 +6219,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"373
+"427
 [v _SmsTest `Cuc ~T0 @X0 -> 19 `i e ]
 [i _SmsTest
 :U ..
@@ -5851,7 +6244,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"375
+"429
 [v _SmsFact1 `Cuc ~T0 @X0 -> 15 `i e ]
 [i _SmsFact1
 :U ..
@@ -5872,7 +6265,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"377
+"431
 [v _SmsPh1 `Cuc ~T0 @X0 -> 47 `i e ]
 [i _SmsPh1
 :U ..
@@ -5925,7 +6318,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"378
+"432
 [v _SmsPh2 `Cuc ~T0 @X0 -> 69 `i e ]
 [i _SmsPh2
 :U ..
@@ -6000,7 +6393,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"379
+"433
 [v _SmsPh3 `Cuc ~T0 @X0 -> 25 `i e ]
 [i _SmsPh3
 :U ..
@@ -6031,7 +6424,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"380
+"434
 [v _SmsPh4 `Cuc ~T0 @X0 -> 25 `i e ]
 [i _SmsPh4
 :U ..
@@ -6062,7 +6455,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"381
+"435
 [v _SmsPh5 `Cuc ~T0 @X0 -> 25 `i e ]
 [i _SmsPh5
 :U ..
@@ -6093,7 +6486,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"382
+"436
 [v _SmsPh6 `Cuc ~T0 @X0 -> 19 `i e ]
 [i _SmsPh6
 :U ..
@@ -6118,7 +6511,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"384
+"438
 [v _SmsMS1 `Cuc ~T0 @X0 -> 60 `i e ]
 [i _SmsMS1
 :U ..
@@ -6184,7 +6577,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"385
+"439
 [v _SmsMS2 `Cuc ~T0 @X0 -> 46 `i e ]
 [i _SmsMS2
 :U ..
@@ -6236,7 +6629,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"386
+"440
 [v _SmsMS3 `Cuc ~T0 @X0 -> 40 `i e ]
 [i _SmsMS3
 :U ..
@@ -6282,7 +6675,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"391
+"445
 [v _gsmResponse `uc ~T0 @X0 -> 220 `i e ]
 [i _gsmResponse
 :U ..
@@ -6294,7 +6687,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"396
+"450
 [v _cmti `uc ~T0 @X0 -> 14 `i s ]
 [i _cmti
 :U ..
@@ -6314,663 +6707,716 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"401
-[v _loraAttempt `uc ~T0 @X0 1 e ]
-[i _loraAttempt
--> -> 0 `i `uc
+"455
+[v _systemAuthenticated `a ~T0 @X0 1 e ]
+[i _systemAuthenticated
+-> -> 0 `i `a
 ]
-"402
-[v _timer3Count `uc ~T0 @X0 1 e ]
-[i _timer3Count
--> -> 0 `i `uc
+"456
+[v _newSMSRcvd `a ~T0 @X0 1 e ]
+[i _newSMSRcvd
+-> -> 0 `i `a
 ]
-"403
-[v _rxCharacter `uc ~T0 @X0 1 e ]
-[i _rxCharacter
--> -> 0 `i `uc
+"457
+[v _checkMoistureSensor `a ~T0 @X0 1 e ]
+[i _checkMoistureSensor
+-> -> 0 `i `a
 ]
-"404
-[v _msgIndex `uc ~T0 @X0 1 e ]
-[i _msgIndex
--> -> 0 `i `uc
+"458
+[v _moistureSensorFailed `a ~T0 @X0 1 e ]
+[i _moistureSensorFailed
+-> -> 0 `i `a
 ]
-"405
-[v _temp `uc ~T0 @X0 1 e ]
-[i _temp
--> -> 0 `i `uc
+"459
+[v _controllerCommandExecuted `a ~T0 @X0 1 e ]
+[i _controllerCommandExecuted
+-> -> 0 `i `a
 ]
-"406
-[v _iterator `uc ~T0 @X0 1 e ]
-[i _iterator
--> -> 0 `i `uc
+"460
+[v _currentDateCalled `a ~T0 @X0 1 e ]
+[i _currentDateCalled
+-> -> 0 `i `a
 ]
-"407
-[v _fieldCount `uc ~T0 @X0 1 e ]
-[i _fieldCount
--> -> 12 `i `uc
+"461
+[v _sleepCountChangedDueToInterrupt `a ~T0 @X0 1 e ]
+[i _sleepCountChangedDueToInterrupt
+-> -> 0 `i `a
 ]
-"408
-[v _resetCount `uc ~T0 @X0 1 e ]
-[i _resetCount
--> -> 0 `i `uc
+"462
+[v _inSleepMode `a ~T0 @X0 1 e ]
+[i _inSleepMode
+-> -> 0 `i `a
 ]
-"409
-[v _startFieldNo `uc ~T0 @X0 1 e ]
-[i _startFieldNo
--> -> 0 `i `uc
+"463
+[v _dryRunDetected `a ~T0 @X0 1 e ]
+[i _dryRunDetected
+-> -> 0 `i `a
 ]
-"410
-[v _space `uc ~T0 @X0 1 e ]
-[i _space
--> -> 32 `i `uc
+"464
+[v _lowPhaseCurrentDetected `a ~T0 @X0 1 e ]
+[i _lowPhaseCurrentDetected
+-> -> 0 `i `a
 ]
-"411
-[v _terminateSms `uc ~T0 @X0 1 e ]
-[i _terminateSms
--> -> 26 `i `uc
+"465
+[v _valveDue `a ~T0 @X0 1 e ]
+[i _valveDue
+-> -> 0 `i `a
 ]
-"412
-[v _enter `uc ~T0 @X0 1 e ]
-[i _enter
--> -> 13 `i `uc
+"466
+[v _valveExecuted `a ~T0 @X0 1 e ]
+[i _valveExecuted
+-> -> 0 `i `a
 ]
-"413
-[v _newLine `uc ~T0 @X0 1 e ]
-[i _newLine
--> -> 10 `i `uc
+"467
+[v _onHold `a ~T0 @X0 1 e ]
+[i _onHold
+-> -> 0 `i `a
 ]
-"414
-[v _hundredsDigit `uc ~T0 @X0 1 e ]
-[i _hundredsDigit
--> -> 0 `i `uc
+"468
+[v _dueValveChecked `a ~T0 @X0 1 e ]
+[i _dueValveChecked
+-> -> 0 `i `a
 ]
-"415
-[v _tensDigit `uc ~T0 @X0 1 e ]
-[i _tensDigit
--> -> 0 `i `uc
+"469
+[v _correctDate `a ~T0 @X0 1 e ]
+[i _correctDate
+-> -> 0 `i `a
 ]
-"416
-[v _unitsDigit `uc ~T0 @X0 1 e ]
-[i _unitsDigit
--> -> 0 `i `uc
+"470
+[v _phaseFailureDetected `a ~T0 @X0 1 e ]
+[i _phaseFailureDetected
+-> -> 0 `i `a
 ]
-"417
-[v _Timer0Overflow `uc ~T0 @X0 1 e ]
-[i _Timer0Overflow
--> -> 0 `i `uc
+"471
+[v _lowRTCBatteryDetected `a ~T0 @X0 1 e ]
+[i _lowRTCBatteryDetected
+-> -> 0 `i `a
 ]
-"418
-[v _Timer1Overflow `uc ~T0 @X0 1 e ]
-[i _Timer1Overflow
--> -> 0 `i `uc
+"472
+[v _rtcBatteryLevelChecked `a ~T0 @X0 1 e ]
+[i _rtcBatteryLevelChecked
+-> -> 0 `i `a
 ]
-"419
-[v _Timer3Overflow `uc ~T0 @X0 1 e ]
-[i _Timer3Overflow
--> -> 0 `i `uc
+"473
+[v _phaseFailureActionTaken `a ~T0 @X0 1 e ]
+[i _phaseFailureActionTaken
+-> -> 0 `i `a
 ]
-"420
-[v _filtrationCycleSequence `uc ~T0 @X0 1 e ]
-[i _filtrationCycleSequence
--> -> 0 `i `uc
+"474
+[v _filtrationEnabled `a ~T0 @X0 1 e ]
+[i _filtrationEnabled
+-> -> 0 `i `a
 ]
-"421
-[v _currentYY `uc ~T0 @X0 1 e ]
-[i _currentYY
--> -> 0 `i `uc
+"475
+[v _cmtiCmd `a ~T0 @X0 1 e ]
+[i _cmtiCmd
+-> -> 0 `i `a
 ]
-"422
-[v _currentMM `uc ~T0 @X0 1 e ]
-[i _currentMM
--> -> 0 `i `uc
+"476
+[v _DeviceBurnStatus `a ~T0 @X0 1 e ]
+[i _DeviceBurnStatus
+-> -> 0 `i `a
 ]
-"423
-[v _currentDD `uc ~T0 @X0 1 e ]
-[i _currentDD
--> -> 0 `i `uc
+"477
+[v _gsmSetToLocalTime `a ~T0 @X0 1 e ]
+[i _gsmSetToLocalTime
+-> -> 0 `i `a
 ]
-"424
-[v _currentHour `uc ~T0 @X0 1 e ]
-[i _currentHour
--> -> 0 `i `uc
+"478
+[v _cmdRceived `a ~T0 @X0 1 e ]
+[i _cmdRceived
+-> -> 0 `i `a
 ]
-"425
-[v _currentMinutes `uc ~T0 @X0 1 e ]
-[i _currentMinutes
--> -> 0 `i `uc
+"479
+[v _checkLoraConnection `a ~T0 @X0 1 e ]
+[i _checkLoraConnection
+-> -> 0 `i `a
 ]
-"426
-[v _currentSeconds `uc ~T0 @X0 1 e ]
-[i _currentSeconds
--> -> 0 `i `uc
+"480
+[v _LoraConnectionFailed `a ~T0 @X0 1 e ]
+[i _LoraConnectionFailed
+-> -> 0 `i `a
 ]
-"427
-[v _dueYY `uc ~T0 @X0 1 e ]
-[i _dueYY
--> -> 0 `i `uc
+"481
+[v _wetSensor `a ~T0 @X0 1 e ]
+[i _wetSensor
+-> -> 0 `i `a
 ]
-"428
-[v _dueMM `uc ~T0 @X0 1 e ]
-[i _dueMM
--> -> 0 `i `uc
+"482
+[v _fertigationDry `a ~T0 @X0 1 e ]
+[i _fertigationDry
+-> -> 0 `i `a
 ]
-"429
-[v _filtrationDelay1 `uc ~T0 @X0 1 e ]
-[i _filtrationDelay1
--> -> 0 `i `uc
-]
-"430
-[v _filtrationDelay2 `uc ~T0 @X0 1 e ]
-[i _filtrationDelay2
--> -> 0 `i `uc
-]
-"431
-[v _filtrationDelay3 `uc ~T0 @X0 1 e ]
-[i _filtrationDelay3
--> -> 0 `i `uc
-]
-"432
-[v _filtrationOnTime `uc ~T0 @X0 1 e ]
-[i _filtrationOnTime
--> -> 0 `i `uc
-]
-"433
-[v _filtrationSeperationTime `uc ~T0 @X0 1 e ]
-[i _filtrationSeperationTime
--> -> 0 `i `uc
-]
-"434
-[v _dryRunCheckCount `uc ~T0 @X0 1 e ]
-[i _dryRunCheckCount
--> -> 0 `i `uc
-]
-"435
-[v _dueDD `ui ~T0 @X0 1 e ]
-[i _dueDD
--> -> 0 `i `ui
-]
-"436
-[v _sleepCount `ui ~T0 @X0 1 e ]
-[i _sleepCount
--> -> 0 `i `ui
-]
-"437
-[v _remainingFertigationOnPeriod `ui ~T0 @X0 1 e ]
-[i _remainingFertigationOnPeriod
--> -> 0 `i `ui
-]
-"438
-[v _lower8bits `ui ~T0 @X0 1 e ]
-[i _lower8bits
--> -> 0 `i `ui
-]
-"439
-[v _higher8bits `ui ~T0 @X0 1 e ]
-[i _higher8bits
--> -> 0 `i `ui
-]
-"440
-[v _moistureLevel `ui ~T0 @X0 1 e ]
-[i _moistureLevel
--> -> 0 `i `ui
-]
-"441
-[v _zero `Cui ~T0 @X0 1 e ]
-[i _zero
--> -> 0 `i `ui
-]
-"446
-[v _fieldValve `S2016 ~T0 @X0 -> 12 `i e ]
-[i _fieldValve
-:U ..
-:U ..
--> -> 0 `i `ui
-..
-..
-]
-"24 lora.c
-[; ;lora.c: 24: unsigned char rxByteLora(void) {
+"27 lora.c
+[; ;lora.c: 27: unsigned char rxByteLora(void) {
 [v _rxByteLora `(uc ~T0 @X0 1 ef ]
 {
 [e :U _rxByteLora ]
 [f ]
-"25
-[; ;lora.c: 25:     while (PIR3bits.RC1IF == 0);
+"28
+[; ;lora.c: 28:     while (PIR3bits.RC1IF == 0);
 [e $U 2018  ]
 [e :U 2019 ]
 [e :U 2018 ]
 [e $ == -> . . _PIR3bits 0 5 `i -> 0 `i 2019  ]
 [e :U 2020 ]
-"27
-[; ;lora.c: 27:     return RC1REG;
+"30
+[; ;lora.c: 30:     return RC1REG;
 [e ) _RC1REG ]
 [e $UE 2017  ]
-"28
-[; ;lora.c: 28: }
+"31
+[; ;lora.c: 31: }
 [e :UE 2017 ]
 }
-"37
-[; ;lora.c: 37: void txByteLora(unsigned char serialData) {
+"40
+[; ;lora.c: 40: void txByteLora(unsigned char serialData) {
 [v _txByteLora `(v ~T0 @X0 1 ef1`uc ]
 {
 [e :U _txByteLora ]
 [v _serialData `uc ~T0 @X0 1 r1 ]
 [f ]
-"38
-[; ;lora.c: 38:     TX1REG = serialData;
+"41
+[; ;lora.c: 41:     TX1REG = serialData;
 [e = _TX1REG _serialData ]
-"39
-[; ;lora.c: 39:     while (PIR3bits.TX1IF == 0);
+"42
+[; ;lora.c: 42:     while (PIR3bits.TX1IF == 0);
 [e $U 2022  ]
 [e :U 2023 ]
 [e :U 2022 ]
 [e $ == -> . . _PIR3bits 0 4 `i -> 0 `i 2023  ]
 [e :U 2024 ]
-"41
-[; ;lora.c: 41: }
+"44
+[; ;lora.c: 44: }
 [e :UE 2021 ]
 }
-"49
-[; ;lora.c: 49: void transmitStringToLora(const char *string) {
+"52
+[; ;lora.c: 52: void transmitStringToLora(const char *string) {
 [v _transmitStringToLora `(v ~T0 @X0 1 ef1`*Cuc ]
 {
 [e :U _transmitStringToLora ]
 [v _string `*Cuc ~T0 @X0 1 r1 ]
 [f ]
-"51
-[; ;lora.c: 51:     while (*string) {
+"54
+[; ;lora.c: 54:     while (*string) {
 [e $U 2026  ]
 [e :U 2027 ]
 {
-"52
-[; ;lora.c: 52:         txByteLora(*string++);
+"55
+[; ;lora.c: 55:         txByteLora(*string++);
 [e ( _txByteLora (1 -> *U ++ _string * -> -> 1 `i `x -> -> # *U _string `i `x `uc ]
-"53
-[; ;lora.c: 53:         myMsDelay(10);
+"56
+[; ;lora.c: 56:         myMsDelay(10);
 [e ( _myMsDelay (1 -> -> 10 `i `ui ]
-"54
-[; ;lora.c: 54:     }
+"57
+[; ;lora.c: 57:     }
 }
 [e :U 2026 ]
-"51
-[; ;lora.c: 51:     while (*string) {
+"54
+[; ;lora.c: 54:     while (*string) {
 [e $ != -> *U _string `i -> 0 `i 2027  ]
 [e :U 2028 ]
-"55
-[; ;lora.c: 55: }
+"58
+[; ;lora.c: 58: }
 [e :UE 2025 ]
 }
-"63
-[; ;lora.c: 63: void transmitNumberToLora(unsigned char *number, unsigned char index) {
+"66
+[; ;lora.c: 66: void transmitNumberToLora(unsigned char *number, unsigned char index) {
 [v _transmitNumberToLora `(v ~T0 @X0 1 ef2`*uc`uc ]
 {
 [e :U _transmitNumberToLora ]
 [v _number `*uc ~T0 @X0 1 r1 ]
 [v _index `uc ~T0 @X0 1 r2 ]
 [f ]
-"64
-[; ;lora.c: 64:     unsigned char j = 0;
+"67
+[; ;lora.c: 67:     unsigned char j = 0;
 [v _j `uc ~T0 @X0 1 a ]
 [e = _j -> -> 0 `i `uc ]
-"66
-[; ;lora.c: 66:     while (j < index) {
+"69
+[; ;lora.c: 69:     while (j < index) {
 [e $U 2030  ]
 [e :U 2031 ]
 {
-"67
-[; ;lora.c: 67:         txByteLora(*number++);
-[e ( _txByteLora (1 *U ++ _number * -> -> 1 `i `x -> -> # *U _number `i `x ]
-"68
-[; ;lora.c: 68:         j++;
-[e ++ _j -> -> 1 `i `uc ]
-"69
-[; ;lora.c: 69:         myMsDelay(10);
-[e ( _myMsDelay (1 -> -> 10 `i `ui ]
 "70
-[; ;lora.c: 70:     }
+[; ;lora.c: 70:         txByteLora(*number++);
+[e ( _txByteLora (1 *U ++ _number * -> -> 1 `i `x -> -> # *U _number `i `x ]
+"71
+[; ;lora.c: 71:         j++;
+[e ++ _j -> -> 1 `i `uc ]
+"72
+[; ;lora.c: 72:         myMsDelay(10);
+[e ( _myMsDelay (1 -> -> 10 `i `ui ]
+"73
+[; ;lora.c: 73:     }
 }
 [e :U 2030 ]
-"66
-[; ;lora.c: 66:     while (j < index) {
+"69
+[; ;lora.c: 69:     while (j < index) {
 [e $ < -> _j `i -> _index `i 2031  ]
 [e :U 2032 ]
-"71
-[; ;lora.c: 71: }
+"74
+[; ;lora.c: 74: }
 [e :UE 2029 ]
 }
-"78
-[; ;lora.c: 78: void sendCmdToLora(unsigned char Action, unsigned char FieldNo) {
+"81
+[; ;lora.c: 81: void sendCmdToLora(unsigned char Action, unsigned char FieldNo) {
 [v _sendCmdToLora `(v ~T0 @X0 1 ef2`uc`uc ]
 {
 [e :U _sendCmdToLora ]
 [v _Action `uc ~T0 @X0 1 r1 ]
 [v _FieldNo `uc ~T0 @X0 1 r2 ]
 [f ]
-"84
-[; ;lora.c: 84:     setBCDdigit(0x06,1);
+"87
+[; ;lora.c: 87:     setBCDdigit(0x06,1);
 [e ( _setBCDdigit (2 , -> -> 6 `i `uc -> -> 1 `i `a ]
-"85
-[; ;lora.c: 85:     checkLoraConnection = 1;
-[e = _checkLoraConnection -> -> 1 `i `a ]
-"86
-[; ;lora.c: 86:     LoraConnectionFailed = 0;
-[e = _LoraConnectionFailed -> -> 0 `i `a ]
 "88
-[; ;lora.c: 88:     if (FieldNo<9){
+[; ;lora.c: 88:     checkLoraConnection = 1;
+[e = _checkLoraConnection -> -> 1 `i `a ]
+"89
+[; ;lora.c: 89:     LoraConnectionFailed = 0;
+[e = _LoraConnectionFailed -> -> 0 `i `a ]
+"91
+[; ;lora.c: 91:     if (FieldNo<9){
 [e $ ! < -> _FieldNo `i -> 9 `i 2034  ]
 {
-"89
-[; ;lora.c: 89:         temporaryBytesArray[0] = 48;
+"92
+[; ;lora.c: 92:         temporaryBytesArray[0] = 48;
 [e = *U + &U _temporaryBytesArray * -> -> -> 0 `i `ui `ux -> -> # *U &U _temporaryBytesArray `ui `ux -> -> 48 `i `uc ]
-"90
-[; ;lora.c: 90:         temporaryBytesArray[1] = FieldNo + 49;
+"93
+[; ;lora.c: 93:         temporaryBytesArray[1] = FieldNo + 49;
 [e = *U + &U _temporaryBytesArray * -> -> -> 1 `i `ui `ux -> -> # *U &U _temporaryBytesArray `ui `ux -> + -> _FieldNo `i -> 49 `i `uc ]
-"91
-[; ;lora.c: 91:     }
+"94
+[; ;lora.c: 94:     }
 }
 [e $U 2035  ]
-"92
-[; ;lora.c: 92:     else if (FieldNo > 8 && FieldNo < 12) {
+"95
+[; ;lora.c: 95:     else if (FieldNo > 8 && FieldNo < 12) {
 [e :U 2034 ]
 [e $ ! && > -> _FieldNo `i -> 8 `i < -> _FieldNo `i -> 12 `i 2036  ]
 {
-"93
-[; ;lora.c: 93:         temporaryBytesArray[0] = 49;
+"96
+[; ;lora.c: 96:         temporaryBytesArray[0] = 49;
 [e = *U + &U _temporaryBytesArray * -> -> -> 0 `i `ui `ux -> -> # *U &U _temporaryBytesArray `ui `ux -> -> 49 `i `uc ]
-"94
-[; ;lora.c: 94:         temporaryBytesArray[1] = FieldNo + 39;
+"97
+[; ;lora.c: 97:         temporaryBytesArray[1] = FieldNo + 39;
 [e = *U + &U _temporaryBytesArray * -> -> -> 1 `i `ui `ux -> -> # *U &U _temporaryBytesArray `ui `ux -> + -> _FieldNo `i -> 39 `i `uc ]
-"95
-[; ;lora.c: 95:     }
+"98
+[; ;lora.c: 98:     }
 }
 [e :U 2036 ]
 [e :U 2035 ]
-"96
-[; ;lora.c: 96:     myMsDelay(100);
-[e ( _myMsDelay (1 -> -> 100 `i `ui ]
-"97
-[; ;lora.c: 97:     controllerCommandExecuted = 0;
-[e = _controllerCommandExecuted -> -> 0 `i `a ]
-"98
-[; ;lora.c: 98:     timer3Count = 15;
-[e = _timer3Count -> -> 15 `i `uc ]
 "99
-[; ;lora.c: 99:     T3CONbits.TMR3ON = 1;
-[e = . . _T3CONbits 3 0 -> -> 1 `i `uc ]
+[; ;lora.c: 99:     myMsDelay(100);
+[e ( _myMsDelay (1 -> -> 100 `i `ui ]
 "100
-[; ;lora.c: 100:     switch (Action) {
+[; ;lora.c: 100:     controllerCommandExecuted = 0;
+[e = _controllerCommandExecuted -> -> 0 `i `a ]
+"101
+[; ;lora.c: 101:     timer3Count = 10;
+[e = _timer3Count -> -> 10 `i `uc ]
+"102
+[; ;lora.c: 102:     T3CONbits.TMR3ON = 1;
+[e = . . _T3CONbits 3 0 -> -> 1 `i `uc ]
+"103
+[; ;lora.c: 103:     switch (Action) {
 [e $U 2038  ]
 {
-"101
-[; ;lora.c: 101:     case 0x00:
-[e :U 2039 ]
-"102
-[; ;lora.c: 102:         transmitStringToLora("#ON01TIME");
-[e ( _transmitStringToLora (1 :s 1C ]
-"103
-[; ;lora.c: 103:         temporaryBytesArray[2]=fieldValve[FieldNo].onPeriod%10;
-[e = *U + &U _temporaryBytesArray * -> -> -> 2 `i `ui `ux -> -> # *U &U _temporaryBytesArray `ui `ux -> % -> . *U + &U _fieldValve * -> _FieldNo `ux -> -> # *U &U _fieldValve `ui `ux 2 `i -> 10 `i `uc ]
 "104
-[; ;lora.c: 104:         temporaryBytesArray[3]=fieldValve[FieldNo].onPeriod/10;
-[e = *U + &U _temporaryBytesArray * -> -> -> 3 `i `ui `ux -> -> # *U &U _temporaryBytesArray `ui `ux -> / -> . *U + &U _fieldValve * -> _FieldNo `ux -> -> # *U &U _fieldValve `ui `ux 2 `i -> 10 `i `uc ]
+[; ;lora.c: 104:     case 0x00:
+[e :U 2039 ]
 "105
-[; ;lora.c: 105:         temporaryBytesArray[3]=temporaryBytesArray[3]%10;
-[e = *U + &U _temporaryBytesArray * -> -> -> 3 `i `ui `ux -> -> # *U &U _temporaryBytesArray `ui `ux -> % -> *U + &U _temporaryBytesArray * -> -> -> 3 `i `ui `ux -> -> # *U &U _temporaryBytesArray `ui `ux `i -> 10 `i `uc ]
+[; ;lora.c: 105:         transmitStringToLora("#ON01TIME");
+[e ( _transmitStringToLora (1 :s 1C ]
 "106
-[; ;lora.c: 106:         temporaryBytesArray[4]=fieldValve[FieldNo].onPeriod/100;
-[e = *U + &U _temporaryBytesArray * -> -> -> 4 `i `ui `ux -> -> # *U &U _temporaryBytesArray `ui `ux -> / -> . *U + &U _fieldValve * -> _FieldNo `ux -> -> # *U &U _fieldValve `ui `ux 2 `i -> 100 `i `uc ]
+[; ;lora.c: 106:         myMsDelay(10);
+[e ( _myMsDelay (1 -> -> 10 `i `ui ]
 "107
-[; ;lora.c: 107:         transmitNumberToLora(temporaryBytesArray+2,3);
-[e ( _transmitNumberToLora (2 , + &U _temporaryBytesArray * -> -> 2 `i `x -> -> # *U &U _temporaryBytesArray `i `x -> -> 3 `i `uc ]
+[; ;lora.c: 107:         if (fieldValve[FieldNo].onPeriod > 0 && fieldValve[FieldNo].onPeriod < 995) {
+[e $ ! && > . *U + &U _fieldValve * -> _FieldNo `ux -> -> # *U &U _fieldValve `ui `ux 2 -> -> 0 `i `ui < . *U + &U _fieldValve * -> _FieldNo `ux -> -> # *U &U _fieldValve `ui `ux 2 -> -> 995 `i `ui 2040  ]
+{
 "108
-[; ;lora.c: 108:         transmitStringToLora("SLAVE");
-[e ( _transmitStringToLora (1 :s 2C ]
+[; ;lora.c: 108:             lower8bits = fieldValve[FieldNo].onPeriod + 5;
+[e = _lower8bits + . *U + &U _fieldValve * -> _FieldNo `ux -> -> # *U &U _fieldValve `ui `ux 2 -> -> 5 `i `ui ]
 "109
-[; ;lora.c: 109:         transmitNumberToLora(temporaryBytesArray,2);
-[e ( _transmitNumberToLora (2 , &U _temporaryBytesArray -> -> 2 `i `uc ]
+[; ;lora.c: 109:         }
+}
+[e $U 2041  ]
 "110
-[; ;lora.c: 110:         transmitStringToLora("$");
-[e ( _transmitStringToLora (1 :s 3C ]
-"111
-[; ;lora.c: 111:         myMsDelay(100);
-[e ( _myMsDelay (1 -> -> 100 `i `ui ]
-"112
-[; ;lora.c: 112:         break;
-[e $U 2037  ]
-"113
-[; ;lora.c: 113:     case 0x01:
+[; ;lora.c: 110:         else {
 [e :U 2040 ]
-"114
-[; ;lora.c: 114:         transmitStringToLora("#OFF01SLAVE");
-[e ( _transmitStringToLora (1 :s 4C ]
-"115
-[; ;lora.c: 115:         transmitNumberToLora(temporaryBytesArray,2);
-[e ( _transmitNumberToLora (2 , &U _temporaryBytesArray -> -> 2 `i `uc ]
-"116
-[; ;lora.c: 116:         transmitStringToLora("$");
-[e ( _transmitStringToLora (1 :s 5C ]
-"117
-[; ;lora.c: 117:         myMsDelay(100);
-[e ( _myMsDelay (1 -> -> 100 `i `ui ]
-"118
-[; ;lora.c: 118:         break;
-[e $U 2037  ]
-"119
-[; ;lora.c: 119:     case 0x02:
+{
+"111
+[; ;lora.c: 111:             lower8bits = fieldValve[FieldNo].onPeriod;
+[e = _lower8bits . *U + &U _fieldValve * -> _FieldNo `ux -> -> # *U &U _fieldValve `ui `ux 2 ]
+"112
+[; ;lora.c: 112:         }
+}
 [e :U 2041 ]
+"118
+[; ;lora.c: 118:         temporaryBytesArray[4] = (unsigned char) ((lower8bits / 100) + 48);
+[e = *U + &U _temporaryBytesArray * -> -> -> 4 `i `ui `ux -> -> # *U &U _temporaryBytesArray `ui `ux -> + / _lower8bits -> -> 100 `i `ui -> -> 48 `i `ui `uc ]
+"119
+[; ;lora.c: 119:         lower8bits = lower8bits % 100;
+[e = _lower8bits % _lower8bits -> -> 100 `i `ui ]
 "120
-[; ;lora.c: 120:         transmitStringToLora("#GETSENSOR01SLAVE");
-[e ( _transmitStringToLora (1 :s 6C ]
+[; ;lora.c: 120:         temporaryBytesArray[5] = (unsigned char) ((lower8bits / 10) + 48);
+[e = *U + &U _temporaryBytesArray * -> -> -> 5 `i `ui `ux -> -> # *U &U _temporaryBytesArray `ui `ux -> + / _lower8bits -> -> 10 `i `ui -> -> 48 `i `ui `uc ]
 "121
-[; ;lora.c: 121:         transmitNumberToLora(temporaryBytesArray,2);
-[e ( _transmitNumberToLora (2 , &U _temporaryBytesArray -> -> 2 `i `uc ]
+[; ;lora.c: 121:         lower8bits = lower8bits % 10;
+[e = _lower8bits % _lower8bits -> -> 10 `i `ui ]
 "122
-[; ;lora.c: 122:         transmitStringToLora("$");
-[e ( _transmitStringToLora (1 :s 7C ]
+[; ;lora.c: 122:         temporaryBytesArray[6] = (unsigned char) (lower8bits + 48);
+[e = *U + &U _temporaryBytesArray * -> -> -> 6 `i `ui `ux -> -> # *U &U _temporaryBytesArray `ui `ux -> + _lower8bits -> -> 48 `i `ui `uc ]
 "123
-[; ;lora.c: 123:         myMsDelay(100);
-[e ( _myMsDelay (1 -> -> 100 `i `ui ]
+[; ;lora.c: 123:         transmitNumberToLora(temporaryBytesArray+4,3);
+[e ( _transmitNumberToLora (2 , + &U _temporaryBytesArray * -> -> 4 `i `x -> -> # *U &U _temporaryBytesArray `i `x -> -> 3 `i `uc ]
 "124
-[; ;lora.c: 124:         break;
-[e $U 2037  ]
+[; ;lora.c: 124:         transmitStringToLora("SLAVE");
+[e ( _transmitStringToLora (1 :s 2C ]
 "125
-[; ;lora.c: 125:     }
+[; ;lora.c: 125:         transmitNumberToLora(temporaryBytesArray,2);
+[e ( _transmitNumberToLora (2 , &U _temporaryBytesArray -> -> 2 `i `uc ]
+"126
+[; ;lora.c: 126:         transmitStringToLora("$");
+[e ( _transmitStringToLora (1 :s 3C ]
+"127
+[; ;lora.c: 127:         myMsDelay(100);
+[e ( _myMsDelay (1 -> -> 100 `i `ui ]
+"128
+[; ;lora.c: 128:         break;
+[e $U 2037  ]
+"129
+[; ;lora.c: 129:     case 0x01:
+[e :U 2042 ]
+"130
+[; ;lora.c: 130:         transmitStringToLora("#OFF01SLAVE");
+[e ( _transmitStringToLora (1 :s 4C ]
+"131
+[; ;lora.c: 131:         transmitNumberToLora(temporaryBytesArray,2);
+[e ( _transmitNumberToLora (2 , &U _temporaryBytesArray -> -> 2 `i `uc ]
+"132
+[; ;lora.c: 132:         transmitStringToLora("$");
+[e ( _transmitStringToLora (1 :s 5C ]
+"133
+[; ;lora.c: 133:         myMsDelay(100);
+[e ( _myMsDelay (1 -> -> 100 `i `ui ]
+"134
+[; ;lora.c: 134:         break;
+[e $U 2037  ]
+"135
+[; ;lora.c: 135:     case 0x02:
+[e :U 2043 ]
+"136
+[; ;lora.c: 136:         transmitStringToLora("#GETSENSOR01SLAVE");
+[e ( _transmitStringToLora (1 :s 6C ]
+"137
+[; ;lora.c: 137:         transmitNumberToLora(temporaryBytesArray,2);
+[e ( _transmitNumberToLora (2 , &U _temporaryBytesArray -> -> 2 `i `uc ]
+"138
+[; ;lora.c: 138:         transmitStringToLora("$");
+[e ( _transmitStringToLora (1 :s 7C ]
+"139
+[; ;lora.c: 139:         myMsDelay(100);
+[e ( _myMsDelay (1 -> -> 100 `i `ui ]
+"140
+[; ;lora.c: 140:         break;
+[e $U 2037  ]
+"141
+[; ;lora.c: 141:     }
 }
 [e $U 2037  ]
 [e :U 2038 ]
 [e [\ -> _Action `i , $ -> 0 `i 2039
- , $ -> 1 `i 2040
- , $ -> 2 `i 2041
+ , $ -> 1 `i 2042
+ , $ -> 2 `i 2043
  2037 ]
 [e :U 2037 ]
-"126
-[; ;lora.c: 126:     while (!controllerCommandExecuted);
-[e $U 2042  ]
-[e :U 2043 ]
-[e :U 2042 ]
-[e $ ! != -> _controllerCommandExecuted `i -> 0 `i 2043  ]
-[e :U 2044 ]
-"127
-[; ;lora.c: 127:     checkLoraConnection = 0;
-[e = _checkLoraConnection -> -> 0 `i `a ]
-"128
-[; ;lora.c: 128:     if (LoraConnectionFailed) {
-[e $ ! != -> _LoraConnectionFailed `i -> 0 `i 2045  ]
-{
-"129
-[; ;lora.c: 129:         loraAttempt++;
-[e ++ _loraAttempt -> -> 1 `i `uc ]
-"130
-[; ;lora.c: 130:     }
-}
-[e $U 2046  ]
-"131
-[; ;lora.c: 131:     else if (isLoraResponseAck(Action,FieldNo)) {
+"142
+[; ;lora.c: 142:     while (!controllerCommandExecuted);
+[e $U 2044  ]
 [e :U 2045 ]
-[e $ ! != -> ( _isLoraResponseAck (2 , _Action _FieldNo `i -> 0 `i 2047  ]
+[e :U 2044 ]
+[e $ ! != -> _controllerCommandExecuted `i -> 0 `i 2045  ]
+[e :U 2046 ]
+"143
+[; ;lora.c: 143:     PIR5bits.TMR3IF = 1;
+[e = . . _PIR5bits 0 2 -> -> 1 `i `uc ]
+"144
+[; ;lora.c: 144:     checkLoraConnection = 0;
+[e = _checkLoraConnection -> -> 0 `i `a ]
+"145
+[; ;lora.c: 145:     if (LoraConnectionFailed) {
+[e $ ! != -> _LoraConnectionFailed `i -> 0 `i 2047  ]
 {
-"132
-[; ;lora.c: 132:         LoraConnectionFailed = 0;
-[e = _LoraConnectionFailed -> -> 0 `i `a ]
-"133
-[; ;lora.c: 133:         loraAttempt = 99;
-[e = _loraAttempt -> -> 99 `i `uc ]
-"134
-[; ;lora.c: 134:     }
+"146
+[; ;lora.c: 146:         loraAttempt++;
+[e ++ _loraAttempt -> -> 1 `i `uc ]
+"152
+[; ;lora.c: 152:     }
 }
 [e $U 2048  ]
-"135
-[; ;lora.c: 135:     else if (isLoraResponseAck(Action,FieldNo)== off) {
+"153
+[; ;lora.c: 153:     else if (isLoraResponseAck(Action,FieldNo)) {
 [e :U 2047 ]
-[e $ ! == -> ( _isLoraResponseAck (2 , _Action _FieldNo `i -> _off `i 2049  ]
+[e $ ! != -> ( _isLoraResponseAck (2 , _Action _FieldNo `i -> 0 `i 2049  ]
 {
-"136
-[; ;lora.c: 136:         LoraConnectionFailed = 1;
-[e = _LoraConnectionFailed -> -> 1 `i `a ]
-"137
-[; ;lora.c: 137:         loraAttempt++;
-[e ++ _loraAttempt -> -> 1 `i `uc ]
-"138
-[; ;lora.c: 138:     }
+"154
+[; ;lora.c: 154:         LoraConnectionFailed = 0;
+[e = _LoraConnectionFailed -> -> 0 `i `a ]
+"155
+[; ;lora.c: 155:         loraAttempt = 99;
+[e = _loraAttempt -> -> 99 `i `uc ]
+"161
+[; ;lora.c: 161:     }
 }
+[e $U 2050  ]
+"162
+[; ;lora.c: 162:     else {
 [e :U 2049 ]
+{
+"163
+[; ;lora.c: 163:         LoraConnectionFailed = 1;
+[e = _LoraConnectionFailed -> -> 1 `i `a ]
+"164
+[; ;lora.c: 164:         loraAttempt++;
+[e ++ _loraAttempt -> -> 1 `i `uc ]
+"170
+[; ;lora.c: 170:     }
+}
+[e :U 2050 ]
 [e :U 2048 ]
-[e :U 2046 ]
-"139
-[; ;lora.c: 139:     PIR5bits.TMR3IF = 1;
-[e = . . _PIR5bits 0 2 -> -> 1 `i `uc ]
-"140
-[; ;lora.c: 140:     setBCDdigit(0x0F,0);
+"171
+[; ;lora.c: 171:     deleteDecodedString();
+[e ( _deleteDecodedString ..  ]
+"172
+[; ;lora.c: 172:     setBCDdigit(0x0F,0);
 [e ( _setBCDdigit (2 , -> -> 15 `i `uc -> -> 0 `i `a ]
-"141
-[; ;lora.c: 141:     myMsDelay(500);
+"173
+[; ;lora.c: 173:     myMsDelay(500);
 [e ( _myMsDelay (1 -> -> 500 `i `ui ]
-"148
-[; ;lora.c: 148: }
+"180
+[; ;lora.c: 180: }
 [e :UE 2033 ]
 }
-"155
-[; ;lora.c: 155: _Bool isLoraResponseAck(unsigned char Action, unsigned char FieldNo) {
+"187
+[; ;lora.c: 187: _Bool isLoraResponseAck(unsigned char Action, unsigned char FieldNo) {
 [v _isLoraResponseAck `(a ~T0 @X0 1 ef2`uc`uc ]
 {
 [e :U _isLoraResponseAck ]
 [v _Action `uc ~T0 @X0 1 r1 ]
 [v _FieldNo `uc ~T0 @X0 1 r2 ]
 [f ]
-"161
-[; ;lora.c: 161:     unsigned char field = 99;
+"193
+[; ;lora.c: 193:     unsigned char field = 99;
 [v _field `uc ~T0 @X0 1 a ]
 [e = _field -> -> 99 `i `uc ]
-"162
-[; ;lora.c: 162:     myMsDelay(100);
-[e ( _myMsDelay (1 -> -> 100 `i `ui ]
-"163
-[; ;lora.c: 163:     switch (Action) {
-[e $U 2052  ]
-{
-"164
-[; ;lora.c: 164:     case 0x00:
-[e :U 2053 ]
-"165
-[; ;lora.c: 165:         field = fetchFieldNo(10);
-[e = _field ( _fetchFieldNo (1 -> -> 10 `i `uc ]
-"166
-[; ;lora.c: 166:         if(strncmp((char*)(decodedString+1),(char*)(slaveOnOK),(9)) == 0 && strncmp((char*)(decodedString+9),(char*)(ack),(3)) == 0 && field == FieldNo) {
-[e $ ! && && == ( _strncmp (3 , , -> -> + &U _decodedString * -> -> 1 `i `x -> -> # *U &U _decodedString `i `x `*uc `*Cuc -> -> &U _slaveOnOK `*uc `*Cuc -> -> 9 `i `ui -> 0 `i == ( _strncmp (3 , , -> -> + &U _decodedString * -> -> 9 `i `x -> -> # *U &U _decodedString `i `x `*uc `*Cuc -> -> &U _ack `*uc `*Cuc -> -> 3 `i `ui -> 0 `i == -> _field `i -> _FieldNo `i 2054  ]
-{
-"167
-[; ;lora.c: 167:             return 1;
-[e ) -> -> 1 `i `a ]
-[e $UE 2050  ]
-"168
-[; ;lora.c: 168:         }
-}
-[e :U 2054 ]
-"169
-[; ;lora.c: 169:         break;
-[e $U 2051  ]
-"170
-[; ;lora.c: 170:     case 0x01:
-[e :U 2055 ]
-"171
-[; ;lora.c: 171:         field = fetchFieldNo(11);
-[e = _field ( _fetchFieldNo (1 -> -> 11 `i `uc ]
-"172
-[; ;lora.c: 172:         if(strncmp((char*)(decodedString+1),(char*)(slaveOffOK),(10)) == 0 && strncmp((char*)(decodedString+10),(char*)(ack),(3)) == 0 && field == FieldNo) {
-[e $ ! && && == ( _strncmp (3 , , -> -> + &U _decodedString * -> -> 1 `i `x -> -> # *U &U _decodedString `i `x `*uc `*Cuc -> -> &U _slaveOffOK `*uc `*Cuc -> -> 10 `i `ui -> 0 `i == ( _strncmp (3 , , -> -> + &U _decodedString * -> -> 10 `i `x -> -> # *U &U _decodedString `i `x `*uc `*Cuc -> -> &U _ack `*uc `*Cuc -> -> 3 `i `ui -> 0 `i == -> _field `i -> _FieldNo `i 2056  ]
-{
-"173
-[; ;lora.c: 173:             return 1;
-[e ) -> -> 1 `i `a ]
-[e $UE 2050  ]
-"174
-[; ;lora.c: 174:         }
-}
-[e :U 2056 ]
-"175
-[; ;lora.c: 175:         break;
-[e $U 2051  ]
-"176
-[; ;lora.c: 176:     case 0x02:
-[e :U 2057 ]
-"177
-[; ;lora.c: 177:         field = fetchFieldNo(11);
-[e = _field ( _fetchFieldNo (1 -> -> 11 `i `uc ]
-"178
-[; ;lora.c: 178:         if(strncmp((char*)(decodedString+6),(char*)(slave),(5)) == 0 && field == FieldNo) {
-[e $ ! && == ( _strncmp (3 , , -> -> + &U _decodedString * -> -> 6 `i `x -> -> # *U &U _decodedString `i `x `*uc `*Cuc -> -> &U _slave `*uc `*Cuc -> -> 5 `i `ui -> 0 `i == -> _field `i -> _FieldNo `i 2058  ]
-{
-"179
-[; ;lora.c: 179:             return 1;
-[e ) -> -> 1 `i `a ]
-[e $UE 2050  ]
-"180
-[; ;lora.c: 180:         }
-}
-[e :U 2058 ]
-"181
-[; ;lora.c: 181:     }
-}
-[e $U 2051  ]
-[e :U 2052 ]
-[e [\ -> _Action `i , $ -> 0 `i 2053
- , $ -> 1 `i 2055
- , $ -> 2 `i 2057
- 2051 ]
-[e :U 2051 ]
-"182
-[; ;lora.c: 182:     if(strncmp((char*)(decodedString+1),(char*)(masterError),(11)) == 0) {
-[e $ ! == ( _strncmp (3 , , -> -> + &U _decodedString * -> -> 1 `i `x -> -> # *U &U _decodedString `i `x `*uc `*Cuc -> -> &U _masterError `*uc `*Cuc -> -> 11 `i `ui -> 0 `i 2059  ]
-{
-"183
-[; ;lora.c: 183:         return 0;
-[e ) -> -> 0 `i `a ]
-[e $UE 2050  ]
-"184
-[; ;lora.c: 184:     }
-}
-[e $U 2060  ]
-"185
-[; ;lora.c: 185:     else if(strncmp((char*)(decodedString+1),(char*)(slaveError),(10)) == 0) {
-[e :U 2059 ]
-[e $ ! == ( _strncmp (3 , , -> -> + &U _decodedString * -> -> 1 `i `x -> -> # *U &U _decodedString `i `x `*uc `*Cuc -> -> &U _slaveError `*uc `*Cuc -> -> 10 `i `ui -> 0 `i 2061  ]
-{
-"186
-[; ;lora.c: 186:         return 0;
-[e ) -> -> 0 `i `a ]
-[e $UE 2050  ]
-"187
-[; ;lora.c: 187:     }
-}
-[e :U 2061 ]
-[e :U 2060 ]
-"188
-[; ;lora.c: 188:     return 0;
-[e ) -> -> 0 `i `a ]
-[e $UE 2050  ]
+"194
+[; ;lora.c: 194:     unsigned char index = 6;
+[v _index `uc ~T0 @X0 1 a ]
+[e = _index -> -> 6 `i `uc ]
 "195
-[; ;lora.c: 195: }
-[e :UE 2050 ]
+[; ;lora.c: 195:     myMsDelay(100);
+[e ( _myMsDelay (1 -> -> 100 `i `ui ]
+"196
+[; ;lora.c: 196:     switch (Action) {
+[e $U 2053  ]
+{
+"197
+[; ;lora.c: 197:     case 0x00:
+[e :U 2054 ]
+"198
+[; ;lora.c: 198:         field = fetchFieldNo(10);
+[e = _field ( _fetchFieldNo (1 -> -> 10 `i `uc ]
+"199
+[; ;lora.c: 199:         if(strncmp((char*)(decodedString+1),(char*)(on),(2)) == 0 && strncmp((char*)(decodedString+12),(char*)(ack),(3)) == 0 && field == FieldNo) {
+[e $ ! && && == ( _strncmp (3 , , -> -> + &U _decodedString * -> -> 1 `i `x -> -> # *U &U _decodedString `i `x `*uc `*Cuc -> -> &U _on `*uc `*Cuc -> -> 2 `i `ui -> 0 `i == ( _strncmp (3 , , -> -> + &U _decodedString * -> -> 12 `i `x -> -> # *U &U _decodedString `i `x `*uc `*Cuc -> -> &U _ack `*uc `*Cuc -> -> 3 `i `ui -> 0 `i == -> _field `i -> _FieldNo `i 2055  ]
+{
+"200
+[; ;lora.c: 200:             return 1;
+[e ) -> -> 1 `i `a ]
+[e $UE 2051  ]
+"201
+[; ;lora.c: 201:         }
+}
+[e :U 2055 ]
+"202
+[; ;lora.c: 202:         break;
+[e $U 2052  ]
+"203
+[; ;lora.c: 203:     case 0x01:
+[e :U 2056 ]
+"204
+[; ;lora.c: 204:         field = fetchFieldNo(11);
+[e = _field ( _fetchFieldNo (1 -> -> 11 `i `uc ]
+"205
+[; ;lora.c: 205:         if(strncmp((char*)(decodedString+1),(char*)(off),(3)) == 0 && strncmp((char*)(decodedString+13),(char*)(ack),(3)) == 0 && field == FieldNo) {
+[e $ ! && && == ( _strncmp (3 , , -> -> + &U _decodedString * -> -> 1 `i `x -> -> # *U &U _decodedString `i `x `*uc `*Cuc -> -> &U _off `*uc `*Cuc -> -> 3 `i `ui -> 0 `i == ( _strncmp (3 , , -> -> + &U _decodedString * -> -> 13 `i `x -> -> # *U &U _decodedString `i `x `*uc `*Cuc -> -> &U _ack `*uc `*Cuc -> -> 3 `i `ui -> 0 `i == -> _field `i -> _FieldNo `i 2057  ]
+{
+"206
+[; ;lora.c: 206:             return 1;
+[e ) -> -> 1 `i `a ]
+[e $UE 2051  ]
+"207
+[; ;lora.c: 207:         }
+}
+[e :U 2057 ]
+"208
+[; ;lora.c: 208:         break;
+[e $U 2052  ]
+"209
+[; ;lora.c: 209:     case 0x02:
+[e :U 2058 ]
+"210
+[; ;lora.c: 210:         moistureLevel = 0;
+[e = _moistureLevel -> -> 0 `i `ui ]
+"211
+[; ;lora.c: 211:         for ( msgIndex = 1; msgIndex < 6 ; msgIndex++) {
+{
+[e = _msgIndex -> -> 1 `i `uc ]
+[e $ < -> _msgIndex `i -> 6 `i 2059  ]
+[e $U 2060  ]
+[e :U 2059 ]
+{
+"213
+[; ;lora.c: 213:             if (isNumber(decodedString[msgIndex])) {
+[e $ ! != -> ( _isNumber (1 *U + &U _decodedString * -> _msgIndex `ux -> -> # *U &U _decodedString `ui `ux `i -> 0 `i 2062  ]
+{
+"214
+[; ;lora.c: 214:                 if (decodedString[msgIndex + 1] == 'S') {
+[e $ ! == -> *U + &U _decodedString * -> -> + -> _msgIndex `i -> 1 `i `ui `ux -> -> # *U &U _decodedString `ui `ux `ui -> 83 `ui 2063  ]
+{
+"215
+[; ;lora.c: 215:                     decodedString[msgIndex] = decodedString[msgIndex] - 48;
+[e = *U + &U _decodedString * -> _msgIndex `ux -> -> # *U &U _decodedString `ui `ux -> - -> *U + &U _decodedString * -> _msgIndex `ux -> -> # *U &U _decodedString `ui `ux `i -> 48 `i `uc ]
+"216
+[; ;lora.c: 216:                     moistureLevel = moistureLevel + decodedString[msgIndex];
+[e = _moistureLevel + _moistureLevel -> *U + &U _decodedString * -> _msgIndex `ux -> -> # *U &U _decodedString `ui `ux `ui ]
+"217
+[; ;lora.c: 217:                     index = msgIndex + 1;
+[e = _index -> + -> _msgIndex `i -> 1 `i `uc ]
+"218
+[; ;lora.c: 218:                     msgIndex = 99;
+[e = _msgIndex -> -> 99 `i `uc ]
+"219
+[; ;lora.c: 219:                 }
+}
+[e $U 2064  ]
+"220
+[; ;lora.c: 220:                 else {
+[e :U 2063 ]
+{
+"221
+[; ;lora.c: 221:                     decodedString[msgIndex] = decodedString[msgIndex] - 48;
+[e = *U + &U _decodedString * -> _msgIndex `ux -> -> # *U &U _decodedString `ui `ux -> - -> *U + &U _decodedString * -> _msgIndex `ux -> -> # *U &U _decodedString `ui `ux `i -> 48 `i `uc ]
+"222
+[; ;lora.c: 222:                     decodedString[msgIndex] = decodedString[msgIndex] * 10;
+[e = *U + &U _decodedString * -> _msgIndex `ux -> -> # *U &U _decodedString `ui `ux -> * -> *U + &U _decodedString * -> _msgIndex `ux -> -> # *U &U _decodedString `ui `ux `i -> 10 `i `uc ]
+"223
+[; ;lora.c: 223:                     moistureLevel = moistureLevel * 10;
+[e = _moistureLevel * _moistureLevel -> -> 10 `i `ui ]
+"224
+[; ;lora.c: 224:                     moistureLevel = moistureLevel + decodedString[msgIndex];
+[e = _moistureLevel + _moistureLevel -> *U + &U _decodedString * -> _msgIndex `ux -> -> # *U &U _decodedString `ui `ux `ui ]
+"225
+[; ;lora.c: 225:                 }
+}
+[e :U 2064 ]
+"226
+[; ;lora.c: 226:             }
+}
+[e $U 2065  ]
+"227
+[; ;lora.c: 227:             else {
+[e :U 2062 ]
+{
+"228
+[; ;lora.c: 228:                 break;
+[e $U 2060  ]
+"229
+[; ;lora.c: 229:             }
+}
+[e :U 2065 ]
+"230
+[; ;lora.c: 230:         }
+}
+[e ++ _msgIndex -> -> 1 `i `uc ]
+[e $ < -> _msgIndex `i -> 6 `i 2059  ]
+[e :U 2060 ]
+}
+"231
+[; ;lora.c: 231:         field = fetchFieldNo(index+5);
+[e = _field ( _fetchFieldNo (1 -> + -> _index `i -> 5 `i `uc ]
+"232
+[; ;lora.c: 232:         if(strncmp((char*)(decodedString+index),(char*)(slave),(5)) == 0 && field == FieldNo) {
+[e $ ! && == ( _strncmp (3 , , -> -> + &U _decodedString * -> -> _index `i `x -> -> # *U &U _decodedString `i `x `*uc `*Cuc -> -> &U _slave `*uc `*Cuc -> -> 5 `i `ui -> 0 `i == -> _field `i -> _FieldNo `i 2066  ]
+{
+"233
+[; ;lora.c: 233:             return 1;
+[e ) -> -> 1 `i `a ]
+[e $UE 2051  ]
+"234
+[; ;lora.c: 234:         }
+}
+[e $U 2067  ]
+"235
+[; ;lora.c: 235:         else if(strncmp((char*)(decodedString+1),(char*)(sensor),(6)) == 0 && strncmp((char*)(decodedString+7),(char*)(error),(5)) == 0 && strncmp((char*)(decodedString+12),(char*)(slave),(5)) == 0) {
+[e :U 2066 ]
+[e $ ! && && == ( _strncmp (3 , , -> -> + &U _decodedString * -> -> 1 `i `x -> -> # *U &U _decodedString `i `x `*uc `*Cuc -> -> &U _sensor `*uc `*Cuc -> -> 6 `i `ui -> 0 `i == ( _strncmp (3 , , -> -> + &U _decodedString * -> -> 7 `i `x -> -> # *U &U _decodedString `i `x `*uc `*Cuc -> -> &U _error `*uc `*Cuc -> -> 5 `i `ui -> 0 `i == ( _strncmp (3 , , -> -> + &U _decodedString * -> -> 12 `i `x -> -> # *U &U _decodedString `i `x `*uc `*Cuc -> -> &U _slave `*uc `*Cuc -> -> 5 `i `ui -> 0 `i 2068  ]
+{
+"236
+[; ;lora.c: 236:             moistureSensorFailed = 1;
+[e = _moistureSensorFailed -> -> 1 `i `a ]
+"237
+[; ;lora.c: 237:             return 1;
+[e ) -> -> 1 `i `a ]
+[e $UE 2051  ]
+"238
+[; ;lora.c: 238:         }
+}
+[e :U 2068 ]
+[e :U 2067 ]
+"239
+[; ;lora.c: 239:     }
+}
+[e $U 2052  ]
+[e :U 2053 ]
+[e [\ -> _Action `i , $ -> 0 `i 2054
+ , $ -> 1 `i 2056
+ , $ -> 2 `i 2058
+ 2052 ]
+[e :U 2052 ]
+"240
+[; ;lora.c: 240:     if(strncmp((char*)(decodedString+1),(char*)(master),(6)) == 0 && strncmp((char*)(decodedString+7),(char*)(error),(5)) == 0) {
+[e $ ! && == ( _strncmp (3 , , -> -> + &U _decodedString * -> -> 1 `i `x -> -> # *U &U _decodedString `i `x `*uc `*Cuc -> -> &U _master `*uc `*Cuc -> -> 6 `i `ui -> 0 `i == ( _strncmp (3 , , -> -> + &U _decodedString * -> -> 7 `i `x -> -> # *U &U _decodedString `i `x `*uc `*Cuc -> -> &U _error `*uc `*Cuc -> -> 5 `i `ui -> 0 `i 2069  ]
+{
+"241
+[; ;lora.c: 241:         return 0;
+[e ) -> -> 0 `i `a ]
+[e $UE 2051  ]
+"242
+[; ;lora.c: 242:     }
+}
+[e $U 2070  ]
+"243
+[; ;lora.c: 243:     else if(strncmp((char*)(decodedString+1),(char*)(slave),(5)) == 0 && strncmp((char*)(decodedString+6),(char*)(error),(5)) == 0) {
+[e :U 2069 ]
+[e $ ! && == ( _strncmp (3 , , -> -> + &U _decodedString * -> -> 1 `i `x -> -> # *U &U _decodedString `i `x `*uc `*Cuc -> -> &U _slave `*uc `*Cuc -> -> 5 `i `ui -> 0 `i == ( _strncmp (3 , , -> -> + &U _decodedString * -> -> 6 `i `x -> -> # *U &U _decodedString `i `x `*uc `*Cuc -> -> &U _error `*uc `*Cuc -> -> 5 `i `ui -> 0 `i 2071  ]
+{
+"244
+[; ;lora.c: 244:         return 0;
+[e ) -> -> 0 `i `a ]
+[e $UE 2051  ]
+"245
+[; ;lora.c: 245:     }
+}
+[e :U 2071 ]
+[e :U 2070 ]
+"246
+[; ;lora.c: 246:     return 0;
+[e ) -> -> 0 `i `a ]
+[e $UE 2051  ]
+"253
+[; ;lora.c: 253: }
+[e :UE 2051 ]
 }
 [a 6C 35 71 69 84 83 69 78 83 79 82 48 49 83 76 65 86 69 0 ]
 [a 4C 35 79 70 70 48 49 83 76 65 86 69 0 ]

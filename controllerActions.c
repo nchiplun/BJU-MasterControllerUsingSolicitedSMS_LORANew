@@ -81,9 +81,9 @@ This function is called to check if string is Base64 encoded
 The purpose of this function is to check if string has space or = or multiple of 4.
 
  **************************************************************************************************************************/
-_Bool isBase64String(char * string) {
-    unsigned int stringLength;
-    char * s = string;
+_Bool isBase64String(unsigned char * string) {
+    //unsigned int stringLength;
+    unsigned char * s = string;
 	while (*s++ != '\0') {
         if (*s == space) {
             return false;
@@ -128,7 +128,7 @@ The purpose of this function is to receive local time stamp from GSM module
  **************************************************************************************************************************/
 void getDateFromGSM(void) {
     unsigned char index = 0;
-    timer3Count = 15;  // 15 sec window
+    timer3Count = 30;  // 30 sec window
     #ifdef DEBUG_MODE_ON_H
     //********Debug log#start************//
     transmitStringToDebug("getDateFromGSM_IN\r\n");
@@ -140,9 +140,8 @@ void getDateFromGSM(void) {
     setBCDdigit(0x0B,1);  // (]) BCD indication for getDateFromGSM action
     while (!controllerCommandExecuted) {
         transmitStringToGSM("AT+CCLK?\r\n"); // To get local time stamp  +CCLK: "18/05/26,12:00:06+22"   ok
-        myMsDelay(1000);
         if (!controllerCommandExecuted) {
-            myMsDelay(30000);
+            myMsDelay(5000);
         }
     }
     setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
@@ -425,7 +424,7 @@ void scanValveScheduleAndGetSleepCount(void) {
         }*/
     
     if (valveDue) {
-        /* check Fertigation status and set sleep count to delay start*/
+        /* check Fertigation status and set sleep count to fertigation wet period*/
         if(fieldValve[iterator].isFertigationEnabled && fieldValve[iterator].fertigationInstance != 0) {
             sleepCount = fieldValve[iterator].fertigationDelay; // calculate sleep count for fertigation delay 
             fieldValve[iterator].fertigationStage = wetPeriod;
@@ -667,7 +666,7 @@ The Action is decided upon Type of message received.
 void extractReceivedSms(void) {
     unsigned char count = CLEAR, onHour = CLEAR, onMinute = CLEAR;
     unsigned int digit = CLEAR;
-    timer3Count = 15;  // 15 sec window
+    timer3Count = 30;  // 30 sec window
     #ifdef DEBUG_MODE_ON_H
     //********Debug log#start************//
     transmitStringToDebug("extractReceivedSms_IN\r\n");
@@ -704,14 +703,14 @@ void extractReceivedSms(void) {
             transmitStringToDebug((char *)stringToDecode);
             transmitStringToDebug("\r\n");
             //********Debug log#end**************//
-            deleteGsmResponse();
             #endif
-            if (isBase64String((char *)stringToDecode)) {
+            deleteGsmResponse();
+            if (isBase64String((unsigned char *)stringToDecode)) {
                 deleteDecodedString();
                 base64Decoder();
             }
             else {
-                deleteGsmResponse();
+                //deleteGsmResponse();
                 setBCDdigit(0x05,0);  // (5.) BCD indication for Incorrect SMS format
                 myMsDelay(2000);
                 /***************************/ 
@@ -820,7 +819,7 @@ void extractReceivedSms(void) {
                         else {
                             switch (count) {
                             case 1: // code to extract on period;
-                                fieldValve[iterator].onPeriod = (unsigned char)digit;
+                                fieldValve[iterator].onPeriod = digit;
                                 digit = CLEAR;
                                 break;
                             case 2: // code to extract off period;
@@ -991,7 +990,7 @@ void extractReceivedSms(void) {
                         /***************************/                    
                     }
                     else {
-                        for (msgIndex = 9; count < 3 ; msgIndex++) {
+                        for (msgIndex = 9; count < 15 ; msgIndex++) {
                             if (isNumber(decodedString[msgIndex])) {
                                 if (decodedString[msgIndex + 1] == space) {
                                     decodedString[msgIndex] = decodedString[msgIndex] - 48;
@@ -1008,15 +1007,63 @@ void extractReceivedSms(void) {
                                 count++;
                                 switch (count) {
                                 case 1: // code to extract fertigationDelay;
-                                    fieldValve[iterator].fertigationDelay = (unsigned char)digit;
+                                    fieldValve[iterator].fertigationDelay = digit;
                                     digit = CLEAR;
                                     break;
                                 case 2: // code to extract fertigationONperiod;
-                                    fieldValve[iterator].fertigationONperiod = (unsigned char)digit;
+                                    fieldValve[iterator].fertigationONperiod = digit;
                                     digit = CLEAR;
                                     break;
                                 case 3: // code to extract fertigationInstance;
                                     fieldValve[iterator].fertigationInstance = (unsigned char)digit;
+                                    digit = CLEAR;
+                                    break;
+                                case 4: // code to extract injector1OnPeriod;
+                                    fieldValve[iterator].injector1OnPeriod = digit;
+                                    digit = CLEAR;
+                                    break;
+                                case 5: // code to extract injector1OffPeriod;
+                                    fieldValve[iterator].injector1OffPeriod = digit;
+                                    digit = CLEAR;
+                                    break;
+                                case 6: // code to extract injector1Cycle;
+                                    fieldValve[iterator].injector1Cycle = (unsigned char)digit;
+                                    digit = CLEAR;
+                                    break;
+                                case 7: // code to extract injector2OnPeriod;
+                                    fieldValve[iterator].injector2OnPeriod = digit;
+                                    digit = CLEAR;
+                                    break;
+                                case 8: // code to extract injector2OffPeriod;
+                                    fieldValve[iterator].injector2OffPeriod = digit;
+                                    digit = CLEAR;
+                                    break;
+                                case 9: // code to extract injector2Cycle;
+                                    fieldValve[iterator].injector2Cycle = (unsigned char)digit;
+                                    digit = CLEAR;
+                                    break;
+                                case 10: // code to extract injector3OnPeriod;
+                                    fieldValve[iterator].injector3OnPeriod = digit;
+                                    digit = CLEAR;
+                                    break;
+                                case 11: // code to extract injector3OffPeriod;
+                                    fieldValve[iterator].injector3OffPeriod = digit;
+                                    digit = CLEAR;
+                                    break;
+                                case 12: // code to extract injector3Cycle;
+                                    fieldValve[iterator].injector3Cycle = (unsigned char)digit;
+                                    digit = CLEAR;
+                                    break;
+                                case 13: // code to extract injector4OnPeriod;
+                                    fieldValve[iterator].injector4OnPeriod = digit;
+                                    digit = CLEAR;
+                                    break;
+                                case 14: // code to extract injector4OffPeriod;
+                                    fieldValve[iterator].injector4OffPeriod = digit;
+                                    digit = CLEAR;
+                                    break;
+                                case 15: // code to extract injector1Cycle;
+                                    fieldValve[iterator].injector4Cycle = (unsigned char)digit;
                                     fieldValve[iterator].fertigationStage = OFF;
                                     fieldValve[iterator].fertigationValveInterrupted = false;
                                     digit = CLEAR;
@@ -1886,7 +1933,7 @@ Here Timer1 is used to count frequency of pulses by measuring timer count for 1 
 _Bool isFieldMoistureSensorWet(unsigned char FieldNo) {
     unsigned long moistureLevelAvg = CLEAR;
     unsigned long timer1Value = CLEAR; // To store 16 bit SFR Timer1 Register value
-    unsigned long constant = 160000; // Constant to calculate frequency in Hz ~16MHz 
+    unsigned long constant = 160000; // Constant to calculate frequency in Hz ~16MHz 16000000/100 to convert freq from 5 digit to 3 digit
     unsigned char itr = CLEAR, avg = 20;
     
     moistureLevel = CLEAR; // To store moisture level in Hz
@@ -1919,7 +1966,7 @@ _Bool isFieldMoistureSensorWet(unsigned char FieldNo) {
     moistureLevel = LOW;
     checkMoistureSensor = true;
     moistureSensorFailed = false;
-    timer3Count = 15; // 15 second window
+    timer3Count = 5; // 5 second window
     // Averaging measured pulse width
     for (itr = 1; itr <= avg && !moistureSensorFailed; itr++) {
         T1CONbits.TMR1ON = OFF;
@@ -2263,11 +2310,9 @@ Here Timer1 is used to count frequency of pulses by measuring timer count for 1 
 
  **************************************************************************************************************************/
 _Bool isFieldMoistureSensorWetLora(unsigned char FieldNo) {
-    unsigned int digit = CLEAR;
     unsigned char action;
     loraAttempt = 0;
     action = 0x02;
-    moistureLevel = CLEAR; // To store moisture level in Hz
     setBCDdigit(0x09,0); // (9.) BCD indication for Moisture Sensor Failure Error
     moistureSensorFailed = false;
     // Averaging measured pulse width
@@ -2298,32 +2343,13 @@ _Bool isFieldMoistureSensorWetLora(unsigned char FieldNo) {
 
     do {
         sendCmdToLora(action,FieldNo); 
-    } while(loraAttempt<5);
-    if (!LoraConnectionFailed && loraAttempt == 99) {  // Successful Sensor reading
-        for ( msgIndex = 1; msgIndex < 6 ; msgIndex++) {
-            //is number
-            if (isNumber(decodedString[msgIndex])) {
-                if (decodedString[msgIndex + 1] == 'S') {
-                    decodedString[msgIndex] = decodedString[msgIndex] - 48;
-                    digit = digit + decodedString[msgIndex];
-                } 
-                else {
-                    decodedString[msgIndex] = decodedString[msgIndex] - 48;
-                    decodedString[msgIndex] = decodedString[msgIndex] * 10;
-                    digit = digit * 10;
-                    digit = digit + decodedString[msgIndex];
-                }
-            } 
-        }
-        moistureLevel = digit;
-    }
-    else {
+    } while(loraAttempt<2);
+    if (LoraConnectionFailed || moistureSensorFailed) {  // Unsuccessful Sensor reading
         moistureLevel = CLEAR;
         moistureSensorFailed = true;
     }
-    
     setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
-    if (moistureLevel >= fieldValve[FieldNo].wetValue) { //Field is full wet, no need to switch ON valve and motor, estimate new due dates
+    if ((moistureLevel/100) >= fieldValve[FieldNo].wetValue) { //Field is full wet, no need to switch ON valve and motor, estimate new due dates
         #ifdef DEBUG_MODE_ON_H
         //********Debug log#start************//
         transmitStringToDebug("isFieldMoistureSensorWetLora_Yes_Out\r\n");
@@ -2340,7 +2366,7 @@ _Bool isFieldMoistureSensorWetLora(unsigned char FieldNo) {
         return false;
     }
     
-#ifdef DEBUG_MODE_ON_H
+    #ifdef DEBUG_MODE_ON_H
     //********Debug log#start************//
     /***************************/
     // for field no. 01 to 09
@@ -2362,7 +2388,7 @@ _Bool isFieldMoistureSensorWetLora(unsigned char FieldNo) {
     transmitNumberToDebug(temporaryBytesArray, 2);
     transmitStringToDebug("\r\n");
     //********Debug log#end**************//
-#endif
+    #endif
 }
 
 /*********** Motor Dry run condition#Start********/
@@ -2633,6 +2659,11 @@ void doDryRunAction(void) {
 				/************Fertigation switch off due to dry run***********/
 				if (fieldValve[field_No].fertigationStage == injectPeriod) {
 					fertigationValveControl = OFF; // Switch off fertigation valve in case it is ON
+					//Switch off all Injectors after completing fertigation on Period
+                    field9ValveControl = OFF;
+                    field10ValveControl = OFF;
+                    field11ValveControl = OFF;
+                    field12ValveControl = OFF;																 
 					fieldValve[field_No].fertigationStage = OFF;
 					fieldValve[field_No].fertigationValveInterrupted = true;
 					remainingFertigationOnPeriod = readActiveSleepCountFromEeprom();
@@ -2662,7 +2693,7 @@ void doDryRunAction(void) {
 					/***************************/
 
 					/***************************/
-					sendSms(SmsDR1, userMobileNo, fieldNoRequired); // Acknowledge user about dry run detected again
+					sendSms(SmsDR1, userMobileNo, fieldNoRequired); // Acknowledge user about dry run detected and action taken
 					#ifdef SMS_DELIVERY_REPORT_ON_H
 					sleepCount = 2; // Load sleep count for SMS transmission action
 					sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
@@ -2694,7 +2725,7 @@ void doDryRunAction(void) {
                     /***************************/
 
                     /***************************/
-                    sendSms(SmsDR2, userMobileNo, fieldNoRequired); // Acknowledge user about dry run detected again
+                    sendSms(SmsDR2, userMobileNo, fieldNoRequired); // Acknowledge user about dry run detected and action taken
                     #ifdef SMS_DELIVERY_REPORT_ON_H
                     sleepCount = 2; // Load sleep count for SMS transmission action
                     sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
@@ -2728,7 +2759,7 @@ void doDryRunAction(void) {
                     /***************************/
 
                     /***************************/
-					sendSms(SmsDR3, userMobileNo, fieldNoRequired); // Acknowledge user about dry run detected again
+					sendSms(SmsDR3, userMobileNo, fieldNoRequired); // Acknowledge user about dry run detected and action taken
 					#ifdef SMS_DELIVERY_REPORT_ON_H
 					sleepCount = 2; // Load sleep count for SMS transmission action
 					sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
@@ -2752,7 +2783,7 @@ void doDryRunAction(void) {
                     /***************************/
 
                     /***************************/
-					sendSms(SmsDR4, userMobileNo, fieldNoRequired); // Acknowledge user about dry run detected again
+					sendSms(SmsDR4, userMobileNo, fieldNoRequired); // Acknowledge user about dry run detected and action taken
 					#ifdef SMS_DELIVERY_REPORT_ON_H
 					sleepCount = 2; // Load sleep count for SMS transmission action
 					sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
@@ -2765,7 +2796,7 @@ void doDryRunAction(void) {
             }
             if (phaseR) {
                 /***************************/
-                sendSms(SmsPh3, userMobileNo, noInfo); // Acknowledge user about dry run detected again
+                sendSms(SmsPh3, userMobileNo, noInfo); // Acknowledge user about Phase failure detected and action taken
                 #ifdef SMS_DELIVERY_REPORT_ON_H
                 sleepCount = 2; // Load sleep count for SMS transmission action
                 sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
@@ -2777,7 +2808,7 @@ void doDryRunAction(void) {
             }
             else if (phaseY) {
                 /***************************/
-                sendSms(SmsPh4, userMobileNo, noInfo); // Acknowledge user about dry run detected again
+                sendSms(SmsPh4, userMobileNo, noInfo); // Acknowledge user about Phase failure detected and action taken
                 #ifdef SMS_DELIVERY_REPORT_ON_H
                 sleepCount = 2; // Load sleep count for SMS transmission action
                 sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
@@ -2789,7 +2820,7 @@ void doDryRunAction(void) {
             }
             else if (phaseB) {
                 /***************************/
-                sendSms(SmsPh5, userMobileNo, noInfo); // Acknowledge user about dry run detected again
+                sendSms(SmsPh5, userMobileNo, noInfo); // Acknowledge user about Phase failure detected and action taken
                 #ifdef SMS_DELIVERY_REPORT_ON_H
                 sleepCount = 2; // Load sleep count for SMS transmission action
                 sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
@@ -2801,7 +2832,7 @@ void doDryRunAction(void) {
             }
             else {
                 /***************************/
-                sendSms(SmsPh6, userMobileNo, noInfo); // Acknowledge user about dry run detected again
+                sendSms(SmsPh6, userMobileNo, noInfo); // Acknowledge user about Phase failure detected and action taken
                 #ifdef SMS_DELIVERY_REPORT_ON_H
                 sleepCount = 2; // Load sleep count for SMS transmission action
                 sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
@@ -2869,9 +2900,14 @@ void doLowPhaseAction(void) {
                 powerOffMotor();
                 myMsDelay(1000);
                 deActivateValve(field_No);   // Deactivate Valve upon phase failure condition and reset valve to next due time
-                /************Fertigation switch off due to dry run***********/
+                /************Fertigation switch off due to low phase detection***********/
                 if (fieldValve[field_No].fertigationStage == injectPeriod) {
                     fertigationValveControl = OFF; // Switch off fertigation valve in case it is ON
+					//Switch off all Injectors after completing fertigation on Period
+                    field9ValveControl = OFF;
+                    field10ValveControl = OFF;
+                    field11ValveControl = OFF;
+                    field12ValveControl = OFF;																 
 
                     /***************************/
                     // for field no. 01 to 09
@@ -2886,7 +2922,7 @@ void doLowPhaseAction(void) {
                     /***************************/
 
                     /***************************/
-                    sendSms(SmsFert6, userMobileNo, fieldNoRequired); // Acknowledge user about successful Fertigation stopped action
+                    sendSms(SmsFert6, userMobileNo, fieldNoRequired); // Acknowledge user about successful Fertigation stopped action due to low phase detection
                     #ifdef SMS_DELIVERY_REPORT_ON_H
                     sleepCount = 2; // Load sleep count for SMS transmission action
                     sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
@@ -2942,9 +2978,14 @@ void doPhaseFailureAction(void) {
                 powerOffMotor();
                 myMsDelay(1000);
                 deActivateValve(field_No);   // Deactivate Valve upon phase failure condition and reset valve to next due time
-                /************Fertigation switch off due to dry run***********/
+                /************Fertigation switch off due to Phase failure***********/
                 if (fieldValve[field_No].fertigationStage == injectPeriod) {
                     fertigationValveControl = OFF; // Switch off fertigation valve in case it is ON
+					//Switch off all Injectors after completing fertigation on Period
+                    field9ValveControl = OFF;
+                    field10ValveControl = OFF;
+                    field11ValveControl = OFF;
+                    field12ValveControl = OFF;																 
 
                     /***************************/
                     // for field no. 01 to 09
@@ -2959,7 +3000,7 @@ void doPhaseFailureAction(void) {
                     /***************************/
 
                     /***************************/
-                    sendSms(SmsFert6, userMobileNo, fieldNoRequired); // Acknowledge user about successful Fertigation stopped action
+                    sendSms(SmsFert6, userMobileNo, fieldNoRequired); // Acknowledge user about successful Fertigation stopped action due to PhaseFailure
                     #ifdef SMS_DELIVERY_REPORT_ON_H
                     sleepCount = 2; // Load sleep count for SMS transmission action
                     sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
@@ -3173,14 +3214,16 @@ void activateValve(unsigned char FieldNo) {
 #endif
     unsigned char action;
     loraAttempt = 0;
-    action = 0x00;
+    action = 0x00; // activate valve action
     do {
         sendCmdToLora(action,FieldNo); 
-    } while(loraAttempt<5);
+    } while(loraAttempt<2);
     if (!LoraConnectionFailed && loraAttempt == 99) {  // Successful Valve Activation
         // check field no. of valve in action
         fieldValve[FieldNo].status = ON; //notify field valve status
         valveDue = true; // Set Valve ON status
+        loraAliveCount = CLEAR;
+        loraAliveCountCheck = CLEAR;
         myMsDelay(100);
         saveIrrigationValveOnOffStatusIntoEeprom(eepromAddress[FieldNo], &fieldValve[FieldNo]);
         myMsDelay(100);
@@ -3234,9 +3277,9 @@ void activateValve(unsigned char FieldNo) {
         fieldValve[FieldNo].status = OFF;
         fieldValve[FieldNo].cyclesExecuted = fieldValve[FieldNo].cycles;
         startFieldNo = FieldNo+1;               // scan for next field no.
-        myMsDelay(50);
+        myMsDelay(100);
         getDueDate(fieldValve[FieldNo].offPeriod); // calculate next due date of valve
-        myMsDelay(50); // Today's date is not known for next due date
+        myMsDelay(100);
         fieldValve[FieldNo].nextDueDD = (unsigned char)dueDD;
         fieldValve[FieldNo].nextDueMM = dueMM;
         fieldValve[FieldNo].nextDueYY = dueYY;
@@ -3300,7 +3343,7 @@ void deActivateValve(unsigned char FieldNo) {
     action = 0x01;
     do {
         sendCmdToLora(action,FieldNo); 
-    } while(loraAttempt<5);
+    } while(loraAttempt<2);
     /***************************/
     // for field no. 01 to 09
     if (FieldNo<9){
@@ -3518,7 +3561,7 @@ void configureController(void) {
     ADRPT = 0X00;
     ADACT = 0X00;
 
-    //-----------Timer0_Config (60 sec) used for filtration  cycle sequence followup----------------------//
+    //-----------Timer0_Config (60 sec) used for SLEEP Count control during Motor ON period and to control filtration  cycle sequence followup----------------------//
     //-----------Timer will not halt in sleep mode------------------------------------------------------//
 
     T0CON0 = 0b00010000; // 16 bit Timer 
@@ -3863,6 +3906,7 @@ void actionsOnSystemReset(void) {
             for (iterator = 0; iterator < fieldCount; iterator++) {
                 // check if any field valve status was true after reset
                 if (fieldValve[iterator].status == ON) {
+					startFieldNo = iterator;  // start action from interrupted field irrigation valve
                     //getDueDate(fieldValve[iterator].offPeriod); // calculate next due date of valve
                     fetchTimefromRTC();
                     /*** Check if System Restarted on next day of Due date ***/
@@ -3871,7 +3915,6 @@ void actionsOnSystemReset(void) {
                         valveDue = false; // Clear Valve Due
                         fieldValve[iterator].status = OFF;
                         fieldValve[iterator].cyclesExecuted = fieldValve[iterator].cycles;
-                        startFieldNo = iterator;  // start action form interrupted field irrigation valve
                         if (fieldValve[iterator].isFertigationEnabled) {  
                             if (fieldValve[iterator].fertigationStage == injectPeriod) {
                                 fieldValve[iterator].fertigationStage = OFF;
@@ -3893,7 +3936,6 @@ void actionsOnSystemReset(void) {
                     }
                     else { // if system restarted on same day with due valve
                         valveDue = true; // Set valve ON status
-                        startFieldNo = iterator;  // start action form interrupted field irrigation valve
                         #ifdef DEBUG_MODE_ON_H
                         //********Debug log#start************//
                         transmitStringToDebug("System restarted with Due valve on same day\r\n");
@@ -4095,10 +4137,60 @@ void actionsOnSleepCountFinish(void) {
     unsigned char field_No = CLEAR;
     if (valveDue && sleepCount == 0 && !dryRunDetected && !phaseFailureDetected && !onHold && !lowPhaseCurrentDetected) {
         for (field_No = 0; field_No < fieldCount; field_No++) {
-            // upon completing first delay start period sleep , switch on fertigation valve
+            // upon completing first delay start period sleep , switch ON fertigation valve
             if (fieldValve[field_No].status == ON && fieldValve[field_No].isFertigationEnabled && fieldValve[field_No].fertigationStage == wetPeriod) {
                 myMsDelay(1000);
-                fertigationValveControl = ON; // switch on fertigation valve for given field after start period
+                fertigationValveControl = ON; // switch on fertigation valve for given field after start period 
+				// Injector code             
+                // Initialize all count to zero
+                injector1OnPeriodCnt = CLEAR;
+                injector2OnPeriodCnt = CLEAR;
+                injector3OnPeriodCnt = CLEAR;
+                injector4OnPeriodCnt = CLEAR;
+
+                injector1OffPeriodCnt = CLEAR; 
+                injector2OffPeriodCnt = CLEAR;
+                injector3OffPeriodCnt = CLEAR;
+                injector4OffPeriodCnt = CLEAR;
+
+                injector1CycleCnt = CLEAR;
+                injector2CycleCnt = CLEAR;
+                injector3CycleCnt = CLEAR;
+                injector4CycleCnt = CLEAR;
+                                              
+                // Initialize Injectors values to configured values          
+                injector1OnPeriod = fieldValve[field_No].injector1OnPeriod; 
+                injector2OnPeriod = fieldValve[field_No].injector2OnPeriod; 
+                injector3OnPeriod = fieldValve[field_No].injector3OnPeriod; 
+                injector4OnPeriod = fieldValve[field_No].injector4OnPeriod; 
+
+                injector1OffPeriod = fieldValve[field_No].injector1OffPeriod; 
+                injector2OffPeriod = fieldValve[field_No].injector2OffPeriod; 
+                injector3OffPeriod = fieldValve[field_No].injector3OffPeriod; 
+                injector4OffPeriod = fieldValve[field_No].injector4OffPeriod; 
+
+                injector1Cycle = fieldValve[field_No].injector1Cycle;
+                injector2Cycle = fieldValve[field_No].injector2Cycle;
+                injector3Cycle = fieldValve[field_No].injector3Cycle;
+                injector4Cycle = fieldValve[field_No].injector4Cycle;
+                
+				// Initialize injector cycle
+                if(injector1OnPeriod > 0) {
+                    field9ValveControl = ON;
+                    injector1OnPeriodCnt++;
+                }
+                if(injector2OnPeriod > 0) {
+                    field10ValveControl = ON;
+                    injector2OnPeriodCnt++;
+                }
+                if(injector3OnPeriod > 0) {
+                    field11ValveControl = ON;
+                    injector3OnPeriodCnt++;
+                }
+                if(injector4OnPeriod > 0) {
+                    field12ValveControl = ON;
+                    injector4OnPeriodCnt++;
+                }						                
                 fieldValve[field_No].fertigationStage = injectPeriod;
                 if (fieldValve[field_No].fertigationValveInterrupted) {
                     fieldValve[field_No].fertigationValveInterrupted = false;
@@ -4113,7 +4205,7 @@ void actionsOnSleepCountFinish(void) {
                 myMsDelay(100);
                 saveActiveSleepCountIntoEeprom(); // Save current valve on time 
                 myMsDelay(100);
-
+                
                 /***************************/
                 // for field no. 01 to 09
                 if (field_No<9){
@@ -4142,7 +4234,12 @@ void actionsOnSleepCountFinish(void) {
             // Upon completing fertigation on period sleep, switch off fertigation valve
             else if (fieldValve[field_No].status == ON && fieldValve[field_No].isFertigationEnabled && fieldValve[field_No].fertigationStage == injectPeriod) {
                 myMsDelay(1000);
-                fertigationValveControl = OFF; // switch off fertigation valve for given field after on period
+                fertigationValveControl = OFF; // switch off fertigation valve for given field after on period                
+                //Switch off all Injectors after completing fertigation on Period
+                field9ValveControl = OFF;
+                field10ValveControl = OFF;
+                field11ValveControl = OFF;
+                field12ValveControl = OFF;               
                 fieldValve[field_No].fertigationStage = flushPeriod;
                 fieldValve[field_No].fertigationInstance--;
                 if(fieldValve[field_No].fertigationInstance == 0) {
@@ -4169,7 +4266,7 @@ void actionsOnSleepCountFinish(void) {
 				if (fertigationDry) { // Fertigation executed with low fertigation level  detection
                     fertigationDry = false;
                     /***************************/
-                    sendSms(SmsFert8, userMobileNo, fieldNoRequired); // Acknowledge user about successful Fertigation stopped action
+                    sendSms(SmsFert8, userMobileNo, fieldNoRequired); // Acknowledge user about Fertigation stopped action due to low fertilizer level
                     #ifdef SMS_DELIVERY_REPORT_ON_H
                     sleepCount = 2; // Load sleep count for SMS transmission action
                     sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
@@ -4254,6 +4351,11 @@ void actionsOnSleepCountFinish(void) {
                     }
                     if (fieldValve[field_No].fertigationStage == injectPeriod) {
                         fertigationValveControl = OFF; // switch off fertigation valve for given field after on period
+						//Switch off all Injectors after completing fertigation on Period
+                        field9ValveControl = OFF;
+                        field10ValveControl = OFF;
+                        field11ValveControl = OFF;
+                        field12ValveControl = OFF;																 
                         fieldValve[field_No].fertigationStage = OFF;
                         saveFertigationValveStatusIntoEeprom(eepromAddress[field_No], &fieldValve[field_No]);
                         myMsDelay(100);
@@ -4279,6 +4381,11 @@ void actionsOnSleepCountFinish(void) {
                 }
                 else if (fieldValve[field_No].fertigationStage == injectPeriod) {
                     fertigationValveControl = OFF; // switch off fertigation valve for given field after on period
+					//Switch off all Injectors after completing fertigation on Period
+                    field9ValveControl = OFF;
+                    field10ValveControl = OFF;
+                    field11ValveControl = OFF;
+                    field12ValveControl = OFF;																 
                     fieldValve[field_No].fertigationStage = OFF;
                     saveFertigationValveStatusIntoEeprom(eepromAddress[field_No], &fieldValve[field_No]);
                     myMsDelay(100);
@@ -4357,9 +4464,59 @@ void actionsOnDueValve(unsigned char field_No) {
 
             //Switch ON Fertigation valve interrupted due to power on same day
             if (fieldValve[field_No].fertigationStage == injectPeriod) {
+				powerOnMotor(); // Power ON Motor							 
                 myMsDelay(1000);
                 fertigationValveControl = ON;
+				// Injector code
+				// Initialize all count to zero
+				injector1OnPeriodCnt = CLEAR;
+				injector2OnPeriodCnt = CLEAR;
+				injector3OnPeriodCnt = CLEAR;
+				injector4OnPeriodCnt = CLEAR;
 
+				injector1OffPeriodCnt = CLEAR; 
+				injector2OffPeriodCnt = CLEAR;
+				injector3OffPeriodCnt = CLEAR;
+				injector4OffPeriodCnt = CLEAR;
+
+				injector1CycleCnt = CLEAR;
+				injector2CycleCnt = CLEAR;
+				injector3CycleCnt = CLEAR;
+				injector4CycleCnt = CLEAR;
+
+				// Initialize Injectors values to configured values
+				injector1OnPeriod = fieldValve[field_No].injector1OnPeriod; 
+				injector2OnPeriod = fieldValve[field_No].injector2OnPeriod; 
+				injector3OnPeriod = fieldValve[field_No].injector3OnPeriod; 
+				injector4OnPeriod = fieldValve[field_No].injector4OnPeriod; 
+
+				injector1OffPeriod = fieldValve[field_No].injector1OffPeriod; 
+				injector2OffPeriod = fieldValve[field_No].injector2OffPeriod; 
+				injector3OffPeriod = fieldValve[field_No].injector3OffPeriod; 
+				injector4OffPeriod = fieldValve[field_No].injector4OffPeriod; 
+
+				injector1Cycle = fieldValve[field_No].injector1Cycle;
+				injector2Cycle = fieldValve[field_No].injector2Cycle;
+				injector3Cycle = fieldValve[field_No].injector3Cycle;
+				injector4Cycle = fieldValve[field_No].injector4Cycle;
+
+				// Initialize injector cycle
+				if(injector1OnPeriod > 0) {
+					field9ValveControl = ON;
+					injector1OnPeriodCnt++;
+				}
+				if(injector2OnPeriod > 0) {
+					field10ValveControl = ON;
+					injector2OnPeriodCnt++;
+				}
+				if(injector3OnPeriod > 0) {
+					field11ValveControl = ON;
+					injector3OnPeriodCnt++;
+				}
+				if(injector4OnPeriod > 0) {
+					field12ValveControl = ON;
+					injector4OnPeriodCnt++;
+				}		   
                 /***************************/
                 // for field no. 01 to 09
                 if (field_No<9){
@@ -4385,6 +4542,17 @@ void actionsOnDueValve(unsigned char field_No) {
                 /*Send sms*/
 
             }
+			else if (valveExecuted) { // DeActivate previous executed field valve
+				last_Field_No = readFieldIrrigationValveNoFromEeprom();
+				if(last_Field_No != field_No) { // if not multiple cycles for same valve
+					deActivateValve(last_Field_No); // Successful Deactivate valve 
+				}
+				valveExecuted = false;            
+			} 
+			else { // Switch on Motor for First Valve activation
+				powerOnMotor(); // Power ON Motor
+			}
+			
             if (fieldValve[field_No].cyclesExecuted == fieldValve[field_No].cycles) {
                 /******** Calculate and save Field Valve next Due date**********/
                 getDueDate(fieldValve[field_No].offPeriod); // calculate next due date of valve
@@ -4395,19 +4563,6 @@ void actionsOnDueValve(unsigned char field_No) {
                 saveIrrigationValveDueTimeIntoEeprom(eepromAddress[field_No], &fieldValve[field_No]);
                 myMsDelay(100);
                 /***********************************************/
-            }
-
-            // DeActivate previous executed field valve
-            if (valveExecuted) {
-                last_Field_No = readFieldIrrigationValveNoFromEeprom();
-                if(last_Field_No != field_No) {  // if not multiple cycles for same valve
-                   deActivateValve(last_Field_No); // Successful Deactivate valve 
-                }
-                valveExecuted = false;            
-            } 
-            // Switch on Motor for First Valve activation
-            else {
-                powerOnMotor(); // Power On Motor
             }
         }
     }

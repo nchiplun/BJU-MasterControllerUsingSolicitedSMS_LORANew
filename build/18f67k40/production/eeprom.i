@@ -24432,19 +24432,31 @@ int toupper_l(int, locale_t);
 # 43 "./variableDefinitions.h"
 # 1 "./congfigBits.h" 1
 # 43 "./variableDefinitions.h" 2
-# 144 "./variableDefinitions.h"
+# 147 "./variableDefinitions.h"
 struct FIELDVALVE {
     unsigned int dryValue;
     unsigned int wetValue;
-    unsigned char onPeriod;
+    unsigned int onPeriod;
+    unsigned int fertigationDelay;
+    unsigned int fertigationONperiod;
+    unsigned int injector1OnPeriod;
+    unsigned int injector2OnPeriod;
+    unsigned int injector3OnPeriod;
+    unsigned int injector4OnPeriod;
+    unsigned int injector1OffPeriod;
+    unsigned int injector2OffPeriod;
+    unsigned int injector3OffPeriod;
+    unsigned int injector4OffPeriod;
+    unsigned char injector1Cycle;
+    unsigned char injector2Cycle;
+    unsigned char injector3Cycle;
+    unsigned char injector4Cycle;
     unsigned char offPeriod;
     unsigned char motorOnTimeHour;
     unsigned char motorOnTimeMinute;
     unsigned char nextDueDD;
     unsigned char nextDueMM;
     unsigned char nextDueYY;
-    unsigned char fertigationDelay;
-    unsigned char fertigationONperiod;
     unsigned char fertigationInstance;
  unsigned char priority;
     unsigned char fertigationStage;
@@ -24458,48 +24470,88 @@ struct FIELDVALVE {
 
 
 
+#pragma idata fieldValve
+struct FIELDVALVE fieldValve[12] = {0};
+
+
+
 
 #pragma idata eepromAddress
-const unsigned int eepromAddress[16] = {0x0000, 0x0020, 0x0040, 0x0060, 0x0080, 0x00A0, 0x00C0, 0x00E0, 0x0100, 0x0120, 0x0140, 0x0160, 0x0180, 0x0190, 0x01A0, 0x1B0};
-# 216 "./variableDefinitions.h"
-_Bool systemAuthenticated = 0;
-_Bool newSMSRcvd = 0;
-_Bool moistureSensorFailed = 0;
-_Bool controllerCommandExecuted = 0;
-_Bool currentDateCalled = 0;
-_Bool sleepCountChangedDueToInterrupt = 0;
-_Bool inSleepMode = 0;
-_Bool dryRunDetected = 0;
-_Bool lowPhaseCurrentDetected = 0;
-_Bool valveDue = 0;
-_Bool valveExecuted = 0;
-_Bool onHold = 0;
-_Bool dueValveChecked = 0;
-_Bool correctDate = 0;
-_Bool phaseFailureDetected = 0;
-_Bool lowRTCBatteryDetected = 0;
-_Bool rtcBatteryLevelChecked = 0;
-_Bool phaseFailureActionTaken = 0;
-_Bool filtrationEnabled = 0;
-_Bool cmtiCmd = 0;
-_Bool DeviceBurnStatus = 0;
-_Bool gsmSetToLocalTime = 0;
-_Bool off = 0;
-_Bool cmdRceived = 0;
-_Bool checkLoraConnection = 0;
-_Bool LoraConnectionFailed = 0;
-_Bool wetSensor = 0;
-
-
-
-
+const unsigned int eepromAddress[16] = {0x0000, 0x0030, 0x0060, 0x0090, 0x00C0, 0x00F0, 0x0120, 0x0150, 0x0180, 0x01B0, 0x01E0, 0x0210, 0x0240, 0x0270, 0x02A0, 0x2D0};
+# 234 "./variableDefinitions.h"
+unsigned int filtrationSeperationTime = 0;
+unsigned int dueDD = 0;
+unsigned int sleepCount = 0;
+unsigned int remainingFertigationOnPeriod = 0;
+unsigned int lower8bits = 0;
+unsigned int higher8bits = 0;
+unsigned int moistureLevel = 0;
+unsigned int injector1OnPeriod = 0;
+unsigned int injector2OnPeriod = 0;
+unsigned int injector3OnPeriod = 0;
+unsigned int injector4OnPeriod = 0;
+unsigned int injector1OnPeriodCnt = 0;
+unsigned int injector2OnPeriodCnt = 0;
+unsigned int injector3OnPeriodCnt = 0;
+unsigned int injector4OnPeriodCnt = 0;
+unsigned int injector1OffPeriod = 0;
+unsigned int injector2OffPeriod = 0;
+unsigned int injector3OffPeriod = 0;
+unsigned int injector4OffPeriod = 0;
+unsigned int injector1OffPeriodCnt = 0;
+unsigned int injector2OffPeriodCnt = 0;
+unsigned int injector3OffPeriodCnt = 0;
+unsigned int injector4OffPeriodCnt = 0;
+unsigned int noLoadCutOff = 0;
+unsigned int fullLoadCutOff = 0;
 unsigned char userMobileNo[11] = "";
 unsigned char temporaryBytesArray[20] = "";
 unsigned char null[11] = {'\0'};
 unsigned char pwd[7] = "";
 unsigned char factryPswrd[7] = "";
-unsigned int noLoadCutOff = 0;
-unsigned int fullLoadCutOff = 0;
+unsigned char injector1Cycle = 0;
+unsigned char injector2Cycle = 0;
+unsigned char injector3Cycle = 0;
+unsigned char injector4Cycle = 0;
+unsigned char injector1CycleCnt = 0;
+unsigned char injector2CycleCnt = 0;
+unsigned char injector3CycleCnt = 0;
+unsigned char injector4CycleCnt = 0;
+unsigned char loraAliveCount = 0;
+unsigned char loraAliveCountCheck = 0;
+unsigned char loraAttempt = 0;
+unsigned char timer3Count = 0;
+unsigned char rxCharacter = 0;
+unsigned char msgIndex = 0;
+unsigned char temp = 0;
+unsigned char iterator = 0;
+unsigned char fieldCount = 12;
+unsigned char resetCount = 0;
+unsigned char startFieldNo = 0;
+unsigned char space = 0x20;
+unsigned char terminateSms = 0x1A;
+unsigned char enter = 0x0D;
+unsigned char newLine = 0x0A;
+unsigned char hundredsDigit = 0;
+unsigned char tensDigit = 0;
+unsigned char unitsDigit = 0;
+unsigned char Timer0Overflow = 0;
+unsigned char Timer1Overflow = 0;
+unsigned char Timer3Overflow = 0;
+unsigned char filtrationCycleSequence = 0;
+unsigned char currentYY = 0;
+unsigned char currentMM = 0;
+unsigned char currentDD = 0;
+unsigned char currentHour = 0;
+unsigned char currentMinutes = 0;
+unsigned char currentSeconds = 0;
+unsigned char dueYY = 0;
+unsigned char dueMM = 0;
+unsigned char filtrationDelay1 = 0;
+unsigned char filtrationDelay2 = 0;
+unsigned char filtrationDelay3 = 0;
+unsigned char filtrationOnTime = 0;
+unsigned char dryRunCheckCount = 0;
 
 
 
@@ -24539,15 +24591,15 @@ unsigned static char countryCode[4] = "+91";
 
 
 
-
-unsigned static char slaveOnOK[10] = "ON01SLAVE";
-unsigned static char slaveOffOK[11] = "OFF01SLAVE";
+unsigned static char on[3] = "ON";
+unsigned static char off[4] = "OFF";
 unsigned static char slave[6] = "SLAVE";
 unsigned static char ack[4] = "ACK";
 unsigned static char idle[5] = "IDLE";
-unsigned static char masterError[12] = "MASTERERROR";
-unsigned static char slaveError[11] = "SLAVEERROR";
-
+unsigned static char master[7] = "MASTER";
+unsigned static char error[6] = "ERROR";
+unsigned static char alive[6] = "ALIVE";
+unsigned static char sensor[7] = "SENSOR";
 
 
 
@@ -24555,7 +24607,6 @@ const char SmsAU1[23] = "Admin set successfully";
 const char SmsAU2[51] = "You are no more Admin now. New Admin is set to\r\n";
 const char SmsAU3[22] = "Authentication failed";
 const char SmsAU4[64] = "System Authenticated with Phase failure, suspending all actions";
-
 
 const char SmsPwd1[32] = "Login code changed successfully";
 const char SmsPwd2[23] = "Login code not changed";
@@ -24577,6 +24628,8 @@ const char SmsFert3[34] = "Fertigation enabled for field no.";
 const char SmsFert4[35] = "Fertigation disabled for field no.";
 const char SmsFert5[34] = "Fertigation started for field no.";
 const char SmsFert6[34] = "Fertigation stopped for field no.";
+const char SmsFert7[71] = "Fertigation stopped with fertilizer level sensor failure for field no.";
+const char SmsFert8[60] = "Fertigation stopped with low fertilizer level for field no.";
 
 const char SmsFilt1[27] = "Water filtration activated";
 const char SmsFilt2[29] = "Water filtration deactivated";
@@ -24647,52 +24700,34 @@ unsigned char static cmti[14] = "+CMTI: \"SM\",x";
 
 
 
-unsigned char loraAttempt = 0;
-unsigned char timer3Count = 0;
-unsigned char rxCharacter = 0;
-unsigned char msgIndex = 0;
-unsigned char temp = 0;
-unsigned char iterator = 0;
-unsigned char fieldCount = 12;
-unsigned char resetCount = 0;
-unsigned char startFieldNo = 0;
-unsigned char space = 0x20;
-unsigned char terminateSms = 0x1A;
-unsigned char enter = 0x0D;
-unsigned char newLine = 0x0A;
-unsigned char hundredsDigit = 0;
-unsigned char tensDigit = 0;
-unsigned char unitsDigit = 0;
-unsigned char Timer0Overflow = 0;
-unsigned char Timer1Overflow = 0;
-unsigned char Timer3Overflow = 0;
-unsigned char filtrationCycleSequence = 0;
-unsigned char currentYY = 0;
-unsigned char currentMM = 0;
-unsigned char currentDD = 0;
-unsigned char currentHour = 0;
-unsigned char currentMinutes = 0;
-unsigned char currentSeconds = 0;
-unsigned char dueYY = 0;
-unsigned char dueMM = 0;
-unsigned char filtrationDelay1 = 0;
-unsigned char filtrationDelay2 = 0;
-unsigned char filtrationDelay3 = 0;
-unsigned char filtrationOnTime = 0;
-unsigned char filtrationSeperationTime = 0;
-unsigned char dryRunCheckCount = 0;
-unsigned int dueDD = 0;
-unsigned int sleepCount = 0;
-unsigned int remainingFertigationOnPeriod = 0;
-unsigned int lower8bits = 0;
-unsigned int higher8bits = 0;
-unsigned int moistureLevel = 0;
-unsigned int const zero = 0;
-
-
-
-#pragma idata fieldValve
-struct FIELDVALVE fieldValve[12] = {0};
+_Bool systemAuthenticated = 0;
+_Bool newSMSRcvd = 0;
+_Bool checkMoistureSensor = 0;
+_Bool moistureSensorFailed = 0;
+_Bool controllerCommandExecuted = 0;
+_Bool currentDateCalled = 0;
+_Bool sleepCountChangedDueToInterrupt = 0;
+_Bool inSleepMode = 0;
+_Bool dryRunDetected = 0;
+_Bool lowPhaseCurrentDetected = 0;
+_Bool valveDue = 0;
+_Bool valveExecuted = 0;
+_Bool onHold = 0;
+_Bool dueValveChecked = 0;
+_Bool correctDate = 0;
+_Bool phaseFailureDetected = 0;
+_Bool lowRTCBatteryDetected = 0;
+_Bool rtcBatteryLevelChecked = 0;
+_Bool phaseFailureActionTaken = 0;
+_Bool filtrationEnabled = 0;
+_Bool cmtiCmd = 0;
+_Bool DeviceBurnStatus = 0;
+_Bool gsmSetToLocalTime = 0;
+_Bool cmdRceived = 0;
+_Bool checkLoraConnection = 0;
+_Bool LoraConnectionFailed = 0;
+_Bool wetSensor = 0;
+_Bool fertigationDry = 0;
 # 12 "eeprom.c" 2
 
 # 1 "./controllerActions.h" 1
@@ -24702,7 +24737,7 @@ void configureController(void);
 void deepSleep(void);
 _Bool isSystemReady(void);
 _Bool isNumber(unsigned char);
-_Bool isBase64String(char *);
+_Bool isBase64String(unsigned char *);
 void extractReceivedSms(void);
 unsigned int days(unsigned char, unsigned char);
 void getDateFromGSM(void);
@@ -24712,6 +24747,7 @@ void activateValve(unsigned char);
 void deActivateValve(unsigned char);
 void powerOnMotor(void);
 void powerOffMotor(void);
+_Bool isFieldMoistureSensorWetLora(unsigned char);
 _Bool isFieldMoistureSensorWet(unsigned char);
 _Bool isMotorInNoLoad(void);
 void calibrateMotorCurrent(unsigned char, unsigned char);
@@ -24817,17 +24853,19 @@ void saveIrrigationValveValuesIntoEeprom(unsigned int address, struct FIELDVALVE
     myMsDelay(50);
     eepromWrite(address + 3, (fieldptr->wetValue >> 8) & 0xFF);
     myMsDelay(50);
-    eepromWrite(address + 4, fieldptr->onPeriod);
+    eepromWrite(address + 4, fieldptr->onPeriod & 0xFF);
     myMsDelay(50);
-    eepromWrite(address + 5, fieldptr->offPeriod);
+    eepromWrite(address + 5, (fieldptr->onPeriod >> 8) & 0xFF);
     myMsDelay(50);
-    eepromWrite(address + 6, fieldptr->motorOnTimeHour);
+    eepromWrite(address + 30, fieldptr->offPeriod);
     myMsDelay(50);
-    eepromWrite(address + 7, fieldptr->motorOnTimeMinute);
+    eepromWrite(address + 31, fieldptr->motorOnTimeHour);
     myMsDelay(50);
-    eepromWrite(address + 14, fieldptr->priority);
+    eepromWrite(address + 32, fieldptr->motorOnTimeMinute);
     myMsDelay(50);
-    eepromWrite(address + 16, fieldptr->cycles);
+    eepromWrite(address + 37, fieldptr->priority);
+    myMsDelay(50);
+    eepromWrite(address + 39, fieldptr->cycles);
     myMsDelay(50);
 
 
@@ -24851,17 +24889,61 @@ void saveFertigationValveValuesIntoEeprom(unsigned int address, struct FIELDVALV
 
 
     myMsDelay(50);
-    eepromWrite(address + 11, fieldptr->fertigationDelay);
+    eepromWrite(address + 6, fieldptr->fertigationDelay & 0xFF);
     myMsDelay(50);
-    eepromWrite(address + 12, fieldptr->fertigationONperiod);
+    eepromWrite(address + 7, (fieldptr->fertigationDelay >> 8) & 0xFF);
     myMsDelay(50);
-    eepromWrite(address + 13, fieldptr->fertigationInstance);
+    eepromWrite(address + 8, fieldptr->fertigationONperiod & 0xFF);
     myMsDelay(50);
-    eepromWrite(address + 15, fieldptr->fertigationStage);
+    eepromWrite(address + 9, (fieldptr->fertigationONperiod >> 8) & 0xFF);
     myMsDelay(50);
-    eepromWrite(address + 20, fieldptr->isFertigationEnabled);
+    eepromWrite(address + 10, fieldptr->injector1OnPeriod & 0xFF);
     myMsDelay(50);
-    eepromWrite(address + 21, fieldptr->fertigationValveInterrupted);
+    eepromWrite(address + 11, (fieldptr->injector1OnPeriod >> 8) & 0xFF);
+    myMsDelay(50);
+    eepromWrite(address + 12, fieldptr->injector2OnPeriod & 0xFF);
+    myMsDelay(50);
+    eepromWrite(address + 13, (fieldptr->injector2OnPeriod >> 8) & 0xFF);
+    myMsDelay(50);
+    eepromWrite(address + 14, fieldptr->injector3OnPeriod & 0xFF);
+    myMsDelay(50);
+    eepromWrite(address + 15, (fieldptr->injector3OnPeriod >> 8) & 0xFF);
+    myMsDelay(50);
+    eepromWrite(address + 16, fieldptr->injector4OnPeriod & 0xFF);
+    myMsDelay(50);
+    eepromWrite(address + 17, (fieldptr->injector4OnPeriod >> 8) & 0xFF);
+    myMsDelay(50);
+    eepromWrite(address + 18, fieldptr->injector1OffPeriod & 0xFF);
+    myMsDelay(50);
+    eepromWrite(address + 19, (fieldptr->injector1OffPeriod >> 8) & 0xFF);
+    myMsDelay(50);
+    eepromWrite(address + 20, fieldptr->injector2OffPeriod & 0xFF);
+    myMsDelay(50);
+    eepromWrite(address + 21, (fieldptr->injector2OffPeriod >> 8) & 0xFF);
+    myMsDelay(50);
+    eepromWrite(address + 22, fieldptr->injector3OffPeriod & 0xFF);
+    myMsDelay(50);
+    eepromWrite(address + 23, (fieldptr->injector3OffPeriod >> 8) & 0xFF);
+    myMsDelay(50);
+    eepromWrite(address + 24, fieldptr->injector4OffPeriod & 0xFF);
+    myMsDelay(50);
+    eepromWrite(address + 25, (fieldptr->injector4OffPeriod >> 8) & 0xFF);
+    myMsDelay(50);
+    eepromWrite(address + 26, fieldptr->injector1Cycle);
+    myMsDelay(50);
+    eepromWrite(address + 27, fieldptr->injector2Cycle);
+    myMsDelay(50);
+    eepromWrite(address + 28, fieldptr->injector3Cycle);
+    myMsDelay(50);
+    eepromWrite(address + 29, fieldptr->injector4Cycle);
+    myMsDelay(50);
+    eepromWrite(address + 36, fieldptr->fertigationInstance);
+    myMsDelay(50);
+    eepromWrite(address + 38, fieldptr->fertigationStage);
+    myMsDelay(50);
+    eepromWrite(address + 43, fieldptr->isFertigationEnabled);
+    myMsDelay(50);
+    eepromWrite(address + 44, fieldptr->fertigationValveInterrupted);
     myMsDelay(50);
 
 
@@ -24870,7 +24952,7 @@ void saveFertigationValveValuesIntoEeprom(unsigned int address, struct FIELDVALV
 
 
 }
-# 145 "eeprom.c"
+# 191 "eeprom.c"
 void saveIrrigationValveDueTimeIntoEeprom(unsigned int address, struct FIELDVALVE *fieldptr) {
 
 
@@ -24879,11 +24961,11 @@ void saveIrrigationValveDueTimeIntoEeprom(unsigned int address, struct FIELDVALV
 
 
     myMsDelay(50);
-    eepromWrite(address + 8, fieldptr->nextDueDD);
+    eepromWrite(address + 33, fieldptr->nextDueDD);
     myMsDelay(50);
-    eepromWrite(address + 9, fieldptr->nextDueMM);
+    eepromWrite(address + 34, fieldptr->nextDueMM);
     myMsDelay(50);
-    eepromWrite(address + 10, fieldptr->nextDueYY);
+    eepromWrite(address + 35, fieldptr->nextDueYY);
     myMsDelay(50);
 
 
@@ -24892,7 +24974,7 @@ void saveIrrigationValveDueTimeIntoEeprom(unsigned int address, struct FIELDVALV
 
 
 }
-# 174 "eeprom.c"
+# 220 "eeprom.c"
 void saveIrrigationValveOnOffStatusIntoEeprom(unsigned int address, struct FIELDVALVE *fieldptr) {
 
 
@@ -24901,7 +24983,7 @@ void saveIrrigationValveOnOffStatusIntoEeprom(unsigned int address, struct FIELD
 
 
     myMsDelay(50);
-    eepromWrite(address + 18, fieldptr->status);
+    eepromWrite(address + 41, fieldptr->status);
     myMsDelay(50);
 
 
@@ -24910,7 +24992,7 @@ void saveIrrigationValveOnOffStatusIntoEeprom(unsigned int address, struct FIELD
 
 
 }
-# 199 "eeprom.c"
+# 245 "eeprom.c"
 void saveIrrigationValveCycleStatusIntoEeprom(unsigned int address, struct FIELDVALVE *fieldptr) {
 
 
@@ -24919,7 +25001,7 @@ void saveIrrigationValveCycleStatusIntoEeprom(unsigned int address, struct FIELD
 
 
     myMsDelay(50);
-    eepromWrite(address + 17, fieldptr->cyclesExecuted);
+    eepromWrite(address + 40, fieldptr->cyclesExecuted);
     myMsDelay(50);
 
 
@@ -24928,7 +25010,7 @@ void saveIrrigationValveCycleStatusIntoEeprom(unsigned int address, struct FIELD
 
 
 }
-# 224 "eeprom.c"
+# 270 "eeprom.c"
 void saveFertigationValveStatusIntoEeprom(unsigned int address, struct FIELDVALVE *fieldptr) {
 
 
@@ -24937,11 +25019,11 @@ void saveFertigationValveStatusIntoEeprom(unsigned int address, struct FIELDVALV
 
 
     myMsDelay(50);
-    eepromWrite(address + 13, fieldptr->fertigationInstance);
+    eepromWrite(address + 36, fieldptr->fertigationInstance);
     myMsDelay(50);
-    eepromWrite(address + 15, fieldptr->fertigationStage);
+    eepromWrite(address + 38, fieldptr->fertigationStage);
     myMsDelay(50);
-    eepromWrite(address + 21, fieldptr->fertigationValveInterrupted);
+    eepromWrite(address + 44, fieldptr->fertigationValveInterrupted);
     myMsDelay(50);
 
 
@@ -24950,7 +25032,7 @@ void saveFertigationValveStatusIntoEeprom(unsigned int address, struct FIELDVALV
 
 
 }
-# 253 "eeprom.c"
+# 299 "eeprom.c"
 void saveIrrigationValveConfigurationStatusIntoEeprom(unsigned int address, struct FIELDVALVE *fieldptr) {
 
 
@@ -24959,7 +25041,7 @@ void saveIrrigationValveConfigurationStatusIntoEeprom(unsigned int address, stru
 
 
     myMsDelay(50);
-    eepromWrite(address + 19, fieldptr->isConfigured);
+    eepromWrite(address + 42, fieldptr->isConfigured);
     myMsDelay(50);
 
 
@@ -24968,7 +25050,7 @@ void saveIrrigationValveConfigurationStatusIntoEeprom(unsigned int address, stru
 
 
 }
-# 278 "eeprom.c"
+# 324 "eeprom.c"
 void readValveDataFromEeprom(unsigned int address, struct FIELDVALVE *fieldptr){
 
     myMsDelay(50);
@@ -24988,41 +25070,132 @@ void readValveDataFromEeprom(unsigned int address, struct FIELDVALVE *fieldptr){
     higher8bits <<= 8;
     higher8bits &= 0xFF00;
     fieldptr->wetValue = ((lower8bits) | (higher8bits));
-    fieldptr->onPeriod = eepromRead(address + 4);
+    lower8bits = eepromRead(address + 4);
     myMsDelay(50);
-    fieldptr->offPeriod = eepromRead(address + 5);
+    lower8bits &= 0x00FF;
+    higher8bits = eepromRead(address + 5);
     myMsDelay(50);
-    fieldptr->motorOnTimeHour = eepromRead(address + 6);
+    higher8bits <<= 8;
+    higher8bits &= 0xFF00;
+    fieldptr->onPeriod = ((lower8bits) | (higher8bits));
     myMsDelay(50);
-    fieldptr->motorOnTimeMinute = eepromRead(address + 7);
+    lower8bits = eepromRead(address + 6);
     myMsDelay(50);
-    fieldptr->nextDueDD = eepromRead(address + 8);
+    lower8bits &= 0x00FF;
+    higher8bits = eepromRead(address + 7);
+    higher8bits <<= 8;
+    higher8bits &= 0xFF00;
+    fieldptr->fertigationDelay = ((lower8bits) | (higher8bits));
     myMsDelay(50);
-    fieldptr->nextDueMM = eepromRead(address + 9);
+    lower8bits = eepromRead(address + 8);
     myMsDelay(50);
-    fieldptr->nextDueYY = eepromRead(address + 10);
+    lower8bits &= 0x00FF;
+    higher8bits = eepromRead(address + 9);
+    higher8bits <<= 8;
+    higher8bits &= 0xFF00;
+    fieldptr->fertigationONperiod = ((lower8bits) | (higher8bits));
     myMsDelay(50);
-    fieldptr->fertigationDelay = eepromRead(address + 11);
+    lower8bits = eepromRead(address + 10);
     myMsDelay(50);
-    fieldptr->fertigationONperiod = eepromRead(address + 12);
+    lower8bits &= 0x00FF;
+    higher8bits = eepromRead(address + 11);
+    higher8bits <<= 8;
+    higher8bits &= 0xFF00;
+    fieldptr->injector1OnPeriod = ((lower8bits) | (higher8bits));
     myMsDelay(50);
-    fieldptr->fertigationInstance = eepromRead(address + 13);
+    lower8bits = eepromRead(address + 12);
     myMsDelay(50);
-    fieldptr->priority = eepromRead(address + 14);
+    lower8bits &= 0x00FF;
+    higher8bits = eepromRead(address + 13);
+    higher8bits <<= 8;
+    higher8bits &= 0xFF00;
+    fieldptr->injector2OnPeriod = ((lower8bits) | (higher8bits));
     myMsDelay(50);
-    fieldptr->fertigationStage = eepromRead(address + 15);
+    lower8bits = eepromRead(address + 14);
     myMsDelay(50);
-    fieldptr->cycles = eepromRead(address + 16);
+    lower8bits &= 0x00FF;
+    higher8bits = eepromRead(address + 15);
+    higher8bits <<= 8;
+    higher8bits &= 0xFF00;
+    fieldptr->injector3OnPeriod = ((lower8bits) | (higher8bits));
     myMsDelay(50);
-    fieldptr->cyclesExecuted = eepromRead(address + 17);
+    lower8bits = eepromRead(address + 16);
     myMsDelay(50);
-    fieldptr->status = eepromRead(address + 18);
+    lower8bits &= 0x00FF;
+    higher8bits = eepromRead(address + 17);
+    higher8bits <<= 8;
+    higher8bits &= 0xFF00;
+    fieldptr->injector4OnPeriod = ((lower8bits) | (higher8bits));
     myMsDelay(50);
-    fieldptr->isConfigured = eepromRead(address + 19);
+    lower8bits = eepromRead(address + 18);
     myMsDelay(50);
-    fieldptr->isFertigationEnabled = eepromRead(address + 20);
+    lower8bits &= 0x00FF;
+    higher8bits = eepromRead(address + 19);
+    higher8bits <<= 8;
+    higher8bits &= 0xFF00;
+    fieldptr->injector1OffPeriod = ((lower8bits) | (higher8bits));
     myMsDelay(50);
-    fieldptr->fertigationValveInterrupted = eepromRead(address + 21);
+    lower8bits = eepromRead(address + 20);
+    myMsDelay(50);
+    lower8bits &= 0x00FF;
+    higher8bits = eepromRead(address + 21);
+    higher8bits <<= 8;
+    higher8bits &= 0xFF00;
+    fieldptr->injector2OffPeriod = ((lower8bits) | (higher8bits));
+    myMsDelay(50);
+    lower8bits = eepromRead(address + 22);
+    myMsDelay(50);
+    lower8bits &= 0x00FF;
+    higher8bits = eepromRead(address + 23);
+    higher8bits <<= 8;
+    higher8bits &= 0xFF00;
+    fieldptr->injector3OffPeriod = ((lower8bits) | (higher8bits));
+    myMsDelay(50);
+    lower8bits = eepromRead(address + 24);
+    myMsDelay(50);
+    lower8bits &= 0x00FF;
+    higher8bits = eepromRead(address + 25);
+    higher8bits <<= 8;
+    higher8bits &= 0xFF00;
+    fieldptr->injector4OffPeriod = ((lower8bits) | (higher8bits));
+    myMsDelay(50);
+    fieldptr->injector1Cycle = eepromRead(address + 26);
+    myMsDelay(50);
+    fieldptr->injector2Cycle = eepromRead(address + 27);
+    myMsDelay(50);
+    fieldptr->injector3Cycle = eepromRead(address + 28);
+    myMsDelay(50);
+    fieldptr->injector4Cycle = eepromRead(address + 29);
+    myMsDelay(50);
+    fieldptr->offPeriod = eepromRead(address + 30);
+    myMsDelay(50);
+    fieldptr->motorOnTimeHour = eepromRead(address + 31);
+    myMsDelay(50);
+    fieldptr->motorOnTimeMinute = eepromRead(address + 32);
+    myMsDelay(50);
+    fieldptr->nextDueDD = eepromRead(address + 33);
+    myMsDelay(50);
+    fieldptr->nextDueMM = eepromRead(address + 34);
+    myMsDelay(50);
+    fieldptr->nextDueYY = eepromRead(address + 35);
+    myMsDelay(50);
+    fieldptr->fertigationInstance = eepromRead(address + 36);
+    myMsDelay(50);
+    fieldptr->priority = eepromRead(address + 37);
+    myMsDelay(50);
+    fieldptr->fertigationStage = eepromRead(address + 38);
+    myMsDelay(50);
+    fieldptr->cycles = eepromRead(address + 39);
+    myMsDelay(50);
+    fieldptr->cyclesExecuted = eepromRead(address + 40);
+    myMsDelay(50);
+    fieldptr->status = eepromRead(address + 41);
+    myMsDelay(50);
+    fieldptr->isConfigured = eepromRead(address + 42);
+    myMsDelay(50);
+    fieldptr->isFertigationEnabled = eepromRead(address + 43);
+    myMsDelay(50);
+    fieldptr->fertigationValveInterrupted = eepromRead(address + 44);
     myMsDelay(50);
 
 }
@@ -25230,14 +25403,13 @@ void readMotorLoadValuesFromEeprom(void){
     myMsDelay(50);
     lower8bits &= 0x00FF;
     higher8bits = eepromRead(eepromAddress[15] + 12);
-    myMsDelay(50);
     higher8bits <<= 8;
     higher8bits &= 0xFF00;
     fullLoadCutOff = ((lower8bits) | (higher8bits));
     myMsDelay(50);
 
 }
-# 601 "eeprom.c"
+# 737 "eeprom.c"
 void saveRemainingFertigationOnPeriod(void) {
 
 
@@ -25287,7 +25459,7 @@ unsigned int readActiveSleepCountFromEeprom(void) {
 
     return ((lower8bits) | (higher8bits));
 }
-# 658 "eeprom.c"
+# 794 "eeprom.c"
 unsigned int readRemainingFertigationOnPeriodFromEeprom(void) {
 
 
@@ -25406,9 +25578,11 @@ void saveFiltrationSequenceData(void) {
     myMsDelay(50);
     eepromWrite(eepromAddress[12] + 3, filtrationOnTime);
     myMsDelay(50);
-    eepromWrite(eepromAddress[12] + 4, filtrationSeperationTime);
+    eepromWrite(eepromAddress[12] + 4, filtrationSeperationTime & 0xFF);
     myMsDelay(50);
-    eepromWrite(eepromAddress[12] + 5, filtrationEnabled);
+    eepromWrite(eepromAddress[12] + 5, (filtrationSeperationTime >> 8) & 0xFF);
+    myMsDelay(50);
+    eepromWrite(eepromAddress[12] + 6, filtrationEnabled);
     myMsDelay(50);
 
 
@@ -25442,7 +25616,7 @@ unsigned char readFieldIrrigationValveNoFromEeprom(void) {
 
     return field_no;
 }
-# 821 "eeprom.c"
+# 959 "eeprom.c"
 void loadDataFromEeprom(void) {
 
 
@@ -25486,9 +25660,15 @@ void loadDataFromEeprom(void) {
     myMsDelay(50);
     filtrationOnTime = eepromRead(eepromAddress[12]+3);
     myMsDelay(50);
-    filtrationSeperationTime = eepromRead(eepromAddress[12]+4);
+    lower8bits = eepromRead(eepromAddress[12] + 4);
     myMsDelay(50);
-    filtrationEnabled = eepromRead(eepromAddress[12]+5);
+    lower8bits &= 0x00FF;
+    higher8bits = eepromRead(eepromAddress[12] + 5);
+    higher8bits <<= 8;
+    higher8bits &= 0xFF00;
+    filtrationSeperationTime = ((lower8bits) | (higher8bits));
+    myMsDelay(50);
+    filtrationEnabled = eepromRead(eepromAddress[12]+6);
     myMsDelay(50);
     readMotorLoadValuesFromEeprom();
     myMsDelay(50);

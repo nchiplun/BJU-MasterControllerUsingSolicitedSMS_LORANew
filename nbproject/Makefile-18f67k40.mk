@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=ADC.c RTC_DS1307.c controllerActions.c dataEncryption.c eeprom.c gsm.c main_1.c serailMonitor.c lora.c main_1_Test.c
+SOURCEFILES_QUOTED_IF_SPACED=ADC.c RTC_DS1307.c controllerActions.c dataEncryption.c eeprom.c gsm.c main_1.c serailMonitor.c lora.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/ADC.p1 ${OBJECTDIR}/RTC_DS1307.p1 ${OBJECTDIR}/controllerActions.p1 ${OBJECTDIR}/dataEncryption.p1 ${OBJECTDIR}/eeprom.p1 ${OBJECTDIR}/gsm.p1 ${OBJECTDIR}/main_1.p1 ${OBJECTDIR}/serailMonitor.p1 ${OBJECTDIR}/lora.p1 ${OBJECTDIR}/main_1_Test.p1
-POSSIBLE_DEPFILES=${OBJECTDIR}/ADC.p1.d ${OBJECTDIR}/RTC_DS1307.p1.d ${OBJECTDIR}/controllerActions.p1.d ${OBJECTDIR}/dataEncryption.p1.d ${OBJECTDIR}/eeprom.p1.d ${OBJECTDIR}/gsm.p1.d ${OBJECTDIR}/main_1.p1.d ${OBJECTDIR}/serailMonitor.p1.d ${OBJECTDIR}/lora.p1.d ${OBJECTDIR}/main_1_Test.p1.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/ADC.p1 ${OBJECTDIR}/RTC_DS1307.p1 ${OBJECTDIR}/controllerActions.p1 ${OBJECTDIR}/dataEncryption.p1 ${OBJECTDIR}/eeprom.p1 ${OBJECTDIR}/gsm.p1 ${OBJECTDIR}/main_1.p1 ${OBJECTDIR}/serailMonitor.p1 ${OBJECTDIR}/lora.p1
+POSSIBLE_DEPFILES=${OBJECTDIR}/ADC.p1.d ${OBJECTDIR}/RTC_DS1307.p1.d ${OBJECTDIR}/controllerActions.p1.d ${OBJECTDIR}/dataEncryption.p1.d ${OBJECTDIR}/eeprom.p1.d ${OBJECTDIR}/gsm.p1.d ${OBJECTDIR}/main_1.p1.d ${OBJECTDIR}/serailMonitor.p1.d ${OBJECTDIR}/lora.p1.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/ADC.p1 ${OBJECTDIR}/RTC_DS1307.p1 ${OBJECTDIR}/controllerActions.p1 ${OBJECTDIR}/dataEncryption.p1 ${OBJECTDIR}/eeprom.p1 ${OBJECTDIR}/gsm.p1 ${OBJECTDIR}/main_1.p1 ${OBJECTDIR}/serailMonitor.p1 ${OBJECTDIR}/lora.p1 ${OBJECTDIR}/main_1_Test.p1
+OBJECTFILES=${OBJECTDIR}/ADC.p1 ${OBJECTDIR}/RTC_DS1307.p1 ${OBJECTDIR}/controllerActions.p1 ${OBJECTDIR}/dataEncryption.p1 ${OBJECTDIR}/eeprom.p1 ${OBJECTDIR}/gsm.p1 ${OBJECTDIR}/main_1.p1 ${OBJECTDIR}/serailMonitor.p1 ${OBJECTDIR}/lora.p1
 
 # Source Files
-SOURCEFILES=ADC.c RTC_DS1307.c controllerActions.c dataEncryption.c eeprom.c gsm.c main_1.c serailMonitor.c lora.c main_1_Test.c
+SOURCEFILES=ADC.c RTC_DS1307.c controllerActions.c dataEncryption.c eeprom.c gsm.c main_1.c serailMonitor.c lora.c
 
 
 
@@ -166,14 +166,6 @@ ${OBJECTDIR}/lora.p1: lora.c  nbproject/Makefile-${CND_CONF}.mk
 	@-${MV} ${OBJECTDIR}/lora.d ${OBJECTDIR}/lora.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/lora.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
-${OBJECTDIR}/main_1_Test.p1: main_1_Test.c  nbproject/Makefile-${CND_CONF}.mk 
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/main_1_Test.p1.d 
-	@${RM} ${OBJECTDIR}/main_1_Test.p1 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -D__DEBUG=1  -mdebugger=none   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_18f67k40=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mdefault-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/main_1_Test.p1 main_1_Test.c 
-	@-${MV} ${OBJECTDIR}/main_1_Test.d ${OBJECTDIR}/main_1_Test.p1.d 
-	@${FIXDEPS} ${OBJECTDIR}/main_1_Test.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
-	
 else
 ${OBJECTDIR}/ADC.p1: ADC.c  nbproject/Makefile-${CND_CONF}.mk 
 	@${MKDIR} "${OBJECTDIR}" 
@@ -246,14 +238,6 @@ ${OBJECTDIR}/lora.p1: lora.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_18f67k40=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mdefault-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/lora.p1 lora.c 
 	@-${MV} ${OBJECTDIR}/lora.d ${OBJECTDIR}/lora.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/lora.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
-	
-${OBJECTDIR}/main_1_Test.p1: main_1_Test.c  nbproject/Makefile-${CND_CONF}.mk 
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/main_1_Test.p1.d 
-	@${RM} ${OBJECTDIR}/main_1_Test.p1 
-	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -O0 -fasmfile -maddrqual=ignore -xassembler-with-cpp -mwarn=-3 -Wa,-a -DXPRJ_18f67k40=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx32 -Wl,--data-init -mno-keep-startup -mno-download -mdefault-config-bits $(COMPARISON_BUILD)  -std=c99 -gdwarf-3 -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/main_1_Test.p1 main_1_Test.c 
-	@-${MV} ${OBJECTDIR}/main_1_Test.d ${OBJECTDIR}/main_1_Test.p1.d 
-	@${FIXDEPS} ${OBJECTDIR}/main_1_Test.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
 endif
 

@@ -114,7 +114,7 @@ void __interrupt(high_priority)rxANDiocInterrupt_handler(void) {
             decodedString[msgIndex] = rxCharacter; // Load Received byte into storage buffer
             msgIndex++; // point to next location for storing next received byte
         }
-        else if (msgIndex < 50) {
+        else if (msgIndex > 0 && msgIndex < 25) {
             decodedString[msgIndex] = rxCharacter; // Load received byte into storage buffer
             msgIndex++; // point to next location for storing next received byte
             // check if storage index is reached to last character of CMTI command
@@ -175,52 +175,52 @@ void __interrupt(low_priority) timerInterrupt_handler(void) {
             }
         } 
         //*To follow filtration  cycle sequence*/
-        if (filtrationCycleSequence == 1 && Timer0Overflow == filtrationDelay1 ) { // 10 minute off
+        if (filtrationCycleSequence == 99) {    // Filtration is disabled
+            Timer0Overflow = 0;
+        }
+        else if (filtrationCycleSequence == 1 && Timer0Overflow == filtrationDelay1 ) { // Filtration1 Start Delay
             Timer0Overflow = 0;
             filtration1ValveControl = ON;
             filtrationCycleSequence = 2;
         }
-        else if (filtrationCycleSequence == 2 && Timer0Overflow == filtrationOnTime ) {  // 1 minute on
+        else if (filtrationCycleSequence == 2 && Timer0Overflow == filtrationOnTime ) {  // Filtration1 On Period
             Timer0Overflow = 0;
             filtration1ValveControl = OFF;
             filtrationCycleSequence = 3;
         }
-        else if (filtrationCycleSequence == 3 && Timer0Overflow == filtrationDelay2 ) { // 1 minute off
+        else if (filtrationCycleSequence == 3 && Timer0Overflow == filtrationDelay2 ) { // Filtration2 Start Delay
             Timer0Overflow = 0;
             filtration2ValveControl = ON;
             filtrationCycleSequence = 4;
         }
-        else if (filtrationCycleSequence == 4 && Timer0Overflow == filtrationOnTime ) { // 1 minute on
+        else if (filtrationCycleSequence == 4 && Timer0Overflow == filtrationOnTime ) { // Filtration2 On Period
             Timer0Overflow = 0;
             filtration2ValveControl = OFF;
             filtrationCycleSequence = 5;
         }
-        else if (filtrationCycleSequence == 5 && Timer0Overflow == filtrationDelay2 ) { // 1 minute off 
+        else if (filtrationCycleSequence == 5 && Timer0Overflow == filtrationDelay2 ) { // Filtration3 Start Delay
             Timer0Overflow = 0;
             filtration3ValveControl = ON;
             filtrationCycleSequence = 6;
         }
-        else if (filtrationCycleSequence == 6 && Timer0Overflow == filtrationOnTime ) { // 1 minute on
+        else if (filtrationCycleSequence == 6 && Timer0Overflow == filtrationOnTime ) { // Filtration3 On Period
             Timer0Overflow = 0;
             filtration3ValveControl = OFF;
             filtrationCycleSequence = 7;
         }
-        else if (filtrationCycleSequence == 7 && Timer0Overflow == filtrationSeperationTime ) { // 30 minutes all off
+        else if (filtrationCycleSequence == 7 && Timer0Overflow == filtrationSeperationTime ) { //Filtration Repeat Delay
             Timer0Overflow = 0;
             filtrationCycleSequence = 1;
         }
-        else if (filtrationCycleSequence == 99) {
-            Timer0Overflow = 0;
-        }
     }
 /*To measure pulse width of moisture sensor output*/
-/*
+
     if (PIR5bits.TMR1IF) {
         Run_led = GLOW; // Led Indication for system in Operational Mode
         Timer1Overflow++;
         PIR5bits.TMR1IF = CLEAR;
     }
-*/
+
     if (PIR5bits.TMR3IF) {
         Run_led = GLOW; // Led Indication for system in Operational Mode
         PIR5bits.TMR3IF = CLEAR;
@@ -255,13 +255,15 @@ void __interrupt(low_priority) timerInterrupt_handler(void) {
     //actionsOnSystemReset();
     configureController(); // set Microcontroller ports, ADC, Timer, I2C, UART, Interrupt Config
     myMsDelay(1000);
-    loadDataFromEeprom(); // Read configured valve data saved in EEprom
+    //loadDataFromEeprom(); // Read configured valve data saved in EEprom
     myMsDelay(1000);
+    isRTCBatteryDrained();
     while (1) {
+        
         loraAttempt = 0;
         do {
             sendCmdToLora(0,0); 
-        } while(loraAttempt<5);
+        } while(loraAttempt<2);
         if (!LoraConnectionFailed && loraAttempt == 99) {  // Successful Valve Activation
             setBCDdigit(0x01,1);
             myMsDelay(10000);
@@ -273,7 +275,7 @@ void __interrupt(low_priority) timerInterrupt_handler(void) {
         loraAttempt = 0;
         do {
             sendCmdToLora(1,0); 
-        } while(loraAttempt<5);
+        } while(loraAttempt<2);
         if (!LoraConnectionFailed && loraAttempt == 99) {  // Successful Valve Activation
             setBCDdigit(0x02,1);
             myMsDelay(10000);
@@ -286,7 +288,7 @@ void __interrupt(low_priority) timerInterrupt_handler(void) {
         loraAttempt = 0;
         do {
             sendCmdToLora(2,0); 
-        } while(loraAttempt<5);
+        } while(loraAttempt<2);
         if (!LoraConnectionFailed && loraAttempt == 99) {  // Successful Valve Activation
             setBCDdigit(0x03,1);
             myMsDelay(10000);
@@ -377,5 +379,51 @@ void __interrupt(low_priority) timerInterrupt_handler(void) {
  // Rain Sensor 7 and 8 pin changed from RC0 and RC1 to RE4 and RD4 respectively
  // Added Priority and changed SMS format
  // decode of incoming sms required in extract receive function
+ 
+ 
+ if (field2ValveControl == ON && injector2OnPeriodCnt == injector2OnPeriod) {
+                field2ValveControl = OFF;
+                injector2OnPeriodCnt = CLEAR;
+                injector2OffPeriodCnt++;
+            }
+            else if (field2ValveControl == OFF && injector2OffPeriodCnt == injector2OffPeriod) {
+                field2ValveControl = ON;
+                injector2OnPeriodCnt++;
+                injector2OffPeriodCnt = CLEAR;
+            }
+            if (field3ValveControl == ON && injector3OnPeriodCnt == injector3OnPeriod) {
+                field3ValveControl = OFF;
+                injector3OnPeriodCnt = CLEAR;
+                injector3OffPeriodCnt++;
+            }
+            else if (field3ValveControl == OFF && injector3OffPeriodCnt == injector3OffPeriod) {
+                field3ValveControl = ON;
+                injector3OnPeriodCnt++;
+                injector3OffPeriodCnt = CLEAR;
+            }
+            if (field4ValveControl == ON && injector4OnPeriodCnt == injector4OnPeriod) {
+                field4ValveControl = OFF;
+                injector4OnPeriodCnt = CLEAR;
+                injector4OffPeriodCnt++;
+            }
+            else if (field4ValveControl == OFF && injector4OffPeriodCnt == injector4OffPeriod) {
+                field4ValveControl = ON;
+                injector4OnPeriodCnt++;
+                injector4OffPeriodCnt = CLEAR;
+            }
+            if (field1ValveControl == ON) {injector1OnPeriodCnt++; injector1cycle++;}
+            else {injector1OffPeriodCnt++;}
+            if (field2ValveControl == ON) {injector2OnPeriodCnt++; injector2cycle++;}
+            else {injector2OffPeriodCnt++;}
+            if (field3ValveControl == ON) {injector3OnPeriodCnt++; injector3cycle++;}
+            else {injector3OffPeriodCnt++;}
+            if (field4ValveControl == ON) {injector4OnPeriodCnt++; injector4cycle++;}
+            else {injector4OffPeriodCnt++;}
+            /*
+            if (field1ValveControl == OFF) {injector1OffPeriodCnt++;}
+            if (field2ValveControl == OFF) {injector2OffPeriodCnt++;}
+            if (field3ValveControl == OFF) {injector3OffPeriodCnt++;}
+            if (field4ValveControl == OFF) {injector4OffPeriodCnt++;}
+            */
  
              

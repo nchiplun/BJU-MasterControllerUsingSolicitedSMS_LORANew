@@ -31,7 +31,10 @@
       <itemPath>main_1.c</itemPath>
       <itemPath>serailMonitor.c</itemPath>
       <itemPath>lora.c</itemPath>
-      <itemPath>main_1_Test.c</itemPath>
+      <itemPath>main_2_Test.c</itemPath>
+      <itemPath>controllerActions_Test.c</itemPath>
+      <itemPath>gsmTest.c</itemPath>
+      <itemPath>loraTest.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -210,6 +213,11 @@
         <property key="programoptions.uselvpprogramming" value="false"/>
         <property key="voltagevalue" value="5.0"/>
       </PICkit3PlatformTool>
+      <Simulator>
+        <property key="W0106_SIM_PERIPH_PARTIAL_SUPPORT" value="report"/>
+        <property key="W9602_COMP_DAC_SOURCE_UNAVAILABLE" value="report"/>
+        <property key="periphADC1.minTacq" value="4"/>
+      </Simulator>
       <Tool>
         <property key="AutoSelectMemRanges" value="auto"/>
         <property key="Freeze Peripherals" value="true"/>
@@ -217,6 +225,8 @@
         <property key="ToolFirmwareFilePath"
                   value="Press to browse for a specific firmware version"/>
         <property key="ToolFirmwareOption.UseLatestFirmware" value="true"/>
+        <property key="W0106_SIM_PERIPH_PARTIAL_SUPPORT" value="report"/>
+        <property key="W9602_COMP_DAC_SOURCE_UNAVAILABLE" value="report"/>
         <property key="debugoptions.debug-startup" value="Use system settings"/>
         <property key="debugoptions.reset-behaviour" value="Use system settings"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
@@ -234,6 +244,7 @@
                   value="${memories.instruction.ram.ranges}"/>
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-ffff"/>
+        <property key="periphADC1.minTacq" value="4"/>
         <property key="poweroptions.powerenable" value="false"/>
         <property key="programmertogo.imagename" value=""/>
         <property key="programoptions.donoteraseauxmem" value="false"/>
@@ -273,7 +284,7 @@
         <property key="user-pack-device-support" value=""/>
         <property key="wpo-lto" value="false"/>
       </XC8-config-global>
-      <item path="main_1.c" ex="false" overriding="false">
+      <item path="controllerActions.c" ex="true" overriding="false">
         <HI-TECH-COMP>
         </HI-TECH-COMP>
         <HI-TECH-LINK>
@@ -283,7 +294,75 @@
         <XC8-config-global>
         </XC8-config-global>
       </item>
-      <item path="main_1_Test.c" ex="true" overriding="false">
+      <item path="controllerActions_Test.c" ex="false" overriding="false">
+        <HI-TECH-COMP>
+        </HI-TECH-COMP>
+        <HI-TECH-LINK>
+        </HI-TECH-LINK>
+        <XC8-CO>
+        </XC8-CO>
+        <XC8-config-global>
+        </XC8-config-global>
+      </item>
+      <item path="gsm.c" ex="true" overriding="false">
+        <HI-TECH-COMP>
+        </HI-TECH-COMP>
+        <HI-TECH-LINK>
+        </HI-TECH-LINK>
+        <XC8-CO>
+        </XC8-CO>
+        <XC8-config-global>
+        </XC8-config-global>
+      </item>
+      <item path="gsmTest.c" ex="false" overriding="false">
+        <HI-TECH-COMP>
+        </HI-TECH-COMP>
+        <HI-TECH-LINK>
+        </HI-TECH-LINK>
+        <XC8-CO>
+        </XC8-CO>
+        <XC8-config-global>
+        </XC8-config-global>
+      </item>
+      <item path="lora.c" ex="true" overriding="false">
+        <HI-TECH-COMP>
+        </HI-TECH-COMP>
+        <HI-TECH-LINK>
+        </HI-TECH-LINK>
+        <XC8-CO>
+        </XC8-CO>
+        <XC8-config-global>
+        </XC8-config-global>
+      </item>
+      <item path="loraTest.c" ex="false" overriding="false">
+        <HI-TECH-COMP>
+        </HI-TECH-COMP>
+        <HI-TECH-LINK>
+        </HI-TECH-LINK>
+        <XC8-CO>
+        </XC8-CO>
+        <XC8-config-global>
+        </XC8-config-global>
+      </item>
+      <item path="main_1.c" ex="true" overriding="false">
+        <HI-TECH-COMP>
+        </HI-TECH-COMP>
+        <HI-TECH-LINK>
+        </HI-TECH-LINK>
+        <XC8-CO>
+        </XC8-CO>
+        <XC8-config-global>
+        </XC8-config-global>
+      </item>
+      <item path="main_2_Test.c" ex="false" overriding="false">
+        <HI-TECH-COMP>
+        </HI-TECH-COMP>
+        <HI-TECH-LINK>
+        </HI-TECH-LINK>
+        <XC8-CO>
+        </XC8-CO>
+        <XC8-config-global>
+        </XC8-config-global>
       </item>
     </conf>
     <conf name="18f67k40" type="2">
@@ -426,6 +505,46 @@
         <property key="user-pack-device-support" value=""/>
         <property key="wpo-lto" value="false"/>
       </XC8-config-global>
+      <item path="controllerActions_Test.c" ex="true" overriding="false">
+        <HI-TECH-COMP>
+        </HI-TECH-COMP>
+        <HI-TECH-LINK>
+        </HI-TECH-LINK>
+        <XC8-CO>
+        </XC8-CO>
+        <XC8-config-global>
+        </XC8-config-global>
+      </item>
+      <item path="gsmTest.c" ex="true" overriding="false">
+        <HI-TECH-COMP>
+        </HI-TECH-COMP>
+        <HI-TECH-LINK>
+        </HI-TECH-LINK>
+        <XC8-CO>
+        </XC8-CO>
+        <XC8-config-global>
+        </XC8-config-global>
+      </item>
+      <item path="loraTest.c" ex="true" overriding="false">
+        <HI-TECH-COMP>
+        </HI-TECH-COMP>
+        <HI-TECH-LINK>
+        </HI-TECH-LINK>
+        <XC8-CO>
+        </XC8-CO>
+        <XC8-config-global>
+        </XC8-config-global>
+      </item>
+      <item path="main_2_Test.c" ex="true" overriding="false">
+        <HI-TECH-COMP>
+        </HI-TECH-COMP>
+        <HI-TECH-LINK>
+        </HI-TECH-LINK>
+        <XC8-CO>
+        </XC8-CO>
+        <XC8-config-global>
+        </XC8-config-global>
+      </item>
     </conf>
   </confs>
 </configurationDescriptor>

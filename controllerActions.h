@@ -22,7 +22,7 @@ void configureController(void);                 // System configuration
 void deepSleep(void);                           // Sleep Activity
 _Bool isSystemReady(void);                      // To check system is ready
 _Bool isNumber(unsigned char);                  // To check if variable is number
-_Bool isBase64String(char *);                   // To check if string is base 64 encoded                
+_Bool isBase64String(unsigned char *);                   // To check if string is base 64 encoded                
 void extractReceivedSms(void);                  // To extract data received in GSM
 unsigned int days(unsigned char, unsigned char); // To calculate no. of days between 2 dates of calender
 void getDateFromGSM(void);                      // To fetch current time stamp from GSM 

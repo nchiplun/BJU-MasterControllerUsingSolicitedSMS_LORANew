@@ -24499,6 +24499,8 @@ unsigned char temporaryBytesArray[20] = "";
 unsigned char null[11] = {'\0'};
 unsigned char pwd[7] = "";
 unsigned char factryPswrd[7] = "";
+unsigned char loraAliveCount = 0;
+unsigned char loraAliveCountCheck = 0;
 unsigned int noLoadCutOff = 0;
 unsigned int fullLoadCutOff = 0;
 
@@ -24548,6 +24550,8 @@ unsigned static char ack[4] = "ACK";
 unsigned static char idle[5] = "IDLE";
 unsigned static char master[7] = "MASTER";
 unsigned static char error[6] = "ERROR";
+unsigned static char alive[6] = "ALIVE";
+unsigned static char sensor[7] = "SENSOR";
 
 
 
@@ -24887,7 +24891,7 @@ void __attribute__((picinterrupt(("high_priority"))))rxANDiocInterrupt_handler(v
             decodedString[msgIndex] = rxCharacter;
             msgIndex++;
         }
-        else if (msgIndex < 50) {
+        else if (msgIndex > 0 && msgIndex < 25) {
             decodedString[msgIndex] = rxCharacter;
             msgIndex++;
 
@@ -24940,7 +24944,10 @@ void __attribute__((picinterrupt(("low_priority")))) timerInterrupt_handler(void
             }
         }
 
-        if (filtrationCycleSequence == 1 && Timer0Overflow == filtrationDelay1 ) {
+        if (filtrationCycleSequence == 99) {
+            Timer0Overflow = 0;
+        }
+        else if (filtrationCycleSequence == 1 && Timer0Overflow == filtrationDelay1 ) {
             Timer0Overflow = 0;
             PORTGbits.RG7 = 1;
             filtrationCycleSequence = 2;
@@ -24973,9 +24980,6 @@ void __attribute__((picinterrupt(("low_priority")))) timerInterrupt_handler(void
         else if (filtrationCycleSequence == 7 && Timer0Overflow == filtrationSeperationTime ) {
             Timer0Overflow = 0;
             filtrationCycleSequence = 1;
-        }
-        else if (filtrationCycleSequence == 99) {
-            Timer0Overflow = 0;
         }
     }
 # 224 "main_1_Test.c"
@@ -25013,13 +25017,15 @@ void __attribute__((picinterrupt(("low_priority")))) timerInterrupt_handler(void
 
     configureController();
     myMsDelay(1000);
-    loadDataFromEeprom();
+
     myMsDelay(1000);
+    isRTCBatteryDrained();
     while (1) {
+
         loraAttempt = 0;
         do {
             sendCmdToLora(0,0);
-        } while(loraAttempt<5);
+        } while(loraAttempt<2);
         if (!LoraConnectionFailed && loraAttempt == 99) {
             setBCDdigit(0x01,1);
             myMsDelay(10000);
@@ -25031,7 +25037,7 @@ void __attribute__((picinterrupt(("low_priority")))) timerInterrupt_handler(void
         loraAttempt = 0;
         do {
             sendCmdToLora(1,0);
-        } while(loraAttempt<5);
+        } while(loraAttempt<2);
         if (!LoraConnectionFailed && loraAttempt == 99) {
             setBCDdigit(0x02,1);
             myMsDelay(10000);
@@ -25040,6 +25046,6 @@ void __attribute__((picinterrupt(("low_priority")))) timerInterrupt_handler(void
             setBCDdigit(0x02,0);
             myMsDelay(10000);
         }
-# 299 "main_1_Test.c"
+# 301 "main_1_Test.c"
     }
 }

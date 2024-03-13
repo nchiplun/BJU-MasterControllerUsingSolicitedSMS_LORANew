@@ -219,9 +219,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 "21 ./controllerActions.h
 [; ;./controllerActions.h: 21: void configureController(void);
 [v _configureController `(v ~T0 @X0 0 ef ]
-"26 ./eeprom.h
-[; ;./eeprom.h: 26: void loadDataFromEeprom(void);
-[v _loadDataFromEeprom `(v ~T0 @X0 0 ef ]
+"42
+[; ;./controllerActions.h: 42: _Bool isRTCBatteryDrained(void);
+[v _isRTCBatteryDrained `(a ~T0 @X0 0 ef ]
 "19 ./lora.h
 [; ;./lora.h: 19: void sendCmdToLora(unsigned char, unsigned char);
 [v _sendCmdToLora `(v ~T0 @X0 0 ef2`uc`uc ]
@@ -2544,46 +2544,58 @@ Version 4.0 HI-TECH Software Intermediate Code
 ..
 ]
 "253
-[; ;./variableDefinitions.h: 253: unsigned int noLoadCutOff = 0;
+[; ;./variableDefinitions.h: 253: unsigned char loraAliveCount = 0;
+[v _loraAliveCount `uc ~T0 @X0 1 e ]
+[i _loraAliveCount
+-> -> 0 `i `uc
+]
+"254
+[; ;./variableDefinitions.h: 254: unsigned char loraAliveCountCheck = 0;
+[v _loraAliveCountCheck `uc ~T0 @X0 1 e ]
+[i _loraAliveCountCheck
+-> -> 0 `i `uc
+]
+"255
+[; ;./variableDefinitions.h: 255: unsigned int noLoadCutOff = 0;
 [v _noLoadCutOff `ui ~T0 @X0 1 e ]
 [i _noLoadCutOff
 -> -> 0 `i `ui
 ]
-"254
-[; ;./variableDefinitions.h: 254: unsigned int fullLoadCutOff = 0;
+"256
+[; ;./variableDefinitions.h: 256: unsigned int fullLoadCutOff = 0;
 [v _fullLoadCutOff `ui ~T0 @X0 1 e ]
 [i _fullLoadCutOff
 -> -> 0 `i `ui
 ]
-"260
+"262
 [v _encodedString `uc ~T0 @X0 -> 100 `i e ]
 [i _encodedString
 :U ..
 -> -> 0 `ui `uc
 ..
 ]
-"262
+"264
 [v _stringToEncode `uc ~T0 @X0 -> 100 `i e ]
 [i _stringToEncode
 :U ..
 -> -> 0 `ui `uc
 ..
 ]
-"264
+"266
 [v _stringToDecode `uc ~T0 @X0 -> 220 `i e ]
 [i _stringToDecode
 :U ..
 -> -> 0 `ui `uc
 ..
 ]
-"267
+"269
 [v _decodedString `uc ~T0 @X0 -> 220 `i e ]
 [i _decodedString
 :U ..
 -> -> 0 `ui `uc
 ..
 ]
-"271
+"273
 [v _admin `uc ~T0 @X0 -> 3 `i s ]
 [i _admin
 :U ..
@@ -2592,7 +2604,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"272
+"274
 [v _hook `uc ~T0 @X0 -> 5 `i s ]
 [i _hook
 :U ..
@@ -2603,7 +2615,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"273
+"275
 [v _set `uc ~T0 @X0 -> 4 `i s ]
 [i _set
 :U ..
@@ -2613,7 +2625,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"274
+"276
 [v _enable `uc ~T0 @X0 -> 7 `i s ]
 [i _enable
 :U ..
@@ -2626,7 +2638,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"275
+"277
 [v _disable `uc ~T0 @X0 -> 8 `i s ]
 [i _disable
 :U ..
@@ -2640,7 +2652,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"276
+"278
 [v _active `uc ~T0 @X0 -> 7 `i s ]
 [i _active
 :U ..
@@ -2653,7 +2665,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"277
+"279
 [v _dactive `uc ~T0 @X0 -> 8 `i s ]
 [i _dactive
 :U ..
@@ -2667,7 +2679,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"278
+"280
 [v _hold `uc ~T0 @X0 -> 5 `i s ]
 [i _hold
 :U ..
@@ -2678,7 +2690,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"279
+"281
 [v _extract `uc ~T0 @X0 -> 8 `i s ]
 [i _extract
 :U ..
@@ -2692,7 +2704,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"280
+"282
 [v _ok `uc ~T0 @X0 -> 3 `i s ]
 [i _ok
 :U ..
@@ -2701,7 +2713,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"281
+"283
 [v _time `uc ~T0 @X0 -> 5 `i s ]
 [i _time
 :U ..
@@ -2712,7 +2724,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"282
+"284
 [v _feed `uc ~T0 @X0 -> 5 `i s ]
 [i _feed
 :U ..
@@ -2723,7 +2735,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"283
+"285
 [v _fdata `uc ~T0 @X0 -> 6 `i s ]
 [i _fdata
 :U ..
@@ -2735,7 +2747,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"284
+"286
 [v _inject `uc ~T0 @X0 -> 7 `i s ]
 [i _inject
 :U ..
@@ -2748,7 +2760,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"285
+"287
 [v _ct `uc ~T0 @X0 -> 3 `i s ]
 [i _ct
 :U ..
@@ -2757,7 +2769,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"286
+"288
 [v _setct `uc ~T0 @X0 -> 4 `i s ]
 [i _setct
 :U ..
@@ -2767,7 +2779,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"287
+"289
 [v _secret `uc ~T0 @X0 -> 12 `i s ]
 [i _secret
 :U ..
@@ -2785,7 +2797,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"288
+"290
 [v _getct `uc ~T0 @X0 -> 6 `i s ]
 [i _getct
 :U ..
@@ -2797,7 +2809,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"289
+"291
 [v _getfreq `uc ~T0 @X0 -> 8 `i s ]
 [i _getfreq
 :U ..
@@ -2811,7 +2823,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"290
+"292
 [v _countryCode `uc ~T0 @X0 -> 4 `i s ]
 [i _countryCode
 :U ..
@@ -2821,7 +2833,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"295
+"297
 [v _on `uc ~T0 @X0 -> 3 `i s ]
 [i _on
 :U ..
@@ -2830,7 +2842,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"296
+"298
 [v _off `uc ~T0 @X0 -> 4 `i s ]
 [i _off
 :U ..
@@ -2840,7 +2852,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"297
+"299
 [v _slave `uc ~T0 @X0 -> 6 `i s ]
 [i _slave
 :U ..
@@ -2852,7 +2864,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"298
+"300
 [v _ack `uc ~T0 @X0 -> 4 `i s ]
 [i _ack
 :U ..
@@ -2862,7 +2874,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"299
+"301
 [v _idle `uc ~T0 @X0 -> 5 `i s ]
 [i _idle
 :U ..
@@ -2873,7 +2885,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"300
+"302
 [v _master `uc ~T0 @X0 -> 7 `i s ]
 [i _master
 :U ..
@@ -2886,7 +2898,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"301
+"303
 [v _error `uc ~T0 @X0 -> 6 `i s ]
 [i _error
 :U ..
@@ -2898,7 +2910,32 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"306
+"304
+[v _alive `uc ~T0 @X0 -> 6 `i s ]
+[i _alive
+:U ..
+-> 65 `c
+-> 76 `c
+-> 73 `c
+-> 86 `c
+-> 69 `c
+-> 0 `c
+..
+]
+"305
+[v _sensor `uc ~T0 @X0 -> 7 `i s ]
+[i _sensor
+:U ..
+-> 83 `c
+-> 69 `c
+-> 78 `c
+-> 83 `c
+-> 79 `c
+-> 82 `c
+-> 0 `c
+..
+]
+"310
 [v _SmsAU1 `Cuc ~T0 @X0 -> 23 `i e ]
 [i _SmsAU1
 :U ..
@@ -2927,7 +2964,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"307
+"311
 [v _SmsAU2 `Cuc ~T0 @X0 -> 51 `i e ]
 [i _SmsAU2
 :U ..
@@ -2982,7 +3019,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"308
+"312
 [v _SmsAU3 `Cuc ~T0 @X0 -> 22 `i e ]
 [i _SmsAU3
 :U ..
@@ -3010,7 +3047,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"309
+"313
 [v _SmsAU4 `Cuc ~T0 @X0 -> 64 `i e ]
 [i _SmsAU4
 :U ..
@@ -3080,7 +3117,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"312
+"316
 [v _SmsPwd1 `Cuc ~T0 @X0 -> 32 `i e ]
 [i _SmsPwd1
 :U ..
@@ -3118,7 +3155,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"313
+"317
 [v _SmsPwd2 `Cuc ~T0 @X0 -> 23 `i e ]
 [i _SmsPwd2
 :U ..
@@ -3147,7 +3184,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"314
+"318
 [v _SmsPwd3 `Cuc ~T0 @X0 -> 23 `i e ]
 [i _SmsPwd3
 :U ..
@@ -3176,7 +3213,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"316
+"320
 [v _SmsIrr1 `Cuc ~T0 @X0 -> 36 `i e ]
 [i _SmsIrr1
 :U ..
@@ -3218,7 +3255,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"317
+"321
 [v _SmsIrr2 `Cuc ~T0 @X0 -> 48 `i e ]
 [i _SmsIrr2
 :U ..
@@ -3272,7 +3309,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"318
+"322
 [v _SmsIrr3 `Cuc ~T0 @X0 -> 40 `i e ]
 [i _SmsIrr3
 :U ..
@@ -3318,7 +3355,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"319
+"323
 [v _SmsIrr4 `Cuc ~T0 @X0 -> 33 `i e ]
 [i _SmsIrr4
 :U ..
@@ -3357,7 +3394,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"320
+"324
 [v _SmsIrr5 `Cuc ~T0 @X0 -> 33 `i e ]
 [i _SmsIrr5
 :U ..
@@ -3396,7 +3433,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"321
+"325
 [v _SmsIrr6 `Cuc ~T0 @X0 -> 60 `i e ]
 [i _SmsIrr6
 :U ..
@@ -3460,7 +3497,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"322
+"326
 [v _SmsIrr7 `Cuc ~T0 @X0 -> 15 `i e ]
 [i _SmsIrr7
 :U ..
@@ -3481,7 +3518,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"323
+"327
 [v _SmsIrr8 `Cuc ~T0 @X0 -> 51 `i e ]
 [i _SmsIrr8
 :U ..
@@ -3538,7 +3575,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"324
+"328
 [v _SmsIrr9 `Cuc ~T0 @X0 -> 51 `i e ]
 [i _SmsIrr9
 :U ..
@@ -3595,7 +3632,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"326
+"330
 [v _SmsFert1 `Cuc ~T0 @X0 -> 64 `i e ]
 [i _SmsFert1
 :U ..
@@ -3665,7 +3702,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"327
+"331
 [v _SmsFert2 `Cuc ~T0 @X0 -> 56 `i e ]
 [i _SmsFert2
 :U ..
@@ -3727,7 +3764,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"328
+"332
 [v _SmsFert3 `Cuc ~T0 @X0 -> 34 `i e ]
 [i _SmsFert3
 :U ..
@@ -3767,7 +3804,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"329
+"333
 [v _SmsFert4 `Cuc ~T0 @X0 -> 35 `i e ]
 [i _SmsFert4
 :U ..
@@ -3808,7 +3845,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"330
+"334
 [v _SmsFert5 `Cuc ~T0 @X0 -> 34 `i e ]
 [i _SmsFert5
 :U ..
@@ -3848,7 +3885,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"331
+"335
 [v _SmsFert6 `Cuc ~T0 @X0 -> 34 `i e ]
 [i _SmsFert6
 :U ..
@@ -3888,7 +3925,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"332
+"336
 [v _SmsFert7 `Cuc ~T0 @X0 -> 71 `i e ]
 [i _SmsFert7
 :U ..
@@ -3965,7 +4002,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"333
+"337
 [v _SmsFert8 `Cuc ~T0 @X0 -> 60 `i e ]
 [i _SmsFert8
 :U ..
@@ -4031,7 +4068,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"335
+"339
 [v _SmsFilt1 `Cuc ~T0 @X0 -> 27 `i e ]
 [i _SmsFilt1
 :U ..
@@ -4064,7 +4101,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"336
+"340
 [v _SmsFilt2 `Cuc ~T0 @X0 -> 29 `i e ]
 [i _SmsFilt2
 :U ..
@@ -4099,7 +4136,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"337
+"341
 [v _SmsFilt3 `Cuc ~T0 @X0 -> 32 `i e ]
 [i _SmsFilt3
 :U ..
@@ -4137,7 +4174,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"338
+"342
 [v _SmsFilt4 `Cuc ~T0 @X0 -> 27 `i e ]
 [i _SmsFilt4
 :U ..
@@ -4170,7 +4207,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"340
+"344
 [v _SmsSR01 `Cuc ~T0 @X0 -> 60 `i e ]
 [i _SmsSR01
 :U ..
@@ -4236,7 +4273,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"341
+"345
 [v _SmsSR02 `Cuc ~T0 @X0 -> 78 `i e ]
 [i _SmsSR02
 :U ..
@@ -4320,7 +4357,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"342
+"346
 [v _SmsSR03 `Cuc ~T0 @X0 -> 75 `i e ]
 [i _SmsSR03
 :U ..
@@ -4401,7 +4438,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"343
+"347
 [v _SmsSR04 `Cuc ~T0 @X0 -> 77 `i e ]
 [i _SmsSR04
 :U ..
@@ -4484,7 +4521,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"344
+"348
 [v _SmsSR05 `Cuc ~T0 @X0 -> 82 `i e ]
 [i _SmsSR05
 :U ..
@@ -4572,7 +4609,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"345
+"349
 [v _SmsSR06 `Cuc ~T0 @X0 -> 74 `i e ]
 [i _SmsSR06
 :U ..
@@ -4652,7 +4689,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"346
+"350
 [v _SmsSR07 `Cuc ~T0 @X0 -> 74 `i e ]
 [i _SmsSR07
 :U ..
@@ -4732,7 +4769,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"347
+"351
 [v _SmsSR08 `Cuc ~T0 @X0 -> 37 `i e ]
 [i _SmsSR08
 :U ..
@@ -4775,7 +4812,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"348
+"352
 [v _SmsSR09 `Cuc ~T0 @X0 -> 31 `i e ]
 [i _SmsSR09
 :U ..
@@ -4812,7 +4849,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"349
+"353
 [v _SmsSR10 `Cuc ~T0 @X0 -> 36 `i e ]
 [i _SmsSR10
 :U ..
@@ -4854,7 +4891,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"350
+"354
 [v _SmsSR11 `Cuc ~T0 @X0 -> 41 `i e ]
 [i _SmsSR11
 :U ..
@@ -4901,7 +4938,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"351
+"355
 [v _SmsSR12 `Cuc ~T0 @X0 -> 33 `i e ]
 [i _SmsSR12
 :U ..
@@ -4940,7 +4977,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"352
+"356
 [v _SmsSR13 `Cuc ~T0 @X0 -> 33 `i e ]
 [i _SmsSR13
 :U ..
@@ -4979,7 +5016,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"353
+"357
 [v _SmsSR14 `Cuc ~T0 @X0 -> 59 `i e ]
 [i _SmsSR14
 :U ..
@@ -5044,7 +5081,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"354
+"358
 [v _SmsSR15 `Cuc ~T0 @X0 -> 50 `i e ]
 [i _SmsSR15
 :U ..
@@ -5100,7 +5137,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"356
+"360
 [v _SmsRTC1 `Cuc ~T0 @X0 -> 50 `i e ]
 [i _SmsRTC1
 :U ..
@@ -5156,7 +5193,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"357
+"361
 [v _SmsRTC2 `Cuc ~T0 @X0 -> 41 `i e ]
 [i _SmsRTC2
 :U ..
@@ -5203,7 +5240,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"358
+"362
 [v _SmsRTC3 `Cuc ~T0 @X0 -> 56 `i e ]
 [i _SmsRTC3
 :U ..
@@ -5265,7 +5302,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"359
+"363
 [v _SmsRTC4 `Cuc ~T0 @X0 -> 56 `i e ]
 [i _SmsRTC4
 :U ..
@@ -5327,7 +5364,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"361
+"365
 [v _SmsDR1 `Cuc ~T0 @X0 -> 133 `i e ]
 [i _SmsDR1
 :U ..
@@ -5464,7 +5501,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"362
+"366
 [v _SmsDR2 `Cuc ~T0 @X0 -> 120 `i e ]
 [i _SmsDR2
 :U ..
@@ -5588,7 +5625,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"363
+"367
 [v _SmsDR3 `Cuc ~T0 @X0 -> 103 `i e ]
 [i _SmsDR3
 :U ..
@@ -5695,7 +5732,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"364
+"368
 [v _SmsDR4 `Cuc ~T0 @X0 -> 108 `i e ]
 [i _SmsDR4
 :U ..
@@ -5807,7 +5844,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"366
+"370
 [v _SmsT1 `Cuc ~T0 @X0 -> 27 `i e ]
 [i _SmsT1
 :U ..
@@ -5840,7 +5877,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"367
+"371
 [v _SmsT2 `Cuc ~T0 @X0 -> 15 `i e ]
 [i _SmsT2
 :U ..
@@ -5861,7 +5898,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"369
+"373
 [v _SmsMotor1 `Cuc ~T0 @X0 -> 58 `i e ]
 [i _SmsMotor1
 :U ..
@@ -5923,7 +5960,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"370
+"374
 [v _SmsMotor2 `Cuc ~T0 @X0 -> 35 `i e ]
 [i _SmsMotor2
 :U ..
@@ -5964,7 +6001,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"371
+"375
 [v _SmsMotor3 `Cuc ~T0 @X0 -> 47 `i e ]
 [i _SmsMotor3
 :U ..
@@ -6017,7 +6054,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"372
+"376
 [v _SmsMotor4 `Cuc ~T0 @X0 -> 49 `i e ]
 [i _SmsMotor4
 :U ..
@@ -6072,7 +6109,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"374
+"378
 [v _SmsConnect `Cuc ~T0 @X0 -> 17 `i e ]
 [i _SmsConnect
 :U ..
@@ -6095,7 +6132,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"376
+"380
 [v _SmsTest `Cuc ~T0 @X0 -> 19 `i e ]
 [i _SmsTest
 :U ..
@@ -6120,7 +6157,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"378
+"382
 [v _SmsFact1 `Cuc ~T0 @X0 -> 15 `i e ]
 [i _SmsFact1
 :U ..
@@ -6141,7 +6178,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"380
+"384
 [v _SmsPh1 `Cuc ~T0 @X0 -> 47 `i e ]
 [i _SmsPh1
 :U ..
@@ -6194,7 +6231,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"381
+"385
 [v _SmsPh2 `Cuc ~T0 @X0 -> 69 `i e ]
 [i _SmsPh2
 :U ..
@@ -6269,7 +6306,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"382
+"386
 [v _SmsPh3 `Cuc ~T0 @X0 -> 25 `i e ]
 [i _SmsPh3
 :U ..
@@ -6300,7 +6337,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"383
+"387
 [v _SmsPh4 `Cuc ~T0 @X0 -> 25 `i e ]
 [i _SmsPh4
 :U ..
@@ -6331,7 +6368,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"384
+"388
 [v _SmsPh5 `Cuc ~T0 @X0 -> 25 `i e ]
 [i _SmsPh5
 :U ..
@@ -6362,7 +6399,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"385
+"389
 [v _SmsPh6 `Cuc ~T0 @X0 -> 19 `i e ]
 [i _SmsPh6
 :U ..
@@ -6387,7 +6424,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"387
+"391
 [v _SmsMS1 `Cuc ~T0 @X0 -> 60 `i e ]
 [i _SmsMS1
 :U ..
@@ -6453,7 +6490,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"388
+"392
 [v _SmsMS2 `Cuc ~T0 @X0 -> 46 `i e ]
 [i _SmsMS2
 :U ..
@@ -6505,7 +6542,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"389
+"393
 [v _SmsMS3 `Cuc ~T0 @X0 -> 40 `i e ]
 [i _SmsMS3
 :U ..
@@ -6551,7 +6588,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"394
+"398
 [v _gsmResponse `uc ~T0 @X0 -> 220 `i e ]
 [i _gsmResponse
 :U ..
@@ -6563,7 +6600,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"399
+"403
 [v _cmti `uc ~T0 @X0 -> 14 `i s ]
 [i _cmti
 :U ..
@@ -6583,212 +6620,212 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 0 `c
 ..
 ]
-"404
+"408
 [v _loraAttempt `uc ~T0 @X0 1 e ]
 [i _loraAttempt
 -> -> 0 `i `uc
 ]
-"405
+"409
 [v _timer3Count `uc ~T0 @X0 1 e ]
 [i _timer3Count
 -> -> 0 `i `uc
 ]
-"406
+"410
 [v _rxCharacter `uc ~T0 @X0 1 e ]
 [i _rxCharacter
 -> -> 0 `i `uc
 ]
-"407
+"411
 [v _msgIndex `uc ~T0 @X0 1 e ]
 [i _msgIndex
 -> -> 0 `i `uc
 ]
-"408
+"412
 [v _temp `uc ~T0 @X0 1 e ]
 [i _temp
 -> -> 0 `i `uc
 ]
-"409
+"413
 [v _iterator `uc ~T0 @X0 1 e ]
 [i _iterator
 -> -> 0 `i `uc
 ]
-"410
+"414
 [v _fieldCount `uc ~T0 @X0 1 e ]
 [i _fieldCount
 -> -> 12 `i `uc
 ]
-"411
+"415
 [v _resetCount `uc ~T0 @X0 1 e ]
 [i _resetCount
 -> -> 0 `i `uc
 ]
-"412
+"416
 [v _startFieldNo `uc ~T0 @X0 1 e ]
 [i _startFieldNo
 -> -> 0 `i `uc
 ]
-"413
+"417
 [v _space `uc ~T0 @X0 1 e ]
 [i _space
 -> -> 32 `i `uc
 ]
-"414
+"418
 [v _terminateSms `uc ~T0 @X0 1 e ]
 [i _terminateSms
 -> -> 26 `i `uc
 ]
-"415
+"419
 [v _enter `uc ~T0 @X0 1 e ]
 [i _enter
 -> -> 13 `i `uc
 ]
-"416
+"420
 [v _newLine `uc ~T0 @X0 1 e ]
 [i _newLine
 -> -> 10 `i `uc
 ]
-"417
+"421
 [v _hundredsDigit `uc ~T0 @X0 1 e ]
 [i _hundredsDigit
 -> -> 0 `i `uc
 ]
-"418
+"422
 [v _tensDigit `uc ~T0 @X0 1 e ]
 [i _tensDigit
 -> -> 0 `i `uc
 ]
-"419
+"423
 [v _unitsDigit `uc ~T0 @X0 1 e ]
 [i _unitsDigit
 -> -> 0 `i `uc
 ]
-"420
+"424
 [v _Timer0Overflow `uc ~T0 @X0 1 e ]
 [i _Timer0Overflow
 -> -> 0 `i `uc
 ]
-"421
+"425
 [v _Timer1Overflow `uc ~T0 @X0 1 e ]
 [i _Timer1Overflow
 -> -> 0 `i `uc
 ]
-"422
+"426
 [v _Timer3Overflow `uc ~T0 @X0 1 e ]
 [i _Timer3Overflow
 -> -> 0 `i `uc
 ]
-"423
+"427
 [v _filtrationCycleSequence `uc ~T0 @X0 1 e ]
 [i _filtrationCycleSequence
 -> -> 0 `i `uc
 ]
-"424
+"428
 [v _currentYY `uc ~T0 @X0 1 e ]
 [i _currentYY
 -> -> 0 `i `uc
 ]
-"425
+"429
 [v _currentMM `uc ~T0 @X0 1 e ]
 [i _currentMM
 -> -> 0 `i `uc
 ]
-"426
+"430
 [v _currentDD `uc ~T0 @X0 1 e ]
 [i _currentDD
 -> -> 0 `i `uc
 ]
-"427
+"431
 [v _currentHour `uc ~T0 @X0 1 e ]
 [i _currentHour
 -> -> 0 `i `uc
 ]
-"428
+"432
 [v _currentMinutes `uc ~T0 @X0 1 e ]
 [i _currentMinutes
 -> -> 0 `i `uc
 ]
-"429
+"433
 [v _currentSeconds `uc ~T0 @X0 1 e ]
 [i _currentSeconds
 -> -> 0 `i `uc
 ]
-"430
+"434
 [v _dueYY `uc ~T0 @X0 1 e ]
 [i _dueYY
 -> -> 0 `i `uc
 ]
-"431
+"435
 [v _dueMM `uc ~T0 @X0 1 e ]
 [i _dueMM
 -> -> 0 `i `uc
 ]
-"432
+"436
 [v _filtrationDelay1 `uc ~T0 @X0 1 e ]
 [i _filtrationDelay1
 -> -> 0 `i `uc
 ]
-"433
+"437
 [v _filtrationDelay2 `uc ~T0 @X0 1 e ]
 [i _filtrationDelay2
 -> -> 0 `i `uc
 ]
-"434
+"438
 [v _filtrationDelay3 `uc ~T0 @X0 1 e ]
 [i _filtrationDelay3
 -> -> 0 `i `uc
 ]
-"435
+"439
 [v _filtrationOnTime `uc ~T0 @X0 1 e ]
 [i _filtrationOnTime
 -> -> 0 `i `uc
 ]
-"436
+"440
 [v _filtrationSeperationTime `uc ~T0 @X0 1 e ]
 [i _filtrationSeperationTime
 -> -> 0 `i `uc
 ]
-"437
+"441
 [v _dryRunCheckCount `uc ~T0 @X0 1 e ]
 [i _dryRunCheckCount
 -> -> 0 `i `uc
 ]
-"438
+"442
 [v _dueDD `ui ~T0 @X0 1 e ]
 [i _dueDD
 -> -> 0 `i `ui
 ]
-"439
+"443
 [v _sleepCount `ui ~T0 @X0 1 e ]
 [i _sleepCount
 -> -> 0 `i `ui
 ]
-"440
+"444
 [v _remainingFertigationOnPeriod `ui ~T0 @X0 1 e ]
 [i _remainingFertigationOnPeriod
 -> -> 0 `i `ui
 ]
-"441
+"445
 [v _lower8bits `ui ~T0 @X0 1 e ]
 [i _lower8bits
 -> -> 0 `i `ui
 ]
-"442
+"446
 [v _higher8bits `ui ~T0 @X0 1 e ]
 [i _higher8bits
 -> -> 0 `i `ui
 ]
-"443
+"447
 [v _moistureLevel `ui ~T0 @X0 1 e ]
 [i _moistureLevel
 -> -> 0 `i `ui
 ]
-"444
+"448
 [v _zero `Cui ~T0 @X0 1 e ]
 [i _zero
 -> -> 0 `i `ui
 ]
-"449
+"453
 [v _fieldValve `S2016 ~T0 @X0 -> 12 `i e ]
 [i _fieldValve
 :U ..
@@ -7031,9 +7068,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 }
 [e $U 2039  ]
 "117
-[; ;main_1_Test.c: 117:         else if (msgIndex < 50) {
+[; ;main_1_Test.c: 117:         else if (msgIndex > 0 && msgIndex < 25) {
 [e :U 2038 ]
-[e $ ! < -> _msgIndex `i -> 50 `i 2040  ]
+[e $ ! && > -> _msgIndex `i -> 0 `i < -> _msgIndex `i -> 25 `i 2040  ]
 {
 "118
 [; ;main_1_Test.c: 118:             decodedString[msgIndex] = rxCharacter;
@@ -7191,135 +7228,135 @@ Version 4.0 HI-TECH Software Intermediate Code
 }
 [e :U 2049 ]
 "178
-[; ;main_1_Test.c: 178:         if (filtrationCycleSequence == 1 && Timer0Overflow == filtrationDelay1 ) {
-[e $ ! && == -> _filtrationCycleSequence `i -> 1 `i == -> _Timer0Overflow `i -> _filtrationDelay1 `i 2051  ]
+[; ;main_1_Test.c: 178:         if (filtrationCycleSequence == 99) {
+[e $ ! == -> _filtrationCycleSequence `i -> 99 `i 2051  ]
 {
 "179
 [; ;main_1_Test.c: 179:             Timer0Overflow = 0;
 [e = _Timer0Overflow -> -> 0 `i `uc ]
 "180
-[; ;main_1_Test.c: 180:             PORTGbits.RG7 = 1;
-[e = . . _PORTGbits 0 7 -> -> 1 `i `uc ]
-"181
-[; ;main_1_Test.c: 181:             filtrationCycleSequence = 2;
-[e = _filtrationCycleSequence -> -> 2 `i `uc ]
-"182
-[; ;main_1_Test.c: 182:         }
+[; ;main_1_Test.c: 180:         }
 }
 [e $U 2052  ]
-"183
-[; ;main_1_Test.c: 183:         else if (filtrationCycleSequence == 2 && Timer0Overflow == filtrationOnTime ) {
+"181
+[; ;main_1_Test.c: 181:         else if (filtrationCycleSequence == 1 && Timer0Overflow == filtrationDelay1 ) {
 [e :U 2051 ]
-[e $ ! && == -> _filtrationCycleSequence `i -> 2 `i == -> _Timer0Overflow `i -> _filtrationOnTime `i 2053  ]
+[e $ ! && == -> _filtrationCycleSequence `i -> 1 `i == -> _Timer0Overflow `i -> _filtrationDelay1 `i 2053  ]
 {
-"184
-[; ;main_1_Test.c: 184:             Timer0Overflow = 0;
+"182
+[; ;main_1_Test.c: 182:             Timer0Overflow = 0;
 [e = _Timer0Overflow -> -> 0 `i `uc ]
+"183
+[; ;main_1_Test.c: 183:             PORTGbits.RG7 = 1;
+[e = . . _PORTGbits 0 7 -> -> 1 `i `uc ]
+"184
+[; ;main_1_Test.c: 184:             filtrationCycleSequence = 2;
+[e = _filtrationCycleSequence -> -> 2 `i `uc ]
 "185
-[; ;main_1_Test.c: 185:             PORTGbits.RG7 = 0;
-[e = . . _PORTGbits 0 7 -> -> 0 `i `uc ]
-"186
-[; ;main_1_Test.c: 186:             filtrationCycleSequence = 3;
-[e = _filtrationCycleSequence -> -> 3 `i `uc ]
-"187
-[; ;main_1_Test.c: 187:         }
+[; ;main_1_Test.c: 185:         }
 }
 [e $U 2054  ]
-"188
-[; ;main_1_Test.c: 188:         else if (filtrationCycleSequence == 3 && Timer0Overflow == filtrationDelay2 ) {
+"186
+[; ;main_1_Test.c: 186:         else if (filtrationCycleSequence == 2 && Timer0Overflow == filtrationOnTime ) {
 [e :U 2053 ]
-[e $ ! && == -> _filtrationCycleSequence `i -> 3 `i == -> _Timer0Overflow `i -> _filtrationDelay2 `i 2055  ]
+[e $ ! && == -> _filtrationCycleSequence `i -> 2 `i == -> _Timer0Overflow `i -> _filtrationOnTime `i 2055  ]
 {
-"189
-[; ;main_1_Test.c: 189:             Timer0Overflow = 0;
+"187
+[; ;main_1_Test.c: 187:             Timer0Overflow = 0;
 [e = _Timer0Overflow -> -> 0 `i `uc ]
+"188
+[; ;main_1_Test.c: 188:             PORTGbits.RG7 = 0;
+[e = . . _PORTGbits 0 7 -> -> 0 `i `uc ]
+"189
+[; ;main_1_Test.c: 189:             filtrationCycleSequence = 3;
+[e = _filtrationCycleSequence -> -> 3 `i `uc ]
 "190
-[; ;main_1_Test.c: 190:             PORTEbits.RE2 = 1;
-[e = . . _PORTEbits 0 2 -> -> 1 `i `uc ]
-"191
-[; ;main_1_Test.c: 191:             filtrationCycleSequence = 4;
-[e = _filtrationCycleSequence -> -> 4 `i `uc ]
-"192
-[; ;main_1_Test.c: 192:         }
+[; ;main_1_Test.c: 190:         }
 }
 [e $U 2056  ]
-"193
-[; ;main_1_Test.c: 193:         else if (filtrationCycleSequence == 4 && Timer0Overflow == filtrationOnTime ) {
+"191
+[; ;main_1_Test.c: 191:         else if (filtrationCycleSequence == 3 && Timer0Overflow == filtrationDelay2 ) {
 [e :U 2055 ]
-[e $ ! && == -> _filtrationCycleSequence `i -> 4 `i == -> _Timer0Overflow `i -> _filtrationOnTime `i 2057  ]
+[e $ ! && == -> _filtrationCycleSequence `i -> 3 `i == -> _Timer0Overflow `i -> _filtrationDelay2 `i 2057  ]
 {
-"194
-[; ;main_1_Test.c: 194:             Timer0Overflow = 0;
+"192
+[; ;main_1_Test.c: 192:             Timer0Overflow = 0;
 [e = _Timer0Overflow -> -> 0 `i `uc ]
+"193
+[; ;main_1_Test.c: 193:             PORTEbits.RE2 = 1;
+[e = . . _PORTEbits 0 2 -> -> 1 `i `uc ]
+"194
+[; ;main_1_Test.c: 194:             filtrationCycleSequence = 4;
+[e = _filtrationCycleSequence -> -> 4 `i `uc ]
 "195
-[; ;main_1_Test.c: 195:             PORTEbits.RE2 = 0;
-[e = . . _PORTEbits 0 2 -> -> 0 `i `uc ]
-"196
-[; ;main_1_Test.c: 196:             filtrationCycleSequence = 5;
-[e = _filtrationCycleSequence -> -> 5 `i `uc ]
-"197
-[; ;main_1_Test.c: 197:         }
+[; ;main_1_Test.c: 195:         }
 }
 [e $U 2058  ]
-"198
-[; ;main_1_Test.c: 198:         else if (filtrationCycleSequence == 5 && Timer0Overflow == filtrationDelay2 ) {
+"196
+[; ;main_1_Test.c: 196:         else if (filtrationCycleSequence == 4 && Timer0Overflow == filtrationOnTime ) {
 [e :U 2057 ]
-[e $ ! && == -> _filtrationCycleSequence `i -> 5 `i == -> _Timer0Overflow `i -> _filtrationDelay2 `i 2059  ]
+[e $ ! && == -> _filtrationCycleSequence `i -> 4 `i == -> _Timer0Overflow `i -> _filtrationOnTime `i 2059  ]
 {
-"199
-[; ;main_1_Test.c: 199:             Timer0Overflow = 0;
+"197
+[; ;main_1_Test.c: 197:             Timer0Overflow = 0;
 [e = _Timer0Overflow -> -> 0 `i `uc ]
+"198
+[; ;main_1_Test.c: 198:             PORTEbits.RE2 = 0;
+[e = . . _PORTEbits 0 2 -> -> 0 `i `uc ]
+"199
+[; ;main_1_Test.c: 199:             filtrationCycleSequence = 5;
+[e = _filtrationCycleSequence -> -> 5 `i `uc ]
 "200
-[; ;main_1_Test.c: 200:             PORTEbits.RE3 = 1;
-[e = . . _PORTEbits 0 3 -> -> 1 `i `uc ]
-"201
-[; ;main_1_Test.c: 201:             filtrationCycleSequence = 6;
-[e = _filtrationCycleSequence -> -> 6 `i `uc ]
-"202
-[; ;main_1_Test.c: 202:         }
+[; ;main_1_Test.c: 200:         }
 }
 [e $U 2060  ]
-"203
-[; ;main_1_Test.c: 203:         else if (filtrationCycleSequence == 6 && Timer0Overflow == filtrationOnTime ) {
+"201
+[; ;main_1_Test.c: 201:         else if (filtrationCycleSequence == 5 && Timer0Overflow == filtrationDelay2 ) {
 [e :U 2059 ]
-[e $ ! && == -> _filtrationCycleSequence `i -> 6 `i == -> _Timer0Overflow `i -> _filtrationOnTime `i 2061  ]
+[e $ ! && == -> _filtrationCycleSequence `i -> 5 `i == -> _Timer0Overflow `i -> _filtrationDelay2 `i 2061  ]
 {
-"204
-[; ;main_1_Test.c: 204:             Timer0Overflow = 0;
+"202
+[; ;main_1_Test.c: 202:             Timer0Overflow = 0;
 [e = _Timer0Overflow -> -> 0 `i `uc ]
+"203
+[; ;main_1_Test.c: 203:             PORTEbits.RE3 = 1;
+[e = . . _PORTEbits 0 3 -> -> 1 `i `uc ]
+"204
+[; ;main_1_Test.c: 204:             filtrationCycleSequence = 6;
+[e = _filtrationCycleSequence -> -> 6 `i `uc ]
 "205
-[; ;main_1_Test.c: 205:             PORTEbits.RE3 = 0;
-[e = . . _PORTEbits 0 3 -> -> 0 `i `uc ]
-"206
-[; ;main_1_Test.c: 206:             filtrationCycleSequence = 7;
-[e = _filtrationCycleSequence -> -> 7 `i `uc ]
-"207
-[; ;main_1_Test.c: 207:         }
+[; ;main_1_Test.c: 205:         }
 }
 [e $U 2062  ]
-"208
-[; ;main_1_Test.c: 208:         else if (filtrationCycleSequence == 7 && Timer0Overflow == filtrationSeperationTime ) {
+"206
+[; ;main_1_Test.c: 206:         else if (filtrationCycleSequence == 6 && Timer0Overflow == filtrationOnTime ) {
 [e :U 2061 ]
-[e $ ! && == -> _filtrationCycleSequence `i -> 7 `i == -> _Timer0Overflow `i -> _filtrationSeperationTime `i 2063  ]
+[e $ ! && == -> _filtrationCycleSequence `i -> 6 `i == -> _Timer0Overflow `i -> _filtrationOnTime `i 2063  ]
 {
-"209
-[; ;main_1_Test.c: 209:             Timer0Overflow = 0;
+"207
+[; ;main_1_Test.c: 207:             Timer0Overflow = 0;
 [e = _Timer0Overflow -> -> 0 `i `uc ]
+"208
+[; ;main_1_Test.c: 208:             PORTEbits.RE3 = 0;
+[e = . . _PORTEbits 0 3 -> -> 0 `i `uc ]
+"209
+[; ;main_1_Test.c: 209:             filtrationCycleSequence = 7;
+[e = _filtrationCycleSequence -> -> 7 `i `uc ]
 "210
-[; ;main_1_Test.c: 210:             filtrationCycleSequence = 1;
-[e = _filtrationCycleSequence -> -> 1 `i `uc ]
-"211
-[; ;main_1_Test.c: 211:         }
+[; ;main_1_Test.c: 210:         }
 }
 [e $U 2064  ]
-"212
-[; ;main_1_Test.c: 212:         else if (filtrationCycleSequence == 99) {
+"211
+[; ;main_1_Test.c: 211:         else if (filtrationCycleSequence == 7 && Timer0Overflow == filtrationSeperationTime ) {
 [e :U 2063 ]
-[e $ ! == -> _filtrationCycleSequence `i -> 99 `i 2065  ]
+[e $ ! && == -> _filtrationCycleSequence `i -> 7 `i == -> _Timer0Overflow `i -> _filtrationSeperationTime `i 2065  ]
 {
-"213
-[; ;main_1_Test.c: 213:             Timer0Overflow = 0;
+"212
+[; ;main_1_Test.c: 212:             Timer0Overflow = 0;
 [e = _Timer0Overflow -> -> 0 `i `uc ]
+"213
+[; ;main_1_Test.c: 213:             filtrationCycleSequence = 1;
+[e = _filtrationCycleSequence -> -> 1 `i `uc ]
 "214
 [; ;main_1_Test.c: 214:         }
 }
@@ -7432,109 +7469,109 @@ Version 4.0 HI-TECH Software Intermediate Code
 "257
 [; ;main_1_Test.c: 257:     myMsDelay(1000);
 [e ( _myMsDelay (1 -> -> 1000 `i `ui ]
-"258
-[; ;main_1_Test.c: 258:     loadDataFromEeprom();
-[e ( _loadDataFromEeprom ..  ]
 "259
 [; ;main_1_Test.c: 259:     myMsDelay(1000);
 [e ( _myMsDelay (1 -> -> 1000 `i `ui ]
 "260
-[; ;main_1_Test.c: 260:     while (1) {
+[; ;main_1_Test.c: 260:     isRTCBatteryDrained();
+[e ( _isRTCBatteryDrained ..  ]
+"261
+[; ;main_1_Test.c: 261:     while (1) {
 [e :U 2073 ]
 {
-"261
-[; ;main_1_Test.c: 261:         loraAttempt = 0;
+"263
+[; ;main_1_Test.c: 263:         loraAttempt = 0;
 [e = _loraAttempt -> -> 0 `i `uc ]
-"262
-[; ;main_1_Test.c: 262:         do {
+"264
+[; ;main_1_Test.c: 264:         do {
 [e :U 2077 ]
 {
-"263
-[; ;main_1_Test.c: 263:             sendCmdToLora(0,0);
-[e ( _sendCmdToLora (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
-"264
-[; ;main_1_Test.c: 264:         } while(loraAttempt<5);
-}
-[e $ < -> _loraAttempt `i -> 5 `i 2077  ]
-[e :U 2076 ]
 "265
-[; ;main_1_Test.c: 265:         if (!LoraConnectionFailed && loraAttempt == 99) {
+[; ;main_1_Test.c: 265:             sendCmdToLora(0,0);
+[e ( _sendCmdToLora (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
+"266
+[; ;main_1_Test.c: 266:         } while(loraAttempt<2);
+}
+[e $ < -> _loraAttempt `i -> 2 `i 2077  ]
+[e :U 2076 ]
+"267
+[; ;main_1_Test.c: 267:         if (!LoraConnectionFailed && loraAttempt == 99) {
 [e $ ! && ! != -> _LoraConnectionFailed `i -> 0 `i == -> _loraAttempt `i -> 99 `i 2078  ]
 {
-"266
-[; ;main_1_Test.c: 266:             setBCDdigit(0x01,1);
-[e ( _setBCDdigit (2 , -> -> 1 `i `uc -> -> 1 `i `a ]
-"267
-[; ;main_1_Test.c: 267:             myMsDelay(10000);
-[e ( _myMsDelay (1 -> -> 10000 `i `ui ]
 "268
-[; ;main_1_Test.c: 268:         }
+[; ;main_1_Test.c: 268:             setBCDdigit(0x01,1);
+[e ( _setBCDdigit (2 , -> -> 1 `i `uc -> -> 1 `i `a ]
+"269
+[; ;main_1_Test.c: 269:             myMsDelay(10000);
+[e ( _myMsDelay (1 -> -> 10000 `i `ui ]
+"270
+[; ;main_1_Test.c: 270:         }
 }
 [e $U 2079  ]
-"269
-[; ;main_1_Test.c: 269:         else {
+"271
+[; ;main_1_Test.c: 271:         else {
 [e :U 2078 ]
 {
-"270
-[; ;main_1_Test.c: 270:             setBCDdigit(0x01,0);
-[e ( _setBCDdigit (2 , -> -> 1 `i `uc -> -> 0 `i `a ]
-"271
-[; ;main_1_Test.c: 271:             myMsDelay(10000);
-[e ( _myMsDelay (1 -> -> 10000 `i `ui ]
 "272
-[; ;main_1_Test.c: 272:         }
+[; ;main_1_Test.c: 272:             setBCDdigit(0x01,0);
+[e ( _setBCDdigit (2 , -> -> 1 `i `uc -> -> 0 `i `a ]
+"273
+[; ;main_1_Test.c: 273:             myMsDelay(10000);
+[e ( _myMsDelay (1 -> -> 10000 `i `ui ]
+"274
+[; ;main_1_Test.c: 274:         }
 }
 [e :U 2079 ]
-"273
-[; ;main_1_Test.c: 273:         loraAttempt = 0;
+"275
+[; ;main_1_Test.c: 275:         loraAttempt = 0;
 [e = _loraAttempt -> -> 0 `i `uc ]
-"274
-[; ;main_1_Test.c: 274:         do {
+"276
+[; ;main_1_Test.c: 276:         do {
 [e :U 2082 ]
 {
-"275
-[; ;main_1_Test.c: 275:             sendCmdToLora(1,0);
-[e ( _sendCmdToLora (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
-"276
-[; ;main_1_Test.c: 276:         } while(loraAttempt<5);
-}
-[e $ < -> _loraAttempt `i -> 5 `i 2082  ]
-[e :U 2081 ]
 "277
-[; ;main_1_Test.c: 277:         if (!LoraConnectionFailed && loraAttempt == 99) {
+[; ;main_1_Test.c: 277:             sendCmdToLora(1,0);
+[e ( _sendCmdToLora (2 , -> -> 1 `i `uc -> -> 0 `i `uc ]
+"278
+[; ;main_1_Test.c: 278:         } while(loraAttempt<2);
+}
+[e $ < -> _loraAttempt `i -> 2 `i 2082  ]
+[e :U 2081 ]
+"279
+[; ;main_1_Test.c: 279:         if (!LoraConnectionFailed && loraAttempt == 99) {
 [e $ ! && ! != -> _LoraConnectionFailed `i -> 0 `i == -> _loraAttempt `i -> 99 `i 2083  ]
 {
-"278
-[; ;main_1_Test.c: 278:             setBCDdigit(0x02,1);
-[e ( _setBCDdigit (2 , -> -> 2 `i `uc -> -> 1 `i `a ]
-"279
-[; ;main_1_Test.c: 279:             myMsDelay(10000);
-[e ( _myMsDelay (1 -> -> 10000 `i `ui ]
 "280
-[; ;main_1_Test.c: 280:         }
+[; ;main_1_Test.c: 280:             setBCDdigit(0x02,1);
+[e ( _setBCDdigit (2 , -> -> 2 `i `uc -> -> 1 `i `a ]
+"281
+[; ;main_1_Test.c: 281:             myMsDelay(10000);
+[e ( _myMsDelay (1 -> -> 10000 `i `ui ]
+"282
+[; ;main_1_Test.c: 282:         }
 }
 [e $U 2084  ]
-"281
-[; ;main_1_Test.c: 281:         else {
+"283
+[; ;main_1_Test.c: 283:         else {
 [e :U 2083 ]
 {
-"282
-[; ;main_1_Test.c: 282:             setBCDdigit(0x02,0);
-[e ( _setBCDdigit (2 , -> -> 2 `i `uc -> -> 0 `i `a ]
-"283
-[; ;main_1_Test.c: 283:             myMsDelay(10000);
-[e ( _myMsDelay (1 -> -> 10000 `i `ui ]
 "284
-[; ;main_1_Test.c: 284:         }
+[; ;main_1_Test.c: 284:             setBCDdigit(0x02,0);
+[e ( _setBCDdigit (2 , -> -> 2 `i `uc -> -> 0 `i `a ]
+"285
+[; ;main_1_Test.c: 285:             myMsDelay(10000);
+[e ( _myMsDelay (1 -> -> 10000 `i `ui ]
+"286
+[; ;main_1_Test.c: 286:         }
 }
 [e :U 2084 ]
-"299
-[; ;main_1_Test.c: 299:     }
+"301
+[; ;main_1_Test.c: 301:     }
 }
 [e :U 2072 ]
 [e $U 2073  ]
 [e :U 2074 ]
-"300
-[; ;main_1_Test.c: 300: }
+"302
+[; ;main_1_Test.c: 302: }
 [e :UE 2071 ]
 }
