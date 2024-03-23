@@ -6,6 +6,6 @@ ADC.h  \
 controllerActions.h  \
 eeprom.h  \
 gsm.h  \
+lora.h  \
 RTC_DS1307.h  \
-dataEncryption.h  \
-serialMonitor.h 
+dataEncryption.h 

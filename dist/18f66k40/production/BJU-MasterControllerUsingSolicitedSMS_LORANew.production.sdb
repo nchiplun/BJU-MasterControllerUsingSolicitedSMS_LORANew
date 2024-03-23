@@ -1,0 +1,2307 @@
+[p GLOBOPT AUTOSTATIC IEEE_FLT IEEE_DBL LFSROK EMI_WORD ]
+[d version 1.1 ]
+[d edition pro ]
+[d chip 18F66K40 ]
+[d frameptr 4065 ]
+"20 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\ADC.c
+[v _selectChannel selectChannel `(v  1 e 1 0 ]
+"60
+[v _getADCResult getADCResult `(ui  1 e 2 0 ]
+"7 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\__lldiv.c
+[v ___lldiv __lldiv `(ul  1 e 4 0 ]
+"7 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\awdiv.c
+[v ___awdiv __awdiv `(i  1 e 2 0 ]
+[v i1___awdiv __awdiv `(i  1 e 2 0 ]
+"7 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\awmod.c
+[v ___awmod __awmod `(i  1 e 2 0 ]
+[v i1___awmod __awmod `(i  1 e 2 0 ]
+"4 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\fleq.c
+[v ___fleq __fleq `(b  1 e 0 0 ]
+"62 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\float.c
+[v ___ftpack __ftpack `(f  1 e 4 0 ]
+"86 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\ftadd.c
+[v ___ftadd __ftadd `(f  1 e 4 0 ]
+"54 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\ftdiv.c
+[v ___ftdiv __ftdiv `(f  1 e 4 0 ]
+"62 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\ftmul.c
+[v ___ftmul __ftmul `(f  1 e 4 0 ]
+"19 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\ftsub.c
+[v ___ftsub __ftsub `(f  1 e 4 0 ]
+"7 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\lwdiv.c
+[v ___lwdiv __lwdiv `(ui  1 e 2 0 ]
+[v i1___lwdiv __lwdiv `(ui  1 e 2 0 ]
+"7 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\lwmod.c
+[v ___lwmod __lwmod `(ui  1 e 2 0 ]
+[v i1___lwmod __lwmod `(ui  1 e 2 0 ]
+"6 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\rand.c
+[v _srand srand `(v  1 e 1 0 ]
+"11
+[v _rand rand `(i  1 e 2 0 ]
+"10 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\sprcadd.c
+[v ___fladd __fladd `(d  1 e 4 0 ]
+"245
+[v ___flsub __flsub `(d  1 e 4 0 ]
+"11 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\sprcdiv.c
+[v ___fldiv __fldiv `(d  1 e 4 0 ]
+"8 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\sprcmul.c
+[v ___flmul __flmul `(d  1 e 4 0 ]
+"5 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\strlen.c
+[v _strlen strlen `(ui  1 e 2 0 ]
+"3 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\strncmp.c
+[v _strncmp strncmp `(i  1 e 2 0 ]
+[v i1_strncmp strncmp `(i  1 e 2 0 ]
+"3 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\strncpy.c
+[v _strncpy strncpy `(*.39uc  1 e 2 0 ]
+"15 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\Umul16.c
+[v ___wmul __wmul `(ui  1 e 2 0 ]
+"15 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\Umul32.c
+[v ___lmul __lmul `(ul  1 e 4 0 ]
+"91 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\Umul64.c
+[v ___omul __omul `(uo  1 e 8 0 ]
+"49 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\controllerActions_Test.c
+[v _myMsDelay myMsDelay `(v  1 e 1 0 ]
+[v i1_myMsDelay myMsDelay `(v  1 e 1 0 ]
+[v i2_myMsDelay myMsDelay `(v  1 e 1 0 ]
+"69
+[v _isNumber isNumber `(a  1 e 1 0 ]
+"115
+[v _setBCDdigit setBCDdigit `(v  1 e 1 0 ]
+[v i1_setBCDdigit setBCDdigit `(v  1 e 1 0 ]
+[v i2_setBCDdigit setBCDdigit `(v  1 e 1 0 ]
+"129
+[v _getDateFromGSM getDateFromGSM `(v  1 e 1 0 ]
+"226
+[v _getDueDate getDueDate `(v  1 e 1 0 ]
+"327
+[v _scanValveScheduleAndGetSleepCount scanValveScheduleAndGetSleepCount `(v  1 e 1 0 ]
+"478
+[v _days days `(ui  1 e 2 0 ]
+"503
+[v _fetchFieldNo fetchFieldNo `(uc  1 e 1 0 ]
+"1071
+[v _isFieldMoistureSensorWetLora isFieldMoistureSensorWetLora `(a  1 e 1 0 ]
+"1177
+[v _isMotorInNoLoad isMotorInNoLoad `(a  1 e 1 0 ]
+"1236
+[v _calibrateMotorCurrent calibrateMotorCurrent `(v  1 e 1 0 ]
+"1401
+[v _doDryRunAction doDryRunAction `(v  1 e 1 0 ]
+"1645
+[v _doLowPhaseAction doLowPhaseAction `(v  1 e 1 0 ]
+"1718
+[v _doPhaseFailureAction doPhaseFailureAction `(v  1 e 1 0 ]
+"1794
+[v _isRTCBatteryDrained isRTCBatteryDrained `(a  1 e 1 0 ]
+"1845
+[v _phaseFailure phaseFailure `(a  1 e 1 0 ]
+"1886
+[v _powerOnMotor powerOnMotor `(v  1 e 1 0 ]
+"1929
+[v _powerOffMotor powerOffMotor `(v  1 e 1 0 ]
+"1964
+[v _activateValve activateValve `(v  1 e 1 0 ]
+"2089
+[v _deActivateValve deActivateValve `(v  1 e 1 0 ]
+"2163
+[v _deepSleep deepSleep `(v  1 e 1 0 ]
+"2234
+[v _configureController configureController `(v  1 e 1 0 ]
+"2417
+[v _actionsOnSystemReset actionsOnSystemReset `(v  1 e 1 0 ]
+"2986
+[v _actionsOnSleepCountFinish actionsOnSleepCountFinish `(v  1 e 1 0 ]
+"3215
+[v _actionsOnDueValve actionsOnDueValve `(v  1 e 1 0 ]
+"3336
+[v _deleteUserData deleteUserData `(v  1 e 1 0 ]
+"3355
+[v _deleteValveData deleteValveData `(v  1 e 1 0 ]
+"3452
+[v _deleteDecodedString deleteDecodedString `(v  1 e 1 0 ]
+[v i1_deleteDecodedString deleteDecodedString `(v  1 e 1 0 ]
+"27 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\eeprom.c
+[v _eepromWrite eepromWrite `(v  1 e 1 0 ]
+"49
+[v _eepromRead eepromRead `(uc  1 e 1 0 ]
+"68
+[v _saveIrrigationValveValuesIntoEeprom saveIrrigationValveValuesIntoEeprom `(v  1 e 1 0 ]
+"112
+[v _saveFertigationValveValuesIntoEeprom saveFertigationValveValuesIntoEeprom `(v  1 e 1 0 ]
+"191
+[v _saveIrrigationValveDueTimeIntoEeprom saveIrrigationValveDueTimeIntoEeprom `(v  1 e 1 0 ]
+"220
+[v _saveIrrigationValveOnOffStatusIntoEeprom saveIrrigationValveOnOffStatusIntoEeprom `(v  1 e 1 0 ]
+"245
+[v _saveIrrigationValveCycleStatusIntoEeprom saveIrrigationValveCycleStatusIntoEeprom `(v  1 e 1 0 ]
+"270
+[v _saveFertigationValveStatusIntoEeprom saveFertigationValveStatusIntoEeprom `(v  1 e 1 0 ]
+"299
+[v _saveIrrigationValveConfigurationStatusIntoEeprom saveIrrigationValveConfigurationStatusIntoEeprom `(v  1 e 1 0 ]
+"324
+[v _readValveDataFromEeprom readValveDataFromEeprom `(v  1 e 1 0 ]
+"479
+[v _saveMobileNoIntoEeprom saveMobileNoIntoEeprom `(v  1 e 1 0 ]
+"531
+[v _saveFactryPswrdIntoEeprom saveFactryPswrdIntoEeprom `(v  1 e 1 0 ]
+"557
+[v _saveActiveSleepCountIntoEeprom saveActiveSleepCountIntoEeprom `(v  1 e 1 0 ]
+"583
+[v _saveResetCountIntoEeprom saveResetCountIntoEeprom `(v  1 e 1 0 ]
+"607
+[v _saveDeviceProgramStatusIntoEeprom saveDeviceProgramStatusIntoEeprom `(v  1 e 1 0 ]
+"631
+[v _saveMotorLoadValuesIntoEeprom saveMotorLoadValuesIntoEeprom `(v  1 e 1 0 ]
+"661
+[v _readMotorLoadValuesFromEeprom readMotorLoadValuesFromEeprom `(v  1 e 1 0 ]
+"737
+[v _saveRemainingFertigationOnPeriod saveRemainingFertigationOnPeriod `(v  1 e 1 0 ]
+"763
+[v _readActiveSleepCountFromEeprom readActiveSleepCountFromEeprom `(ui  1 e 2 0 ]
+"794
+[v _readRemainingFertigationOnPeriodFromEeprom readRemainingFertigationOnPeriodFromEeprom `(ui  1 e 2 0 ]
+"824
+[v _saveAuthenticationStatus saveAuthenticationStatus `(v  1 e 1 0 ]
+"848
+[v _saveRTCBatteryStatus saveRTCBatteryStatus `(v  1 e 1 0 ]
+"872
+[v _saveIrrigationValveNoIntoEeprom saveIrrigationValveNoIntoEeprom `(v  1 e 1 0 ]
+"896
+[v _saveFiltrationSequenceData saveFiltrationSequenceData `(v  1 e 1 0 ]
+"931
+[v _readFieldIrrigationValveNoFromEeprom readFieldIrrigationValveNoFromEeprom `(uc  1 e 1 0 ]
+"959
+[v _loadDataFromEeprom loadDataFromEeprom `(v  1 e 1 0 ]
+"25 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\gsmTest.c
+[v _rxByte rxByte `(uc  1 e 1 0 ]
+"38
+[v _txByte txByte `(v  1 e 1 0 ]
+[v i1_txByte txByte `(v  1 e 1 0 ]
+"50
+[v _transmitStringToGSM transmitStringToGSM `(v  1 e 1 0 ]
+[v i1_transmitStringToGSM transmitStringToGSM `(v  1 e 1 0 ]
+"64
+[v _transmitNumberToGSM transmitNumberToGSM `(v  1 e 1 0 ]
+[v i1_transmitNumberToGSM transmitNumberToGSM `(v  1 e 1 0 ]
+"230
+[v _sendSms sendSms `(v  1 e 1 0 ]
+[v i1_sendSms sendSms `(v  1 e 1 0 ]
+"549
+[v _checkSignalStrength checkSignalStrength `(v  1 e 1 0 ]
+"28 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\loraTest.c
+[v _rxByteLora rxByteLora `(uc  1 e 1 0 ]
+"41
+[v _txByteLora txByteLora `(v  1 e 1 0 ]
+"53
+[v _transmitStringToLora transmitStringToLora `(v  1 e 1 0 ]
+"67
+[v _transmitNumberToLora transmitNumberToLora `(v  1 e 1 0 ]
+"82
+[v _sendCmdToLora sendCmdToLora `(v  1 e 1 0 ]
+"193
+[v _isLoraResponseAck isLoraResponseAck `(a  1 e 1 0 ]
+"36 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\main_2_Test.c
+[v _rxANDiocInterrupt_handler rxANDiocInterrupt_handler `IIH(v  1 e 1 0 ]
+"162
+[v _timerInterrupt_handler timerInterrupt_handler `IIL(v  1 e 1 0 ]
+"376
+[v _main main `(v  1 e 1 0 ]
+"22 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\RTC_DS1307.c
+[v _feedTimeInRTC feedTimeInRTC `(v  1 e 1 0 ]
+"62
+[v _decimal2BCD decimal2BCD `(uc  1 e 1 0 ]
+"71
+[v _bcd2Decimal bcd2Decimal `(uc  1 e 1 0 ]
+"79
+[v _fetchTimefromRTC fetchTimefromRTC `(v  1 e 1 0 ]
+"121
+[v _i2cStart i2cStart `(v  1 e 1 0 ]
+"130
+[v _i2cRestart i2cRestart `(v  1 e 1 0 ]
+"138
+[v _i2cStop i2cStop `(v  1 e 1 0 ]
+"143
+[v _i2cWait i2cWait `(v  1 e 1 0 ]
+"148
+[v _i2cSend i2cSend `(v  1 e 1 0 ]
+"154
+[v _i2cRead i2cRead `(uc  1 e 1 0 ]
+[s S24 FIELDVALVE 45 `ui 1 dryValue 2 0 `ui 1 wetValue 2 2 `ui 1 onPeriod 2 4 `ui 1 fertigationDelay 2 6 `ui 1 fertigationONperiod 2 8 `ui 1 injector1OnPeriod 2 10 `ui 1 injector2OnPeriod 2 12 `ui 1 injector3OnPeriod 2 14 `ui 1 injector4OnPeriod 2 16 `ui 1 injector1OffPeriod 2 18 `ui 1 injector2OffPeriod 2 20 `ui 1 injector3OffPeriod 2 22 `ui 1 injector4OffPeriod 2 24 `uc 1 injector1Cycle 1 26 `uc 1 injector2Cycle 1 27 `uc 1 injector3Cycle 1 28 `uc 1 injector4Cycle 1 29 `uc 1 offPeriod 1 30 `uc 1 motorOnTimeHour 1 31 `uc 1 motorOnTimeMinute 1 32 `uc 1 nextDueDD 1 33 `uc 1 nextDueMM 1 34 `uc 1 nextDueYY 1 35 `uc 1 fertigationInstance 1 36 `uc 1 priority 1 37 `uc 1 fertigationStage 1 38 `uc 1 cycles 1 39 `uc 1 cyclesExecuted 1 40 `a 1 status 1 41 `a 1 isConfigured 1 42 `a 1 isFertigationEnabled 1 43 `a 1 fertigationValveInterrupted 1 44 ]
+"185 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew/variableDefinitions.h
+[v _fieldValve fieldValve `[12]S24  1 e 540 0 ]
+"191
+[v _eepromAddress eepromAddress `C[16]ui  1 e 32 0 ]
+"234
+[v _filtrationSeperationTime filtrationSeperationTime `ui  1 e 2 0 ]
+"235
+[v _dueDD dueDD `ui  1 e 2 0 ]
+"236
+[v _sleepCount sleepCount `ui  1 e 2 0 ]
+"237
+[v _remainingFertigationOnPeriod remainingFertigationOnPeriod `ui  1 e 2 0 ]
+"238
+[v _lower8bits lower8bits `ui  1 e 2 0 ]
+"239
+[v _higher8bits higher8bits `ui  1 e 2 0 ]
+"240
+[v _moistureLevel moistureLevel `ui  1 e 2 0 ]
+"241
+[v _injector1OnPeriod injector1OnPeriod `ui  1 e 2 0 ]
+"242
+[v _injector2OnPeriod injector2OnPeriod `ui  1 e 2 0 ]
+"243
+[v _injector3OnPeriod injector3OnPeriod `ui  1 e 2 0 ]
+"244
+[v _injector4OnPeriod injector4OnPeriod `ui  1 e 2 0 ]
+"245
+[v _injector1OnPeriodCnt injector1OnPeriodCnt `ui  1 e 2 0 ]
+"246
+[v _injector2OnPeriodCnt injector2OnPeriodCnt `ui  1 e 2 0 ]
+"247
+[v _injector3OnPeriodCnt injector3OnPeriodCnt `ui  1 e 2 0 ]
+"248
+[v _injector4OnPeriodCnt injector4OnPeriodCnt `ui  1 e 2 0 ]
+"249
+[v _injector1OffPeriod injector1OffPeriod `ui  1 e 2 0 ]
+"250
+[v _injector2OffPeriod injector2OffPeriod `ui  1 e 2 0 ]
+"251
+[v _injector3OffPeriod injector3OffPeriod `ui  1 e 2 0 ]
+"252
+[v _injector4OffPeriod injector4OffPeriod `ui  1 e 2 0 ]
+"253
+[v _injector1OffPeriodCnt injector1OffPeriodCnt `ui  1 e 2 0 ]
+"254
+[v _injector2OffPeriodCnt injector2OffPeriodCnt `ui  1 e 2 0 ]
+"255
+[v _injector3OffPeriodCnt injector3OffPeriodCnt `ui  1 e 2 0 ]
+"256
+[v _injector4OffPeriodCnt injector4OffPeriodCnt `ui  1 e 2 0 ]
+"257
+[v _noLoadCutOff noLoadCutOff `ui  1 e 2 0 ]
+"258
+[v _fullLoadCutOff fullLoadCutOff `ui  1 e 2 0 ]
+"259
+[v _userMobileNo userMobileNo `[11]uc  1 e 11 0 ]
+"260
+[v _temporaryBytesArray temporaryBytesArray `[20]uc  1 e 20 0 ]
+"262
+[v _pwd pwd `[7]uc  1 e 7 0 ]
+"263
+[v _factryPswrd factryPswrd `[7]uc  1 e 7 0 ]
+"264
+[v _injector1Cycle injector1Cycle `uc  1 e 1 0 ]
+"265
+[v _injector2Cycle injector2Cycle `uc  1 e 1 0 ]
+"266
+[v _injector3Cycle injector3Cycle `uc  1 e 1 0 ]
+"267
+[v _injector4Cycle injector4Cycle `uc  1 e 1 0 ]
+"268
+[v _injector1CycleCnt injector1CycleCnt `uc  1 e 1 0 ]
+"269
+[v _injector2CycleCnt injector2CycleCnt `uc  1 e 1 0 ]
+"270
+[v _injector3CycleCnt injector3CycleCnt `uc  1 e 1 0 ]
+"271
+[v _injector4CycleCnt injector4CycleCnt `uc  1 e 1 0 ]
+"272
+[v _loraAliveCount loraAliveCount `uc  1 e 1 0 ]
+"273
+[v _loraAliveCountCheck loraAliveCountCheck `uc  1 e 1 0 ]
+"274
+[v _loraAttempt loraAttempt `uc  1 e 1 0 ]
+"275
+[v _timer3Count timer3Count `uc  1 e 1 0 ]
+"276
+[v _rxCharacter rxCharacter `uc  1 e 1 0 ]
+"277
+[v _msgIndex msgIndex `uc  1 e 1 0 ]
+"278
+[v _temp temp `uc  1 e 1 0 ]
+"279
+[v _iterator iterator `uc  1 e 1 0 ]
+"281
+[v _resetCount resetCount `uc  1 e 1 0 ]
+"282
+[v _startFieldNo startFieldNo `uc  1 e 1 0 ]
+"288
+[v _tensDigit tensDigit `uc  1 e 1 0 ]
+"289
+[v _unitsDigit unitsDigit `uc  1 e 1 0 ]
+"290
+[v _Timer0Overflow Timer0Overflow `uc  1 e 1 0 ]
+"291
+[v _Timer1Overflow Timer1Overflow `uc  1 e 1 0 ]
+"292
+[v _Timer3Overflow Timer3Overflow `uc  1 e 1 0 ]
+"293
+[v _filtrationCycleSequence filtrationCycleSequence `uc  1 e 1 0 ]
+"294
+[v _currentYY currentYY `uc  1 e 1 0 ]
+"295
+[v _currentMM currentMM `uc  1 e 1 0 ]
+"296
+[v _currentDD currentDD `uc  1 e 1 0 ]
+"297
+[v _currentHour currentHour `uc  1 e 1 0 ]
+"298
+[v _currentMinutes currentMinutes `uc  1 e 1 0 ]
+"299
+[v _currentSeconds currentSeconds `uc  1 e 1 0 ]
+"300
+[v _dueYY dueYY `uc  1 e 1 0 ]
+"301
+[v _dueMM dueMM `uc  1 e 1 0 ]
+"302
+[v _filtrationDelay1 filtrationDelay1 `uc  1 e 1 0 ]
+"303
+[v _filtrationDelay2 filtrationDelay2 `uc  1 e 1 0 ]
+"304
+[v _filtrationDelay3 filtrationDelay3 `uc  1 e 1 0 ]
+"305
+[v _filtrationOnTime filtrationOnTime `uc  1 e 1 0 ]
+"306
+[v _dryRunCheckCount dryRunCheckCount `uc  1 e 1 0 ]
+"316
+[v _stringToDecode stringToDecode `[220]uc  1 e 220 0 ]
+"319
+[v _decodedString decodedString `[220]uc  1 e 220 0 ]
+"346
+[v _on@variableDefinitions$F4916 on `[3]uc  1 s 3 on ]
+"347
+[v _off@variableDefinitions$F4917 off `[4]uc  1 s 4 off ]
+"348
+[v _slave@variableDefinitions$F2692 slave `[6]uc  1 s 6 slave ]
+[v _slave@variableDefinitions$F4918 slave `[6]uc  1 s 6 slave ]
+"349
+[v _ack@variableDefinitions$F4919 ack `[4]uc  1 s 4 ack ]
+"351
+[v _master@variableDefinitions$F4921 master `[7]uc  1 s 7 master ]
+"352
+[v _error@variableDefinitions$F4922 error `[6]uc  1 s 6 error ]
+"353
+[v _alive@variableDefinitions$F2697 alive `[6]uc  1 s 6 alive ]
+"354
+[v _sensor@variableDefinitions$F4924 sensor `[7]uc  1 s 7 sensor ]
+"361
+[v _SmsAU4 SmsAU4 `C[64]uc  1 e 64 0 ]
+"370
+[v _SmsIrr4 SmsIrr4 `C[33]uc  1 e 33 0 ]
+"371
+[v _SmsIrr5 SmsIrr5 `C[33]uc  1 e 33 0 ]
+"372
+[v _SmsIrr6 SmsIrr6 `C[60]uc  1 e 60 0 ]
+"373
+[v _SmsIrr7 SmsIrr7 `C[15]uc  1 e 15 0 ]
+"374
+[v _SmsIrr8 SmsIrr8 `C[51]uc  1 e 51 0 ]
+"375
+[v _SmsIrr9 SmsIrr9 `C[51]uc  1 e 51 0 ]
+"381
+[v _SmsFert5 SmsFert5 `C[34]uc  1 e 34 0 ]
+"382
+[v _SmsFert6 SmsFert6 `C[34]uc  1 e 34 0 ]
+"383
+[v _SmsFert7 SmsFert7 `C[71]uc  1 e 71 0 ]
+"384
+[v _SmsFert8 SmsFert8 `C[60]uc  1 e 60 0 ]
+"391
+[v _SmsSR01 SmsSR01 `C[60]uc  1 e 60 0 ]
+"392
+[v _SmsSR02 SmsSR02 `C[78]uc  1 e 78 0 ]
+"393
+[v _SmsSR03 SmsSR03 `C[75]uc  1 e 75 0 ]
+"394
+[v _SmsSR04 SmsSR04 `C[77]uc  1 e 77 0 ]
+"395
+[v _SmsSR05 SmsSR05 `C[82]uc  1 e 82 0 ]
+"396
+[v _SmsSR06 SmsSR06 `C[74]uc  1 e 74 0 ]
+"397
+[v _SmsSR07 SmsSR07 `C[74]uc  1 e 74 0 ]
+"398
+[v _SmsSR08 SmsSR08 `C[37]uc  1 e 37 0 ]
+"399
+[v _SmsSR09 SmsSR09 `C[31]uc  1 e 31 0 ]
+"400
+[v _SmsSR10 SmsSR10 `C[36]uc  1 e 36 0 ]
+"401
+[v _SmsSR11 SmsSR11 `C[41]uc  1 e 41 0 ]
+"402
+[v _SmsSR12 SmsSR12 `C[33]uc  1 e 33 0 ]
+"403
+[v _SmsSR13 SmsSR13 `C[33]uc  1 e 33 0 ]
+"404
+[v _SmsSR14 SmsSR14 `C[59]uc  1 e 59 0 ]
+"407
+[v _SmsRTC1 SmsRTC1 `C[50]uc  1 e 50 0 ]
+"409
+[v _SmsRTC3 SmsRTC3 `C[56]uc  1 e 56 0 ]
+"410
+[v _SmsRTC4 SmsRTC4 `C[56]uc  1 e 56 0 ]
+"412
+[v _SmsDR1 SmsDR1 `C[133]uc  1 e 133 0 ]
+"413
+[v _SmsDR2 SmsDR2 `C[120]uc  1 e 120 0 ]
+"414
+[v _SmsDR3 SmsDR3 `C[103]uc  1 e 103 0 ]
+"415
+[v _SmsDR4 SmsDR4 `C[108]uc  1 e 108 0 ]
+"418
+[v _SmsT2 SmsT2 `C[15]uc  1 e 15 0 ]
+"420
+[v _SmsMotor1 SmsMotor1 `C[58]uc  1 e 58 0 ]
+"422
+[v _SmsMotor3 SmsMotor3 `C[47]uc  1 e 47 0 ]
+"431
+[v _SmsPh1 SmsPh1 `C[47]uc  1 e 47 0 ]
+"432
+[v _SmsPh2 SmsPh2 `C[69]uc  1 e 69 0 ]
+"433
+[v _SmsPh3 SmsPh3 `C[25]uc  1 e 25 0 ]
+"434
+[v _SmsPh4 SmsPh4 `C[25]uc  1 e 25 0 ]
+"435
+[v _SmsPh5 SmsPh5 `C[25]uc  1 e 25 0 ]
+"436
+[v _SmsPh6 SmsPh6 `C[19]uc  1 e 19 0 ]
+"438
+[v _SmsMS1 SmsMS1 `C[60]uc  1 e 60 0 ]
+"445
+[v _gsmResponse gsmResponse `[220]uc  1 e 220 0 ]
+"450
+[v _cmti@variableDefinitions$F2769 cmti `[14]uc  1 s 14 cmti ]
+"455
+[v _systemAuthenticated systemAuthenticated `a  1 e 1 0 ]
+"456
+[v _newSMSRcvd newSMSRcvd `a  1 e 1 0 ]
+"457
+[v _checkMoistureSensor checkMoistureSensor `a  1 e 1 0 ]
+"458
+[v _moistureSensorFailed moistureSensorFailed `a  1 e 1 0 ]
+"459
+[v _controllerCommandExecuted controllerCommandExecuted `a  1 e 1 0 ]
+"460
+[v _currentDateCalled currentDateCalled `a  1 e 1 0 ]
+"462
+[v _inSleepMode inSleepMode `a  1 e 1 0 ]
+"463
+[v _dryRunDetected dryRunDetected `a  1 e 1 0 ]
+"464
+[v _lowPhaseCurrentDetected lowPhaseCurrentDetected `a  1 e 1 0 ]
+"465
+[v _valveDue valveDue `a  1 e 1 0 ]
+"466
+[v _valveExecuted valveExecuted `a  1 e 1 0 ]
+"467
+[v _onHold onHold `a  1 e 1 0 ]
+"468
+[v _dueValveChecked dueValveChecked `a  1 e 1 0 ]
+"470
+[v _phaseFailureDetected phaseFailureDetected `a  1 e 1 0 ]
+"471
+[v _lowRTCBatteryDetected lowRTCBatteryDetected `a  1 e 1 0 ]
+"472
+[v _rtcBatteryLevelChecked rtcBatteryLevelChecked `a  1 e 1 0 ]
+"473
+[v _phaseFailureActionTaken phaseFailureActionTaken `a  1 e 1 0 ]
+"474
+[v _filtrationEnabled filtrationEnabled `a  1 e 1 0 ]
+"475
+[v _cmtiCmd cmtiCmd `a  1 e 1 0 ]
+"476
+[v _DeviceBurnStatus DeviceBurnStatus `a  1 e 1 0 ]
+"477
+[v _gsmSetToLocalTime gsmSetToLocalTime `a  1 e 1 0 ]
+"479
+[v _checkLoraConnection checkLoraConnection `a  1 e 1 0 ]
+"480
+[v _LoraConnectionFailed LoraConnectionFailed `a  1 e 1 0 ]
+"481
+[v _wetSensor wetSensor `a  1 e 1 0 ]
+"482
+[v _fertigationDry fertigationDry `a  1 e 1 0 ]
+"3797 C:/Users/nandu/.mchp_packs/Microchip/PIC18F-K_DFP/1.6.125/xc8\pic\include\proc\pic18f66k40.h
+[v _SSP2CLKPPS SSP2CLKPPS `VEuc  1 e 1 @3612 ]
+"3863
+[v _SSP2DATPPS SSP2DATPPS `VEuc  1 e 1 @3613 ]
+[s S3453 . 1 `uc 1 INT0IP 1 0 :1:0 
+`uc 1 INT1IP 1 0 :1:1 
+`uc 1 INT2IP 1 0 :1:2 
+`uc 1 INT3IP 1 0 :1:3 
+`uc 1 IOCIP 1 0 :1:4 
+`uc 1 TMR0IP 1 0 :1:5 
+]
+"4010
+[u S3460 . 1 `S3453 1 . 1 0 ]
+[v _IPR0bits IPR0bits `VES3460  1 e 1 @3615 ]
+[s S3583 . 1 `uc 1 SSP1IP 1 0 :1:0 
+`uc 1 BCL1IP 1 0 :1:1 
+`uc 1 SSP2IP 1 0 :1:2 
+`uc 1 BCL2IP 1 0 :1:3 
+`uc 1 TX1IP 1 0 :1:4 
+`uc 1 RC1IP 1 0 :1:5 
+`uc 1 TX2IP 1 0 :1:6 
+`uc 1 RC2IP 1 0 :1:7 
+]
+"4170
+[s S3592 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 RXBNIP 1 0 :1:1 
+`uc 1 . 1 0 :2:2 
+`uc 1 TXBNIP 1 0 :1:4 
+]
+[u S3597 . 1 `S3583 1 . 1 0 `S3592 1 . 1 0 ]
+[v _IPR3bits IPR3bits `VES3597  1 e 1 @3618 ]
+[s S3639 . 1 `uc 1 TX3IP 1 0 :1:0 
+`uc 1 RC3IP 1 0 :1:1 
+`uc 1 TX4IP 1 0 :1:2 
+`uc 1 RC4IP 1 0 :1:3 
+`uc 1 TX5IP 1 0 :1:4 
+`uc 1 RC5IP 1 0 :1:5 
+]
+"4243
+[s S3646 . 1 `uc 1 CCIP3IP 1 0 :1:0 
+]
+[u S3648 . 1 `S3639 1 . 1 0 `S3646 1 . 1 0 ]
+[v _IPR4bits IPR4bits `VES3648  1 e 1 @3619 ]
+[s S3493 . 1 `uc 1 TMR1IP 1 0 :1:0 
+`uc 1 TMR2IP 1 0 :1:1 
+`uc 1 TMR3IP 1 0 :1:2 
+`uc 1 TMR4IP 1 0 :1:3 
+`uc 1 TMR5IP 1 0 :1:4 
+`uc 1 TMR6IP 1 0 :1:5 
+`uc 1 TMR7IP 1 0 :1:6 
+`uc 1 TMR8IP 1 0 :1:7 
+]
+"4307
+[s S3502 . 1 `uc 1 CCH05 1 0 :1:0 
+`uc 1 CCH15 1 0 :1:1 
+`uc 1 . 1 0 :1:2 
+`uc 1 EVPOL05 1 0 :1:3 
+`uc 1 EVPOL15 1 0 :1:4 
+]
+[u S3508 . 1 `S3493 1 . 1 0 `S3502 1 . 1 0 ]
+[v _IPR5bits IPR5bits `VES3508  1 e 1 @3620 ]
+[s S3364 . 1 `uc 1 INT0IE 1 0 :1:0 
+`uc 1 INT1IE 1 0 :1:1 
+`uc 1 INT2IE 1 0 :1:2 
+`uc 1 INT3IE 1 0 :1:3 
+`uc 1 IOCIE 1 0 :1:4 
+`uc 1 TMR0IE 1 0 :1:5 
+]
+"4558
+[u S3371 . 1 `S3364 1 . 1 0 ]
+[v _PIE0bits PIE0bits `VES3371  1 e 1 @3625 ]
+[s S3538 . 1 `uc 1 SSP1IE 1 0 :1:0 
+`uc 1 BCL1IE 1 0 :1:1 
+`uc 1 SSP2IE 1 0 :1:2 
+`uc 1 BCL2IE 1 0 :1:3 
+`uc 1 TX1IE 1 0 :1:4 
+`uc 1 RC1IE 1 0 :1:5 
+`uc 1 TX2IE 1 0 :1:6 
+`uc 1 RC2IE 1 0 :1:7 
+]
+"4725
+[s S3547 . 1 `uc 1 RXB0IE 1 0 :1:0 
+`uc 1 RXB1IE 1 0 :1:1 
+`uc 1 TXB0IE 1 0 :1:2 
+`uc 1 TXB1IE 1 0 :1:3 
+`uc 1 TXB2IE 1 0 :1:4 
+]
+[s S3553 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 RXBNIE 1 0 :1:1 
+`uc 1 . 1 0 :2:2 
+`uc 1 TXBNIE 1 0 :1:4 
+]
+[u S3558 . 1 `S3538 1 . 1 0 `S3547 1 . 1 0 `S3553 1 . 1 0 ]
+[v _PIE3bits PIE3bits `VES3558  1 e 1 @3628 ]
+[s S3622 . 1 `uc 1 TX3IE 1 0 :1:0 
+`uc 1 RC3IE 1 0 :1:1 
+`uc 1 TX4IE 1 0 :1:2 
+`uc 1 RC4IE 1 0 :1:3 
+`uc 1 TX5IE 1 0 :1:4 
+`uc 1 RC5IE 1 0 :1:5 
+]
+"4820
+[u S3629 . 1 `S3622 1 . 1 0 ]
+[v _PIE4bits PIE4bits `VES3629  1 e 1 @3629 ]
+[s S3472 . 1 `uc 1 TMR1IE 1 0 :1:0 
+`uc 1 TMR2IE 1 0 :1:1 
+`uc 1 TMR3IE 1 0 :1:2 
+`uc 1 TMR4IE 1 0 :1:3 
+`uc 1 TMR5IE 1 0 :1:4 
+`uc 1 TMR6IE 1 0 :1:5 
+`uc 1 TMR7IE 1 0 :1:6 
+`uc 1 TMR8IE 1 0 :1:7 
+]
+"4872
+[u S3481 . 1 `S3472 1 . 1 0 ]
+[v _PIE5bits PIE5bits `VES3481  1 e 1 @3630 ]
+[s S2334 . 1 `uc 1 INT0IF 1 0 :1:0 
+`uc 1 INT1IF 1 0 :1:1 
+`uc 1 INT2IF 1 0 :1:2 
+`uc 1 INT3IF 1 0 :1:3 
+`uc 1 IOCIF 1 0 :1:4 
+`uc 1 TMR0IF 1 0 :1:5 
+]
+"5103
+[u S2341 . 1 `S2334 1 . 1 0 ]
+[v _PIR0bits PIR0bits `VES2341  1 e 1 @3635 ]
+[s S2251 . 1 `uc 1 SSP1IF 1 0 :1:0 
+`uc 1 BCL1IF 1 0 :1:1 
+`uc 1 SSP2IF 1 0 :1:2 
+`uc 1 BCL2IF 1 0 :1:3 
+`uc 1 TX1IF 1 0 :1:4 
+`uc 1 RC1IF 1 0 :1:5 
+`uc 1 TX2IF 1 0 :1:6 
+`uc 1 RC2IF 1 0 :1:7 
+]
+"5263
+[s S2260 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 RXBNIF 1 0 :1:1 
+`uc 1 . 1 0 :2:2 
+`uc 1 TXBNIF 1 0 :1:4 
+]
+[u S2265 . 1 `S2251 1 . 1 0 `S2260 1 . 1 0 ]
+[v _PIR3bits PIR3bits `VES2265  1 e 1 @3638 ]
+[s S2173 . 1 `uc 1 TX3IF 1 0 :1:0 
+`uc 1 RC3IF 1 0 :1:1 
+`uc 1 TX4IF 1 0 :1:2 
+`uc 1 RC4IF 1 0 :1:3 
+`uc 1 TX5IF 1 0 :1:4 
+`uc 1 RC5IF 1 0 :1:5 
+]
+"5333
+[u S2180 . 1 `S2173 1 . 1 0 ]
+[v _PIR4bits PIR4bits `VES2180  1 e 1 @3639 ]
+[s S2473 . 1 `uc 1 TMR1IF 1 0 :1:0 
+`uc 1 TMR2IF 1 0 :1:1 
+`uc 1 TMR3IF 1 0 :1:2 
+`uc 1 TMR4IF 1 0 :1:3 
+`uc 1 TMR5IF 1 0 :1:4 
+`uc 1 TMR6IF 1 0 :1:5 
+`uc 1 TMR7IF 1 0 :1:6 
+`uc 1 TMR8IF 1 0 :1:7 
+]
+"5385
+[u S2482 . 1 `S2473 1 . 1 0 ]
+[v _PIR5bits PIR5bits `VES2482  1 e 1 @3640 ]
+[s S3292 . 1 `uc 1 SEN 1 0 :1:0 
+`uc 1 WDTPS 1 0 :5:1 
+]
+"5634
+[s S3295 . 1 `uc 1 SWDTEN 1 0 :1:0 
+]
+[s S3297 . 1 `uc 1 WDTSEN 1 0 :1:0 
+]
+[s S3299 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 WDTPS0 1 0 :1:1 
+`uc 1 WDTPS1 1 0 :1:2 
+`uc 1 WDTPS2 1 0 :1:3 
+`uc 1 WDTPS3 1 0 :1:4 
+`uc 1 WDTPS4 1 0 :1:5 
+]
+[u S3306 . 1 `S3292 1 . 1 0 `S3295 1 . 1 0 `S3297 1 . 1 0 `S3299 1 . 1 0 ]
+[v _WDTCON0bits WDTCON0bits `VES3306  1 e 1 @3645 ]
+[s S3709 . 1 `uc 1 DOZE 1 0 :3:0 
+`uc 1 . 1 0 :1:3 
+`uc 1 DOE 1 0 :1:4 
+`uc 1 ROI 1 0 :1:5 
+`uc 1 DOZEN 1 0 :1:6 
+`uc 1 IDLEN 1 0 :1:7 
+]
+"6142
+[s S3716 . 1 `uc 1 DOZE0 1 0 :1:0 
+`uc 1 DOZE1 1 0 :1:1 
+`uc 1 DOZE2 1 0 :1:2 
+]
+[u S3720 . 1 `S3709 1 . 1 0 `S3716 1 . 1 0 ]
+[v _CPUDOZEbits CPUDOZEbits `VES3720  1 e 1 @3650 ]
+[s S3668 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 ADOEN 1 0 :1:2 
+`uc 1 SOSCEN 1 0 :1:3 
+`uc 1 LFOEN 1 0 :1:4 
+`uc 1 MFOEN 1 0 :1:5 
+`uc 1 HFOEN 1 0 :1:6 
+`uc 1 EXTOEN 1 0 :1:7 
+]
+"6495
+[u S3676 . 1 `S3668 1 . 1 0 ]
+[v _OSCENbits OSCENbits `VES3676  1 e 1 @3655 ]
+"8159
+[v _RC6PPS RC6PPS `VEuc  1 e 1 @3688 ]
+"8209
+[v _RC7PPS RC7PPS `VEuc  1 e 1 @3689 ]
+"8509
+[v _RD5PPS RD5PPS `VEuc  1 e 1 @3695 ]
+"8559
+[v _RD6PPS RD6PPS `VEuc  1 e 1 @3696 ]
+"8659
+[v _RE0PPS RE0PPS `VEuc  1 e 1 @3698 ]
+"8709
+[v _RE1PPS RE1PPS `VEuc  1 e 1 @3699 ]
+"10009
+[v _INLVLA INLVLA `VEuc  1 e 1 @3726 ]
+"10071
+[v _SLRCONA SLRCONA `VEuc  1 e 1 @3727 ]
+"10133
+[v _ODCONA ODCONA `VEuc  1 e 1 @3728 ]
+"10195
+[v _WPUA WPUA `VEuc  1 e 1 @3729 ]
+"10257
+[v _ANSELA ANSELA `VEuc  1 e 1 @3730 ]
+"10505
+[v _INLVLB INLVLB `VEuc  1 e 1 @3734 ]
+"10567
+[v _SLRCONB SLRCONB `VEuc  1 e 1 @3735 ]
+"10629
+[v _ODCONB ODCONB `VEuc  1 e 1 @3736 ]
+"10691
+[v _WPUB WPUB `VEuc  1 e 1 @3737 ]
+"10753
+[v _ANSELB ANSELB `VEuc  1 e 1 @3738 ]
+"11001
+[v _INLVLC INLVLC `VEuc  1 e 1 @3742 ]
+"11063
+[v _SLRCONC SLRCONC `VEuc  1 e 1 @3743 ]
+"11125
+[v _ODCONC ODCONC `VEuc  1 e 1 @3744 ]
+"11187
+[v _WPUC WPUC `VEuc  1 e 1 @3745 ]
+"11249
+[v _INLVLD INLVLD `VEuc  1 e 1 @3747 ]
+"11311
+[v _SLRCOND SLRCOND `VEuc  1 e 1 @3748 ]
+"11373
+[v _ODCOND ODCOND `VEuc  1 e 1 @3749 ]
+"11435
+[v _WPUD WPUD `VEuc  1 e 1 @3750 ]
+"11497
+[v _ANSELD ANSELD `VEuc  1 e 1 @3751 ]
+"11559
+[v _IOCEF IOCEF `VEuc  1 e 1 @3752 ]
+"11621
+[v _IOCEN IOCEN `VEuc  1 e 1 @3753 ]
+"11683
+[v _IOCEP IOCEP `VEuc  1 e 1 @3754 ]
+"11745
+[v _INLVLE INLVLE `VEuc  1 e 1 @3755 ]
+"11807
+[v _SLRCONE SLRCONE `VEuc  1 e 1 @3756 ]
+"11869
+[v _ODCONE ODCONE `VEuc  1 e 1 @3757 ]
+"11931
+[v _WPUE WPUE `VEuc  1 e 1 @3758 ]
+"11993
+[v _ANSELE ANSELE `VEuc  1 e 1 @3759 ]
+"12055
+[v _INLVLF INLVLF `VEuc  1 e 1 @3760 ]
+"12117
+[v _SLRCONF SLRCONF `VEuc  1 e 1 @3761 ]
+"12179
+[v _ODCONF ODCONF `VEuc  1 e 1 @3762 ]
+"12241
+[v _WPUF WPUF `VEuc  1 e 1 @3763 ]
+"12303
+[v _ANSELF ANSELF `VEuc  1 e 1 @3764 ]
+"12428
+[v _INLVLG INLVLG `VEuc  1 e 1 @3768 ]
+"12490
+[v _SLRCONG SLRCONG `VEuc  1 e 1 @3769 ]
+"12547
+[v _ODCONG ODCONG `VEuc  1 e 1 @3770 ]
+"12604
+[v _WPUG WPUG `VEuc  1 e 1 @3771 ]
+"12666
+[v _ANSELG ANSELG `VEuc  1 e 1 @3772 ]
+"12723
+[v _INLVLH INLVLH `VEuc  1 e 1 @3773 ]
+"12785
+[v _SLRCONH SLRCONH `VEuc  1 e 1 @3774 ]
+"12847
+[v _ODCONH ODCONH `VEuc  1 e 1 @3775 ]
+"12909
+[v _WPUH WPUH `VEuc  1 e 1 @3776 ]
+"14197
+[v _SSP2BUF SSP2BUF `VEuc  1 e 1 @3797 ]
+"14217
+[v _SSP2ADD SSP2ADD `VEuc  1 e 1 @3798 ]
+"14407
+[v _SSP2STAT SSP2STAT `VEuc  1 e 1 @3800 ]
+[s S508 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 R_NOT_W 1 0 :1:2 
+]
+"14556
+[s S511 . 1 `uc 1 . 1 0 :5:0 
+`uc 1 D_NOT_A 1 0 :1:5 
+]
+[s S514 . 1 `uc 1 BF 1 0 :1:0 
+`uc 1 UA 1 0 :1:1 
+`uc 1 R_nW 1 0 :1:2 
+`uc 1 S 1 0 :1:3 
+`uc 1 P 1 0 :1:4 
+`uc 1 D_nA 1 0 :1:5 
+`uc 1 CKE 1 0 :1:6 
+`uc 1 SMP 1 0 :1:7 
+]
+[s S523 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 R_W 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 D_A 1 0 :1:5 
+]
+[s S528 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 nW 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 nA 1 0 :1:5 
+]
+[s S533 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 NOT_WRITE 1 0 :1:2 
+]
+[s S536 . 1 `uc 1 . 1 0 :5:0 
+`uc 1 NOT_ADDRESS 1 0 :1:5 
+]
+[s S539 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 nWRITE 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 nADDRESS 1 0 :1:5 
+]
+[s S544 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 READ_WRITE 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 DATA_ADDRESS 1 0 :1:5 
+]
+[s S549 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 I2C_READ 1 0 :1:2 
+`uc 1 I2C_START 1 0 :1:3 
+`uc 1 I2C_STOP 1 0 :1:4 
+`uc 1 I2C_DAT 1 0 :1:5 
+]
+[s S555 . 1 `uc 1 BF2 1 0 :1:0 
+`uc 1 UA2 1 0 :1:1 
+`uc 1 R 1 0 :1:2 
+`uc 1 START 1 0 :1:3 
+`uc 1 STOP 1 0 :1:4 
+`uc 1 D 1 0 :1:5 
+`uc 1 CKE2 1 0 :1:6 
+`uc 1 SMP2 1 0 :1:7 
+]
+[s S564 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 RW 1 0 :1:2 
+`uc 1 START2 1 0 :1:3 
+`uc 1 STOP2 1 0 :1:4 
+`uc 1 DA 1 0 :1:5 
+]
+[s S570 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 RW2 1 0 :1:2 
+`uc 1 I2C_START2 1 0 :1:3 
+`uc 1 I2C_STOP2 1 0 :1:4 
+`uc 1 DA2 1 0 :1:5 
+]
+[s S576 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 I2C_READ2 1 0 :1:2 
+`uc 1 S2 1 0 :1:3 
+`uc 1 P2 1 0 :1:4 
+`uc 1 DATA_ADDRESS2 1 0 :1:5 
+]
+[s S582 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 READ_WRITE2 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 D_A2 1 0 :1:5 
+]
+[s S587 . 1 `uc 1 . 1 0 :5:0 
+`uc 1 D_NOT_A2 1 0 :1:5 
+]
+[s S590 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 R_W2 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 D_nA2 1 0 :1:5 
+]
+[s S595 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 R_NOT_W2 1 0 :1:2 
+]
+[s S598 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 R_nW2 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 I2C_DAT2 1 0 :1:5 
+]
+[s S603 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 NOT_W2 1 0 :1:2 
+]
+[s S606 . 1 `uc 1 . 1 0 :5:0 
+`uc 1 NOT_A2 1 0 :1:5 
+]
+[s S609 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 nW2 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 nA2 1 0 :1:5 
+]
+[s S614 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 NOT_WRITE2 1 0 :1:2 
+]
+[s S617 . 1 `uc 1 . 1 0 :5:0 
+`uc 1 NOT_ADDRESS2 1 0 :1:5 
+]
+[s S620 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 nWRITE2 1 0 :1:2 
+`uc 1 . 1 0 :2:3 
+`uc 1 nADDRESS2 1 0 :1:5 
+]
+[u S625 . 1 `S508 1 . 1 0 `S511 1 . 1 0 `S514 1 . 1 0 `S523 1 . 1 0 `S528 1 . 1 0 `S533 1 . 1 0 `S536 1 . 1 0 `S539 1 . 1 0 `S544 1 . 1 0 `S549 1 . 1 0 `S555 1 . 1 0 `S564 1 . 1 0 `S570 1 . 1 0 `S576 1 . 1 0 `S582 1 . 1 0 `S587 1 . 1 0 `S590 1 . 1 0 `S595 1 . 1 0 `S598 1 . 1 0 `S603 1 . 1 0 `S606 1 . 1 0 `S609 1 . 1 0 `S614 1 . 1 0 `S617 1 . 1 0 `S620 1 . 1 0 ]
+[v _SSP2STATbits SSP2STATbits `VES625  1 e 1 @3800 ]
+"14861
+[v _SSP2CON1 SSP2CON1 `VEuc  1 e 1 @3801 ]
+"14981
+[v _SSP2CON2 SSP2CON2 `VEuc  1 e 1 @3802 ]
+[s S430 . 1 `uc 1 SEN 1 0 :1:0 
+`uc 1 RSEN 1 0 :1:1 
+`uc 1 PEN 1 0 :1:2 
+`uc 1 RCEN 1 0 :1:3 
+`uc 1 ACKEN 1 0 :1:4 
+`uc 1 ACKDT 1 0 :1:5 
+`uc 1 ACKSTAT 1 0 :1:6 
+`uc 1 GCEN 1 0 :1:7 
+]
+"15028
+[s S439 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 ADMSK 1 0 :5:1 
+]
+[s S442 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 ADMSK1 1 0 :1:1 
+`uc 1 ADMSK2 1 0 :1:2 
+`uc 1 ADMSK3 1 0 :1:3 
+`uc 1 ADMSK4 1 0 :1:4 
+`uc 1 ADMSK5 1 0 :1:5 
+]
+[s S449 . 1 `uc 1 SEN2 1 0 :1:0 
+`uc 1 ADMSK12 1 0 :1:1 
+`uc 1 ADMSK22 1 0 :1:2 
+`uc 1 ADMSK32 1 0 :1:3 
+`uc 1 ACKEN2 1 0 :1:4 
+`uc 1 ACKDT2 1 0 :1:5 
+`uc 1 ACKSTAT2 1 0 :1:6 
+`uc 1 GCEN2 1 0 :1:7 
+]
+[s S458 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 RSEN2 1 0 :1:1 
+`uc 1 PEN2 1 0 :1:2 
+`uc 1 RCEN2 1 0 :1:3 
+`uc 1 ADMSK42 1 0 :1:4 
+`uc 1 ADMSK52 1 0 :1:5 
+]
+[u S465 . 1 `S430 1 . 1 0 `S439 1 . 1 0 `S442 1 . 1 0 `S449 1 . 1 0 `S458 1 . 1 0 ]
+[v _SSP2CON2bits SSP2CON2bits `VES465  1 e 1 @3802 ]
+"16336
+[v _RC3REG RC3REG `VEuc  1 e 1 @3818 ]
+"16374
+[v _TX3REG TX3REG `VEuc  1 e 1 @3819 ]
+"16412
+[v _SP3BRG SP3BRG `VEus  1 e 2 @3820 ]
+"16495
+[v _RC3STA RC3STA `VEuc  1 e 1 @3822 ]
+[s S2226 . 1 `uc 1 RX9D 1 0 :1:0 
+`uc 1 OERR 1 0 :1:1 
+`uc 1 FERR 1 0 :1:2 
+`uc 1 ADDEN 1 0 :1:3 
+`uc 1 CREN 1 0 :1:4 
+`uc 1 SREN 1 0 :1:5 
+`uc 1 RX9 1 0 :1:6 
+`uc 1 SPEN 1 0 :1:7 
+]
+"16517
+[u S2235 . 1 `S2226 1 . 1 0 ]
+[v _RC3STAbits RC3STAbits `VES2235  1 e 1 @3822 ]
+"16617
+[v _TX3STA TX3STA `VEuc  1 e 1 @3823 ]
+"16739
+[v _BAUD3CON BAUD3CON `VEuc  1 e 1 @3824 ]
+"26066
+[v _ADACT ADACT `VEuc  1 e 1 @3926 ]
+"26176
+[v _ADREF ADREF `VEuc  1 e 1 @3928 ]
+"26217
+[v _ADCON1 ADCON1 `VEuc  1 e 1 @3929 ]
+"26256
+[v _ADCON2 ADCON2 `VEuc  1 e 1 @3930 ]
+"26333
+[v _ADCON3 ADCON3 `VEuc  1 e 1 @3931 ]
+"26404
+[v _ADACQ ADACQ `VEuc  1 e 1 @3932 ]
+"26474
+[v _ADCAP ADCAP `VEuc  1 e 1 @3933 ]
+"26596
+[v _ADPCH ADPCH `VEuc  1 e 1 @3935 ]
+[s S58 . 1 `uc 1 ADGO 1 0 :1:0 
+`uc 1 . 1 0 :1:1 
+`uc 1 ADFM 1 0 :1:2 
+`uc 1 . 1 0 :1:3 
+`uc 1 ADCS 1 0 :1:4 
+`uc 1 . 1 0 :1:5 
+`uc 1 ADCONT 1 0 :1:6 
+`uc 1 ADON 1 0 :1:7 
+]
+"26689
+[s S67 . 1 `uc 1 GO 1 0 :1:0 
+`uc 1 . 1 0 :1:1 
+`uc 1 ADFM0 1 0 :1:2 
+]
+[s S71 . 1 `uc 1 DONE 1 0 :1:0 
+]
+[s S73 . 1 `uc 1 GO_NOT_DONE 1 0 :1:0 
+]
+[s S75 . 1 `uc 1 GO_nDONE 1 0 :1:0 
+]
+[s S77 . 1 `uc 1 . 1 0 :7:0 
+`uc 1 ADCAL 1 0 :1:7 
+]
+[u S80 . 1 `S58 1 . 1 0 `S67 1 . 1 0 `S71 1 . 1 0 `S73 1 . 1 0 `S75 1 . 1 0 `S77 1 . 1 0 ]
+[v _ADCON0bits ADCON0bits `VES80  1 e 1 @3936 ]
+"26903
+[v _ADRESL ADRESL `VEuc  1 e 1 @3939 ]
+"26973
+[v _ADRESH ADRESH `VEuc  1 e 1 @3940 ]
+"27100
+[v _ADRPT ADRPT `VEuc  1 e 1 @3942 ]
+"28129
+[v _NVMADRL NVMADRL `VEuc  1 e 1 @3956 ]
+"28257
+[v _NVMADRH NVMADRH `VEuc  1 e 1 @3957 ]
+"28313
+[v _NVMDAT NVMDAT `VEuc  1 e 1 @3958 ]
+[s S1305 . 1 `uc 1 RD 1 0 :1:0 
+`uc 1 WR 1 0 :1:1 
+`uc 1 WREN 1 0 :1:2 
+`uc 1 WRERR 1 0 :1:3 
+`uc 1 FREE 1 0 :1:4 
+`uc 1 . 1 0 :1:5 
+`uc 1 NVMREG 1 0 :2:6 
+]
+"28404
+[s S1313 . 1 `uc 1 . 1 0 :6:0 
+`uc 1 NVMREG0 1 0 :1:6 
+`uc 1 NVMREG1 1 0 :1:7 
+]
+[u S1317 . 1 `S1305 1 . 1 0 `S1313 1 . 1 0 ]
+[v _NVMCON1bits NVMCON1bits `VES1317  1 e 1 @3959 ]
+"28449
+[v _NVMCON2 NVMCON2 `VEuc  1 e 1 @3960 ]
+"28469
+[v _LATA LATA `VEuc  1 e 1 @3961 ]
+"28581
+[v _LATB LATB `VEuc  1 e 1 @3962 ]
+"28693
+[v _LATC LATC `VEuc  1 e 1 @3963 ]
+"28805
+[v _LATD LATD `VEuc  1 e 1 @3964 ]
+"28917
+[v _LATE LATE `VEuc  1 e 1 @3965 ]
+"29029
+[v _LATF LATF `VEuc  1 e 1 @3966 ]
+"29141
+[v _LATG LATG `VEuc  1 e 1 @3967 ]
+"29230
+[v _LATH LATH `VEuc  1 e 1 @3968 ]
+"29330
+[v _TRISA TRISA `VEuc  1 e 1 @3969 ]
+"29452
+[v _TRISB TRISB `VEuc  1 e 1 @3970 ]
+"29574
+[v _TRISC TRISC `VEuc  1 e 1 @3971 ]
+"29696
+[v _TRISD TRISD `VEuc  1 e 1 @3972 ]
+"29818
+[v _TRISE TRISE `VEuc  1 e 1 @3973 ]
+"29940
+[v _TRISF TRISF `VEuc  1 e 1 @3974 ]
+"30002
+[v _TRISG TRISG `VEuc  1 e 1 @3975 ]
+"30059
+[v _TRISH TRISH `VEuc  1 e 1 @3976 ]
+[s S3188 . 1 `uc 1 RA0 1 0 :1:0 
+`uc 1 RA1 1 0 :1:1 
+`uc 1 RA2 1 0 :1:2 
+`uc 1 RA3 1 0 :1:3 
+`uc 1 RA4 1 0 :1:4 
+`uc 1 RA5 1 0 :1:5 
+`uc 1 RA6 1 0 :1:6 
+`uc 1 RA7 1 0 :1:7 
+]
+"30121
+[s S3197 . 1 `uc 1 ULPWUIN 1 0 :1:0 
+`uc 1 . 1 0 :4:1 
+`uc 1 LVDIN 1 0 :1:5 
+`uc 1 . 1 0 :1:6 
+`uc 1 RJPU 1 0 :1:7 
+]
+[u S3203 . 1 `S3188 1 . 1 0 `S3197 1 . 1 0 ]
+[v _PORTAbits PORTAbits `VES3203  1 e 1 @3977 ]
+[s S3078 . 1 `uc 1 RB0 1 0 :1:0 
+`uc 1 RB1 1 0 :1:1 
+`uc 1 RB2 1 0 :1:2 
+`uc 1 RB3 1 0 :1:3 
+`uc 1 RB4 1 0 :1:4 
+`uc 1 RB5 1 0 :1:5 
+`uc 1 RB6 1 0 :1:6 
+`uc 1 RB7 1 0 :1:7 
+]
+"30202
+[s S3087 . 1 `uc 1 . 1 0 :3:0 
+`uc 1 CCP2_PA2 1 0 :1:3 
+]
+[u S3090 . 1 `S3078 1 . 1 0 `S3087 1 . 1 0 ]
+[v _PORTBbits PORTBbits `VES3090  1 e 1 @3978 ]
+[s S3142 . 1 `uc 1 RC0 1 0 :1:0 
+`uc 1 RC1 1 0 :1:1 
+`uc 1 RC2 1 0 :1:2 
+`uc 1 RC3 1 0 :1:3 
+`uc 1 RC4 1 0 :1:4 
+`uc 1 RC5 1 0 :1:5 
+`uc 1 RC6 1 0 :1:6 
+`uc 1 RC7 1 0 :1:7 
+]
+"30278
+[s S3151 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 CCP2 1 0 :1:1 
+`uc 1 PA1 1 0 :1:2 
+]
+[s S3155 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 PA2 1 0 :1:1 
+]
+[u S3158 . 1 `S3142 1 . 1 0 `S3151 1 . 1 0 `S3155 1 . 1 0 ]
+[v _PORTCbits PORTCbits `VES3158  1 e 1 @3979 ]
+[s S2929 . 1 `uc 1 RD0 1 0 :1:0 
+`uc 1 RD1 1 0 :1:1 
+`uc 1 RD2 1 0 :1:2 
+`uc 1 RD3 1 0 :1:3 
+`uc 1 RD4 1 0 :1:4 
+`uc 1 RD5 1 0 :1:5 
+`uc 1 RD6 1 0 :1:6 
+`uc 1 RD7 1 0 :1:7 
+]
+"30359
+[s S2938 . 1 `uc 1 . 1 0 :7:0 
+`uc 1 SS2 1 0 :1:7 
+]
+[u S2941 . 1 `S2929 1 . 1 0 `S2938 1 . 1 0 ]
+[v _PORTDbits PORTDbits `VES2941  1 e 1 @3980 ]
+[s S2355 . 1 `uc 1 RE0 1 0 :1:0 
+`uc 1 RE1 1 0 :1:1 
+`uc 1 RE2 1 0 :1:2 
+`uc 1 RE3 1 0 :1:3 
+`uc 1 RE4 1 0 :1:4 
+`uc 1 RE5 1 0 :1:5 
+`uc 1 RE6 1 0 :1:6 
+`uc 1 RE7 1 0 :1:7 
+]
+"30450
+[s S2364 . 1 `uc 1 PD2 1 0 :1:0 
+`uc 1 PC2 1 0 :1:1 
+`uc 1 CCP10 1 0 :1:2 
+`uc 1 CCP9E 1 0 :1:3 
+`uc 1 CCP8E 1 0 :1:4 
+`uc 1 CCP7E 1 0 :1:5 
+`uc 1 CCP6E 1 0 :1:6 
+`uc 1 CCP2E 1 0 :1:7 
+]
+[s S2373 . 1 `uc 1 RDE 1 0 :1:0 
+`uc 1 WRE 1 0 :1:1 
+`uc 1 CS 1 0 :1:2 
+`uc 1 PC3E 1 0 :1:3 
+`uc 1 PB3E 1 0 :1:4 
+`uc 1 PC1E 1 0 :1:5 
+`uc 1 PB1E 1 0 :1:6 
+`uc 1 PA2E 1 0 :1:7 
+]
+[s S2382 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 PB2 1 0 :1:2 
+]
+[u S2385 . 1 `S2355 1 . 1 0 `S2364 1 . 1 0 `S2373 1 . 1 0 `S2382 1 . 1 0 ]
+[v _PORTEbits PORTEbits `VES2385  1 e 1 @3981 ]
+[s S2425 . 1 `uc 1 RF0 1 0 :1:0 
+`uc 1 RF1 1 0 :1:1 
+`uc 1 RF2 1 0 :1:2 
+`uc 1 RF3 1 0 :1:3 
+`uc 1 RF4 1 0 :1:4 
+`uc 1 RF5 1 0 :1:5 
+`uc 1 RF6 1 0 :1:6 
+`uc 1 RF7 1 0 :1:7 
+]
+"30602
+[s S2434 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 C2OUTF 1 0 :1:1 
+`uc 1 C1OUTF 1 0 :1:2 
+]
+[u S2438 . 1 `S2425 1 . 1 0 `S2434 1 . 1 0 ]
+[v _PORTFbits PORTFbits `VES2438  1 e 1 @3982 ]
+[s S2190 . 1 `uc 1 RG0 1 0 :1:0 
+`uc 1 RG1 1 0 :1:1 
+`uc 1 RG2 1 0 :1:2 
+`uc 1 RG3 1 0 :1:3 
+`uc 1 RG4 1 0 :1:4 
+`uc 1 RG5 1 0 :1:5 
+`uc 1 RG6 1 0 :1:6 
+`uc 1 RG7 1 0 :1:7 
+]
+"30680
+[s S2199 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 C3OUTG 1 0 :1:1 
+`uc 1 . 1 0 :3:2 
+`uc 1 RJPU 1 0 :1:5 
+]
+[u S2204 . 1 `S2190 1 . 1 0 `S2199 1 . 1 0 ]
+[v _PORTGbits PORTGbits `VES2204  1 e 1 @3983 ]
+"30735
+[v _PORTH PORTH `VEuc  1 e 1 @3984 ]
+"31806
+[v _RC1REG RC1REG `VEuc  1 e 1 @3992 ]
+"31860
+[v _TX1REG TX1REG `VEuc  1 e 1 @3993 ]
+"31914
+[v _SP1BRG SP1BRG `VEus  1 e 2 @3994 ]
+"32045
+[v _RC1STA RC1STA `VEuc  1 e 1 @3996 ]
+"32086
+[s S2296 . 1 `uc 1 . 1 0 :6:0 
+`uc 1 RC8_9 1 0 :1:6 
+]
+[s S2299 . 1 `uc 1 . 1 0 :6:0 
+`uc 1 RC9 1 0 :1:6 
+]
+[s S2302 . 1 `uc 1 RCD8 1 0 :1:0 
+]
+[s S2304 . 1 `uc 1 . 1 0 :5:0 
+`uc 1 SRENA 1 0 :1:5 
+]
+[u S2307 . 1 `S2226 1 . 1 0 `S2296 1 . 1 0 `S2299 1 . 1 0 `S2302 1 . 1 0 `S2304 1 . 1 0 ]
+[v _RC1STAbits RC1STAbits `VES2307  1 e 1 @3996 ]
+"32330
+[v _TX1STA TX1STA `VEuc  1 e 1 @3997 ]
+"32774
+[v _BAUD1CON BAUD1CON `VEuc  1 e 1 @3998 ]
+"37342
+[v _TMR3L TMR3L `VEuc  1 e 1 @4039 ]
+"37512
+[v _TMR3H TMR3H `VEuc  1 e 1 @4040 ]
+"37632
+[v _T3CON T3CON `VEuc  1 e 1 @4041 ]
+[s S2496 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 NOT_SYNC 1 0 :1:2 
+]
+"37671
+[s S2499 . 1 `uc 1 ON 1 0 :1:0 
+`uc 1 RD16 1 0 :1:1 
+`uc 1 nSYNC 1 0 :1:2 
+`uc 1 . 1 0 :1:3 
+`uc 1 CKPS 1 0 :2:4 
+]
+"37671
+[s S2505 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 NOT_T3SYNC 1 0 :1:2 
+]
+"37671
+[s S2508 . 1 `uc 1 TMR3ON 1 0 :1:0 
+`uc 1 T3RD16 1 0 :1:1 
+`uc 1 nT3SYNC 1 0 :1:2 
+`uc 1 . 1 0 :1:3 
+`uc 1 T3CKPS0 1 0 :1:4 
+`uc 1 T3CKPS1 1 0 :1:5 
+]
+"37671
+[s S2515 . 1 `uc 1 . 1 0 :4:0 
+`uc 1 CKPS0 1 0 :1:4 
+`uc 1 CKPS1 1 0 :1:5 
+]
+"37671
+[s S2519 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 RD163 1 0 :1:1 
+]
+"37671
+[u S2522 . 1 `S2496 1 . 1 0 `S2499 1 . 1 0 `S2505 1 . 1 0 `S2508 1 . 1 0 `S2515 1 . 1 0 `S2519 1 . 1 0 ]
+"37671
+"37671
+[v _T3CONbits T3CONbits `VES2522  1 e 1 @4041 ]
+"38125
+[v _TMR3CLK TMR3CLK `VEuc  1 e 1 @4044 ]
+"38269
+[v _TMR1L TMR1L `VEuc  1 e 1 @4045 ]
+"38439
+[v _TMR1H TMR1H `VEuc  1 e 1 @4046 ]
+"38559
+[v _T1CON T1CON `VEuc  1 e 1 @4047 ]
+"38598
+"38598
+[s S3025 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 NOT_T1SYNC 1 0 :1:2 
+]
+"38598
+[s S3028 . 1 `uc 1 TMR1ON 1 0 :1:0 
+`uc 1 T1RD16 1 0 :1:1 
+`uc 1 nT1SYNC 1 0 :1:2 
+`uc 1 . 1 0 :1:3 
+`uc 1 T1CKPS0 1 0 :1:4 
+`uc 1 T1CKPS1 1 0 :1:5 
+]
+"38598
+"38598
+[s S3039 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 RD161 1 0 :1:1 
+]
+"38598
+[u S3042 . 1 `S2496 1 . 1 0 `S2499 1 . 1 0 `S3025 1 . 1 0 `S3028 1 . 1 0 `S2515 1 . 1 0 `S3039 1 . 1 0 ]
+"38598
+"38598
+[v _T1CONbits T1CONbits `VES3042  1 e 1 @4047 ]
+"39052
+[v _TMR1CLK TMR1CLK `VEuc  1 e 1 @4050 ]
+"39189
+[v _TMR0L TMR0L `VEuc  1 e 1 @4051 ]
+"39327
+[v _TMR0H TMR0H `VEuc  1 e 1 @4052 ]
+"39581
+[v _T0CON0 T0CON0 `VEuc  1 e 1 @4053 ]
+[s S3265 . 1 `uc 1 T0OUTPS 1 0 :4:0 
+`uc 1 T016BIT 1 0 :1:4 
+`uc 1 T0OUT 1 0 :1:5 
+`uc 1 . 1 0 :1:6 
+`uc 1 T0EN 1 0 :1:7 
+]
+"39601
+[s S3271 . 1 `uc 1 T0OUTPS0 1 0 :1:0 
+`uc 1 T0OUTPS1 1 0 :1:1 
+`uc 1 T0OUTPS2 1 0 :1:2 
+`uc 1 T0OUTPS3 1 0 :1:3 
+]
+"39601
+[u S3276 . 1 `S3265 1 . 1 0 `S3271 1 . 1 0 ]
+"39601
+"39601
+[v _T0CON0bits T0CON0bits `VES3276  1 e 1 @4053 ]
+"39646
+[v _T0CON1 T0CON1 `VEuc  1 e 1 @4054 ]
+[s S3735 . 1 `uc 1 NOT_BOR 1 0 :1:0 
+]
+"39805
+[s S3737 . 1 `uc 1 . 1 0 :1:0 
+`uc 1 NOT_POR 1 0 :1:1 
+]
+"39805
+[s S3740 . 1 `uc 1 . 1 0 :2:0 
+`uc 1 NOT_RI 1 0 :1:2 
+]
+"39805
+[s S3743 . 1 `uc 1 . 1 0 :3:0 
+`uc 1 NOT_RMCLR 1 0 :1:3 
+]
+"39805
+[s S3746 . 1 `uc 1 . 1 0 :4:0 
+`uc 1 NOT_RWDT 1 0 :1:4 
+]
+"39805
+[s S3749 . 1 `uc 1 . 1 0 :5:0 
+`uc 1 NOT_WDTWV 1 0 :1:5 
+]
+"39805
+[s S3752 . 1 `uc 1 nBOR 1 0 :1:0 
+`uc 1 nPOR 1 0 :1:1 
+`uc 1 nRI 1 0 :1:2 
+`uc 1 nRMCLR 1 0 :1:3 
+`uc 1 nRWDT 1 0 :1:4 
+`uc 1 nWDTWV 1 0 :1:5 
+`uc 1 STKUNF 1 0 :1:6 
+`uc 1 STKOVF 1 0 :1:7 
+]
+"39805
+[s S3761 . 1 `uc 1 BOR 1 0 :1:0 
+`uc 1 POR 1 0 :1:1 
+`uc 1 RI 1 0 :1:2 
+`uc 1 RMCLR 1 0 :1:3 
+`uc 1 RWDT 1 0 :1:4 
+`uc 1 WDTWV 1 0 :1:5 
+]
+"39805
+[u S3768 . 1 `S3735 1 . 1 0 `S3737 1 . 1 0 `S3740 1 . 1 0 `S3743 1 . 1 0 `S3746 1 . 1 0 `S3749 1 . 1 0 `S3752 1 . 1 0 `S3761 1 . 1 0 ]
+"39805
+"39805
+[v _PCON0bits PCON0bits `VES3768  1 e 1 @4055 ]
+"40160
+[v _BSR BSR `VEuc  1 e 1 @4064 ]
+[s S1333 . 1 `uc 1 INT0EDG 1 0 :1:0 
+`uc 1 INT1EDG 1 0 :1:1 
+`uc 1 INT2EDG 1 0 :1:2 
+`uc 1 INT3EDG 1 0 :1:3 
+`uc 1 . 1 0 :1:4 
+`uc 1 IPEN 1 0 :1:5 
+`uc 1 PEIE_GIEL 1 0 :1:6 
+`uc 1 GIE_GIEH 1 0 :1:7 
+]
+"40500
+[s S1342 . 1 `uc 1 . 1 0 :6:0 
+`uc 1 PEIE 1 0 :1:6 
+`uc 1 GIE 1 0 :1:7 
+]
+"40500
+[s S1346 . 1 `uc 1 . 1 0 :6:0 
+`uc 1 GIEL 1 0 :1:6 
+`uc 1 GIEH 1 0 :1:7 
+]
+"40500
+[u S1350 . 1 `S1333 1 . 1 0 `S1342 1 . 1 0 `S1346 1 . 1 0 ]
+"40500
+"40500
+[v _INTCONbits INTCONbits `VES1350  1 e 1 @4082 ]
+"43871
+[v _IOCEF5 IOCEF5 `VEb  1 e 0 @30021 ]
+"43874
+[v _IOCEF6 IOCEF6 `VEb  1 e 0 @30022 ]
+"43877
+[v _IOCEF7 IOCEF7 `VEb  1 e 0 @30023 ]
+"4 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\rand.c
+[v _seed seed `ul  1 s 4 seed ]
+"376 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\main_2_Test.c
+[v _main main `(v  1 e 1 0 ]
+{
+"380
+[v main@last_Field_No last_Field_No `uc  1 a 1 10 ]
+"494
+} 0
+"327 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\controllerActions_Test.c
+[v _scanValveScheduleAndGetSleepCount scanValveScheduleAndGetSleepCount `(v  1 e 1 0 ]
+{
+"328
+[v scanValveScheduleAndGetSleepCount@newCount newCount `ul  1 a 4 22 ]
+"329
+[v scanValveScheduleAndGetSleepCount@yearDays yearDays `ui  1 a 2 18 ]
+[v scanValveScheduleAndGetSleepCount@leapYearDays leapYearDays `ui  1 a 2 16 ]
+"330
+[v scanValveScheduleAndGetSleepCount@iLocal iLocal `uc  1 a 1 21 ]
+"331
+[v scanValveScheduleAndGetSleepCount@fieldCylceChecked fieldCylceChecked `a  1 a 1 20 ]
+"466
+} 0
+"478
+[v _days days `(ui  1 e 2 0 ]
+{
+[v days@mm mm `uc  1 a 1 wreg ]
+"479
+[v days@month month `[12]uc  1 a 12 0 ]
+"480
+[v days@days days `ui  1 a 2 13 ]
+"479
+[v days@itr itr `uc  1 a 1 15 ]
+"478
+[v days@mm mm `uc  1 a 1 wreg ]
+[v days@yy yy `uc  1 p 1 23 ]
+"479
+[v days@F14886 F14886 `[12]uc  1 s 12 F14886 ]
+"478
+[v days@mm mm `uc  1 a 1 12 ]
+"491
+} 0
+"15 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\Umul32.c
+[v ___lmul __lmul `(ul  1 e 4 0 ]
+{
+"17
+[v ___lmul@product product `ul  1 a 4 0 ]
+"15
+[v ___lmul@multiplier multiplier `ul  1 p 4 18 ]
+[v ___lmul@multiplicand multiplicand `ul  1 p 4 22 ]
+"129
+} 0
+"2417 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\controllerActions_Test.c
+[v _actionsOnSystemReset actionsOnSystemReset `(v  1 e 1 0 ]
+{
+"2418
+[v actionsOnSystemReset@resetType resetType `uc  1 a 1 9 ]
+"2976
+} 0
+"3 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\strncpy.c
+[v _strncpy strncpy `(*.39uc  1 e 2 0 ]
+{
+"5
+[v strncpy@cp cp `*.39uc  1 a 2 24 ]
+"3
+[v strncpy@d d `*.39uc  1 p 2 18 ]
+[v strncpy@s s `*.39Cuc  1 p 2 20 ]
+[v strncpy@n n `ui  1 p 2 22 ]
+"15
+} 0
+"583 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\eeprom.c
+[v _saveResetCountIntoEeprom saveResetCountIntoEeprom `(v  1 e 1 0 ]
+{
+"599
+} 0
+"631
+[v _saveMotorLoadValuesIntoEeprom saveMotorLoadValuesIntoEeprom `(v  1 e 1 0 ]
+{
+"653
+} 0
+"68
+[v _saveIrrigationValveValuesIntoEeprom saveIrrigationValveValuesIntoEeprom `(v  1 e 1 0 ]
+{
+[v saveIrrigationValveValuesIntoEeprom@address address `ui  1 p 2 0 ]
+[s S24 FIELDVALVE 45 `ui 1 dryValue 2 0 `ui 1 wetValue 2 2 `ui 1 onPeriod 2 4 `ui 1 fertigationDelay 2 6 `ui 1 fertigationONperiod 2 8 `ui 1 injector1OnPeriod 2 10 `ui 1 injector2OnPeriod 2 12 `ui 1 injector3OnPeriod 2 14 `ui 1 injector4OnPeriod 2 16 `ui 1 injector1OffPeriod 2 18 `ui 1 injector2OffPeriod 2 20 `ui 1 injector3OffPeriod 2 22 `ui 1 injector4OffPeriod 2 24 `uc 1 injector1Cycle 1 26 `uc 1 injector2Cycle 1 27 `uc 1 injector3Cycle 1 28 `uc 1 injector4Cycle 1 29 `uc 1 offPeriod 1 30 `uc 1 motorOnTimeHour 1 31 `uc 1 motorOnTimeMinute 1 32 `uc 1 nextDueDD 1 33 `uc 1 nextDueMM 1 34 `uc 1 nextDueYY 1 35 `uc 1 fertigationInstance 1 36 `uc 1 priority 1 37 `uc 1 fertigationStage 1 38 `uc 1 cycles 1 39 `uc 1 cyclesExecuted 1 40 `a 1 status 1 41 `a 1 isConfigured 1 42 `a 1 isFertigationEnabled 1 43 `a 1 fertigationValveInterrupted 1 44 ]
+[v saveIrrigationValveValuesIntoEeprom@fieldptr fieldptr `*.39S24  1 p 2 2 ]
+"104
+} 0
+"531
+[v _saveFactryPswrdIntoEeprom saveFactryPswrdIntoEeprom `(v  1 e 1 0 ]
+{
+"549
+} 0
+"607
+[v _saveDeviceProgramStatusIntoEeprom saveDeviceProgramStatusIntoEeprom `(v  1 e 1 0 ]
+{
+"623
+} 0
+"959
+[v _loadDataFromEeprom loadDataFromEeprom `(v  1 e 1 0 ]
+{
+"1020
+} 0
+"324
+[v _readValveDataFromEeprom readValveDataFromEeprom `(v  1 e 1 0 ]
+{
+[v readValveDataFromEeprom@address address `ui  1 p 2 0 ]
+[s S24 FIELDVALVE 45 `ui 1 dryValue 2 0 `ui 1 wetValue 2 2 `ui 1 onPeriod 2 4 `ui 1 fertigationDelay 2 6 `ui 1 fertigationONperiod 2 8 `ui 1 injector1OnPeriod 2 10 `ui 1 injector2OnPeriod 2 12 `ui 1 injector3OnPeriod 2 14 `ui 1 injector4OnPeriod 2 16 `ui 1 injector1OffPeriod 2 18 `ui 1 injector2OffPeriod 2 20 `ui 1 injector3OffPeriod 2 22 `ui 1 injector4OffPeriod 2 24 `uc 1 injector1Cycle 1 26 `uc 1 injector2Cycle 1 27 `uc 1 injector3Cycle 1 28 `uc 1 injector4Cycle 1 29 `uc 1 offPeriod 1 30 `uc 1 motorOnTimeHour 1 31 `uc 1 motorOnTimeMinute 1 32 `uc 1 nextDueDD 1 33 `uc 1 nextDueMM 1 34 `uc 1 nextDueYY 1 35 `uc 1 fertigationInstance 1 36 `uc 1 priority 1 37 `uc 1 fertigationStage 1 38 `uc 1 cycles 1 39 `uc 1 cyclesExecuted 1 40 `a 1 status 1 41 `a 1 isConfigured 1 42 `a 1 isFertigationEnabled 1 43 `a 1 fertigationValveInterrupted 1 44 ]
+[v readValveDataFromEeprom@fieldptr fieldptr `*.39S24  1 p 2 2 ]
+"471
+} 0
+"661
+[v _readMotorLoadValuesFromEeprom readMotorLoadValuesFromEeprom `(v  1 e 1 0 ]
+{
+"681
+} 0
+"1794 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\controllerActions_Test.c
+[v _isRTCBatteryDrained isRTCBatteryDrained `(a  1 e 1 0 ]
+{
+"1795
+[v isRTCBatteryDrained@batteryVoltage batteryVoltage `ui  1 a 2 2 ]
+"1796
+[v isRTCBatteryDrained@batteryVoltageCutoff batteryVoltageCutoff `ui  1 a 2 0 ]
+"1827
+} 0
+"848 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\eeprom.c
+[v _saveRTCBatteryStatus saveRTCBatteryStatus `(v  1 e 1 0 ]
+{
+"864
+} 0
+"129 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\controllerActions_Test.c
+[v _getDateFromGSM getDateFromGSM `(v  1 e 1 0 ]
+{
+"130
+[v getDateFromGSM@index index `uc  1 a 1 28 ]
+"214
+} 0
+"22 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\RTC_DS1307.c
+[v _feedTimeInRTC feedTimeInRTC `(v  1 e 1 0 ]
+{
+"59
+} 0
+"62
+[v _decimal2BCD decimal2BCD `(uc  1 e 1 0 ]
+{
+[v decimal2BCD@decimal decimal `uc  1 a 1 wreg ]
+"64
+[v decimal2BCD@temp temp `uc  1 a 1 27 ]
+"62
+[v decimal2BCD@decimal decimal `uc  1 a 1 wreg ]
+"65
+[v decimal2BCD@decimal decimal `uc  1 a 1 26 ]
+"68
+} 0
+"3355 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\controllerActions_Test.c
+[v _deleteValveData deleteValveData `(v  1 e 1 0 ]
+{
+"3384
+} 0
+"299 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\eeprom.c
+[v _saveIrrigationValveConfigurationStatusIntoEeprom saveIrrigationValveConfigurationStatusIntoEeprom `(v  1 e 1 0 ]
+{
+[v saveIrrigationValveConfigurationStatusIntoEeprom@address address `ui  1 p 2 0 ]
+[s S24 FIELDVALVE 45 `ui 1 dryValue 2 0 `ui 1 wetValue 2 2 `ui 1 onPeriod 2 4 `ui 1 fertigationDelay 2 6 `ui 1 fertigationONperiod 2 8 `ui 1 injector1OnPeriod 2 10 `ui 1 injector2OnPeriod 2 12 `ui 1 injector3OnPeriod 2 14 `ui 1 injector4OnPeriod 2 16 `ui 1 injector1OffPeriod 2 18 `ui 1 injector2OffPeriod 2 20 `ui 1 injector3OffPeriod 2 22 `ui 1 injector4OffPeriod 2 24 `uc 1 injector1Cycle 1 26 `uc 1 injector2Cycle 1 27 `uc 1 injector3Cycle 1 28 `uc 1 injector4Cycle 1 29 `uc 1 offPeriod 1 30 `uc 1 motorOnTimeHour 1 31 `uc 1 motorOnTimeMinute 1 32 `uc 1 nextDueDD 1 33 `uc 1 nextDueMM 1 34 `uc 1 nextDueYY 1 35 `uc 1 fertigationInstance 1 36 `uc 1 priority 1 37 `uc 1 fertigationStage 1 38 `uc 1 cycles 1 39 `uc 1 cyclesExecuted 1 40 `a 1 status 1 41 `a 1 isConfigured 1 42 `a 1 isFertigationEnabled 1 43 `a 1 fertigationValveInterrupted 1 44 ]
+[v saveIrrigationValveConfigurationStatusIntoEeprom@fieldptr fieldptr `*.39S24  1 p 2 2 ]
+"315
+} 0
+"896
+[v _saveFiltrationSequenceData saveFiltrationSequenceData `(v  1 e 1 0 ]
+{
+"924
+} 0
+"3336 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\controllerActions_Test.c
+[v _deleteUserData deleteUserData `(v  1 e 1 0 ]
+{
+"3344
+} 0
+"479 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\eeprom.c
+[v _saveMobileNoIntoEeprom saveMobileNoIntoEeprom `(v  1 e 1 0 ]
+{
+"497
+} 0
+"824
+[v _saveAuthenticationStatus saveAuthenticationStatus `(v  1 e 1 0 ]
+{
+"840
+} 0
+"2163 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\controllerActions_Test.c
+[v _deepSleep deepSleep `(v  1 e 1 0 ]
+{
+"2222
+} 0
+"1177
+[v _isMotorInNoLoad isMotorInNoLoad `(a  1 e 1 0 ]
+{
+"1178
+[v isMotorInNoLoad@ctOutput ctOutput `ui  1 a 2 2 ]
+"1179
+[v isMotorInNoLoad@temp temp `ui  1 a 2 0 ]
+"1219
+} 0
+"1718
+[v _doPhaseFailureAction doPhaseFailureAction `(v  1 e 1 0 ]
+{
+"1719
+[v doPhaseFailureAction@field_No field_No `uc  1 a 1 1 ]
+"1777
+} 0
+"1645
+[v _doLowPhaseAction doLowPhaseAction `(v  1 e 1 0 ]
+{
+"1646
+[v doLowPhaseAction@field_No field_No `uc  1 a 1 1 ]
+"1704
+} 0
+"1401
+[v _doDryRunAction doDryRunAction `(v  1 e 1 0 ]
+{
+"1403
+[v doDryRunAction@sleepCountVar sleepCountVar `ui  1 a 2 4 ]
+"1402
+[v doDryRunAction@field_No field_No `uc  1 a 1 6 ]
+"1631
+} 0
+"737 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\eeprom.c
+[v _saveRemainingFertigationOnPeriod saveRemainingFertigationOnPeriod `(v  1 e 1 0 ]
+{
+"755
+} 0
+"1929 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\controllerActions_Test.c
+[v _powerOffMotor powerOffMotor `(v  1 e 1 0 ]
+{
+"1951
+} 0
+"2234
+[v _configureController configureController `(v  1 e 1 0 ]
+{
+"2407
+} 0
+"549 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\gsmTest.c
+[v _checkSignalStrength checkSignalStrength `(v  1 e 1 0 ]
+{
+"550
+[v checkSignalStrength@digit digit `uc  1 a 1 0 ]
+"629
+} 0
+"1236 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\controllerActions_Test.c
+[v _calibrateMotorCurrent calibrateMotorCurrent `(v  1 e 1 0 ]
+{
+[v calibrateMotorCurrent@loadType loadType `uc  1 a 1 wreg ]
+"1237
+[v calibrateMotorCurrent@ctOutput ctOutput `ui  1 a 2 2 ]
+"1238
+[v calibrateMotorCurrent@itr itr `uc  1 a 1 1 ]
+[v calibrateMotorCurrent@limit limit `uc  1 a 1 0 ]
+"1236
+[v calibrateMotorCurrent@loadType loadType `uc  1 a 1 wreg ]
+[v calibrateMotorCurrent@FieldNo FieldNo `uc  1 p 1 28 ]
+"1238
+[v calibrateMotorCurrent@loadType loadType `uc  1 a 1 4 ]
+"1387
+} 0
+"20 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\ADC.c
+[v _selectChannel selectChannel `(v  1 e 1 0 ]
+{
+[v selectChannel@channel channel `uc  1 a 1 wreg ]
+[v selectChannel@channel channel `uc  1 a 1 wreg ]
+[v selectChannel@channel channel `uc  1 a 1 20 ]
+"55
+} 0
+"60
+[v _getADCResult getADCResult `(ui  1 e 2 0 ]
+{
+"61
+[v getADCResult@adcResult adcResult `ui  1 a 2 24 ]
+"81
+} 0
+"2986 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\controllerActions_Test.c
+[v _actionsOnSleepCountFinish actionsOnSleepCountFinish `(v  1 e 1 0 ]
+{
+"2987
+[v actionsOnSleepCountFinish@field_No field_No `uc  1 a 1 0 ]
+"3205
+} 0
+"872 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\eeprom.c
+[v _saveIrrigationValveNoIntoEeprom saveIrrigationValveNoIntoEeprom `(v  1 e 1 0 ]
+{
+[v saveIrrigationValveNoIntoEeprom@field_no field_no `uc  1 a 1 wreg ]
+[v saveIrrigationValveNoIntoEeprom@field_no field_no `uc  1 a 1 wreg ]
+"879
+[v saveIrrigationValveNoIntoEeprom@field_no field_no `uc  1 a 1 28 ]
+"888
+} 0
+"112
+[v _saveFertigationValveValuesIntoEeprom saveFertigationValveValuesIntoEeprom `(v  1 e 1 0 ]
+{
+[v saveFertigationValveValuesIntoEeprom@address address `ui  1 p 2 0 ]
+[s S24 FIELDVALVE 45 `ui 1 dryValue 2 0 `ui 1 wetValue 2 2 `ui 1 onPeriod 2 4 `ui 1 fertigationDelay 2 6 `ui 1 fertigationONperiod 2 8 `ui 1 injector1OnPeriod 2 10 `ui 1 injector2OnPeriod 2 12 `ui 1 injector3OnPeriod 2 14 `ui 1 injector4OnPeriod 2 16 `ui 1 injector1OffPeriod 2 18 `ui 1 injector2OffPeriod 2 20 `ui 1 injector3OffPeriod 2 22 `ui 1 injector4OffPeriod 2 24 `uc 1 injector1Cycle 1 26 `uc 1 injector2Cycle 1 27 `uc 1 injector3Cycle 1 28 `uc 1 injector4Cycle 1 29 `uc 1 offPeriod 1 30 `uc 1 motorOnTimeHour 1 31 `uc 1 motorOnTimeMinute 1 32 `uc 1 nextDueDD 1 33 `uc 1 nextDueMM 1 34 `uc 1 nextDueYY 1 35 `uc 1 fertigationInstance 1 36 `uc 1 priority 1 37 `uc 1 fertigationStage 1 38 `uc 1 cycles 1 39 `uc 1 cyclesExecuted 1 40 `a 1 status 1 41 `a 1 isConfigured 1 42 `a 1 isFertigationEnabled 1 43 `a 1 fertigationValveInterrupted 1 44 ]
+[v saveFertigationValveValuesIntoEeprom@fieldptr fieldptr `*.39S24  1 p 2 2 ]
+"182
+} 0
+"270
+[v _saveFertigationValveStatusIntoEeprom saveFertigationValveStatusIntoEeprom `(v  1 e 1 0 ]
+{
+[v saveFertigationValveStatusIntoEeprom@address address `ui  1 p 2 0 ]
+[s S24 FIELDVALVE 45 `ui 1 dryValue 2 0 `ui 1 wetValue 2 2 `ui 1 onPeriod 2 4 `ui 1 fertigationDelay 2 6 `ui 1 fertigationONperiod 2 8 `ui 1 injector1OnPeriod 2 10 `ui 1 injector2OnPeriod 2 12 `ui 1 injector3OnPeriod 2 14 `ui 1 injector4OnPeriod 2 16 `ui 1 injector1OffPeriod 2 18 `ui 1 injector2OffPeriod 2 20 `ui 1 injector3OffPeriod 2 22 `ui 1 injector4OffPeriod 2 24 `uc 1 injector1Cycle 1 26 `uc 1 injector2Cycle 1 27 `uc 1 injector3Cycle 1 28 `uc 1 injector4Cycle 1 29 `uc 1 offPeriod 1 30 `uc 1 motorOnTimeHour 1 31 `uc 1 motorOnTimeMinute 1 32 `uc 1 nextDueDD 1 33 `uc 1 nextDueMM 1 34 `uc 1 nextDueYY 1 35 `uc 1 fertigationInstance 1 36 `uc 1 priority 1 37 `uc 1 fertigationStage 1 38 `uc 1 cycles 1 39 `uc 1 cyclesExecuted 1 40 `a 1 status 1 41 `a 1 isConfigured 1 42 `a 1 isFertigationEnabled 1 43 `a 1 fertigationValveInterrupted 1 44 ]
+[v saveFertigationValveStatusIntoEeprom@fieldptr fieldptr `*.39S24  1 p 2 2 ]
+"290
+} 0
+"557
+[v _saveActiveSleepCountIntoEeprom saveActiveSleepCountIntoEeprom `(v  1 e 1 0 ]
+{
+"575
+} 0
+"794
+[v _readRemainingFertigationOnPeriodFromEeprom readRemainingFertigationOnPeriodFromEeprom `(ui  1 e 2 0 ]
+{
+"816
+} 0
+"763
+[v _readActiveSleepCountFromEeprom readActiveSleepCountFromEeprom `(ui  1 e 2 0 ]
+{
+"785
+} 0
+"3215 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\controllerActions_Test.c
+[v _actionsOnDueValve actionsOnDueValve `(v  1 e 1 0 ]
+{
+[v actionsOnDueValve@field_No field_No `uc  1 a 1 wreg ]
+"3216
+[v actionsOnDueValve@last_Field_No last_Field_No `uc  1 a 1 4 ]
+"3215
+[v actionsOnDueValve@field_No field_No `uc  1 a 1 wreg ]
+"3217
+[v actionsOnDueValve@field_No field_No `uc  1 a 1 5 ]
+"3325
+} 0
+"931 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\eeprom.c
+[v _readFieldIrrigationValveNoFromEeprom readFieldIrrigationValveNoFromEeprom `(uc  1 e 1 0 ]
+{
+"932
+[v readFieldIrrigationValveNoFromEeprom@field_no field_no `uc  1 a 1 28 ]
+"949
+} 0
+"49
+[v _eepromRead eepromRead `(uc  1 e 1 0 ]
+{
+[v eepromRead@address address `ui  1 p 2 26 ]
+"56
+} 0
+"1886 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\controllerActions_Test.c
+[v _powerOnMotor powerOnMotor `(v  1 e 1 0 ]
+{
+"1915
+} 0
+"1845
+[v _phaseFailure phaseFailure `(a  1 e 1 0 ]
+{
+"1873
+} 0
+"1071
+[v _isFieldMoistureSensorWetLora isFieldMoistureSensorWetLora `(a  1 e 1 0 ]
+{
+[v isFieldMoistureSensorWetLora@FieldNo FieldNo `uc  1 a 1 wreg ]
+"1072
+[v isFieldMoistureSensorWetLora@action action `uc  1 a 1 0 ]
+"1071
+[v isFieldMoistureSensorWetLora@FieldNo FieldNo `uc  1 a 1 wreg ]
+"1073
+[v isFieldMoistureSensorWetLora@FieldNo FieldNo `uc  1 a 1 1 ]
+"1162
+} 0
+"2089
+[v _deActivateValve deActivateValve `(v  1 e 1 0 ]
+{
+[v deActivateValve@FieldNo FieldNo `uc  1 a 1 wreg ]
+"2096
+[v deActivateValve@action action `uc  1 a 1 4 ]
+"2089
+[v deActivateValve@FieldNo FieldNo `uc  1 a 1 wreg ]
+"2097
+[v deActivateValve@FieldNo FieldNo `uc  1 a 1 5 ]
+"2151
+} 0
+"1964
+[v _activateValve activateValve `(v  1 e 1 0 ]
+{
+[v activateValve@FieldNo FieldNo `uc  1 a 1 wreg ]
+"1970
+[v activateValve@action action `uc  1 a 1 4 ]
+"1964
+[v activateValve@FieldNo FieldNo `uc  1 a 1 wreg ]
+"1971
+[v activateValve@FieldNo FieldNo `uc  1 a 1 5 ]
+"2077
+} 0
+"82 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\loraTest.c
+[v _sendCmdToLora sendCmdToLora `(v  1 e 1 0 ]
+{
+[v sendCmdToLora@Action Action `uc  1 a 1 wreg ]
+[v sendCmdToLora@Action Action `uc  1 a 1 wreg ]
+[v sendCmdToLora@FieldNo FieldNo `uc  1 p 1 0 ]
+"88
+[v sendCmdToLora@Action Action `uc  1 a 1 3 ]
+"186
+} 0
+"53
+[v _transmitStringToLora transmitStringToLora `(v  1 e 1 0 ]
+{
+[v transmitStringToLora@string string `*.25Cuc  1 p 2 26 ]
+"59
+} 0
+"67
+[v _transmitNumberToLora transmitNumberToLora `(v  1 e 1 0 ]
+{
+"68
+[v transmitNumberToLora@j j `uc  1 a 1 0 ]
+"67
+[v transmitNumberToLora@number number `*.39uc  1 p 2 26 ]
+[v transmitNumberToLora@index index `uc  1 p 1 28 ]
+"75
+} 0
+"41
+[v _txByteLora txByteLora `(v  1 e 1 0 ]
+{
+[v txByteLora@serialData serialData `uc  1 a 1 wreg ]
+[v txByteLora@serialData serialData `uc  1 a 1 wreg ]
+[v txByteLora@serialData serialData `uc  1 a 1 18 ]
+"45
+} 0
+"230 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\gsmTest.c
+[v _sendSms sendSms `(v  1 e 1 0 ]
+{
+[v sendSms@message message `*.25Cuc  1 p 2 0 ]
+[v sendSms@phoneNumber phoneNumber `*.39uc  1 p 2 2 ]
+[v sendSms@info info `uc  1 p 1 4 ]
+"525
+} 0
+"50
+[v _transmitStringToGSM transmitStringToGSM `(v  1 e 1 0 ]
+{
+[v transmitStringToGSM@string string `*.25Cuc  1 p 2 26 ]
+"56
+} 0
+"64
+[v _transmitNumberToGSM transmitNumberToGSM `(v  1 e 1 0 ]
+{
+"65
+[v transmitNumberToGSM@j j `uc  1 a 1 0 ]
+"64
+[v transmitNumberToGSM@number number `*.39uc  1 p 2 26 ]
+[v transmitNumberToGSM@index index `uc  1 p 1 28 ]
+"72
+} 0
+"38
+[v _txByte txByte `(v  1 e 1 0 ]
+{
+[v txByte@serialData serialData `uc  1 a 1 wreg ]
+[v txByte@serialData serialData `uc  1 a 1 wreg ]
+[v txByte@serialData serialData `uc  1 a 1 18 ]
+"42
+} 0
+"7 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\lwdiv.c
+[v ___lwdiv __lwdiv `(ui  1 e 2 0 ]
+{
+"10
+[v ___lwdiv@quotient quotient `ui  1 a 2 1 ]
+"11
+[v ___lwdiv@counter counter `uc  1 a 1 0 ]
+"7
+[v ___lwdiv@dividend dividend `ui  1 p 2 24 ]
+[v ___lwdiv@divisor divisor `ui  1 p 2 26 ]
+"30
+} 0
+"7 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\awmod.c
+[v ___awmod __awmod `(i  1 e 2 0 ]
+{
+"10
+[v ___awmod@sign sign `uc  1 a 1 23 ]
+[v ___awmod@counter counter `uc  1 a 1 22 ]
+"7
+[v ___awmod@dividend dividend `i  1 p 2 18 ]
+[v ___awmod@divisor divisor `i  1 p 2 20 ]
+"34
+} 0
+"7 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\awdiv.c
+[v ___awdiv __awdiv `(i  1 e 2 0 ]
+{
+"10
+[v ___awdiv@quotient quotient `i  1 a 2 24 ]
+"11
+[v ___awdiv@sign sign `uc  1 a 1 23 ]
+[v ___awdiv@counter counter `uc  1 a 1 22 ]
+"7
+[v ___awdiv@dividend dividend `i  1 p 2 18 ]
+[v ___awdiv@divisor divisor `i  1 p 2 20 ]
+"41
+} 0
+"193 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\loraTest.c
+[v _isLoraResponseAck isLoraResponseAck `(a  1 e 1 0 ]
+{
+[v isLoraResponseAck@Action Action `uc  1 a 1 wreg ]
+"199
+[v isLoraResponseAck@field field `uc  1 a 1 2 ]
+"200
+[v isLoraResponseAck@index index `uc  1 a 1 1 ]
+"193
+[v isLoraResponseAck@Action Action `uc  1 a 1 wreg ]
+[v isLoraResponseAck@FieldNo FieldNo `uc  1 p 1 26 ]
+"200
+[v isLoraResponseAck@Action Action `uc  1 a 1 0 ]
+"259
+} 0
+"3 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\strncmp.c
+[v _strncmp strncmp `(i  1 e 2 0 ]
+{
+"5
+[v strncmp@r r `*.39Cuc  1 a 2 2 ]
+[v strncmp@l l `*.39Cuc  1 a 2 0 ]
+"3
+[v strncmp@_l _l `*.39Cuc  1 p 2 18 ]
+[v strncmp@_r _r `*.39Cuc  1 p 2 20 ]
+[v strncmp@n n `ui  1 p 2 22 ]
+"9
+} 0
+"69 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\controllerActions_Test.c
+[v _isNumber isNumber `(a  1 e 1 0 ]
+{
+[v isNumber@character character `uc  1 a 1 wreg ]
+[v isNumber@character character `uc  1 a 1 wreg ]
+[v isNumber@character character `uc  1 a 1 18 ]
+"75
+} 0
+"503
+[v _fetchFieldNo fetchFieldNo `(uc  1 e 1 0 ]
+{
+[v fetchFieldNo@index index `uc  1 a 1 wreg ]
+[v fetchFieldNo@index index `uc  1 a 1 wreg ]
+"509
+[v fetchFieldNo@index index `uc  1 a 1 19 ]
+"653
+} 0
+"15 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\Umul16.c
+[v ___wmul __wmul `(ui  1 e 2 0 ]
+{
+"17
+[v ___wmul@product product `ui  1 a 2 22 ]
+"15
+[v ___wmul@multiplier multiplier `ui  1 p 2 18 ]
+[v ___wmul@multiplicand multiplicand `ui  1 p 2 20 ]
+"53
+} 0
+"3452 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\controllerActions_Test.c
+[v _deleteDecodedString deleteDecodedString `(v  1 e 1 0 ]
+{
+"3469
+} 0
+"220 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\eeprom.c
+[v _saveIrrigationValveOnOffStatusIntoEeprom saveIrrigationValveOnOffStatusIntoEeprom `(v  1 e 1 0 ]
+{
+[v saveIrrigationValveOnOffStatusIntoEeprom@address address `ui  1 p 2 0 ]
+[s S24 FIELDVALVE 45 `ui 1 dryValue 2 0 `ui 1 wetValue 2 2 `ui 1 onPeriod 2 4 `ui 1 fertigationDelay 2 6 `ui 1 fertigationONperiod 2 8 `ui 1 injector1OnPeriod 2 10 `ui 1 injector2OnPeriod 2 12 `ui 1 injector3OnPeriod 2 14 `ui 1 injector4OnPeriod 2 16 `ui 1 injector1OffPeriod 2 18 `ui 1 injector2OffPeriod 2 20 `ui 1 injector3OffPeriod 2 22 `ui 1 injector4OffPeriod 2 24 `uc 1 injector1Cycle 1 26 `uc 1 injector2Cycle 1 27 `uc 1 injector3Cycle 1 28 `uc 1 injector4Cycle 1 29 `uc 1 offPeriod 1 30 `uc 1 motorOnTimeHour 1 31 `uc 1 motorOnTimeMinute 1 32 `uc 1 nextDueDD 1 33 `uc 1 nextDueMM 1 34 `uc 1 nextDueYY 1 35 `uc 1 fertigationInstance 1 36 `uc 1 priority 1 37 `uc 1 fertigationStage 1 38 `uc 1 cycles 1 39 `uc 1 cyclesExecuted 1 40 `a 1 status 1 41 `a 1 isConfigured 1 42 `a 1 isFertigationEnabled 1 43 `a 1 fertigationValveInterrupted 1 44 ]
+[v saveIrrigationValveOnOffStatusIntoEeprom@fieldptr fieldptr `*.39S24  1 p 2 2 ]
+"236
+} 0
+"191
+[v _saveIrrigationValveDueTimeIntoEeprom saveIrrigationValveDueTimeIntoEeprom `(v  1 e 1 0 ]
+{
+[v saveIrrigationValveDueTimeIntoEeprom@address address `ui  1 p 2 0 ]
+[s S24 FIELDVALVE 45 `ui 1 dryValue 2 0 `ui 1 wetValue 2 2 `ui 1 onPeriod 2 4 `ui 1 fertigationDelay 2 6 `ui 1 fertigationONperiod 2 8 `ui 1 injector1OnPeriod 2 10 `ui 1 injector2OnPeriod 2 12 `ui 1 injector3OnPeriod 2 14 `ui 1 injector4OnPeriod 2 16 `ui 1 injector1OffPeriod 2 18 `ui 1 injector2OffPeriod 2 20 `ui 1 injector3OffPeriod 2 22 `ui 1 injector4OffPeriod 2 24 `uc 1 injector1Cycle 1 26 `uc 1 injector2Cycle 1 27 `uc 1 injector3Cycle 1 28 `uc 1 injector4Cycle 1 29 `uc 1 offPeriod 1 30 `uc 1 motorOnTimeHour 1 31 `uc 1 motorOnTimeMinute 1 32 `uc 1 nextDueDD 1 33 `uc 1 nextDueMM 1 34 `uc 1 nextDueYY 1 35 `uc 1 fertigationInstance 1 36 `uc 1 priority 1 37 `uc 1 fertigationStage 1 38 `uc 1 cycles 1 39 `uc 1 cyclesExecuted 1 40 `a 1 status 1 41 `a 1 isConfigured 1 42 `a 1 isFertigationEnabled 1 43 `a 1 fertigationValveInterrupted 1 44 ]
+[v saveIrrigationValveDueTimeIntoEeprom@fieldptr fieldptr `*.39S24  1 p 2 2 ]
+"211
+} 0
+"245
+[v _saveIrrigationValveCycleStatusIntoEeprom saveIrrigationValveCycleStatusIntoEeprom `(v  1 e 1 0 ]
+{
+[v saveIrrigationValveCycleStatusIntoEeprom@address address `ui  1 p 2 0 ]
+[s S24 FIELDVALVE 45 `ui 1 dryValue 2 0 `ui 1 wetValue 2 2 `ui 1 onPeriod 2 4 `ui 1 fertigationDelay 2 6 `ui 1 fertigationONperiod 2 8 `ui 1 injector1OnPeriod 2 10 `ui 1 injector2OnPeriod 2 12 `ui 1 injector3OnPeriod 2 14 `ui 1 injector4OnPeriod 2 16 `ui 1 injector1OffPeriod 2 18 `ui 1 injector2OffPeriod 2 20 `ui 1 injector3OffPeriod 2 22 `ui 1 injector4OffPeriod 2 24 `uc 1 injector1Cycle 1 26 `uc 1 injector2Cycle 1 27 `uc 1 injector3Cycle 1 28 `uc 1 injector4Cycle 1 29 `uc 1 offPeriod 1 30 `uc 1 motorOnTimeHour 1 31 `uc 1 motorOnTimeMinute 1 32 `uc 1 nextDueDD 1 33 `uc 1 nextDueMM 1 34 `uc 1 nextDueYY 1 35 `uc 1 fertigationInstance 1 36 `uc 1 priority 1 37 `uc 1 fertigationStage 1 38 `uc 1 cycles 1 39 `uc 1 cyclesExecuted 1 40 `a 1 status 1 41 `a 1 isConfigured 1 42 `a 1 isFertigationEnabled 1 43 `a 1 fertigationValveInterrupted 1 44 ]
+[v saveIrrigationValveCycleStatusIntoEeprom@fieldptr fieldptr `*.39S24  1 p 2 2 ]
+"261
+} 0
+"27
+[v _eepromWrite eepromWrite `(v  1 e 1 0 ]
+{
+[v eepromWrite@address address `ui  1 p 2 18 ]
+[v eepromWrite@data data `uc  1 p 1 20 ]
+"41
+} 0
+"226 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\controllerActions_Test.c
+[v _getDueDate getDueDate `(v  1 e 1 0 ]
+{
+[v getDueDate@days days `uc  1 a 1 wreg ]
+"228
+[v getDueDate@month month `[13]uc  1 a 13 0 ]
+"227
+[v getDueDate@offset offset `ui  1 a 2 21 ]
+[v getDueDate@yearDays yearDays `ui  1 a 2 19 ]
+[v getDueDate@leapYearDays leapYearDays `ui  1 a 2 17 ]
+[v getDueDate@remDays remDays `ui  1 a 2 15 ]
+"228
+[v getDueDate@lastMonth lastMonth `uc  1 a 1 14 ]
+[v getDueDate@firstMonth firstMonth `uc  1 a 1 13 ]
+"226
+[v getDueDate@days days `uc  1 a 1 wreg ]
+"228
+[v getDueDate@F14874 F14874 `[13]uc  1 s 13 F14874 ]
+"227
+[v getDueDate@days days `uc  1 a 1 23 ]
+"315
+} 0
+"79 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\RTC_DS1307.c
+[v _fetchTimefromRTC fetchTimefromRTC `(v  1 e 1 0 ]
+{
+"115
+} 0
+"115 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\controllerActions_Test.c
+[v _setBCDdigit setBCDdigit `(v  1 e 1 0 ]
+{
+[v setBCDdigit@digit digit `uc  1 a 1 wreg ]
+[v setBCDdigit@digit digit `uc  1 a 1 wreg ]
+[v setBCDdigit@dp_1 dp_1 `a  1 p 1 18 ]
+[v setBCDdigit@digit digit `uc  1 a 1 19 ]
+"118
+} 0
+"49
+[v _myMsDelay myMsDelay `(v  1 e 1 0 ]
+{
+"50
+[v myMsDelay@itr2 itr2 `ui  1 a 2 24 ]
+[v myMsDelay@itr1 itr1 `ui  1 a 2 22 ]
+[v myMsDelay@calibrated calibrated `ui  1 a 2 20 ]
+"49
+[v myMsDelay@mSec mSec `ui  1 p 2 18 ]
+"60
+} 0
+"138 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\RTC_DS1307.c
+[v _i2cStop i2cStop `(v  1 e 1 0 ]
+{
+"141
+} 0
+"121
+[v _i2cStart i2cStart `(v  1 e 1 0 ]
+{
+"128
+} 0
+"148
+[v _i2cSend i2cSend `(v  1 e 1 0 ]
+{
+[v i2cSend@dat dat `uc  1 a 1 wreg ]
+[v i2cSend@dat dat `uc  1 a 1 wreg ]
+[v i2cSend@dat dat `uc  1 a 1 19 ]
+"152
+} 0
+"130
+[v _i2cRestart i2cRestart `(v  1 e 1 0 ]
+{
+"136
+} 0
+"154
+[v _i2cRead i2cRead `(uc  1 e 1 0 ]
+{
+[v i2cRead@ACK ACK `a  1 a 1 wreg ]
+"155
+[v i2cRead@temp temp `uc  1 a 1 20 ]
+"154
+[v i2cRead@ACK ACK `a  1 a 1 wreg ]
+"156
+[v i2cRead@ACK ACK `a  1 a 1 19 ]
+"169
+} 0
+"143
+[v _i2cWait i2cWait `(v  1 e 1 0 ]
+{
+"146
+} 0
+"71
+[v _bcd2Decimal bcd2Decimal `(uc  1 e 1 0 ]
+{
+[v bcd2Decimal@PORTH PORTH `uc  1 a 1 wreg ]
+"73
+[v bcd2Decimal@temp temp `uc  1 a 1 19 ]
+"71
+[v bcd2Decimal@PORTH PORTH `uc  1 a 1 wreg ]
+"74
+[v bcd2Decimal@PORTH PORTH `uc  1 a 1 20 ]
+"76
+} 0
+"7 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\lwmod.c
+[v ___lwmod __lwmod `(ui  1 e 2 0 ]
+{
+"10
+[v ___lwmod@counter counter `uc  1 a 1 22 ]
+"7
+[v ___lwmod@dividend dividend `ui  1 p 2 18 ]
+[v ___lwmod@divisor divisor `ui  1 p 2 20 ]
+"25
+} 0
+"162 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\main_2_Test.c
+[v _timerInterrupt_handler timerInterrupt_handler `IIL(v  1 e 1 0 ]
+{
+"370
+} 0
+"3 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\strncmp.c
+[v i1_strncmp strncmp `(i  1 e 2 0 ]
+{
+"5
+[v i1strncmp@r r `*.39Cuc  1 a 2 21 ]
+[v i1strncmp@l l `*.39Cuc  1 a 2 19 ]
+"3
+[v i1strncmp@_l _l `*.39Cuc  1 p 2 11 ]
+[v i1strncmp@_r _r `*.39Cuc  1 p 2 13 ]
+[v i1strncmp@n n `ui  1 p 2 15 ]
+"9
+} 0
+"230 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\gsmTest.c
+[v i1_sendSms sendSms `(v  1 e 1 0 ]
+{
+[v i1sendSms@message message `*.25Cuc  1 p 2 23 ]
+[v i1sendSms@phoneNumber phoneNumber `*.39uc  1 p 2 25 ]
+[v i1sendSms@info info `uc  1 p 1 27 ]
+"525
+} 0
+"50
+[v i1_transmitStringToGSM transmitStringToGSM `(v  1 e 1 0 ]
+{
+[v i1transmitStringToGSM@string string `*.25Cuc  1 p 2 19 ]
+"56
+} 0
+"64
+[v i1_transmitNumberToGSM transmitNumberToGSM `(v  1 e 1 0 ]
+{
+"65
+[v i1transmitNumberToGSM@j j `uc  1 a 1 22 ]
+"64
+[v i1transmitNumberToGSM@number number `*.39uc  1 p 2 19 ]
+[v i1transmitNumberToGSM@index index `uc  1 p 1 21 ]
+"72
+} 0
+"38
+[v i1_txByte txByte `(v  1 e 1 0 ]
+{
+[v i1txByte@serialData serialData `uc  1 a 1 wreg ]
+[v i1txByte@serialData serialData `uc  1 a 1 wreg ]
+[v i1txByte@serialData serialData `uc  1 a 1 11 ]
+"42
+} 0
+"49 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\controllerActions_Test.c
+[v i1_myMsDelay myMsDelay `(v  1 e 1 0 ]
+{
+"50
+[v i1myMsDelay@itr2 itr2 `ui  1 a 2 17 ]
+[v i1myMsDelay@itr1 itr1 `ui  1 a 2 15 ]
+[v i1myMsDelay@calibrated calibrated `ui  1 a 2 13 ]
+"49
+[v i1myMsDelay@mSec mSec `ui  1 p 2 11 ]
+"60
+} 0
+"115
+[v i1_setBCDdigit setBCDdigit `(v  1 e 1 0 ]
+{
+[v i1setBCDdigit@digit digit `uc  1 a 1 wreg ]
+[v i1setBCDdigit@digit digit `uc  1 a 1 wreg ]
+[v i1setBCDdigit@dp_1 dp_1 `a  1 p 1 11 ]
+[v i1setBCDdigit@digit digit `uc  1 a 1 12 ]
+"118
+} 0
+"7 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\lwmod.c
+[v i1___lwmod __lwmod `(ui  1 e 2 0 ]
+{
+"10
+[v i1___lwmod@counter counter `uc  1 a 1 15 ]
+"7
+[v i1___lwmod@dividend dividend `ui  1 p 2 11 ]
+[v i1___lwmod@divisor divisor `ui  1 p 2 13 ]
+"25
+} 0
+"7 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\lwdiv.c
+[v i1___lwdiv __lwdiv `(ui  1 e 2 0 ]
+{
+"10
+[v i1___lwdiv@quotient quotient `ui  1 a 2 20 ]
+"11
+[v i1___lwdiv@counter counter `uc  1 a 1 22 ]
+"7
+[v i1___lwdiv@dividend dividend `ui  1 p 2 16 ]
+[v i1___lwdiv@divisor divisor `ui  1 p 2 18 ]
+"30
+} 0
+"7 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\awmod.c
+[v i1___awmod __awmod `(i  1 e 2 0 ]
+{
+"10
+[v i1___awmod@sign sign `uc  1 a 1 16 ]
+[v i1___awmod@counter counter `uc  1 a 1 15 ]
+"7
+[v i1___awmod@dividend dividend `i  1 p 2 11 ]
+[v i1___awmod@divisor divisor `i  1 p 2 13 ]
+"34
+} 0
+"7 C:\Program Files\Microchip\xc8\v2.35\pic\sources\c99\common\awdiv.c
+[v i1___awdiv __awdiv `(i  1 e 2 0 ]
+{
+"10
+[v i1___awdiv@quotient quotient `i  1 a 2 17 ]
+"11
+[v i1___awdiv@sign sign `uc  1 a 1 16 ]
+[v i1___awdiv@counter counter `uc  1 a 1 15 ]
+"7
+[v i1___awdiv@dividend dividend `i  1 p 2 11 ]
+[v i1___awdiv@divisor divisor `i  1 p 2 13 ]
+"41
+} 0
+"3452 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\controllerActions_Test.c
+[v i1_deleteDecodedString deleteDecodedString `(v  1 e 1 0 ]
+{
+"3469
+} 0
+"36 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\main_2_Test.c
+[v _rxANDiocInterrupt_handler rxANDiocInterrupt_handler `IIH(v  1 e 1 0 ]
+{
+"152
+} 0
+"115 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\controllerActions_Test.c
+[v i2_setBCDdigit setBCDdigit `(v  1 e 1 0 ]
+{
+[v i2setBCDdigit@digit digit `uc  1 a 1 wreg ]
+[v i2setBCDdigit@digit digit `uc  1 a 1 wreg ]
+[v i2setBCDdigit@dp_1 dp_1 `a  1 p 1 0 ]
+[v i2setBCDdigit@digit digit `uc  1 a 1 1 ]
+"118
+} 0
+"49
+[v i2_myMsDelay myMsDelay `(v  1 e 1 0 ]
+{
+"50
+[v i2myMsDelay@itr2 itr2 `ui  1 a 2 6 ]
+[v i2myMsDelay@itr1 itr1 `ui  1 a 2 4 ]
+[v i2myMsDelay@calibrated calibrated `ui  1 a 2 2 ]
+"49
+[v i2myMsDelay@mSec mSec `ui  1 p 2 0 ]
+"60
+} 0
+"28 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\loraTest.c
+[v _rxByteLora rxByteLora `(uc  1 e 1 0 ]
+{
+"32
+} 0
+"25 D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew\gsmTest.c
+[v _rxByte rxByte `(uc  1 e 1 0 ]
+{
+"29
+} 0

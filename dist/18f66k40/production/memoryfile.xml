@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <executable name="dist/18f66k40/production\AutoIrrigation_LoraNcDevBranch.X.production.hex">
+  <executable name="dist/18f66k40/production\BJU-MasterControllerUsingSolicitedSMS_LORANew.production.hex">
     <memory name="program">
       <units>bytes</units>
       <length>65536</length>
-      <used>52615</used>
-      <free>12921</free>
+      <used>56203</used>
+      <free>9333</free>
     </memory>
     <memory name="data">
       <units>bytes</units>
       <length>3562</length>
-      <used>2554</used>
-      <free>1008</free>
+      <used>3353</used>
+      <free>209</free>
     </memory>
   </executable>
 </project>

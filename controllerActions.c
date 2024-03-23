@@ -81,9 +81,9 @@ This function is called to check if string is Base64 encoded
 The purpose of this function is to check if string has space or = or multiple of 4.
 
  **************************************************************************************************************************/
-_Bool isBase64String(char * string) {
-    unsigned int stringLength;
-    char * s = string;
+_Bool isBase64String(unsigned char * string) {
+    //unsigned int stringLength;
+    unsigned char * s = string;
 	while (*s++ != '\0') {
         if (*s == space) {
             return false;
@@ -128,7 +128,7 @@ The purpose of this function is to receive local time stamp from GSM module
  **************************************************************************************************************************/
 void getDateFromGSM(void) {
     unsigned char index = 0;
-    timer3Count = 30;
+    timer3Count = 30;  // 30 sec window
     #ifdef DEBUG_MODE_ON_H
     //********Debug log#start************//
     transmitStringToDebug("getDateFromGSM_IN\r\n");
@@ -136,13 +136,12 @@ void getDateFromGSM(void) {
     #endif
     controllerCommandExecuted = false;
     msgIndex = CLEAR;
-    T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if GSM fails to respond within 5 min
+    T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if GSM fails to respond within 15 sec
     setBCDdigit(0x0B,1);  // (]) BCD indication for getDateFromGSM action
     while (!controllerCommandExecuted) {
         transmitStringToGSM("AT+CCLK?\r\n"); // To get local time stamp  +CCLK: "18/05/26,12:00:06+22"   ok
-        myMsDelay(1000);
         if (!controllerCommandExecuted) {
-            myMsDelay(30000);
+            myMsDelay(5000);
         }
     }
     setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
@@ -425,7 +424,7 @@ void scanValveScheduleAndGetSleepCount(void) {
         }*/
     
     if (valveDue) {
-        /* check Fertigation status and set sleep count to delay start*/
+        /* check Fertigation status and set sleep count to fertigation wet period*/
         if(fieldValve[iterator].isFertigationEnabled && fieldValve[iterator].fertigationInstance != 0) {
             sleepCount = fieldValve[iterator].fertigationDelay; // calculate sleep count for fertigation delay 
             fieldValve[iterator].fertigationStage = wetPeriod;
@@ -667,7 +666,7 @@ The Action is decided upon Type of message received.
 void extractReceivedSms(void) {
     unsigned char count = CLEAR, onHour = CLEAR, onMinute = CLEAR;
     unsigned int digit = CLEAR;
-    timer3Count = 30;
+    timer3Count = 30;  // 30 sec window
     #ifdef DEBUG_MODE_ON_H
     //********Debug log#start************//
     transmitStringToDebug("extractReceivedSms_IN\r\n");
@@ -677,7 +676,7 @@ void extractReceivedSms(void) {
     if (temporaryBytesArray[0] > '0' && temporaryBytesArray[0] <= '9') {
         controllerCommandExecuted = false;
         msgIndex = CLEAR;
-        T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if GSM fails to respond within 5 min
+        T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if GSM fails to respond within 15 sec
         setBCDdigit(0x03,1);  // (3) BCD indication for Read Sms Action
         while (!controllerCommandExecuted) {
             transmitStringToGSM("AT+CMGR=");
@@ -704,14 +703,14 @@ void extractReceivedSms(void) {
             transmitStringToDebug((char *)stringToDecode);
             transmitStringToDebug("\r\n");
             //********Debug log#end**************//
-            deleteGsmResponse();
             #endif
-            if (isBase64String((char *)stringToDecode)) {
+            deleteGsmResponse();
+            if (isBase64String((unsigned char *)stringToDecode)) {
                 deleteDecodedString();
                 base64Decoder();
             }
             else {
-                deleteGsmResponse();
+                //deleteGsmResponse();
                 setBCDdigit(0x05,0);  // (5.) BCD indication for Incorrect SMS format
                 myMsDelay(2000);
                 /***************************/ 
@@ -820,7 +819,7 @@ void extractReceivedSms(void) {
                         else {
                             switch (count) {
                             case 1: // code to extract on period;
-                                fieldValve[iterator].onPeriod = (unsigned char)digit;
+                                fieldValve[iterator].onPeriod = digit;
                                 digit = CLEAR;
                                 break;
                             case 2: // code to extract off period;
@@ -991,7 +990,7 @@ void extractReceivedSms(void) {
                         /***************************/                    
                     }
                     else {
-                        for (msgIndex = 9; count < 3 ; msgIndex++) {
+                        for (msgIndex = 9; count < 15 ; msgIndex++) {
                             if (isNumber(decodedString[msgIndex])) {
                                 if (decodedString[msgIndex + 1] == space) {
                                     decodedString[msgIndex] = decodedString[msgIndex] - 48;
@@ -1008,15 +1007,63 @@ void extractReceivedSms(void) {
                                 count++;
                                 switch (count) {
                                 case 1: // code to extract fertigationDelay;
-                                    fieldValve[iterator].fertigationDelay = (unsigned char)digit;
+                                    fieldValve[iterator].fertigationDelay = digit;
                                     digit = CLEAR;
                                     break;
                                 case 2: // code to extract fertigationONperiod;
-                                    fieldValve[iterator].fertigationONperiod = (unsigned char)digit;
+                                    fieldValve[iterator].fertigationONperiod = digit;
                                     digit = CLEAR;
                                     break;
                                 case 3: // code to extract fertigationInstance;
                                     fieldValve[iterator].fertigationInstance = (unsigned char)digit;
+                                    digit = CLEAR;
+                                    break;
+                                case 4: // code to extract injector1OnPeriod;
+                                    fieldValve[iterator].injector1OnPeriod = digit;
+                                    digit = CLEAR;
+                                    break;
+                                case 5: // code to extract injector1OffPeriod;
+                                    fieldValve[iterator].injector1OffPeriod = digit;
+                                    digit = CLEAR;
+                                    break;
+                                case 6: // code to extract injector1Cycle;
+                                    fieldValve[iterator].injector1Cycle = (unsigned char)digit;
+                                    digit = CLEAR;
+                                    break;
+                                case 7: // code to extract injector2OnPeriod;
+                                    fieldValve[iterator].injector2OnPeriod = digit;
+                                    digit = CLEAR;
+                                    break;
+                                case 8: // code to extract injector2OffPeriod;
+                                    fieldValve[iterator].injector2OffPeriod = digit;
+                                    digit = CLEAR;
+                                    break;
+                                case 9: // code to extract injector2Cycle;
+                                    fieldValve[iterator].injector2Cycle = (unsigned char)digit;
+                                    digit = CLEAR;
+                                    break;
+                                case 10: // code to extract injector3OnPeriod;
+                                    fieldValve[iterator].injector3OnPeriod = digit;
+                                    digit = CLEAR;
+                                    break;
+                                case 11: // code to extract injector3OffPeriod;
+                                    fieldValve[iterator].injector3OffPeriod = digit;
+                                    digit = CLEAR;
+                                    break;
+                                case 12: // code to extract injector3Cycle;
+                                    fieldValve[iterator].injector3Cycle = (unsigned char)digit;
+                                    digit = CLEAR;
+                                    break;
+                                case 13: // code to extract injector4OnPeriod;
+                                    fieldValve[iterator].injector4OnPeriod = digit;
+                                    digit = CLEAR;
+                                    break;
+                                case 14: // code to extract injector4OffPeriod;
+                                    fieldValve[iterator].injector4OffPeriod = digit;
+                                    digit = CLEAR;
+                                    break;
+                                case 15: // code to extract injector1Cycle;
+                                    fieldValve[iterator].injector4Cycle = (unsigned char)digit;
                                     fieldValve[iterator].fertigationStage = OFF;
                                     fieldValve[iterator].fertigationValveInterrupted = false;
                                     digit = CLEAR;
@@ -1528,7 +1575,7 @@ void extractReceivedSms(void) {
                 else if (strncmp(decodedString, getfreq, 7) == 0) {
                     iterator = fetchFieldNo(7);
                     myMsDelay(100);
-                    isFieldMoistureSensorWet(iterator);
+                    isFieldMoistureSensorWetLora(iterator);
                     /***************************/
                     // for field no. 01 to 09
                     if (iterator<9){
@@ -1886,7 +1933,7 @@ Here Timer1 is used to count frequency of pulses by measuring timer count for 1 
 _Bool isFieldMoistureSensorWet(unsigned char FieldNo) {
     unsigned long moistureLevelAvg = CLEAR;
     unsigned long timer1Value = CLEAR; // To store 16 bit SFR Timer1 Register value
-    unsigned long constant = 160000; // Constant to calculate frequency in Hz ~16MHz 
+    unsigned long constant = 160000; // Constant to calculate frequency in Hz ~16MHz 16000000/100 to convert freq from 5 digit to 3 digit
     unsigned char itr = CLEAR, avg = 20;
     
     moistureLevel = CLEAR; // To store moisture level in Hz
@@ -1919,7 +1966,7 @@ _Bool isFieldMoistureSensorWet(unsigned char FieldNo) {
     moistureLevel = LOW;
     checkMoistureSensor = true;
     moistureSensorFailed = false;
-    timer3Count = 15; // 15 second window
+    timer3Count = 5; // 5 second window
     // Averaging measured pulse width
     for (itr = 1; itr <= avg && !moistureSensorFailed; itr++) {
         T1CONbits.TMR1ON = OFF;
@@ -1934,7 +1981,7 @@ _Bool isFieldMoistureSensorWet(unsigned char FieldNo) {
             transmitStringToDebug("MoistureSensor1 == HIGH\r\n");
             //********Debug log#end**************//
             #endif
-            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 1 min    
+            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 15 sec    
             controllerCommandExecuted = false;
             while (MoistureSensor1 == HIGH && controllerCommandExecuted == false);
             #ifdef DEBUG_MODE_ON_H
@@ -1956,7 +2003,7 @@ _Bool isFieldMoistureSensorWet(unsigned char FieldNo) {
             transmitStringToDebug("MoistureSensor2 == HIGH\r\n");
             //********Debug log#end**************//
             #endif
-            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 1 min    
+            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 15 sec    
             controllerCommandExecuted = false;
             while (MoistureSensor2 == HIGH && controllerCommandExecuted == false);
             #ifdef DEBUG_MODE_ON_H
@@ -1978,7 +2025,7 @@ _Bool isFieldMoistureSensorWet(unsigned char FieldNo) {
             transmitStringToDebug("MoistureSensor3 == HIGH\r\n");
             //********Debug log#end**************//
             #endif
-            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 1 min    
+            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 15 sec    
             controllerCommandExecuted = false;
             while (MoistureSensor3 == HIGH && controllerCommandExecuted == false);
             #ifdef DEBUG_MODE_ON_H
@@ -2000,7 +2047,7 @@ _Bool isFieldMoistureSensorWet(unsigned char FieldNo) {
             transmitStringToDebug("MoistureSensor4 == HIGH\r\n");
             //********Debug log#end**************//
             #endif
-            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 1 min    
+            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 15 sec     
             controllerCommandExecuted = false;
             while (MoistureSensor4 == HIGH && controllerCommandExecuted == false);
             #ifdef DEBUG_MODE_ON_H
@@ -2022,7 +2069,7 @@ _Bool isFieldMoistureSensorWet(unsigned char FieldNo) {
             transmitStringToDebug("MoistureSensor5 == HIGH\r\n");
             //********Debug log#end**************//
             #endif
-            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 1 min    
+            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 15 sec     
             controllerCommandExecuted = false;
             while (MoistureSensor5 == HIGH && controllerCommandExecuted == false);
             #ifdef DEBUG_MODE_ON_H
@@ -2044,7 +2091,7 @@ _Bool isFieldMoistureSensorWet(unsigned char FieldNo) {
             transmitStringToDebug("MoistureSensor6 == HIGH\r\n");
             //********Debug log#end**************//
             #endif
-            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 1 min    
+            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 15 sec    
             controllerCommandExecuted = false;
             while (MoistureSensor6 == HIGH && controllerCommandExecuted == false);
             #ifdef DEBUG_MODE_ON_H
@@ -2066,7 +2113,7 @@ _Bool isFieldMoistureSensorWet(unsigned char FieldNo) {
             transmitStringToDebug("MoistureSensor7 == HIGH\r\n");
             //********Debug log#end**************//
             #endif
-            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 1 min    
+            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 15 sec    
             controllerCommandExecuted = false;
             while (MoistureSensor7 == HIGH && controllerCommandExecuted == false);
             #ifdef DEBUG_MODE_ON_H
@@ -2088,7 +2135,7 @@ _Bool isFieldMoistureSensorWet(unsigned char FieldNo) {
             transmitStringToDebug("MoistureSensor8 == HIGH\r\n");
             //********Debug log#end**************//
             #endif
-            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 1 min    
+            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 15 sec    
             controllerCommandExecuted = false;
             while (MoistureSensor8 == HIGH && controllerCommandExecuted == false);
             #ifdef DEBUG_MODE_ON_H
@@ -2110,7 +2157,7 @@ _Bool isFieldMoistureSensorWet(unsigned char FieldNo) {
             transmitStringToDebug("MoistureSensor9 == HIGH\r\n");
             //********Debug log#end**************//
             #endif
-            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 1 min    
+            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 15 sec    
             controllerCommandExecuted = false;
             while (MoistureSensor9 == HIGH && controllerCommandExecuted == false);
             #ifdef DEBUG_MODE_ON_H
@@ -2132,7 +2179,7 @@ _Bool isFieldMoistureSensorWet(unsigned char FieldNo) {
             transmitStringToDebug("MoistureSensor10 == HIGH\r\n");
             //********Debug log#end**************//
             #endif
-            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 1 min    
+            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 15 sec   
             controllerCommandExecuted = false;
             while (MoistureSensor10 == HIGH && controllerCommandExecuted == false);
             #ifdef DEBUG_MODE_ON_H
@@ -2154,7 +2201,7 @@ _Bool isFieldMoistureSensorWet(unsigned char FieldNo) {
             transmitStringToDebug("MoistureSensor11 == HIGH\r\n");
             //********Debug log#end**************//
             #endif
-            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 1 min    
+            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 15 sec   
             controllerCommandExecuted = false;
             while (MoistureSensor11 == HIGH && controllerCommandExecuted == false);
             #ifdef DEBUG_MODE_ON_H
@@ -2176,7 +2223,7 @@ _Bool isFieldMoistureSensorWet(unsigned char FieldNo) {
             transmitStringToDebug("MoistureSensor12 == HIGH\r\n");
             //********Debug log#end**************//
             #endif
-            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 1 min    
+            T3CONbits.TMR3ON = ON; // Start timer thread to unlock system if Sensor fails to respond within 15 sec   
             controllerCommandExecuted = false;
             while (MoistureSensor12 == HIGH && controllerCommandExecuted == false);
             #ifdef DEBUG_MODE_ON_H
@@ -2211,6 +2258,24 @@ _Bool isFieldMoistureSensorWet(unsigned char FieldNo) {
     }
     checkMoistureSensor = false;
     setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
+    if (FieldNo == 11) {
+        if (moistureLevel >= 150) {
+            #ifdef DEBUG_MODE_ON_H
+            //********Debug log#start************//
+            transmitStringToDebug("isFertigationSensorWet_Yes_Out\r\n");
+            //********Debug log#end**************//
+            #endif
+            return true;
+        }
+        else {
+            #ifdef DEBUG_MODE_ON_H
+            //********Debug log#start************//
+            transmitStringToDebug("isFertigationSensorWet_No_Out\r\n");
+            //********Debug log#end**************//
+            #endif
+            return false;            
+        }
+    }
     if (moistureLevel >= fieldValve[FieldNo].wetValue) { //Field is full wet, no need to switch ON valve and motor, estimate new due dates
         #ifdef DEBUG_MODE_ON_H
         //********Debug log#start************//
@@ -2227,6 +2292,103 @@ _Bool isFieldMoistureSensorWet(unsigned char FieldNo) {
         #endif
         return false;
     }
+}
+
+
+
+/*********** Moisture sensor measurement at Lora Slave #Start********/
+
+/*************************************************************************************************************************
+
+This function is called to send command to lora slave to measure soil moisture of given field and indicate if wet field found .
+The Moisture level is measured in terms of frequency of square wave generated by IC555 based on Senor resistance.
+The Sensor resistance is high and low for Dry and Wet condition respectively.
+This leads the output of IC555 with high and low pulse width.
+For Dry condition pulse width is high and for wet condition pulse width is low.
+i.e. for Dry condition pulse occurrence is low and for wet condition pulse occurrence is high
+Here Timer1 is used to count frequency of pulses by measuring timer count for 1 pulse width and averaging it for 10 pulses.
+
+ **************************************************************************************************************************/
+_Bool isFieldMoistureSensorWetLora(unsigned char FieldNo) {
+    unsigned char action;
+    loraAttempt = 0;
+    action = 0x02;
+    setBCDdigit(0x09,0); // (9.) BCD indication for Moisture Sensor Failure Error
+    moistureSensorFailed = false;
+    // Averaging measured pulse width
+    
+    #ifdef DEBUG_MODE_ON_H
+    //********Debug log#start************//
+    /***************************/
+    // for field no. 01 to 09
+    if (FieldNo<9){
+        temporaryBytesArray[0] = 48; // To store field no. of valve in action 
+        temporaryBytesArray[1] = FieldNo + 49; // To store field no. of valve in action 
+    }// for field no. 10 to 12
+    else if (FieldNo > 8 && FieldNo < 12) {
+        temporaryBytesArray[0] = 49; // To store field no. of valve in action 
+        temporaryBytesArray[1] = FieldNo + 39; // To store field no. of valve in action 
+    }
+    else {
+        temporaryBytesArray[0] = 57; // To store field no. of valve in action 
+        temporaryBytesArray[1] = 57; // To store field no. of valve in action 
+    
+    }
+    /***************************/
+    transmitStringToDebug("isFieldMoistureSensorWetLora_IN : ");
+    transmitNumberToDebug(temporaryBytesArray, 2);
+    transmitStringToDebug("\r\n");
+    //********Debug log#end**************//
+    #endif
+
+    do {
+        sendCmdToLora(action,FieldNo); 
+    } while(loraAttempt<2);
+    if (LoraConnectionFailed || moistureSensorFailed) {  // Unsuccessful Sensor reading
+        moistureLevel = CLEAR;
+        moistureSensorFailed = true;
+    }
+    setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
+    if ((moistureLevel/100) >= fieldValve[FieldNo].wetValue) { //Field is full wet, no need to switch ON valve and motor, estimate new due dates
+        #ifdef DEBUG_MODE_ON_H
+        //********Debug log#start************//
+        transmitStringToDebug("isFieldMoistureSensorWetLora_Yes_Out\r\n");
+        //********Debug log#end**************//
+        #endif
+        return true;
+    } 
+    else {
+        #ifdef DEBUG_MODE_ON_H
+        //********Debug log#start************//
+        transmitStringToDebug("isFieldMoistureSensorWetLorat_No_Out\r\n");
+        //********Debug log#end**************//
+        #endif
+        return false;
+    }
+    
+    #ifdef DEBUG_MODE_ON_H
+    //********Debug log#start************//
+    /***************************/
+    // for field no. 01 to 09
+    if (FieldNo<9){
+        temporaryBytesArray[0] = 48; // To store field no. of valve in action 
+        temporaryBytesArray[1] = FieldNo + 49; // To store field no. of valve in action 
+    }// for field no. 10 to 12
+    else if (FieldNo > 8 && FieldNo < 12) {
+        temporaryBytesArray[0] = 49; // To store field no. of valve in action 
+        temporaryBytesArray[1] = FieldNo + 39; // To store field no. of valve in action 
+    }
+    else {
+        temporaryBytesArray[0] = 57; // To store field no. of valve in action 
+        temporaryBytesArray[1] = 57; // To store field no. of valve in action 
+    
+    }
+    /***************************/
+    transmitStringToDebug("isFieldMoistureSensorWetLora_OUT : ");
+    transmitNumberToDebug(temporaryBytesArray, 2);
+    transmitStringToDebug("\r\n");
+    //********Debug log#end**************//
+    #endif
 }
 
 /*********** Motor Dry run condition#Start********/
@@ -2497,6 +2659,11 @@ void doDryRunAction(void) {
 				/************Fertigation switch off due to dry run***********/
 				if (fieldValve[field_No].fertigationStage == injectPeriod) {
 					fertigationValveControl = OFF; // Switch off fertigation valve in case it is ON
+					//Switch off all Injectors after completing fertigation on Period
+                    field9ValveControl = OFF;
+                    field10ValveControl = OFF;
+                    field11ValveControl = OFF;
+                    field12ValveControl = OFF;																 
 					fieldValve[field_No].fertigationStage = OFF;
 					fieldValve[field_No].fertigationValveInterrupted = true;
 					remainingFertigationOnPeriod = readActiveSleepCountFromEeprom();
@@ -2526,7 +2693,7 @@ void doDryRunAction(void) {
 					/***************************/
 
 					/***************************/
-					sendSms(SmsDR1, userMobileNo, fieldNoRequired); // Acknowledge user about dry run detected again
+					sendSms(SmsDR1, userMobileNo, fieldNoRequired); // Acknowledge user about dry run detected and action taken
 					#ifdef SMS_DELIVERY_REPORT_ON_H
 					sleepCount = 2; // Load sleep count for SMS transmission action
 					sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
@@ -2558,7 +2725,7 @@ void doDryRunAction(void) {
                     /***************************/
 
                     /***************************/
-                    sendSms(SmsDR2, userMobileNo, fieldNoRequired); // Acknowledge user about dry run detected again
+                    sendSms(SmsDR2, userMobileNo, fieldNoRequired); // Acknowledge user about dry run detected and action taken
                     #ifdef SMS_DELIVERY_REPORT_ON_H
                     sleepCount = 2; // Load sleep count for SMS transmission action
                     sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
@@ -2592,7 +2759,7 @@ void doDryRunAction(void) {
                     /***************************/
 
                     /***************************/
-					sendSms(SmsDR3, userMobileNo, fieldNoRequired); // Acknowledge user about dry run detected again
+					sendSms(SmsDR3, userMobileNo, fieldNoRequired); // Acknowledge user about dry run detected and action taken
 					#ifdef SMS_DELIVERY_REPORT_ON_H
 					sleepCount = 2; // Load sleep count for SMS transmission action
 					sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
@@ -2616,7 +2783,7 @@ void doDryRunAction(void) {
                     /***************************/
 
                     /***************************/
-					sendSms(SmsDR4, userMobileNo, fieldNoRequired); // Acknowledge user about dry run detected again
+					sendSms(SmsDR4, userMobileNo, fieldNoRequired); // Acknowledge user about dry run detected and action taken
 					#ifdef SMS_DELIVERY_REPORT_ON_H
 					sleepCount = 2; // Load sleep count for SMS transmission action
 					sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
@@ -2629,7 +2796,7 @@ void doDryRunAction(void) {
             }
             if (phaseR) {
                 /***************************/
-                sendSms(SmsPh3, userMobileNo, noInfo); // Acknowledge user about dry run detected again
+                sendSms(SmsPh3, userMobileNo, noInfo); // Acknowledge user about Phase failure detected and action taken
                 #ifdef SMS_DELIVERY_REPORT_ON_H
                 sleepCount = 2; // Load sleep count for SMS transmission action
                 sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
@@ -2641,7 +2808,7 @@ void doDryRunAction(void) {
             }
             else if (phaseY) {
                 /***************************/
-                sendSms(SmsPh4, userMobileNo, noInfo); // Acknowledge user about dry run detected again
+                sendSms(SmsPh4, userMobileNo, noInfo); // Acknowledge user about Phase failure detected and action taken
                 #ifdef SMS_DELIVERY_REPORT_ON_H
                 sleepCount = 2; // Load sleep count for SMS transmission action
                 sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
@@ -2653,7 +2820,7 @@ void doDryRunAction(void) {
             }
             else if (phaseB) {
                 /***************************/
-                sendSms(SmsPh5, userMobileNo, noInfo); // Acknowledge user about dry run detected again
+                sendSms(SmsPh5, userMobileNo, noInfo); // Acknowledge user about Phase failure detected and action taken
                 #ifdef SMS_DELIVERY_REPORT_ON_H
                 sleepCount = 2; // Load sleep count for SMS transmission action
                 sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
@@ -2665,7 +2832,7 @@ void doDryRunAction(void) {
             }
             else {
                 /***************************/
-                sendSms(SmsPh6, userMobileNo, noInfo); // Acknowledge user about dry run detected again
+                sendSms(SmsPh6, userMobileNo, noInfo); // Acknowledge user about Phase failure detected and action taken
                 #ifdef SMS_DELIVERY_REPORT_ON_H
                 sleepCount = 2; // Load sleep count for SMS transmission action
                 sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
@@ -2733,9 +2900,14 @@ void doLowPhaseAction(void) {
                 powerOffMotor();
                 myMsDelay(1000);
                 deActivateValve(field_No);   // Deactivate Valve upon phase failure condition and reset valve to next due time
-                /************Fertigation switch off due to dry run***********/
+                /************Fertigation switch off due to low phase detection***********/
                 if (fieldValve[field_No].fertigationStage == injectPeriod) {
                     fertigationValveControl = OFF; // Switch off fertigation valve in case it is ON
+					//Switch off all Injectors after completing fertigation on Period
+                    field9ValveControl = OFF;
+                    field10ValveControl = OFF;
+                    field11ValveControl = OFF;
+                    field12ValveControl = OFF;																 
 
                     /***************************/
                     // for field no. 01 to 09
@@ -2750,7 +2922,7 @@ void doLowPhaseAction(void) {
                     /***************************/
 
                     /***************************/
-                    sendSms(SmsFert6, userMobileNo, fieldNoRequired); // Acknowledge user about successful Fertigation stopped action
+                    sendSms(SmsFert6, userMobileNo, fieldNoRequired); // Acknowledge user about successful Fertigation stopped action due to low phase detection
                     #ifdef SMS_DELIVERY_REPORT_ON_H
                     sleepCount = 2; // Load sleep count for SMS transmission action
                     sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
@@ -2806,9 +2978,14 @@ void doPhaseFailureAction(void) {
                 powerOffMotor();
                 myMsDelay(1000);
                 deActivateValve(field_No);   // Deactivate Valve upon phase failure condition and reset valve to next due time
-                /************Fertigation switch off due to dry run***********/
+                /************Fertigation switch off due to Phase failure***********/
                 if (fieldValve[field_No].fertigationStage == injectPeriod) {
                     fertigationValveControl = OFF; // Switch off fertigation valve in case it is ON
+					//Switch off all Injectors after completing fertigation on Period
+                    field9ValveControl = OFF;
+                    field10ValveControl = OFF;
+                    field11ValveControl = OFF;
+                    field12ValveControl = OFF;																 
 
                     /***************************/
                     // for field no. 01 to 09
@@ -2823,7 +3000,7 @@ void doPhaseFailureAction(void) {
                     /***************************/
 
                     /***************************/
-                    sendSms(SmsFert6, userMobileNo, fieldNoRequired); // Acknowledge user about successful Fertigation stopped action
+                    sendSms(SmsFert6, userMobileNo, fieldNoRequired); // Acknowledge user about successful Fertigation stopped action due to PhaseFailure
                     #ifdef SMS_DELIVERY_REPORT_ON_H
                     sleepCount = 2; // Load sleep count for SMS transmission action
                     sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
@@ -3032,100 +3209,102 @@ The purpose of this function is to activate mentioned field valve and notify use
 void activateValve(unsigned char FieldNo) {
 #ifdef DEBUG_MODE_ON_H
     //********Debug log#start************//
-    transmitStringToDebug("activateValve_IN\r\n");
+    transmitStringToDebug("sendActivateValveCmdToLora_IN\r\n");
     //********Debug log#end**************//
 #endif
-    // check field no. of valve in action
-    switch (FieldNo) {
-    case 0:
-        myMsDelay(1000);
-        field1ValveControl = ON; // switch on valve for field 1
-        break;
-    case 1:
-        myMsDelay(1000);
-        field2ValveControl = ON; // switch off valve for field 2
-        break;
-    case 2:
-        myMsDelay(1000);
-        field3ValveControl = ON; // switch on valve for field 3
-        break;
-    case 3:
-        myMsDelay(1000);
-        field4ValveControl = ON; // switch on valve for field 4
-        break;    
-    case 4:
-        myMsDelay(1000);
-        field5ValveControl = ON; // switch off valve for field 5
-        break;
-    case 5:
-        myMsDelay(1000);
-        field6ValveControl = ON; // switch off valve for field 6
-        break;
-    case 6:
-        myMsDelay(1000);
-        field7ValveControl = ON; // switch on valve for field 7
-        break;
-    case 7:
-        myMsDelay(1000);
-        field8ValveControl = ON; // switch on valve for field 8
-        break;
-    case 8:
-        myMsDelay(1000);
-        field9ValveControl = ON; // switch on valve for field 9
-        break;
-    case 9:
-        myMsDelay(1000);
-        field10ValveControl = ON; // switch on valve for field 10
-        break;
-    case 10:
-        myMsDelay(1000);
-        field11ValveControl = ON; // switch on valve for field 11
-        break;
-    case 11:
-        myMsDelay(1000);
-        field12ValveControl = ON; // switch on valve for field 12
-        break;
-    }
-    fieldValve[FieldNo].status = ON; //notify field valve status
-    valveDue = true; // Set Valve ON status
-    myMsDelay(100);
-    saveIrrigationValveOnOffStatusIntoEeprom(eepromAddress[FieldNo], &fieldValve[FieldNo]);
-    myMsDelay(100);
-    /***************************/
-    // for field no. 01 to 09
-    if (FieldNo<9){
-        temporaryBytesArray[0] = 48; // To store field no. of valve in action 
-        temporaryBytesArray[1] = FieldNo + 49; // To store field no. of valve in action 
-    }// for field no. 10 to 12
-    else if (FieldNo > 8 && FieldNo < 12) {
-        temporaryBytesArray[0] = 49; // To store field no. of valve in action 
-        temporaryBytesArray[1] = FieldNo + 39; // To store field no. of valve in action 
-    }
-    /***************************/
-    #ifdef DEBUG_MODE_ON_H
-    //********Debug log#start************//
-    transmitStringToDebug("Valve: ");
-    transmitNumberToDebug(temporaryBytesArray, 2);
-    transmitStringToDebug("\r\n");
-    //********Debug log#end**************//
-    #endif
-    
-    if(moistureSensorFailed) {
-        moistureSensorFailed = false;
+    unsigned char action;
+    loraAttempt = 0;
+    action = 0x00; // activate valve action
+    do {
+        sendCmdToLora(action,FieldNo); 
+    } while(loraAttempt<2);
+    if (!LoraConnectionFailed && loraAttempt == 99) {  // Successful Valve Activation
+        // check field no. of valve in action
+        fieldValve[FieldNo].status = ON; //notify field valve status
+        valveDue = true; // Set Valve ON status
+        loraAliveCount = CLEAR;
+        loraAliveCountCheck = CLEAR;
+        myMsDelay(100);
+        saveIrrigationValveOnOffStatusIntoEeprom(eepromAddress[FieldNo], &fieldValve[FieldNo]);
+        myMsDelay(100);
         /***************************/
-        sendSms(SmsMS1, userMobileNo, fieldNoRequired);
-        #ifdef SMS_DELIVERY_REPORT_ON_H
-        sleepCount = 2; // Load sleep count for SMS transmission action
-        sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
-        setBCDdigit(0x05,0);
-        deepSleep(); // Sleep until message transmission acknowledge SMS is received from service provider
-        setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
+        // for field no. 01 to 09
+        if (FieldNo<9){
+            temporaryBytesArray[0] = 48; // To store field no. of valve in action 
+            temporaryBytesArray[1] = FieldNo + 49; // To store field no. of valve in action 
+        }// for field no. 10 to 12
+        else if (FieldNo > 8 && FieldNo < 12) {
+            temporaryBytesArray[0] = 49; // To store field no. of valve in action 
+            temporaryBytesArray[1] = FieldNo + 39; // To store field no. of valve in action 
+        }
+        /***************************/
+        #ifdef DEBUG_MODE_ON_H
+        //********Debug log#start************//
+        transmitStringToDebug("Valve: ");
+        transmitNumberToDebug(temporaryBytesArray, 2);
+        transmitStringToDebug("\r\n");
+        //********Debug log#end**************//
         #endif
-        /***************************/
+    
+        if(moistureSensorFailed) {
+            moistureSensorFailed = false;
+            /***************************/
+            sendSms(SmsMS1, userMobileNo, fieldNoRequired);
+            #ifdef SMS_DELIVERY_REPORT_ON_H
+            sleepCount = 2; // Load sleep count for SMS transmission action
+            sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
+            setBCDdigit(0x05,0);
+            deepSleep(); // Sleep until message transmission acknowledge SMS is received from service provider
+            setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
+            #endif
+            /***************************/
+        }
+        else {
+            /***************************/
+            sendSms(SmsIrr4, userMobileNo, fieldNoRequired);   // Acknowledge user about successful Irrigation started action
+            #ifdef SMS_DELIVERY_REPORT_ON_H
+            sleepCount = 2; // Load sleep count for SMS transmission action
+            sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
+            setBCDdigit(0x05,0);
+            deepSleep(); // Sleep until message transmission acknowledge SMS is received from service provider
+            setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
+            #endif
+            /***************************/
+        }
     }
-    else {
+    else {   //Skip current valve execution and go for next
+        valveDue = false;
+        fieldValve[FieldNo].status = OFF;
+        fieldValve[FieldNo].cyclesExecuted = fieldValve[FieldNo].cycles;
+        startFieldNo = FieldNo+1;               // scan for next field no.
+        myMsDelay(100);
+        getDueDate(fieldValve[FieldNo].offPeriod); // calculate next due date of valve
+        myMsDelay(100);
+        fieldValve[FieldNo].nextDueDD = (unsigned char)dueDD;
+        fieldValve[FieldNo].nextDueMM = dueMM;
+        fieldValve[FieldNo].nextDueYY = dueYY;
+        myMsDelay(100);
+        saveIrrigationValveOnOffStatusIntoEeprom(eepromAddress[FieldNo], &fieldValve[FieldNo]);
+        myMsDelay(100);
+        saveIrrigationValveCycleStatusIntoEeprom(eepromAddress[FieldNo], &fieldValve[FieldNo]);
+        myMsDelay(100);
+        saveIrrigationValveDueTimeIntoEeprom(eepromAddress[FieldNo], &fieldValve[FieldNo]);
+        myMsDelay(100);
+
         /***************************/
-        sendSms(SmsIrr4, userMobileNo, fieldNoRequired);   // Acknowledge user about successful Irrigation started action
+        // for field no. 01 to 09
+        if (FieldNo<9) {
+            temporaryBytesArray[0] = 48; // To store field no. of valve in action 
+            temporaryBytesArray[1] = FieldNo + 49; // To store field no. of valve in action 
+        }// for field no. 10 to 12
+        else if (FieldNo > 8 && FieldNo < 12) {
+            temporaryBytesArray[0] = 49; // To store field no. of valve in action 
+            temporaryBytesArray[1] = FieldNo + 39; // To store field no. of valve in action 
+        }
+        /***************************/
+
+        /***************************/
+        sendSms(SmsIrr8, userMobileNo, fieldNoRequired); // Acknowledge user about Irrigation not started due to Lora connection failure						
         #ifdef SMS_DELIVERY_REPORT_ON_H
         sleepCount = 2; // Load sleep count for SMS transmission action
         sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
@@ -3159,56 +3338,12 @@ void deActivateValve(unsigned char FieldNo) {
     //********Debug log#end**************//
     #endif
     // check field no. of valve in action
-    switch (FieldNo) {
-    case 0:
-        myMsDelay(1000);
-        field1ValveControl = OFF; // switch off valve for field 1
-        break;
-    case 1:
-        myMsDelay(1000);
-        field2ValveControl = OFF; // switch off valve for field 2
-        break;
-    case 2:
-        myMsDelay(1000);
-        field3ValveControl = OFF; // switch off valve for field 3
-        break;
-    case 3:
-        myMsDelay(1000);
-        field4ValveControl = OFF; // switch off valve for field 4
-        break;    
-    case 4:
-        myMsDelay(1000);
-        field5ValveControl = OFF; // switch off valve for field 5
-        break;
-    case 5:
-        myMsDelay(1000);
-        field6ValveControl = OFF; // switch off valve for field 6
-        break;
-    case 6:
-        myMsDelay(1000);
-        field7ValveControl = OFF; // switch off valve for field 7
-        break;
-    case 7:
-        myMsDelay(1000);
-        field8ValveControl = OFF; // switch off valve for field 8
-        break;
-    case 8:
-        myMsDelay(1000);
-        field9ValveControl = OFF; // switch off valve for field 9
-        break;
-    case 9:
-        myMsDelay(1000);
-        field10ValveControl = OFF; // switch off valve for field 10
-        break;
-    case 10:
-        myMsDelay(1000);
-        field11ValveControl = OFF; // switch off valve for field 11
-        break;    
-    case 11:
-        myMsDelay(1000);
-        field12ValveControl = OFF; // switch off valve for field 12
-        break;   
-    }
+    unsigned char action;
+    loraAttempt = 0;
+    action = 0x01;
+    do {
+        sendCmdToLora(action,FieldNo); 
+    } while(loraAttempt<2);
     /***************************/
     // for field no. 01 to 09
     if (FieldNo<9){
@@ -3220,23 +3355,39 @@ void deActivateValve(unsigned char FieldNo) {
         temporaryBytesArray[1] = FieldNo + 39; // To store field no. of valve in action 
     }
     /***************************/
-    #ifdef DEBUG_MODE_ON_H
-    //********Debug log#start************//
-    transmitStringToDebug("Valve: ");
-    transmitNumberToDebug(temporaryBytesArray, 2);
-    transmitStringToDebug("\r\n");
-    //********Debug log#end**************//
-    #endif
-    /***************************/
-    sendSms(SmsIrr5, userMobileNo, fieldNoRequired); // Acknowledge user about successful Irrigation stopped action
-    #ifdef SMS_DELIVERY_REPORT_ON_H
-    sleepCount = 2; // Load sleep count for SMS transmission action
-    sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
-    setBCDdigit(0x05,0);
-    deepSleep(); // Sleep until message transmission acknowledge SMS is received from service provider
-    setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
-    #endif
-    /***************************/
+    if (!LoraConnectionFailed && loraAttempt == 99) {  // Successful Valve DeActivation
+        
+        /***************************/
+        #ifdef DEBUG_MODE_ON_H
+        //********Debug log#start************//
+        transmitStringToDebug("Valve: ");
+        transmitNumberToDebug(temporaryBytesArray, 2);
+        transmitStringToDebug("\r\n");
+        //********Debug log#end**************//
+        #endif
+        /***************************/
+        sendSms(SmsIrr5, userMobileNo, fieldNoRequired); // Acknowledge user about successful Irrigation stopped action
+        #ifdef SMS_DELIVERY_REPORT_ON_H
+        sleepCount = 2; // Load sleep count for SMS transmission action
+        sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
+        setBCDdigit(0x05,0);
+        deepSleep(); // Sleep until message transmission acknowledge SMS is received from service provider
+        setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
+        #endif
+        /***************************/
+    }
+    else {   
+        /***************************/
+        sendSms(SmsIrr9, userMobileNo, fieldNoRequired); // Acknowledge user about Irrigation stopped with Lora connection failure						
+        #ifdef SMS_DELIVERY_REPORT_ON_H
+        sleepCount = 2; // Load sleep count for SMS transmission action
+        sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
+        setBCDdigit(0x05,0);
+        deepSleep(); // Sleep until message transmission acknowledge SMS is received from service provider
+        setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
+        #endif
+        /***************************/
+    }
 #ifdef DEBUG_MODE_ON_H    
     //********Debug log#start************//
     transmitStringToDebug("deActivateValve_OUT\r\n");
@@ -3274,7 +3425,7 @@ void deepSleep(void) {
                 }
                 else if (lowPhaseCurrentDetected) {
                     doLowPhaseAction();
-                    sleepCount = 65500;
+                    sleepCount = 65500;  // undefined sleep until phase comes back
                 }
             }
             else {
@@ -3410,7 +3561,7 @@ void configureController(void) {
     ADRPT = 0X00;
     ADACT = 0X00;
 
-    //-----------Timer0_Config (60 sec) used for filtration  cycle sequence followup----------------------//
+    //-----------Timer0_Config (60 sec) used for SLEEP Count control during Motor ON period and to control filtration  cycle sequence followup----------------------//
     //-----------Timer will not halt in sleep mode------------------------------------------------------//
 
     T0CON0 = 0b00010000; // 16 bit Timer 
@@ -3445,13 +3596,13 @@ void configureController(void) {
 
     //-----------UART1_Config PRODUCTION LORA-----------------------//
     TX1STA = 0b00100100; // 8 Bit Transmission Enabled with High Baud Rate
-    RC1STA = 0b10000000; // 8 Bit Serial Port Enabled with Reception Disabled
+    RC1STA = 0b10010000; // 8 Bit Reception Enabled with Continuous Reception
     BAUD1CON = 0b00001000; // 16 Bit Baud Rate Register used
     SP1BRG = 0x0681; // XTAL=16MHz, Fosc=64Mhz for SYNC=0 BRGH=1 BRG16=1 (Asynchronous high 16 bit baud rate)
     RC7PPS = 0x17; //EUSART1 Receive
     RC6PPS = 0x0C; //EUSART1 Transmit
     temp = RC1REG; // Empty buffer
-    PIE3bits.RC1IE = DISABLED; // Disables the EUSART Receive Interrupt
+    PIE3bits.RC1IE = ENABLED; // Enables the EUSART Receive Interrupt
     PIE3bits.TX1IE = DISABLED; // Disables the EUSART Transmit Interrupt
     IPR3bits.RC1IP = HIGH; // EUSART Receive Interrupt Priority
 
@@ -3755,6 +3906,7 @@ void actionsOnSystemReset(void) {
             for (iterator = 0; iterator < fieldCount; iterator++) {
                 // check if any field valve status was true after reset
                 if (fieldValve[iterator].status == ON) {
+					startFieldNo = iterator;  // start action from interrupted field irrigation valve
                     //getDueDate(fieldValve[iterator].offPeriod); // calculate next due date of valve
                     fetchTimefromRTC();
                     /*** Check if System Restarted on next day of Due date ***/
@@ -3763,7 +3915,6 @@ void actionsOnSystemReset(void) {
                         valveDue = false; // Clear Valve Due
                         fieldValve[iterator].status = OFF;
                         fieldValve[iterator].cyclesExecuted = fieldValve[iterator].cycles;
-                        startFieldNo = iterator;  // start action form interrupted field irrigation valve
                         if (fieldValve[iterator].isFertigationEnabled) {  
                             if (fieldValve[iterator].fertigationStage == injectPeriod) {
                                 fieldValve[iterator].fertigationStage = OFF;
@@ -3785,7 +3936,6 @@ void actionsOnSystemReset(void) {
                     }
                     else { // if system restarted on same day with due valve
                         valveDue = true; // Set valve ON status
-                        startFieldNo = iterator;  // start action form interrupted field irrigation valve
                         #ifdef DEBUG_MODE_ON_H
                         //********Debug log#start************//
                         transmitStringToDebug("System restarted with Due valve on same day\r\n");
@@ -3891,40 +4041,6 @@ void actionsOnSystemReset(void) {
             setBCDdigit(0x01,0); // (1.) BCD Indication for Authentication Error 
             strncpy(pwd, factryPswrd, 6); // consider factory password
             sleepCount = 65500; // Set Default Sleep count until next sleep count is calculated
-            /****************************************Check Lora Communication*************************************************/
-            transmitStringToLora("#STATUSMASTER$\r\n");
-            setBCDdigit(0x01,1);
-            //transmitStringToDebug("#STATUSMASTER$\r\n");
-            myMsDelay(50000);
-            transmitStringToLora("#STATUSSLAVE01$\r\n");
-            setBCDdigit(0x02,1);
-            //transmitStringToDebug("#STATUSSLAVE01$\r\n");
-            myMsDelay(50000);
-            transmitStringToLora("#GETSENSOR01SLAVE01$\r\n");
-            setBCDdigit(0x03,1);
-            //transmitStringToDebug("#GETSENSOR01SLAVE01$");
-            myMsDelay(50000);
-            transmitStringToLora("#ON01SLAVE01$\r\n");
-            setBCDdigit(0x04,1);
-            //transmitStringToDebug("#ON01SLAVE01$\r\n");
-            myMsDelay(50000);
-            transmitStringToLora("#GETVALVESTATUS01SLAVE01$\r\n");
-            setBCDdigit(0x05,1);
-            //transmitStringToDebug("#GETVALVESTATUS01SLAVE01$\r\n");
-            myMsDelay(50000);
-            transmitStringToLora("#OFF01SLAVE01$\r\n");
-            setBCDdigit(0x06,1);
-            //transmitStringToDebug("#OFF01SLAVE01$\r\n");
-            myMsDelay(50000);
-            transmitStringToLora("#GETVALVESTATUS01SLAVE01$\r\n");
-            setBCDdigit(0x07,1);
-            //transmitStringToDebug("#GETVALVESTATUS01SLAVE01$\r\n");
-            myMsDelay(50000);
-            transmitStringToLora("#GARBAGE$\r\n");
-            setBCDdigit(0x08,1);
-            //transmitStringToDebug("#GARBAGE$\r\n");
-            myMsDelay(50000);
-            /****************************************Check Lora Communication*************************************************/
             deepSleep(); // Sleep with default sleep count until system is configured
             // check if Sleep count executed with interrupt occurred due to new SMS command reception
             if (newSMSRcvd) {
@@ -4021,10 +4137,60 @@ void actionsOnSleepCountFinish(void) {
     unsigned char field_No = CLEAR;
     if (valveDue && sleepCount == 0 && !dryRunDetected && !phaseFailureDetected && !onHold && !lowPhaseCurrentDetected) {
         for (field_No = 0; field_No < fieldCount; field_No++) {
-            // upon completing first delay start period sleep , switch on fertigation valve
+            // upon completing first delay start period sleep , switch ON fertigation valve
             if (fieldValve[field_No].status == ON && fieldValve[field_No].isFertigationEnabled && fieldValve[field_No].fertigationStage == wetPeriod) {
                 myMsDelay(1000);
-                fertigationValveControl = ON; // switch on fertigation valve for given field after start period
+                fertigationValveControl = ON; // switch on fertigation valve for given field after start period 
+				// Injector code             
+                // Initialize all count to zero
+                injector1OnPeriodCnt = CLEAR;
+                injector2OnPeriodCnt = CLEAR;
+                injector3OnPeriodCnt = CLEAR;
+                injector4OnPeriodCnt = CLEAR;
+
+                injector1OffPeriodCnt = CLEAR; 
+                injector2OffPeriodCnt = CLEAR;
+                injector3OffPeriodCnt = CLEAR;
+                injector4OffPeriodCnt = CLEAR;
+
+                injector1CycleCnt = CLEAR;
+                injector2CycleCnt = CLEAR;
+                injector3CycleCnt = CLEAR;
+                injector4CycleCnt = CLEAR;
+                                              
+                // Initialize Injectors values to configured values          
+                injector1OnPeriod = fieldValve[field_No].injector1OnPeriod; 
+                injector2OnPeriod = fieldValve[field_No].injector2OnPeriod; 
+                injector3OnPeriod = fieldValve[field_No].injector3OnPeriod; 
+                injector4OnPeriod = fieldValve[field_No].injector4OnPeriod; 
+
+                injector1OffPeriod = fieldValve[field_No].injector1OffPeriod; 
+                injector2OffPeriod = fieldValve[field_No].injector2OffPeriod; 
+                injector3OffPeriod = fieldValve[field_No].injector3OffPeriod; 
+                injector4OffPeriod = fieldValve[field_No].injector4OffPeriod; 
+
+                injector1Cycle = fieldValve[field_No].injector1Cycle;
+                injector2Cycle = fieldValve[field_No].injector2Cycle;
+                injector3Cycle = fieldValve[field_No].injector3Cycle;
+                injector4Cycle = fieldValve[field_No].injector4Cycle;
+                
+				// Initialize injector cycle
+                if(injector1OnPeriod > 0) {
+                    field9ValveControl = ON;
+                    injector1OnPeriodCnt++;
+                }
+                if(injector2OnPeriod > 0) {
+                    field10ValveControl = ON;
+                    injector2OnPeriodCnt++;
+                }
+                if(injector3OnPeriod > 0) {
+                    field11ValveControl = ON;
+                    injector3OnPeriodCnt++;
+                }
+                if(injector4OnPeriod > 0) {
+                    field12ValveControl = ON;
+                    injector4OnPeriodCnt++;
+                }						                
                 fieldValve[field_No].fertigationStage = injectPeriod;
                 if (fieldValve[field_No].fertigationValveInterrupted) {
                     fieldValve[field_No].fertigationValveInterrupted = false;
@@ -4039,7 +4205,7 @@ void actionsOnSleepCountFinish(void) {
                 myMsDelay(100);
                 saveActiveSleepCountIntoEeprom(); // Save current valve on time 
                 myMsDelay(100);
-
+                
                 /***************************/
                 // for field no. 01 to 09
                 if (field_No<9){
@@ -4068,7 +4234,12 @@ void actionsOnSleepCountFinish(void) {
             // Upon completing fertigation on period sleep, switch off fertigation valve
             else if (fieldValve[field_No].status == ON && fieldValve[field_No].isFertigationEnabled && fieldValve[field_No].fertigationStage == injectPeriod) {
                 myMsDelay(1000);
-                fertigationValveControl = OFF; // switch off fertigation valve for given field after on period
+                fertigationValveControl = OFF; // switch off fertigation valve for given field after on period                
+                //Switch off all Injectors after completing fertigation on Period
+                field9ValveControl = OFF;
+                field10ValveControl = OFF;
+                field11ValveControl = OFF;
+                field12ValveControl = OFF;               
                 fieldValve[field_No].fertigationStage = flushPeriod;
                 fieldValve[field_No].fertigationInstance--;
                 if(fieldValve[field_No].fertigationInstance == 0) {
@@ -4092,19 +4263,50 @@ void actionsOnSleepCountFinish(void) {
                     temporaryBytesArray[1] = field_No + 39; // To store field no. of valve in action 
                 }
                 /***************************/
-
-                /***************************/
-                sendSms(SmsFert6, userMobileNo, fieldNoRequired); // Acknowledge user about successful Fertigation stopped action
-                #ifdef SMS_DELIVERY_REPORT_ON_H
-                sleepCount = 2; // Load sleep count for SMS transmission action
-                sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
-                setBCDdigit(0x05,0);
-                deepSleep(); // Sleep until message transmission acknowledge SMS is received from service provider 
-                setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
-                #endif
-                /***************************/
-                /*Send sms*/
-                break;
+				if (fertigationDry) { // Fertigation executed with low fertigation level  detection
+                    fertigationDry = false;
+                    /***************************/
+                    sendSms(SmsFert8, userMobileNo, fieldNoRequired); // Acknowledge user about Fertigation stopped action due to low fertilizer level
+                    #ifdef SMS_DELIVERY_REPORT_ON_H
+                    sleepCount = 2; // Load sleep count for SMS transmission action
+                    sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
+                    setBCDdigit(0x05,0);
+                    deepSleep(); // Sleep until message transmission acknowledge SMS is received from service provider 
+                    setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
+                    #endif
+                    /***************************/
+                    /*Send sms*/
+                    break;
+                }
+                else if (moistureSensorFailed) { // Fertigation executed with level sensor failure
+                    moistureSensorFailed = false;
+                    /***************************/
+                    sendSms(SmsFert7, userMobileNo, fieldNoRequired); // Acknowledge user about successful Fertigation stopped action
+                    #ifdef SMS_DELIVERY_REPORT_ON_H
+                    sleepCount = 2; // Load sleep count for SMS transmission action
+                    sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
+                    setBCDdigit(0x05,0);
+                    deepSleep(); // Sleep until message transmission acknowledge SMS is received from service provider 
+                    setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
+                    #endif
+                    /***************************/
+                    /*Send sms*/
+                    break;
+                }
+                else {  // Fertigation executed without low level detection and without level sensor failure
+                    /***************************/
+                    sendSms(SmsFert6, userMobileNo, fieldNoRequired); // Acknowledge user about successful Fertigation stopped action
+                    #ifdef SMS_DELIVERY_REPORT_ON_H
+                    sleepCount = 2; // Load sleep count for SMS transmission action
+                    sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
+                    setBCDdigit(0x05,0);
+                    deepSleep(); // Sleep until message transmission acknowledge SMS is received from service provider 
+                    setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
+                    #endif
+                    /***************************/
+                    /*Send sms*/
+                    break;
+                }
             }
             // upon completing entire field valve on period switch off field valve
             else if (fieldValve[field_No].status == ON) {
@@ -4116,7 +4318,7 @@ void actionsOnSleepCountFinish(void) {
                     fieldValve[field_No].cyclesExecuted++; //Cycles execution record
                 }
                 valveDue = false;
-                valveExecuted = true;
+                valveExecuted = true;                    // Valve successfully executed 
                 startFieldNo = field_No+1;               // scan for next field no.
                 myMsDelay(100);
                 saveIrrigationValveNoIntoEeprom(field_No);
@@ -4149,12 +4351,17 @@ void actionsOnSleepCountFinish(void) {
                     }
                     if (fieldValve[field_No].fertigationStage == injectPeriod) {
                         fertigationValveControl = OFF; // switch off fertigation valve for given field after on period
+						//Switch off all Injectors after completing fertigation on Period
+                        field9ValveControl = OFF;
+                        field10ValveControl = OFF;
+                        field11ValveControl = OFF;
+                        field12ValveControl = OFF;																 
                         fieldValve[field_No].fertigationStage = OFF;
                         saveFertigationValveStatusIntoEeprom(eepromAddress[field_No], &fieldValve[field_No]);
                         myMsDelay(100);
                     }
                     valveDue = false;
-                    valveExecuted = true;
+                    valveExecuted = true;                    // complete valve for hold
                     startFieldNo = field_No+1;               // scan for next field no.
                     myMsDelay(100);
                     saveIrrigationValveNoIntoEeprom(field_No);
@@ -4174,6 +4381,11 @@ void actionsOnSleepCountFinish(void) {
                 }
                 else if (fieldValve[field_No].fertigationStage == injectPeriod) {
                     fertigationValveControl = OFF; // switch off fertigation valve for given field after on period
+					//Switch off all Injectors after completing fertigation on Period
+                    field9ValveControl = OFF;
+                    field10ValveControl = OFF;
+                    field11ValveControl = OFF;
+                    field12ValveControl = OFF;																 
                     fieldValve[field_No].fertigationStage = OFF;
                     saveFertigationValveStatusIntoEeprom(eepromAddress[field_No], &fieldValve[field_No]);
                     myMsDelay(100);
@@ -4198,8 +4410,10 @@ The purpose of this function is to perform actions after valve is due.
 ***************************************************************************************************************************/
 void actionsOnDueValve(unsigned char field_No) {
     unsigned char last_Field_No = CLEAR;
+    wetSensor = false;
     // Check if Field is wet
-    if (isFieldMoistureSensorWet(field_No)) {
+    if (isFieldMoistureSensorWetLora(field_No)) {  //Skip current valve execution and go for next
+        wetSensor = true;
         valveDue = false;
         fieldValve[field_No].status = OFF;
         fieldValve[field_No].cyclesExecuted = fieldValve[field_No].cycles;
@@ -4245,61 +4459,111 @@ void actionsOnDueValve(unsigned char field_No) {
     else if (!phaseFailure()){
         myMsDelay(100);
         activateValve(field_No); // Activate valve for field
-        myMsDelay(100);
-
-        //Switch ON Fertigation valve interrupted due to power on same day
-        if (fieldValve[field_No].fertigationStage == injectPeriod) {
-            myMsDelay(1000);
-            fertigationValveControl = ON;
-
-            /***************************/
-            // for field no. 01 to 09
-            if (field_No<9){
-                temporaryBytesArray[0] = 48; // To store field no. of valve in action 
-                temporaryBytesArray[1] = field_No + 49; // To store field no. of valve in action 
-            }// for field no. 10 to 12
-            else if (field_No > 8 && field_No < 12) {
-                temporaryBytesArray[0] = 49; // To store field no. of valve in action 
-                temporaryBytesArray[1] = field_No + 39; // To store field no. of valve in action 
-            }
-            /***************************/
-
-            /***************************/
-            sendSms(SmsFert5, userMobileNo, fieldNoRequired); // Acknowledge user about successful Fertigation started action
-            #ifdef SMS_DELIVERY_REPORT_ON_H
-            sleepCount = 2; // Load sleep count for SMS transmission action
-            sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
-            setBCDdigit(0x05,0);
-            deepSleep(); // Sleep until message transmission acknowledge SMS is received from service provider           
-            setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
-            #endif
-            /***************************/
-            /*Send sms*/
-
-        }
-        if (fieldValve[field_No].cyclesExecuted == fieldValve[field_No].cycles) {
-            /******** Calculate and save Field Valve next Due date**********/
-            getDueDate(fieldValve[field_No].offPeriod); // calculate next due date of valve
-            fieldValve[field_No].nextDueDD = (unsigned char)dueDD;
-            fieldValve[field_No].nextDueMM = dueMM;
-            fieldValve[field_No].nextDueYY = dueYY;
+        if (!LoraConnectionFailed) { // Skip next block if activation is failed
             myMsDelay(100);
-            saveIrrigationValveDueTimeIntoEeprom(eepromAddress[field_No], &fieldValve[field_No]);
-            myMsDelay(100);
-            /***********************************************/
-        }
 
-        // DeActivate previous executed field valve
-        if (valveExecuted) {
-            last_Field_No = readFieldIrrigationValveNoFromEeprom();
-            if(last_Field_No != field_No) {
-               deActivateValve(last_Field_No); // Successful Deactivate valve 
+            //Switch ON Fertigation valve interrupted due to power on same day
+            if (fieldValve[field_No].fertigationStage == injectPeriod) {
+				powerOnMotor(); // Power ON Motor							 
+                myMsDelay(1000);
+                fertigationValveControl = ON;
+				// Injector code
+				// Initialize all count to zero
+				injector1OnPeriodCnt = CLEAR;
+				injector2OnPeriodCnt = CLEAR;
+				injector3OnPeriodCnt = CLEAR;
+				injector4OnPeriodCnt = CLEAR;
+
+				injector1OffPeriodCnt = CLEAR; 
+				injector2OffPeriodCnt = CLEAR;
+				injector3OffPeriodCnt = CLEAR;
+				injector4OffPeriodCnt = CLEAR;
+
+				injector1CycleCnt = CLEAR;
+				injector2CycleCnt = CLEAR;
+				injector3CycleCnt = CLEAR;
+				injector4CycleCnt = CLEAR;
+
+				// Initialize Injectors values to configured values
+				injector1OnPeriod = fieldValve[field_No].injector1OnPeriod; 
+				injector2OnPeriod = fieldValve[field_No].injector2OnPeriod; 
+				injector3OnPeriod = fieldValve[field_No].injector3OnPeriod; 
+				injector4OnPeriod = fieldValve[field_No].injector4OnPeriod; 
+
+				injector1OffPeriod = fieldValve[field_No].injector1OffPeriod; 
+				injector2OffPeriod = fieldValve[field_No].injector2OffPeriod; 
+				injector3OffPeriod = fieldValve[field_No].injector3OffPeriod; 
+				injector4OffPeriod = fieldValve[field_No].injector4OffPeriod; 
+
+				injector1Cycle = fieldValve[field_No].injector1Cycle;
+				injector2Cycle = fieldValve[field_No].injector2Cycle;
+				injector3Cycle = fieldValve[field_No].injector3Cycle;
+				injector4Cycle = fieldValve[field_No].injector4Cycle;
+
+				// Initialize injector cycle
+				if(injector1OnPeriod > 0) {
+					field9ValveControl = ON;
+					injector1OnPeriodCnt++;
+				}
+				if(injector2OnPeriod > 0) {
+					field10ValveControl = ON;
+					injector2OnPeriodCnt++;
+				}
+				if(injector3OnPeriod > 0) {
+					field11ValveControl = ON;
+					injector3OnPeriodCnt++;
+				}
+				if(injector4OnPeriod > 0) {
+					field12ValveControl = ON;
+					injector4OnPeriodCnt++;
+				}		   
+                /***************************/
+                // for field no. 01 to 09
+                if (field_No<9){
+                    temporaryBytesArray[0] = 48; // To store field no. of valve in action 
+                    temporaryBytesArray[1] = field_No + 49; // To store field no. of valve in action 
+                }// for field no. 10 to 12
+                else if (field_No > 8 && field_No < 12) {
+                    temporaryBytesArray[0] = 49; // To store field no. of valve in action 
+                    temporaryBytesArray[1] = field_No + 39; // To store field no. of valve in action 
+                }
+                /***************************/
+
+                /***************************/
+                sendSms(SmsFert5, userMobileNo, fieldNoRequired); // Acknowledge user about successful Fertigation started action
+                #ifdef SMS_DELIVERY_REPORT_ON_H
+                sleepCount = 2; // Load sleep count for SMS transmission action
+                sleepCountChangedDueToInterrupt = true; // Sleep count needs to read from memory after SMS transmission
+                setBCDdigit(0x05,0);
+                deepSleep(); // Sleep until message transmission acknowledge SMS is received from service provider           
+                setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
+                #endif
+                /***************************/
+                /*Send sms*/
+
             }
-            valveExecuted = false;            
-        } 
-        // Switch on Motor for First Valve activation
-        else {
-            powerOnMotor(); // Power On Motor
+			else if (valveExecuted) { // DeActivate previous executed field valve
+				last_Field_No = readFieldIrrigationValveNoFromEeprom();
+				if(last_Field_No != field_No) { // if not multiple cycles for same valve
+					deActivateValve(last_Field_No); // Successful Deactivate valve 
+				}
+				valveExecuted = false;            
+			} 
+			else { // Switch on Motor for First Valve activation
+				powerOnMotor(); // Power ON Motor
+			}
+			
+            if (fieldValve[field_No].cyclesExecuted == fieldValve[field_No].cycles) {
+                /******** Calculate and save Field Valve next Due date**********/
+                getDueDate(fieldValve[field_No].offPeriod); // calculate next due date of valve
+                fieldValve[field_No].nextDueDD = (unsigned char)dueDD;
+                fieldValve[field_No].nextDueMM = dueMM;
+                fieldValve[field_No].nextDueYY = dueYY;
+                myMsDelay(100);
+                saveIrrigationValveDueTimeIntoEeprom(eepromAddress[field_No], &fieldValve[field_No]);
+                myMsDelay(100);
+                /***********************************************/
+            }
         }
     }
 }

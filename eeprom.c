@@ -81,17 +81,19 @@ void saveIrrigationValveValuesIntoEeprom(unsigned int address, struct FIELDVALVE
     myMsDelay(50);
     eepromWrite(address + 3, (fieldptr->wetValue >> 8) & 0xFF);
     myMsDelay(50);
-    eepromWrite(address + 4, fieldptr->onPeriod);
+    eepromWrite(address + 4, fieldptr->onPeriod & 0xFF);
     myMsDelay(50);
-    eepromWrite(address + 5, fieldptr->offPeriod);
+    eepromWrite(address + 5, (fieldptr->onPeriod >> 8) & 0xFF);
     myMsDelay(50);
-    eepromWrite(address + 6, fieldptr->motorOnTimeHour);
+    eepromWrite(address + 30, fieldptr->offPeriod);
     myMsDelay(50);
-    eepromWrite(address + 7, fieldptr->motorOnTimeMinute);
+    eepromWrite(address + 31, fieldptr->motorOnTimeHour);
     myMsDelay(50);
-    eepromWrite(address + 14, fieldptr->priority);
+    eepromWrite(address + 32, fieldptr->motorOnTimeMinute);
     myMsDelay(50);
-    eepromWrite(address + 16, fieldptr->cycles);
+    eepromWrite(address + 37, fieldptr->priority);
+    myMsDelay(50);
+    eepromWrite(address + 39, fieldptr->cycles);
     myMsDelay(50);
     //setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
 #ifdef DEBUG_MODE_ON_H
@@ -115,17 +117,61 @@ void saveFertigationValveValuesIntoEeprom(unsigned int address, struct FIELDVALV
 #endif
     //setBCDdigit(0x04,0); //  "4." BCD Indication for EEPROM Memory Write Operation
     myMsDelay(50);
-    eepromWrite(address + 11, fieldptr->fertigationDelay);
+    eepromWrite(address + 6, fieldptr->fertigationDelay & 0xFF);
     myMsDelay(50);
-    eepromWrite(address + 12, fieldptr->fertigationONperiod);
+    eepromWrite(address + 7, (fieldptr->fertigationDelay >> 8) & 0xFF);
     myMsDelay(50);
-    eepromWrite(address + 13, fieldptr->fertigationInstance);
+    eepromWrite(address + 8, fieldptr->fertigationONperiod & 0xFF);
     myMsDelay(50);
-    eepromWrite(address + 15, fieldptr->fertigationStage);
+    eepromWrite(address + 9, (fieldptr->fertigationONperiod >> 8) & 0xFF);
     myMsDelay(50);
-    eepromWrite(address + 20, fieldptr->isFertigationEnabled);
+    eepromWrite(address + 10, fieldptr->injector1OnPeriod & 0xFF);
     myMsDelay(50);
-    eepromWrite(address + 21, fieldptr->fertigationValveInterrupted);
+    eepromWrite(address + 11, (fieldptr->injector1OnPeriod >> 8) & 0xFF);
+    myMsDelay(50);
+    eepromWrite(address + 12, fieldptr->injector2OnPeriod & 0xFF);
+    myMsDelay(50);
+    eepromWrite(address + 13, (fieldptr->injector2OnPeriod >> 8) & 0xFF);
+    myMsDelay(50);
+    eepromWrite(address + 14, fieldptr->injector3OnPeriod & 0xFF);
+    myMsDelay(50);
+    eepromWrite(address + 15, (fieldptr->injector3OnPeriod >> 8) & 0xFF);
+    myMsDelay(50);
+    eepromWrite(address + 16, fieldptr->injector4OnPeriod & 0xFF);
+    myMsDelay(50);
+    eepromWrite(address + 17, (fieldptr->injector4OnPeriod >> 8) & 0xFF);
+    myMsDelay(50);
+    eepromWrite(address + 18, fieldptr->injector1OffPeriod & 0xFF);
+    myMsDelay(50);
+    eepromWrite(address + 19, (fieldptr->injector1OffPeriod >> 8) & 0xFF);
+    myMsDelay(50);
+    eepromWrite(address + 20, fieldptr->injector2OffPeriod & 0xFF);
+    myMsDelay(50);
+    eepromWrite(address + 21, (fieldptr->injector2OffPeriod >> 8) & 0xFF);
+    myMsDelay(50);
+    eepromWrite(address + 22, fieldptr->injector3OffPeriod & 0xFF);
+    myMsDelay(50);
+    eepromWrite(address + 23, (fieldptr->injector3OffPeriod >> 8) & 0xFF);
+    myMsDelay(50);
+    eepromWrite(address + 24, fieldptr->injector4OffPeriod & 0xFF);
+    myMsDelay(50);
+    eepromWrite(address + 25, (fieldptr->injector4OffPeriod >> 8) & 0xFF);
+    myMsDelay(50);
+    eepromWrite(address + 26, fieldptr->injector1Cycle);
+    myMsDelay(50);
+    eepromWrite(address + 27, fieldptr->injector2Cycle);
+    myMsDelay(50);
+    eepromWrite(address + 28, fieldptr->injector3Cycle);
+    myMsDelay(50);
+    eepromWrite(address + 29, fieldptr->injector4Cycle);
+    myMsDelay(50);
+    eepromWrite(address + 36, fieldptr->fertigationInstance);
+    myMsDelay(50);
+    eepromWrite(address + 38, fieldptr->fertigationStage);
+    myMsDelay(50);
+    eepromWrite(address + 43, fieldptr->isFertigationEnabled);
+    myMsDelay(50);
+    eepromWrite(address + 44, fieldptr->fertigationValveInterrupted);
     myMsDelay(50);
     //setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
 #ifdef DEBUG_MODE_ON_H
@@ -150,11 +196,11 @@ void saveIrrigationValveDueTimeIntoEeprom(unsigned int address, struct FIELDVALV
 #endif
     //setBCDdigit(0x04,0); //  "4." BCD Indication for EEPROM Memory Write Operation
     myMsDelay(50);
-    eepromWrite(address + 8, fieldptr->nextDueDD);
+    eepromWrite(address + 33, fieldptr->nextDueDD);
     myMsDelay(50);
-    eepromWrite(address + 9, fieldptr->nextDueMM);
+    eepromWrite(address + 34, fieldptr->nextDueMM);
     myMsDelay(50);
-    eepromWrite(address + 10, fieldptr->nextDueYY);
+    eepromWrite(address + 35, fieldptr->nextDueYY);
     myMsDelay(50);
     //setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
 #ifdef DEBUG_MODE_ON_H
@@ -179,7 +225,7 @@ void saveIrrigationValveOnOffStatusIntoEeprom(unsigned int address, struct FIELD
 #endif
     //setBCDdigit(0x04,0); //  "4." BCD Indication for EEPROM Memory Write Operation
     myMsDelay(50);
-    eepromWrite(address + 18, fieldptr->status);
+    eepromWrite(address + 41, fieldptr->status);
     myMsDelay(50);
     //setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
 #ifdef DEBUG_MODE_ON_H
@@ -204,7 +250,7 @@ void saveIrrigationValveCycleStatusIntoEeprom(unsigned int address, struct FIELD
 #endif
     //setBCDdigit(0x04,0); //  "4." BCD Indication for EEPROM Memory Write Operation
     myMsDelay(50);
-    eepromWrite(address + 17, fieldptr->cyclesExecuted);
+    eepromWrite(address + 40, fieldptr->cyclesExecuted);
     myMsDelay(50);
     //setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
 #ifdef DEBUG_MODE_ON_H
@@ -229,11 +275,11 @@ void saveFertigationValveStatusIntoEeprom(unsigned int address, struct FIELDVALV
 #endif
     //setBCDdigit(0x04,0); //  "4." BCD Indication for EEPROM Memory Write Operation
     myMsDelay(50);
-    eepromWrite(address + 13, fieldptr->fertigationInstance);
+    eepromWrite(address + 36, fieldptr->fertigationInstance);
     myMsDelay(50);
-    eepromWrite(address + 15, fieldptr->fertigationStage);
+    eepromWrite(address + 38, fieldptr->fertigationStage);
     myMsDelay(50);
-    eepromWrite(address + 21, fieldptr->fertigationValveInterrupted);
+    eepromWrite(address + 44, fieldptr->fertigationValveInterrupted);
     myMsDelay(50);
     //setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
 #ifdef DEBUG_MODE_ON_H
@@ -258,7 +304,7 @@ void saveIrrigationValveConfigurationStatusIntoEeprom(unsigned int address, stru
 #endif
     //setBCDdigit(0x04,0); //  "4." BCD Indication for EEPROM Memory Write Operation
     myMsDelay(50);
-    eepromWrite(address + 19, fieldptr->isConfigured);
+    eepromWrite(address + 42, fieldptr->isConfigured);
     myMsDelay(50);
     //setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
 #ifdef DEBUG_MODE_ON_H
@@ -294,41 +340,132 @@ void readValveDataFromEeprom(unsigned int address, struct FIELDVALVE *fieldptr){
     higher8bits <<= 8;
     higher8bits &= 0xFF00;
     fieldptr->wetValue = ((lower8bits) | (higher8bits));
-    fieldptr->onPeriod = eepromRead(address + 4);
+    lower8bits = eepromRead(address + 4);
     myMsDelay(50);
-    fieldptr->offPeriod = eepromRead(address + 5);
+    lower8bits &= 0x00FF;
+    higher8bits = eepromRead(address + 5);
     myMsDelay(50);
-    fieldptr->motorOnTimeHour = eepromRead(address + 6);
+    higher8bits <<= 8;
+    higher8bits &= 0xFF00;
+    fieldptr->onPeriod = ((lower8bits) | (higher8bits));
     myMsDelay(50);
-    fieldptr->motorOnTimeMinute = eepromRead(address + 7);
+    lower8bits = eepromRead(address + 6);
     myMsDelay(50);
-    fieldptr->nextDueDD = eepromRead(address + 8);
+    lower8bits &= 0x00FF;
+    higher8bits = eepromRead(address + 7);
+    higher8bits <<= 8;
+    higher8bits &= 0xFF00;
+    fieldptr->fertigationDelay = ((lower8bits) | (higher8bits));
     myMsDelay(50);
-    fieldptr->nextDueMM = eepromRead(address + 9);
+    lower8bits = eepromRead(address + 8);
     myMsDelay(50);
-    fieldptr->nextDueYY = eepromRead(address + 10);
+    lower8bits &= 0x00FF;
+    higher8bits = eepromRead(address + 9);
+    higher8bits <<= 8;
+    higher8bits &= 0xFF00;
+    fieldptr->fertigationONperiod = ((lower8bits) | (higher8bits));
     myMsDelay(50);
-    fieldptr->fertigationDelay = eepromRead(address + 11);
+    lower8bits = eepromRead(address + 10);
     myMsDelay(50);
-    fieldptr->fertigationONperiod = eepromRead(address + 12);
+    lower8bits &= 0x00FF;
+    higher8bits = eepromRead(address + 11);
+    higher8bits <<= 8;
+    higher8bits &= 0xFF00;
+    fieldptr->injector1OnPeriod = ((lower8bits) | (higher8bits));
     myMsDelay(50);
-    fieldptr->fertigationInstance = eepromRead(address + 13);
+    lower8bits = eepromRead(address + 12);
     myMsDelay(50);
-    fieldptr->priority = eepromRead(address + 14);
+    lower8bits &= 0x00FF;
+    higher8bits = eepromRead(address + 13);
+    higher8bits <<= 8;
+    higher8bits &= 0xFF00;
+    fieldptr->injector2OnPeriod = ((lower8bits) | (higher8bits));
     myMsDelay(50);
-    fieldptr->fertigationStage = eepromRead(address + 15);
+    lower8bits = eepromRead(address + 14);
     myMsDelay(50);
-    fieldptr->cycles = eepromRead(address + 16);
+    lower8bits &= 0x00FF;
+    higher8bits = eepromRead(address + 15);
+    higher8bits <<= 8;
+    higher8bits &= 0xFF00;
+    fieldptr->injector3OnPeriod = ((lower8bits) | (higher8bits));
     myMsDelay(50);
-    fieldptr->cyclesExecuted = eepromRead(address + 17);
+    lower8bits = eepromRead(address + 16);
     myMsDelay(50);
-    fieldptr->status = eepromRead(address + 18);
+    lower8bits &= 0x00FF;
+    higher8bits = eepromRead(address + 17);
+    higher8bits <<= 8;
+    higher8bits &= 0xFF00;
+    fieldptr->injector4OnPeriod = ((lower8bits) | (higher8bits));
     myMsDelay(50);
-    fieldptr->isConfigured = eepromRead(address + 19);
+    lower8bits = eepromRead(address + 18);
     myMsDelay(50);
-    fieldptr->isFertigationEnabled = eepromRead(address + 20);
+    lower8bits &= 0x00FF;
+    higher8bits = eepromRead(address + 19);
+    higher8bits <<= 8;
+    higher8bits &= 0xFF00;
+    fieldptr->injector1OffPeriod = ((lower8bits) | (higher8bits));
     myMsDelay(50);
-    fieldptr->fertigationValveInterrupted = eepromRead(address + 21);
+    lower8bits = eepromRead(address + 20);
+    myMsDelay(50);
+    lower8bits &= 0x00FF;
+    higher8bits = eepromRead(address + 21);
+    higher8bits <<= 8;
+    higher8bits &= 0xFF00;
+    fieldptr->injector2OffPeriod = ((lower8bits) | (higher8bits));
+    myMsDelay(50);
+    lower8bits = eepromRead(address + 22);
+    myMsDelay(50);
+    lower8bits &= 0x00FF;
+    higher8bits = eepromRead(address + 23);
+    higher8bits <<= 8;
+    higher8bits &= 0xFF00;
+    fieldptr->injector3OffPeriod = ((lower8bits) | (higher8bits));
+    myMsDelay(50);
+    lower8bits = eepromRead(address + 24);
+    myMsDelay(50);
+    lower8bits &= 0x00FF;
+    higher8bits = eepromRead(address + 25);
+    higher8bits <<= 8;
+    higher8bits &= 0xFF00;
+    fieldptr->injector4OffPeriod = ((lower8bits) | (higher8bits));
+    myMsDelay(50);
+    fieldptr->injector1Cycle = eepromRead(address + 26);
+    myMsDelay(50);
+    fieldptr->injector2Cycle = eepromRead(address + 27);
+    myMsDelay(50);
+    fieldptr->injector3Cycle = eepromRead(address + 28);
+    myMsDelay(50);
+    fieldptr->injector4Cycle = eepromRead(address + 29);
+    myMsDelay(50);    
+    fieldptr->offPeriod = eepromRead(address + 30);
+    myMsDelay(50);
+    fieldptr->motorOnTimeHour = eepromRead(address + 31);
+    myMsDelay(50);
+    fieldptr->motorOnTimeMinute = eepromRead(address + 32);
+    myMsDelay(50);
+    fieldptr->nextDueDD = eepromRead(address + 33);
+    myMsDelay(50);
+    fieldptr->nextDueMM = eepromRead(address + 34);
+    myMsDelay(50);
+    fieldptr->nextDueYY = eepromRead(address + 35);
+    myMsDelay(50);
+    fieldptr->fertigationInstance = eepromRead(address + 36);
+    myMsDelay(50);
+    fieldptr->priority = eepromRead(address + 37);
+    myMsDelay(50);
+    fieldptr->fertigationStage = eepromRead(address + 38);
+    myMsDelay(50);
+    fieldptr->cycles = eepromRead(address + 39);
+    myMsDelay(50);
+    fieldptr->cyclesExecuted = eepromRead(address + 40);
+    myMsDelay(50);
+    fieldptr->status = eepromRead(address + 41);
+    myMsDelay(50);
+    fieldptr->isConfigured = eepromRead(address + 42);
+    myMsDelay(50);
+    fieldptr->isFertigationEnabled = eepromRead(address + 43);
+    myMsDelay(50);
+    fieldptr->fertigationValveInterrupted = eepromRead(address + 44);
     myMsDelay(50);    
     //setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
 }
@@ -536,7 +673,6 @@ void readMotorLoadValuesFromEeprom(void){
     myMsDelay(50);
     lower8bits &= 0x00FF;
     higher8bits = eepromRead(eepromAddress[forSystem] + 12);
-    myMsDelay(50);
     higher8bits <<= 8;
     higher8bits &= 0xFF00;
     fullLoadCutOff = ((lower8bits) | (higher8bits));
@@ -773,9 +909,11 @@ void saveFiltrationSequenceData(void) {
     myMsDelay(50);
     eepromWrite(eepromAddress[forFiltration] + 3, filtrationOnTime);
     myMsDelay(50);
-    eepromWrite(eepromAddress[forFiltration] + 4, filtrationSeperationTime);
+    eepromWrite(eepromAddress[forFiltration] + 4, filtrationSeperationTime & 0xFF); // LOWER 8 BIT
     myMsDelay(50);
-    eepromWrite(eepromAddress[forFiltration] + 5, filtrationEnabled);
+    eepromWrite(eepromAddress[forFiltration] + 5, (filtrationSeperationTime >> 8) & 0xFF); //HIGHER 8 BIT
+    myMsDelay(50);
+    eepromWrite(eepromAddress[forFiltration] + 6, filtrationEnabled);
     myMsDelay(50);
     //setBCDdigit(0x0F,0); // Blank "." BCD Indication for Normal Condition
 #ifdef DEBUG_MODE_ON_H
@@ -861,9 +999,15 @@ void loadDataFromEeprom(void) {
     myMsDelay(50);
     filtrationOnTime = eepromRead(eepromAddress[forFiltration]+3);
     myMsDelay(50);
-    filtrationSeperationTime = eepromRead(eepromAddress[forFiltration]+4);
+    lower8bits = eepromRead(eepromAddress[forFiltration] + 4);
     myMsDelay(50);
-    filtrationEnabled = eepromRead(eepromAddress[forFiltration]+5);
+    lower8bits &= 0x00FF;
+    higher8bits = eepromRead(eepromAddress[forFiltration] + 5);
+    higher8bits <<= 8;
+    higher8bits &= 0xFF00;
+    filtrationSeperationTime = ((lower8bits) | (higher8bits));
+    myMsDelay(50);
+    filtrationEnabled = eepromRead(eepromAddress[forFiltration]+6);
     myMsDelay(50);
     readMotorLoadValuesFromEeprom();
     myMsDelay(50);

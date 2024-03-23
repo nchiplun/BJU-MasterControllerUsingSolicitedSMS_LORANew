@@ -24,10 +24,10 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=AutoIrrigation_LoraNcDevBranch.X
+PROJECTNAME=BJU-MasterControllerUsingSolicitedSMS_LORANew
 
 # Active Configuration
-DEFAULTCONF=18f66k40
+DEFAULTCONF=18f67k40
 CONF=${DEFAULTCONF}
 
 # All Configurations

@@ -22,7 +22,7 @@ void configureController(void);                 // System configuration
 void deepSleep(void);                           // Sleep Activity
 _Bool isSystemReady(void);                      // To check system is ready
 _Bool isNumber(unsigned char);                  // To check if variable is number
-_Bool isBase64String(char *);                   // To check if string is base 64 encoded                
+_Bool isBase64String(unsigned char *);                   // To check if string is base 64 encoded                
 void extractReceivedSms(void);                  // To extract data received in GSM
 unsigned int days(unsigned char, unsigned char); // To calculate no. of days between 2 dates of calender
 void getDateFromGSM(void);                      // To fetch current time stamp from GSM 
@@ -32,7 +32,8 @@ void activateValve(unsigned char);              // Trigger valve
 void deActivateValve(unsigned char);            // Stop valve
 void powerOnMotor(void);						// Start motor
 void powerOffMotor(void);						// Stop motor
-_Bool isFieldMoistureSensorWet(unsigned char);	// Measure moisture level for field 1 
+_Bool isFieldMoistureSensorWetLora(unsigned char);	// Measure moisture level for selected field through lora 
+_Bool isFieldMoistureSensorWet(unsigned char);	// Measure moisture level for selected field through onboard sensor 
 _Bool isMotorInNoLoad(void);                    // Measure motor ct current
 void calibrateMotorCurrent(unsigned char, unsigned char);      // Calibrate Motor rated current
 void doDryRunAction(void);                      // Take action after detecting Dry Run

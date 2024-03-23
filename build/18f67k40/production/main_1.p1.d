@@ -5,4 +5,4 @@ variableDefinitions.h  \
 controllerActions.h  \
 eeprom.h  \
 gsm.h  \
-serialMonitor.h 
+lora.h 

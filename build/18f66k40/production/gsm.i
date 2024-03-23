@@ -24431,20 +24431,32 @@ int toupper_l(int, locale_t);
 # 1 "./variableDefinitions.h" 1
 # 43 "./variableDefinitions.h"
 # 1 "./congfigBits.h" 1
-# 44 "./variableDefinitions.h" 2
-# 144 "./variableDefinitions.h"
+# 43 "./variableDefinitions.h" 2
+# 143 "./variableDefinitions.h"
 struct FIELDVALVE {
     unsigned int dryValue;
     unsigned int wetValue;
-    unsigned char onPeriod;
+    unsigned int onPeriod;
+    unsigned int fertigationDelay;
+    unsigned int fertigationONperiod;
+    unsigned int injector1OnPeriod;
+    unsigned int injector2OnPeriod;
+    unsigned int injector3OnPeriod;
+    unsigned int injector4OnPeriod;
+    unsigned int injector1OffPeriod;
+    unsigned int injector2OffPeriod;
+    unsigned int injector3OffPeriod;
+    unsigned int injector4OffPeriod;
+    unsigned char injector1Cycle;
+    unsigned char injector2Cycle;
+    unsigned char injector3Cycle;
+    unsigned char injector4Cycle;
     unsigned char offPeriod;
     unsigned char motorOnTimeHour;
     unsigned char motorOnTimeMinute;
     unsigned char nextDueDD;
     unsigned char nextDueMM;
     unsigned char nextDueYY;
-    unsigned char fertigationDelay;
-    unsigned char fertigationONperiod;
     unsigned char fertigationInstance;
  unsigned char priority;
     unsigned char fertigationStage;
@@ -24458,44 +24470,88 @@ struct FIELDVALVE {
 
 
 
+#pragma idata fieldValve
+struct FIELDVALVE fieldValve[12] = {0};
+
+
+
 
 #pragma idata eepromAddress
-const unsigned int eepromAddress[16] = {0x0000, 0x0020, 0x0040, 0x0060, 0x0080, 0x00A0, 0x00C0, 0x00E0, 0x0100, 0x0120, 0x0140, 0x0160, 0x0180, 0x0190, 0x01A0, 0x1B0};
-# 216 "./variableDefinitions.h"
-_Bool systemAuthenticated = 0;
-_Bool newSMSRcvd = 0;
-_Bool checkMoistureSensor = 0;
-_Bool moistureSensorFailed = 0;
-_Bool controllerCommandExecuted = 0;
-_Bool currentDateCalled = 0;
-_Bool sleepCountChangedDueToInterrupt = 0;
-_Bool inSleepMode = 0;
-_Bool dryRunDetected = 0;
-_Bool lowPhaseCurrentDetected = 0;
-_Bool valveDue = 0;
-_Bool valveExecuted = 0;
-_Bool onHold = 0;
-_Bool dueValveChecked = 0;
-_Bool correctDate = 0;
-_Bool phaseFailureDetected = 0;
-_Bool lowRTCBatteryDetected = 0;
-_Bool rtcBatteryLevelChecked = 0;
-_Bool phaseFailureActionTaken = 0;
-_Bool filtrationEnabled = 0;
-_Bool cmtiCmd = 0;
-_Bool DeviceBurnStatus = 0;
-_Bool gsmSetToLocalTime = 0;
-
-
-
-
+const unsigned int eepromAddress[16] = {0x0000, 0x0030, 0x0060, 0x0090, 0x00C0, 0x00F0, 0x0120, 0x0150, 0x0180, 0x01B0, 0x01E0, 0x0210, 0x0240, 0x0270, 0x02A0, 0x2D0};
+# 230 "./variableDefinitions.h"
+unsigned int filtrationSeperationTime = 0;
+unsigned int dueDD = 0;
+unsigned int sleepCount = 0;
+unsigned int remainingFertigationOnPeriod = 0;
+unsigned int lower8bits = 0;
+unsigned int higher8bits = 0;
+unsigned int moistureLevel = 0;
+unsigned int injector1OnPeriod = 0;
+unsigned int injector2OnPeriod = 0;
+unsigned int injector3OnPeriod = 0;
+unsigned int injector4OnPeriod = 0;
+unsigned int injector1OnPeriodCnt = 0;
+unsigned int injector2OnPeriodCnt = 0;
+unsigned int injector3OnPeriodCnt = 0;
+unsigned int injector4OnPeriodCnt = 0;
+unsigned int injector1OffPeriod = 0;
+unsigned int injector2OffPeriod = 0;
+unsigned int injector3OffPeriod = 0;
+unsigned int injector4OffPeriod = 0;
+unsigned int injector1OffPeriodCnt = 0;
+unsigned int injector2OffPeriodCnt = 0;
+unsigned int injector3OffPeriodCnt = 0;
+unsigned int injector4OffPeriodCnt = 0;
+unsigned int noLoadCutOff = 0;
+unsigned int fullLoadCutOff = 0;
 unsigned char userMobileNo[11] = "";
 unsigned char temporaryBytesArray[20] = "";
 unsigned char null[11] = {'\0'};
 unsigned char pwd[7] = "";
 unsigned char factryPswrd[7] = "";
-unsigned int noLoadCutOff = 0;
-unsigned int fullLoadCutOff = 0;
+unsigned char injector1Cycle = 0;
+unsigned char injector2Cycle = 0;
+unsigned char injector3Cycle = 0;
+unsigned char injector4Cycle = 0;
+unsigned char injector1CycleCnt = 0;
+unsigned char injector2CycleCnt = 0;
+unsigned char injector3CycleCnt = 0;
+unsigned char injector4CycleCnt = 0;
+unsigned char loraAliveCount = 0;
+unsigned char loraAliveCountCheck = 0;
+unsigned char loraAttempt = 0;
+unsigned char timer3Count = 0;
+unsigned char rxCharacter = 0;
+unsigned char msgIndex = 0;
+unsigned char temp = 0;
+unsigned char iterator = 0;
+unsigned char fieldCount = 12;
+unsigned char resetCount = 0;
+unsigned char startFieldNo = 0;
+unsigned char space = 0x20;
+unsigned char terminateSms = 0x1A;
+unsigned char enter = 0x0D;
+unsigned char newLine = 0x0A;
+unsigned char hundredsDigit = 0;
+unsigned char tensDigit = 0;
+unsigned char unitsDigit = 0;
+unsigned char Timer0Overflow = 0;
+unsigned char Timer1Overflow = 0;
+unsigned char Timer3Overflow = 0;
+unsigned char filtrationCycleSequence = 0;
+unsigned char currentYY = 0;
+unsigned char currentMM = 0;
+unsigned char currentDD = 0;
+unsigned char currentHour = 0;
+unsigned char currentMinutes = 0;
+unsigned char currentSeconds = 0;
+unsigned char dueYY = 0;
+unsigned char dueMM = 0;
+unsigned char filtrationDelay1 = 0;
+unsigned char filtrationDelay2 = 0;
+unsigned char filtrationDelay3 = 0;
+unsigned char filtrationOnTime = 0;
+unsigned char dryRunCheckCount = 0;
 
 
 
@@ -24535,12 +24591,22 @@ unsigned static char countryCode[4] = "+91";
 
 
 
+unsigned static char on[3] = "ON";
+unsigned static char off[4] = "OFF";
+unsigned static char slave[6] = "SLAVE";
+unsigned static char ack[4] = "ACK";
+unsigned static char idle[5] = "IDLE";
+unsigned static char master[7] = "MASTER";
+unsigned static char error[6] = "ERROR";
+unsigned static char alive[6] = "ALIVE";
+unsigned static char sensor[7] = "SENSOR";
+
+
 
 const char SmsAU1[23] = "Admin set successfully";
 const char SmsAU2[51] = "You are no more Admin now. New Admin is set to\r\n";
 const char SmsAU3[22] = "Authentication failed";
 const char SmsAU4[64] = "System Authenticated with Phase failure, suspending all actions";
-
 
 const char SmsPwd1[32] = "Login code changed successfully";
 const char SmsPwd2[23] = "Login code not changed";
@@ -24553,6 +24619,8 @@ const char SmsIrr4[33] = "Irrigation started for field no.";
 const char SmsIrr5[33] = "Irrigation stopped for field no.";
 const char SmsIrr6[60] = "Wet field detected.\r\nIrrigation not started for field no.";
 const char SmsIrr7[15] = "Irrigation No:";
+const char SmsIrr8[51] = "Irrigation skipped with no response from field no:";
+const char SmsIrr9[51] = "Irrigation stopped without response from field no.";
 
 const char SmsFert1[64] = "Irrigation is not Active. Fertigation not enabled for field no.";
 const char SmsFert2[56] = "Incorrect values. Fertigation not enabled for field no.";
@@ -24560,6 +24628,8 @@ const char SmsFert3[34] = "Fertigation enabled for field no.";
 const char SmsFert4[35] = "Fertigation disabled for field no.";
 const char SmsFert5[34] = "Fertigation started for field no.";
 const char SmsFert6[34] = "Fertigation stopped for field no.";
+const char SmsFert7[71] = "Fertigation stopped with fertilizer level sensor failure for field no.";
+const char SmsFert8[60] = "Fertigation stopped with low fertilizer level for field no.";
 
 const char SmsFilt1[27] = "Water filtration activated";
 const char SmsFilt2[29] = "Water filtration deactivated";
@@ -24630,51 +24700,35 @@ unsigned char static cmti[14] = "+CMTI: \"SM\",x";
 
 
 
-unsigned char timer3Count = 0;
-unsigned char rxCharacter = 0;
-unsigned char msgIndex = 0;
-unsigned char temp = 0;
-unsigned char iterator = 0;
-unsigned char fieldCount = 12;
-unsigned char resetCount = 0;
-unsigned char startFieldNo = 0;
-unsigned char space = 0x20;
-unsigned char terminateSms = 0x1A;
-unsigned char enter = 0x0D;
-unsigned char newLine = 0x0A;
-unsigned char hundredsDigit = 0;
-unsigned char tensDigit = 0;
-unsigned char unitsDigit = 0;
-unsigned char Timer0Overflow = 0;
-unsigned char Timer1Overflow = 0;
-unsigned char Timer3Overflow = 0;
-unsigned char filtrationCycleSequence = 0;
-unsigned char currentYY = 0;
-unsigned char currentMM = 0;
-unsigned char currentDD = 0;
-unsigned char currentHour = 0;
-unsigned char currentMinutes = 0;
-unsigned char currentSeconds = 0;
-unsigned char dueYY = 0;
-unsigned char dueMM = 0;
-unsigned char filtrationDelay1 = 0;
-unsigned char filtrationDelay2 = 0;
-unsigned char filtrationDelay3 = 0;
-unsigned char filtrationOnTime = 0;
-unsigned char filtrationSeperationTime = 0;
-unsigned char dryRunCheckCount = 0;
-unsigned int dueDD = 0;
-unsigned int sleepCount = 0;
-unsigned int remainingFertigationOnPeriod = 0;
-unsigned int lower8bits = 0;
-unsigned int higher8bits = 0;
-unsigned int moistureLevel = 0;
-unsigned int const zero = 0;
-
-
-
-#pragma idata fieldValve
-struct FIELDVALVE fieldValve[12] = {0};
+_Bool systemAuthenticated = 0;
+_Bool newSMSRcvd = 0;
+_Bool checkMoistureSensor = 0;
+_Bool moistureSensorFailed = 0;
+_Bool controllerCommandExecuted = 0;
+_Bool currentDateCalled = 0;
+_Bool sleepCountChangedDueToInterrupt = 0;
+_Bool inSleepMode = 0;
+_Bool dryRunDetected = 0;
+_Bool lowPhaseCurrentDetected = 0;
+_Bool valveDue = 0;
+_Bool valveExecuted = 0;
+_Bool onHold = 0;
+_Bool dueValveChecked = 0;
+_Bool correctDate = 0;
+_Bool phaseFailureDetected = 0;
+_Bool lowRTCBatteryDetected = 0;
+_Bool rtcBatteryLevelChecked = 0;
+_Bool phaseFailureActionTaken = 0;
+_Bool filtrationEnabled = 0;
+_Bool cmtiCmd = 0;
+_Bool DeviceBurnStatus = 0;
+_Bool gsmSetToLocalTime = 0;
+_Bool cmdRceived = 0;
+_Bool checkLoraConnection = 0;
+_Bool LoraConnectionFailed = 0;
+_Bool wetSensor = 0;
+_Bool fertigationDry = 0;
+_Bool fertigationStart = 0;
 # 12 "gsm.c" 2
 
 # 1 "./controllerActions.h" 1
@@ -24694,6 +24748,7 @@ void activateValve(unsigned char);
 void deActivateValve(unsigned char);
 void powerOnMotor(void);
 void powerOffMotor(void);
+_Bool isFieldMoistureSensorWetLora(unsigned char);
 _Bool isFieldMoistureSensorWet(unsigned char);
 _Bool isMotorInNoLoad(void);
 void calibrateMotorCurrent(unsigned char, unsigned char);
@@ -24780,14 +24835,14 @@ void transmitNumberToGSM(unsigned char *number, unsigned char index) {
 
 
 void configureGSM(void) {
-    timer3Count = 30;
+    timer3Count = 15;
     setBCDdigit(0x0A,0);
     controllerCommandExecuted = 0;
     msgIndex = 1;
     T3CONbits.TMR3ON = 1;
     while (!controllerCommandExecuted) {
         transmitStringToGSM("ATE0\r\n");
-        myMsDelay(200);
+        myMsDelay(500);
     }
     PIR5bits.TMR3IF = 1;
     controllerCommandExecuted = 0;
@@ -24795,7 +24850,7 @@ void configureGSM(void) {
     T3CONbits.TMR3ON = 1;
     while (!controllerCommandExecuted) {
         transmitStringToGSM("AT+CMGF=1\r\n");
-        myMsDelay(200);
+        myMsDelay(500);
     }
     PIR5bits.TMR3IF = 1;
     controllerCommandExecuted = 0;
@@ -24803,7 +24858,7 @@ void configureGSM(void) {
     T3CONbits.TMR3ON = 1;
     while (!controllerCommandExecuted) {
         transmitStringToGSM("AT+CNMI=1,1,0,0,0\r\n");
-        myMsDelay(200);
+        myMsDelay(500);
     }
     PIR5bits.TMR3IF = 1;
     controllerCommandExecuted = 0;
@@ -24811,7 +24866,7 @@ void configureGSM(void) {
     T3CONbits.TMR3ON = 1;
     while (!controllerCommandExecuted) {
         transmitStringToGSM("AT+SCLASS0=1\r\n");
-        myMsDelay(200);
+        myMsDelay(500);
     }
     PIR5bits.TMR3IF = 1;
     controllerCommandExecuted = 0;
@@ -24819,7 +24874,7 @@ void configureGSM(void) {
     T3CONbits.TMR3ON = 1;
     while (!controllerCommandExecuted) {
         transmitStringToGSM("AT+CSCS=\"GSM\"\r\n");
-        myMsDelay(200);
+        myMsDelay(500);
     }
     PIR5bits.TMR3IF = 1;
     setBCDdigit(0x0F,0);
@@ -24879,7 +24934,7 @@ void setGsmToLocalTime(void) {
 
 
 void deleteMsgFromSIMStorage(void) {
-    timer3Count = 30;
+    timer3Count = 15;
     setBCDdigit(0x09,1);
     controllerCommandExecuted = 0;
     msgIndex = 1;
@@ -24956,24 +25011,24 @@ void sendSms(const char *message, unsigned char phoneNumber[], unsigned char inf
     case 5:
         lower8bits = noLoadCutOff;
         temporaryBytesArray[14] = (unsigned char) ((lower8bits / 1000) + 48);
-        lower8bits = lower8bits % 1000;
-        temporaryBytesArray[15] = (unsigned char) ((lower8bits / 100) + 48);
-        lower8bits = lower8bits % 100;
-        temporaryBytesArray[16] = (unsigned char) ((lower8bits / 10) + 48);
-        lower8bits = lower8bits % 10;
-        temporaryBytesArray[17] = (unsigned char) (lower8bits + 48);
+
+        temporaryBytesArray[15] = (unsigned char) (((lower8bits % 1000) / 100) + 48);
+
+        temporaryBytesArray[16] = (unsigned char) (((lower8bits % 100) / 10) + 48);
+
+        temporaryBytesArray[17] = (unsigned char) ((lower8bits % 10) + 48);
         transmitNumberToGSM(temporaryBytesArray+14,4);
         myMsDelay(50);
         transmitStringToGSM(" and ");
         myMsDelay(50);
         lower8bits = fullLoadCutOff;
         temporaryBytesArray[14] = (unsigned char) ((lower8bits / 1000) + 48);
-        lower8bits = lower8bits % 1000;
-        temporaryBytesArray[15] = (unsigned char) ((lower8bits / 100) + 48);
-        lower8bits = lower8bits % 100;
-        temporaryBytesArray[16] = (unsigned char) ((lower8bits / 10) + 48);
-        lower8bits = lower8bits % 10;
-        temporaryBytesArray[17] = (unsigned char) (lower8bits + 48);
+
+        temporaryBytesArray[15] = (unsigned char) (((lower8bits % 1000) / 100) + 48);
+
+        temporaryBytesArray[16] = (unsigned char) (((lower8bits % 100) / 10) + 48);
+
+        temporaryBytesArray[17] = (unsigned char) ((lower8bits % 10) + 48);
         transmitNumberToGSM(temporaryBytesArray+14,4);
         myMsDelay(100);
         break;
@@ -24984,168 +25039,109 @@ void sendSms(const char *message, unsigned char phoneNumber[], unsigned char inf
         myMsDelay(50);
         lower8bits = moistureLevel;
         temporaryBytesArray[14] = (unsigned char) ((lower8bits / 10000) + 48);
-        lower8bits = lower8bits % 10000;
-        temporaryBytesArray[15] = (unsigned char) ((lower8bits / 1000) + 48);
-        lower8bits = lower8bits % 1000;
-        temporaryBytesArray[16] = (unsigned char) ((lower8bits / 100) + 48);
-        lower8bits = lower8bits % 100;
-        temporaryBytesArray[17] = (unsigned char) ((lower8bits / 10) + 48);
-        lower8bits = lower8bits % 10;
-        temporaryBytesArray[18] = (unsigned char) (lower8bits + 48);
+
+        temporaryBytesArray[15] = (unsigned char) (((lower8bits % 10000) / 1000) + 48);
+
+        temporaryBytesArray[16] = (unsigned char) (((lower8bits % 1000) / 100) + 48);
+
+        temporaryBytesArray[17] = (unsigned char) (((lower8bits % 100) / 10) + 48);
+
+        temporaryBytesArray[18] = (unsigned char) ((lower8bits % 10) + 48);
         transmitNumberToGSM(temporaryBytesArray+14,5);
         myMsDelay(100);
         break;
     case 7:
-        myMsDelay(10);
+  myMsDelay(10);
         transmitNumberToGSM(temporaryBytesArray, 2);
         myMsDelay(10);
         transmitStringToGSM(" ONprd:");
         myMsDelay(10);
-        temporaryBytesArray[1] = fieldValve[iterator].onPeriod;
-        temporaryBytesArray[0] = (temporaryBytesArray[1] / 100) + 48;
-        transmitNumberToGSM(temporaryBytesArray, 1);
-        myMsDelay(10);
-        temporaryBytesArray[1] = temporaryBytesArray[1] % 100;
-        temporaryBytesArray[0] = (temporaryBytesArray[1] / 10) + 48;
-        transmitNumberToGSM(temporaryBytesArray, 1);
-        myMsDelay(10);
-        temporaryBytesArray[1] = temporaryBytesArray[1] % 10;
-        temporaryBytesArray[0] = temporaryBytesArray[1] + 48;
-        transmitNumberToGSM(temporaryBytesArray, 1);
+        lower8bits = fieldValve[iterator].onPeriod;
+        temporaryBytesArray[0] = (unsigned char) ((lower8bits / 100) + 48);
+        temporaryBytesArray[1] = (unsigned char) (((lower8bits % 100) / 10) + 48);
+        temporaryBytesArray[2] = (unsigned char) ((lower8bits % 10) + 48);
+        transmitNumberToGSM(temporaryBytesArray,3);
         myMsDelay(10);
         transmitStringToGSM(" OFFprd:");
         myMsDelay(10);
-        temporaryBytesArray[1] = fieldValve[iterator].offPeriod;
-        temporaryBytesArray[1] = temporaryBytesArray[1] % 100;
-        temporaryBytesArray[0] = (temporaryBytesArray[1] / 10) + 48;
-        transmitNumberToGSM(temporaryBytesArray, 1);
-        myMsDelay(10);
-        temporaryBytesArray[1] = temporaryBytesArray[1] % 10;
-        temporaryBytesArray[0] = temporaryBytesArray[1] + 48;
-        transmitNumberToGSM(temporaryBytesArray, 1);
+
+        temporaryBytesArray[0] = (fieldValve[iterator].offPeriod/10) + 48;
+        temporaryBytesArray[1] = (fieldValve[iterator].offPeriod%10) + 48;
+        transmitNumberToGSM(temporaryBytesArray,2);
+# 355 "gsm.c"
         myMsDelay(10);
         transmitStringToGSM(" Dry:");
         myMsDelay(10);
         lower8bits = fieldValve[iterator].dryValue;
-        temporaryBytesArray[0] = (unsigned char)((lower8bits / 100) + 48);
-        transmitNumberToGSM(temporaryBytesArray, 1);
-        myMsDelay(10);
-        lower8bits = lower8bits % 100;
-        temporaryBytesArray[0] = (unsigned char)((lower8bits / 10) + 48);
-        transmitNumberToGSM(temporaryBytesArray, 1);
-        myMsDelay(10);
-        lower8bits = lower8bits % 10;
-        temporaryBytesArray[0] = (unsigned char)(lower8bits + 48);
-        transmitNumberToGSM(temporaryBytesArray, 1);
+        temporaryBytesArray[0] = (unsigned char) ((lower8bits / 100) + 48);
+        temporaryBytesArray[1] = (unsigned char) (((lower8bits % 100) / 10) + 48);
+        temporaryBytesArray[2] = (unsigned char) ((lower8bits % 10) + 48);
+        transmitNumberToGSM(temporaryBytesArray,3);
         myMsDelay(10);
         transmitStringToGSM(" Wet:");
         myMsDelay(10);
         lower8bits = fieldValve[iterator].wetValue;
-        temporaryBytesArray[0] = (unsigned char)((lower8bits / 100) + 48);
-        transmitNumberToGSM(temporaryBytesArray, 1);
-        myMsDelay(10);
-        lower8bits = lower8bits % 100;
-        temporaryBytesArray[0] = (unsigned char)((lower8bits / 10) + 48);
-        transmitNumberToGSM(temporaryBytesArray, 1);
-        myMsDelay(10);
-        lower8bits = lower8bits % 10;
-        temporaryBytesArray[0] = (unsigned char)(lower8bits + 48);
-        transmitNumberToGSM(temporaryBytesArray, 1);
+        temporaryBytesArray[0] = (unsigned char) ((lower8bits / 100) + 48);
+        temporaryBytesArray[1] = (unsigned char) (((lower8bits % 100) / 10) + 48);
+        temporaryBytesArray[2] = (unsigned char) ((lower8bits % 10) + 48);
+        transmitNumberToGSM(temporaryBytesArray,3);
         myMsDelay(10);
         transmitStringToGSM(" DueDate: ");
         myMsDelay(10);
-        temporaryBytesArray[1] = fieldValve[iterator].nextDueDD;
-        temporaryBytesArray[1] = temporaryBytesArray[1] % 100;
-        temporaryBytesArray[0] = (temporaryBytesArray[1] / 10) + 48;
-        transmitNumberToGSM(temporaryBytesArray, 1);
+
+        temporaryBytesArray[0] = (fieldValve[iterator].nextDueDD/10) + 48;
+        temporaryBytesArray[1] = (fieldValve[iterator].nextDueDD%10) + 48;
+        transmitNumberToGSM(temporaryBytesArray,2);
+# 389 "gsm.c"
         myMsDelay(10);
-        temporaryBytesArray[1] = temporaryBytesArray[1] % 10;
-        temporaryBytesArray[0] = temporaryBytesArray[1] + 48;
-        transmitNumberToGSM(temporaryBytesArray, 1);
+
+        temporaryBytesArray[0] = (fieldValve[iterator].nextDueMM/10) + 48;
+        temporaryBytesArray[1] = (fieldValve[iterator].nextDueMM%10) + 48;
+        transmitNumberToGSM(temporaryBytesArray,2);
+# 405 "gsm.c"
         myMsDelay(10);
-        temporaryBytesArray[1] = fieldValve[iterator].nextDueMM;
-        temporaryBytesArray[1] = temporaryBytesArray[1] % 100;
-        temporaryBytesArray[0] = (temporaryBytesArray[1] / 10) + 48;
-        transmitNumberToGSM(temporaryBytesArray, 1);
+
+        temporaryBytesArray[0] = (fieldValve[iterator].nextDueYY/10) + 48;
+        temporaryBytesArray[1] = (fieldValve[iterator].nextDueYY%10) + 48;
+        transmitNumberToGSM(temporaryBytesArray,2);
+# 423 "gsm.c"
         myMsDelay(10);
-        temporaryBytesArray[1] = temporaryBytesArray[1] % 10;
-        temporaryBytesArray[0] = temporaryBytesArray[1] + 48;
-        transmitNumberToGSM(temporaryBytesArray, 1);
+
+        temporaryBytesArray[0] = (fieldValve[iterator].motorOnTimeHour/10) + 48;
+        temporaryBytesArray[1] = (fieldValve[iterator].motorOnTimeHour%10) + 48;
+        transmitNumberToGSM(temporaryBytesArray,2);
+# 441 "gsm.c"
         myMsDelay(10);
-        temporaryBytesArray[1] = fieldValve[iterator].nextDueYY;
-        temporaryBytesArray[1] = temporaryBytesArray[1] % 100;
-        temporaryBytesArray[0] = (temporaryBytesArray[1] / 10) + 48;
-        transmitNumberToGSM(temporaryBytesArray, 1);
-        myMsDelay(10);
-        temporaryBytesArray[1] = temporaryBytesArray[1] % 10;
-        temporaryBytesArray[0] = temporaryBytesArray[1] + 48;
-        transmitNumberToGSM(temporaryBytesArray, 1);
-        myMsDelay(10);
-        transmitStringToGSM("; ");
-        myMsDelay(10);
-        temporaryBytesArray[1] = fieldValve[iterator].motorOnTimeHour;
-        temporaryBytesArray[1] = temporaryBytesArray[1] % 100;
-        temporaryBytesArray[0] = (temporaryBytesArray[1] / 10) + 48;
-        transmitNumberToGSM(temporaryBytesArray, 1);
-        myMsDelay(10);
-        temporaryBytesArray[1] = temporaryBytesArray[1] % 10;
-        temporaryBytesArray[0] = temporaryBytesArray[1] + 48;
-        transmitNumberToGSM(temporaryBytesArray, 1);
-        myMsDelay(10);
-        transmitStringToGSM(":");
-        myMsDelay(10);
-        temporaryBytesArray[1] = fieldValve[iterator].motorOnTimeMinute;
-        temporaryBytesArray[1] = temporaryBytesArray[1] % 100;
-        temporaryBytesArray[0] = (temporaryBytesArray[1] / 10) + 48;
-        transmitNumberToGSM(temporaryBytesArray, 1);
-        myMsDelay(10);
-        temporaryBytesArray[1] = temporaryBytesArray[1] % 10;
-        temporaryBytesArray[0] = temporaryBytesArray[1] + 48;
-        transmitNumberToGSM(temporaryBytesArray, 1);
+
+        temporaryBytesArray[0] = (fieldValve[iterator].motorOnTimeMinute/10) + 48;
+        temporaryBytesArray[1] = (fieldValve[iterator].motorOnTimeMinute%10) + 48;
+        transmitNumberToGSM(temporaryBytesArray,2);
+# 457 "gsm.c"
         myMsDelay(10);
         transmitStringToGSM("\r\n");
         if (fieldValve[iterator].isFertigationEnabled) {
             transmitStringToGSM("Fertigation enabled with delay:");
-            myMsDelay(10);
-            temporaryBytesArray[1] = fieldValve[iterator].fertigationDelay;
-            temporaryBytesArray[0] = (temporaryBytesArray[1] / 100) + 48;
-            transmitNumberToGSM(temporaryBytesArray, 1);
-            myMsDelay(10);
-            temporaryBytesArray[1] = temporaryBytesArray[1] % 100;
-            temporaryBytesArray[0] = (temporaryBytesArray[1] / 10) + 48;
-            transmitNumberToGSM(temporaryBytesArray, 1);
-            myMsDelay(10);
-            temporaryBytesArray[1] = temporaryBytesArray[1] % 10;
-            temporaryBytesArray[0] = temporaryBytesArray[1] + 48;
-            transmitNumberToGSM(temporaryBytesArray, 1);
+            lower8bits = fieldValve[iterator].fertigationDelay;
+            temporaryBytesArray[0] = (unsigned char) ((lower8bits / 100) + 48);
+            temporaryBytesArray[1] = (unsigned char) (((lower8bits % 100) / 10) + 48);
+            temporaryBytesArray[2] = (unsigned char) ((lower8bits % 10) + 48);
+            transmitNumberToGSM(temporaryBytesArray,3);
             myMsDelay(10);
             transmitStringToGSM(" ONprd:");
             myMsDelay(10);
-            temporaryBytesArray[1] = fieldValve[iterator].fertigationONperiod;
-            temporaryBytesArray[0] = (temporaryBytesArray[1] / 100) + 48;
-            transmitNumberToGSM(temporaryBytesArray, 1);
-            myMsDelay(10);
-            temporaryBytesArray[1] = temporaryBytesArray[1] % 100;
-            temporaryBytesArray[0] = (temporaryBytesArray[1] / 10) + 48;
-            transmitNumberToGSM(temporaryBytesArray, 1);
-            myMsDelay(10);
-            temporaryBytesArray[1] = temporaryBytesArray[1] % 10;
-            temporaryBytesArray[0] = temporaryBytesArray[1] + 48;
-            transmitNumberToGSM(temporaryBytesArray, 1);
+            lower8bits = fieldValve[iterator].fertigationONperiod;
+            temporaryBytesArray[0] = (unsigned char) ((lower8bits / 100) + 48);
+            temporaryBytesArray[1] = (unsigned char) (((lower8bits % 100) / 10) + 48);
+            temporaryBytesArray[2] = (unsigned char) ((lower8bits % 10) + 48);
+            transmitNumberToGSM(temporaryBytesArray,3);
             myMsDelay(10);
             transmitStringToGSM(" Iteration:");
             myMsDelay(10);
-            temporaryBytesArray[1] = fieldValve[iterator].fertigationInstance;
-            temporaryBytesArray[0] = (temporaryBytesArray[1] / 100) + 48;
-            transmitNumberToGSM(temporaryBytesArray, 1);
-            myMsDelay(10);
-            temporaryBytesArray[1] = temporaryBytesArray[1] % 100;
-            temporaryBytesArray[0] = (temporaryBytesArray[1] / 10) + 48;
-            transmitNumberToGSM(temporaryBytesArray, 1);
-            myMsDelay(10);
-            temporaryBytesArray[1] = temporaryBytesArray[1] % 10;
-            temporaryBytesArray[0] = temporaryBytesArray[1] + 48;
-            transmitNumberToGSM(temporaryBytesArray, 1);
+
+            temporaryBytesArray[0] = (fieldValve[iterator].fertigationInstance/10) + 48;
+            temporaryBytesArray[1] = (fieldValve[iterator].fertigationInstance%10) + 48;
+            transmitNumberToGSM(temporaryBytesArray,2);
+# 495 "gsm.c"
             myMsDelay(10);
             transmitStringToGSM("\r\n");
         }
@@ -25158,69 +25154,51 @@ void sendSms(const char *message, unsigned char phoneNumber[], unsigned char inf
         myMsDelay(10);
         transmitStringToGSM("\r\nDelay1: ");
         myMsDelay(10);
-        temporaryBytesArray[1] = filtrationDelay1;
-        temporaryBytesArray[1] = temporaryBytesArray[1] % 100;
-        temporaryBytesArray[0] = (temporaryBytesArray[1] / 10) + 48;
-        transmitNumberToGSM(temporaryBytesArray, 1);
-        myMsDelay(10);
-        temporaryBytesArray[1] = temporaryBytesArray[1] % 10;
-        temporaryBytesArray[0] = temporaryBytesArray[1] + 48;
-        transmitNumberToGSM(temporaryBytesArray, 1);
+
+        temporaryBytesArray[0] = (filtrationDelay1/10) + 48;
+        temporaryBytesArray[1] = (filtrationDelay1%10) + 48;
+        transmitNumberToGSM(temporaryBytesArray,2);
+# 522 "gsm.c"
         myMsDelay(10);
         transmitStringToGSM("(Min) ");
         myMsDelay(10);
         transmitStringToGSM("Delay2: ");
         myMsDelay(10);
-        temporaryBytesArray[1] = filtrationDelay2;
-        temporaryBytesArray[1] = temporaryBytesArray[1] % 100;
-        temporaryBytesArray[0] = (temporaryBytesArray[1] / 10) + 48;
-        transmitNumberToGSM(temporaryBytesArray, 1);
-        myMsDelay(10);
-        temporaryBytesArray[1] = temporaryBytesArray[1] % 10;
-        temporaryBytesArray[0] = temporaryBytesArray[1] + 48;
-        transmitNumberToGSM(temporaryBytesArray, 1);
+
+        temporaryBytesArray[0] = (filtrationDelay2/10) + 48;
+        temporaryBytesArray[1] = (filtrationDelay2%10) + 48;
+        transmitNumberToGSM(temporaryBytesArray,2);
+# 542 "gsm.c"
         myMsDelay(10);
         transmitStringToGSM("(Min) ");
         myMsDelay(10);
         transmitStringToGSM("Delay3: ");
         myMsDelay(10);
-        temporaryBytesArray[1] = filtrationDelay3;
-        temporaryBytesArray[1] = temporaryBytesArray[1] % 100;
-        temporaryBytesArray[0] = (temporaryBytesArray[1] / 10) + 48;
-        transmitNumberToGSM(temporaryBytesArray, 1);
-        myMsDelay(10);
-        temporaryBytesArray[1] = temporaryBytesArray[1] % 10;
-        temporaryBytesArray[0] = temporaryBytesArray[1] + 48;
-        transmitNumberToGSM(temporaryBytesArray, 1);
+
+        temporaryBytesArray[0] = (filtrationDelay3/10) + 48;
+        temporaryBytesArray[1] = (filtrationDelay3%10) + 48;
+        transmitNumberToGSM(temporaryBytesArray,2);
+# 562 "gsm.c"
         myMsDelay(10);
         transmitStringToGSM("(Min)");
         myMsDelay(10);
         transmitStringToGSM("\r\nONTime: ");
         myMsDelay(10);
-        temporaryBytesArray[1] = filtrationOnTime;
-        temporaryBytesArray[1] = temporaryBytesArray[1] % 100;
-        temporaryBytesArray[0] = (temporaryBytesArray[1] / 10) + 48;
-        transmitNumberToGSM(temporaryBytesArray, 1);
-        myMsDelay(10);
-        temporaryBytesArray[1] = temporaryBytesArray[1] % 10;
-        temporaryBytesArray[0] = temporaryBytesArray[1] + 48;
-        transmitNumberToGSM(temporaryBytesArray, 1);
+
+        temporaryBytesArray[0] = (filtrationOnTime/10) + 48;
+        temporaryBytesArray[1] = (filtrationOnTime%10) + 48;
+        transmitNumberToGSM(temporaryBytesArray,2);
+# 582 "gsm.c"
         myMsDelay(10);
         transmitStringToGSM("(Min) ");
         myMsDelay(10);
         transmitStringToGSM("Separation Time: ");
         myMsDelay(10);
-        temporaryBytesArray[1] = filtrationSeperationTime;
-        temporaryBytesArray[0] = (temporaryBytesArray[1] / 100) + 48;
-        transmitNumberToGSM(temporaryBytesArray, 1);
-        myMsDelay(10);
-        temporaryBytesArray[1] = temporaryBytesArray[1] % 100;
-        temporaryBytesArray[0] = (temporaryBytesArray[1] / 10) + 48;
-        transmitNumberToGSM(temporaryBytesArray, 1);
-        myMsDelay(10);
-        temporaryBytesArray[1] = temporaryBytesArray[1] % 10;
-        temporaryBytesArray[0] = temporaryBytesArray[1] + 48;
-        transmitNumberToGSM(temporaryBytesArray, 1);
+        lower8bits = filtrationSeperationTime;
+        temporaryBytesArray[0] = (unsigned char) ((lower8bits / 100) + 48);
+        temporaryBytesArray[1] = (unsigned char) (((lower8bits % 100) / 10) + 48);
+        temporaryBytesArray[2] = (unsigned char) ((lower8bits % 10) + 48);
+        transmitNumberToGSM(temporaryBytesArray,3);
         myMsDelay(10);
         transmitStringToGSM("(Min)");
         myMsDelay(10);
@@ -25242,7 +25220,7 @@ void sendSms(const char *message, unsigned char phoneNumber[], unsigned char inf
     setBCDdigit(0x0F,0);
     myMsDelay(500);
 }
-# 596 "gsm.c"
+# 636 "gsm.c"
 void checkSignalStrength(void) {
  unsigned char digit = 0;
     while (1) {

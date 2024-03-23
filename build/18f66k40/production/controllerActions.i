@@ -24426,24 +24426,37 @@ int toupper_l(int, locale_t);
 
  __asm("\tpsect eeprom_data,class=EEDATA,noexec"); __asm("\tdb\t" "0x00" "," "0x00" "," "0x00" "," "0x00" "," "0x00" "," "0x00" "," "0x00" "," "0x00");
  __asm("\tpsect eeprom_data,class=EEDATA,noexec"); __asm("\tdb\t" "0x00" "," "0x00" "," "0x00" "," "0x00" "," "0x00" "," "0x00" "," "0x00" "," "0x00");
-# 12 "controllerActions.c" 2
+# 11 "controllerActions.c" 2
+
 # 1 "./variableDefinitions.h" 1
 # 43 "./variableDefinitions.h"
 # 1 "./congfigBits.h" 1
-# 44 "./variableDefinitions.h" 2
-# 144 "./variableDefinitions.h"
+# 43 "./variableDefinitions.h" 2
+# 143 "./variableDefinitions.h"
 struct FIELDVALVE {
     unsigned int dryValue;
     unsigned int wetValue;
-    unsigned char onPeriod;
+    unsigned int onPeriod;
+    unsigned int fertigationDelay;
+    unsigned int fertigationONperiod;
+    unsigned int injector1OnPeriod;
+    unsigned int injector2OnPeriod;
+    unsigned int injector3OnPeriod;
+    unsigned int injector4OnPeriod;
+    unsigned int injector1OffPeriod;
+    unsigned int injector2OffPeriod;
+    unsigned int injector3OffPeriod;
+    unsigned int injector4OffPeriod;
+    unsigned char injector1Cycle;
+    unsigned char injector2Cycle;
+    unsigned char injector3Cycle;
+    unsigned char injector4Cycle;
     unsigned char offPeriod;
     unsigned char motorOnTimeHour;
     unsigned char motorOnTimeMinute;
     unsigned char nextDueDD;
     unsigned char nextDueMM;
     unsigned char nextDueYY;
-    unsigned char fertigationDelay;
-    unsigned char fertigationONperiod;
     unsigned char fertigationInstance;
  unsigned char priority;
     unsigned char fertigationStage;
@@ -24457,44 +24470,88 @@ struct FIELDVALVE {
 
 
 
+#pragma idata fieldValve
+struct FIELDVALVE fieldValve[12] = {0};
+
+
+
 
 #pragma idata eepromAddress
-const unsigned int eepromAddress[16] = {0x0000, 0x0020, 0x0040, 0x0060, 0x0080, 0x00A0, 0x00C0, 0x00E0, 0x0100, 0x0120, 0x0140, 0x0160, 0x0180, 0x0190, 0x01A0, 0x1B0};
-# 216 "./variableDefinitions.h"
-_Bool systemAuthenticated = 0;
-_Bool newSMSRcvd = 0;
-_Bool checkMoistureSensor = 0;
-_Bool moistureSensorFailed = 0;
-_Bool controllerCommandExecuted = 0;
-_Bool currentDateCalled = 0;
-_Bool sleepCountChangedDueToInterrupt = 0;
-_Bool inSleepMode = 0;
-_Bool dryRunDetected = 0;
-_Bool lowPhaseCurrentDetected = 0;
-_Bool valveDue = 0;
-_Bool valveExecuted = 0;
-_Bool onHold = 0;
-_Bool dueValveChecked = 0;
-_Bool correctDate = 0;
-_Bool phaseFailureDetected = 0;
-_Bool lowRTCBatteryDetected = 0;
-_Bool rtcBatteryLevelChecked = 0;
-_Bool phaseFailureActionTaken = 0;
-_Bool filtrationEnabled = 0;
-_Bool cmtiCmd = 0;
-_Bool DeviceBurnStatus = 0;
-_Bool gsmSetToLocalTime = 0;
-
-
-
-
+const unsigned int eepromAddress[16] = {0x0000, 0x0030, 0x0060, 0x0090, 0x00C0, 0x00F0, 0x0120, 0x0150, 0x0180, 0x01B0, 0x01E0, 0x0210, 0x0240, 0x0270, 0x02A0, 0x2D0};
+# 230 "./variableDefinitions.h"
+unsigned int filtrationSeperationTime = 0;
+unsigned int dueDD = 0;
+unsigned int sleepCount = 0;
+unsigned int remainingFertigationOnPeriod = 0;
+unsigned int lower8bits = 0;
+unsigned int higher8bits = 0;
+unsigned int moistureLevel = 0;
+unsigned int injector1OnPeriod = 0;
+unsigned int injector2OnPeriod = 0;
+unsigned int injector3OnPeriod = 0;
+unsigned int injector4OnPeriod = 0;
+unsigned int injector1OnPeriodCnt = 0;
+unsigned int injector2OnPeriodCnt = 0;
+unsigned int injector3OnPeriodCnt = 0;
+unsigned int injector4OnPeriodCnt = 0;
+unsigned int injector1OffPeriod = 0;
+unsigned int injector2OffPeriod = 0;
+unsigned int injector3OffPeriod = 0;
+unsigned int injector4OffPeriod = 0;
+unsigned int injector1OffPeriodCnt = 0;
+unsigned int injector2OffPeriodCnt = 0;
+unsigned int injector3OffPeriodCnt = 0;
+unsigned int injector4OffPeriodCnt = 0;
+unsigned int noLoadCutOff = 0;
+unsigned int fullLoadCutOff = 0;
 unsigned char userMobileNo[11] = "";
 unsigned char temporaryBytesArray[20] = "";
 unsigned char null[11] = {'\0'};
 unsigned char pwd[7] = "";
 unsigned char factryPswrd[7] = "";
-unsigned int noLoadCutOff = 0;
-unsigned int fullLoadCutOff = 0;
+unsigned char injector1Cycle = 0;
+unsigned char injector2Cycle = 0;
+unsigned char injector3Cycle = 0;
+unsigned char injector4Cycle = 0;
+unsigned char injector1CycleCnt = 0;
+unsigned char injector2CycleCnt = 0;
+unsigned char injector3CycleCnt = 0;
+unsigned char injector4CycleCnt = 0;
+unsigned char loraAliveCount = 0;
+unsigned char loraAliveCountCheck = 0;
+unsigned char loraAttempt = 0;
+unsigned char timer3Count = 0;
+unsigned char rxCharacter = 0;
+unsigned char msgIndex = 0;
+unsigned char temp = 0;
+unsigned char iterator = 0;
+unsigned char fieldCount = 12;
+unsigned char resetCount = 0;
+unsigned char startFieldNo = 0;
+unsigned char space = 0x20;
+unsigned char terminateSms = 0x1A;
+unsigned char enter = 0x0D;
+unsigned char newLine = 0x0A;
+unsigned char hundredsDigit = 0;
+unsigned char tensDigit = 0;
+unsigned char unitsDigit = 0;
+unsigned char Timer0Overflow = 0;
+unsigned char Timer1Overflow = 0;
+unsigned char Timer3Overflow = 0;
+unsigned char filtrationCycleSequence = 0;
+unsigned char currentYY = 0;
+unsigned char currentMM = 0;
+unsigned char currentDD = 0;
+unsigned char currentHour = 0;
+unsigned char currentMinutes = 0;
+unsigned char currentSeconds = 0;
+unsigned char dueYY = 0;
+unsigned char dueMM = 0;
+unsigned char filtrationDelay1 = 0;
+unsigned char filtrationDelay2 = 0;
+unsigned char filtrationDelay3 = 0;
+unsigned char filtrationOnTime = 0;
+unsigned char dryRunCheckCount = 0;
 
 
 
@@ -24534,12 +24591,22 @@ unsigned static char countryCode[4] = "+91";
 
 
 
+unsigned static char on[3] = "ON";
+unsigned static char off[4] = "OFF";
+unsigned static char slave[6] = "SLAVE";
+unsigned static char ack[4] = "ACK";
+unsigned static char idle[5] = "IDLE";
+unsigned static char master[7] = "MASTER";
+unsigned static char error[6] = "ERROR";
+unsigned static char alive[6] = "ALIVE";
+unsigned static char sensor[7] = "SENSOR";
+
+
 
 const char SmsAU1[23] = "Admin set successfully";
 const char SmsAU2[51] = "You are no more Admin now. New Admin is set to\r\n";
 const char SmsAU3[22] = "Authentication failed";
 const char SmsAU4[64] = "System Authenticated with Phase failure, suspending all actions";
-
 
 const char SmsPwd1[32] = "Login code changed successfully";
 const char SmsPwd2[23] = "Login code not changed";
@@ -24552,6 +24619,8 @@ const char SmsIrr4[33] = "Irrigation started for field no.";
 const char SmsIrr5[33] = "Irrigation stopped for field no.";
 const char SmsIrr6[60] = "Wet field detected.\r\nIrrigation not started for field no.";
 const char SmsIrr7[15] = "Irrigation No:";
+const char SmsIrr8[51] = "Irrigation skipped with no response from field no:";
+const char SmsIrr9[51] = "Irrigation stopped without response from field no.";
 
 const char SmsFert1[64] = "Irrigation is not Active. Fertigation not enabled for field no.";
 const char SmsFert2[56] = "Incorrect values. Fertigation not enabled for field no.";
@@ -24559,6 +24628,8 @@ const char SmsFert3[34] = "Fertigation enabled for field no.";
 const char SmsFert4[35] = "Fertigation disabled for field no.";
 const char SmsFert5[34] = "Fertigation started for field no.";
 const char SmsFert6[34] = "Fertigation stopped for field no.";
+const char SmsFert7[71] = "Fertigation stopped with fertilizer level sensor failure for field no.";
+const char SmsFert8[60] = "Fertigation stopped with low fertilizer level for field no.";
 
 const char SmsFilt1[27] = "Water filtration activated";
 const char SmsFilt2[29] = "Water filtration deactivated";
@@ -24629,57 +24700,43 @@ unsigned char static cmti[14] = "+CMTI: \"SM\",x";
 
 
 
-unsigned char timer3Count = 0;
-unsigned char rxCharacter = 0;
-unsigned char msgIndex = 0;
-unsigned char temp = 0;
-unsigned char iterator = 0;
-unsigned char fieldCount = 12;
-unsigned char resetCount = 0;
-unsigned char startFieldNo = 0;
-unsigned char space = 0x20;
-unsigned char terminateSms = 0x1A;
-unsigned char enter = 0x0D;
-unsigned char newLine = 0x0A;
-unsigned char hundredsDigit = 0;
-unsigned char tensDigit = 0;
-unsigned char unitsDigit = 0;
-unsigned char Timer0Overflow = 0;
-unsigned char Timer1Overflow = 0;
-unsigned char Timer3Overflow = 0;
-unsigned char filtrationCycleSequence = 0;
-unsigned char currentYY = 0;
-unsigned char currentMM = 0;
-unsigned char currentDD = 0;
-unsigned char currentHour = 0;
-unsigned char currentMinutes = 0;
-unsigned char currentSeconds = 0;
-unsigned char dueYY = 0;
-unsigned char dueMM = 0;
-unsigned char filtrationDelay1 = 0;
-unsigned char filtrationDelay2 = 0;
-unsigned char filtrationDelay3 = 0;
-unsigned char filtrationOnTime = 0;
-unsigned char filtrationSeperationTime = 0;
-unsigned char dryRunCheckCount = 0;
-unsigned int dueDD = 0;
-unsigned int sleepCount = 0;
-unsigned int remainingFertigationOnPeriod = 0;
-unsigned int lower8bits = 0;
-unsigned int higher8bits = 0;
-unsigned int moistureLevel = 0;
-unsigned int const zero = 0;
+_Bool systemAuthenticated = 0;
+_Bool newSMSRcvd = 0;
+_Bool checkMoistureSensor = 0;
+_Bool moistureSensorFailed = 0;
+_Bool controllerCommandExecuted = 0;
+_Bool currentDateCalled = 0;
+_Bool sleepCountChangedDueToInterrupt = 0;
+_Bool inSleepMode = 0;
+_Bool dryRunDetected = 0;
+_Bool lowPhaseCurrentDetected = 0;
+_Bool valveDue = 0;
+_Bool valveExecuted = 0;
+_Bool onHold = 0;
+_Bool dueValveChecked = 0;
+_Bool correctDate = 0;
+_Bool phaseFailureDetected = 0;
+_Bool lowRTCBatteryDetected = 0;
+_Bool rtcBatteryLevelChecked = 0;
+_Bool phaseFailureActionTaken = 0;
+_Bool filtrationEnabled = 0;
+_Bool cmtiCmd = 0;
+_Bool DeviceBurnStatus = 0;
+_Bool gsmSetToLocalTime = 0;
+_Bool cmdRceived = 0;
+_Bool checkLoraConnection = 0;
+_Bool LoraConnectionFailed = 0;
+_Bool wetSensor = 0;
+_Bool fertigationDry = 0;
+_Bool fertigationStart = 0;
+# 12 "controllerActions.c" 2
 
-
-
-#pragma idata fieldValve
-struct FIELDVALVE fieldValve[12] = {0};
-# 13 "controllerActions.c" 2
 # 1 "./ADC.h" 1
 # 14 "./ADC.h"
 void selectChannel(unsigned char);
 unsigned int getADCResult(void);
-# 14 "controllerActions.c" 2
+# 13 "controllerActions.c" 2
+
 # 1 "./controllerActions.h" 1
 # 20 "./controllerActions.h"
 void myMsDelay(unsigned int);
@@ -24697,6 +24754,7 @@ void activateValve(unsigned char);
 void deActivateValve(unsigned char);
 void powerOnMotor(void);
 void powerOffMotor(void);
+_Bool isFieldMoistureSensorWetLora(unsigned char);
 _Bool isFieldMoistureSensorWet(unsigned char);
 _Bool isMotorInNoLoad(void);
 void calibrateMotorCurrent(unsigned char, unsigned char);
@@ -24718,7 +24776,8 @@ void randomPasswordGeneration(void);
 void deleteGsmResponse(void);
 void deleteStringToDecode(void);
 void deleteDecodedString(void);
-# 15 "controllerActions.c" 2
+# 14 "controllerActions.c" 2
+
 # 1 "./eeprom.h" 1
 # 15 "./eeprom.h"
 void eepromWrite(unsigned int, unsigned char);
@@ -24752,7 +24811,8 @@ void saveFactryPswrdIntoEeprom(void);
 void readFactryPswrdFromEeprom(void);
 void saveMotorLoadValuesIntoEeprom(void);
 void readMotorLoadValuesFromEeprom(void);
-# 16 "controllerActions.c" 2
+# 15 "controllerActions.c" 2
+
 # 1 "./gsm.h" 1
 # 15 "./gsm.h"
 unsigned char rxByte(void);
@@ -24765,13 +24825,18 @@ void sendSms(const char*, unsigned char[], unsigned char);
 void configureGSM(void);
 void deleteMsgFromSIMStorage(void);
 void checkSignalStrength(void);
-# 17 "controllerActions.c" 2
+# 16 "controllerActions.c" 2
+
 # 1 "./lora.h" 1
 # 15 "./lora.h"
+unsigned char rxByteLora(void);
 void txByteLora(unsigned char);
 void transmitStringToLora(const char *);
 void transmitNumberToLora(unsigned char*, unsigned char);
-# 18 "controllerActions.c" 2
+void sendCmdToLora(unsigned char, unsigned char);
+_Bool isLoraResponseAck(unsigned char, unsigned char);
+# 17 "controllerActions.c" 2
+
 # 1 "./RTC_DS1307.h" 1
 # 15 "./RTC_DS1307.h"
 void i2cStart(void);
@@ -24784,13 +24849,14 @@ void fetchTimefromRTC(void);
 unsigned char decimal2BCD (unsigned char);
 unsigned char bcd2Decimal (unsigned char PORTH);
 void feedTimeInRTC(void);
-# 19 "controllerActions.c" 2
+# 18 "controllerActions.c" 2
+
 
 # 1 "./dataEncryption.h" 1
 # 18 "./dataEncryption.h"
 void base64Encoder(void);
 void base64Decoder(void);
-# 21 "controllerActions.c" 2
+# 20 "controllerActions.c" 2
 # 33 "controllerActions.c"
 char *strcpyCustom(char *restrict dest, const char *restrict src) {
  const char *s = src;
@@ -24853,9 +24919,8 @@ void getDateFromGSM(void) {
     setBCDdigit(0x0B,1);
     while (!controllerCommandExecuted) {
         transmitStringToGSM("AT+CCLK?\r\n");
-        myMsDelay(1000);
         if (!controllerCommandExecuted) {
-            myMsDelay(30000);
+            myMsDelay(5000);
         }
     }
     setBCDdigit(0x0F,0);
@@ -24926,7 +24991,7 @@ void getDateFromGSM(void) {
 
 
 }
-# 227 "controllerActions.c"
+# 226 "controllerActions.c"
 void getDueDate(unsigned char days) {
     unsigned int remDays = 0, offset = 0, leapYearDays = 366, yearDays = 365;
     unsigned char firstMonth = 1, lastMonth =12, month[13] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
@@ -25017,7 +25082,7 @@ void getDueDate(unsigned char days) {
 
 
 }
-# 328 "controllerActions.c"
+# 327 "controllerActions.c"
 void scanValveScheduleAndGetSleepCount(void) {
     unsigned long newCount = 0;
     unsigned int leapYearDays = 366, yearDays = 365;
@@ -25158,7 +25223,7 @@ void scanValveScheduleAndGetSleepCount(void) {
 
 
 }
-# 479 "controllerActions.c"
+# 478 "controllerActions.c"
 unsigned int days(unsigned char mm, unsigned char yy) {
     unsigned char itr = 0, month[12] = {31, 0, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     unsigned int days = 0;
@@ -25173,7 +25238,7 @@ unsigned int days(unsigned char mm, unsigned char yy) {
     }
     return (days);
 }
-# 504 "controllerActions.c"
+# 503 "controllerActions.c"
 unsigned char fetchFieldNo(unsigned char index) {
 
 
@@ -25181,60 +25246,60 @@ unsigned char fetchFieldNo(unsigned char index) {
 
 
     if (decodedString[index] == '0' && decodedString[index+1] == '1') {
-# 519 "controllerActions.c"
+# 518 "controllerActions.c"
         return 0;
     }
     else if (decodedString[index] == '0' && decodedString[index+1] == '2') {
-# 530 "controllerActions.c"
+# 529 "controllerActions.c"
         return 1;
     }
     else if (decodedString[index] == '0' && decodedString[index+1] == '3') {
-# 541 "controllerActions.c"
+# 540 "controllerActions.c"
         return 2;
     }
     else if (decodedString[index] == '0' && decodedString[index+1] == '4') {
-# 552 "controllerActions.c"
+# 551 "controllerActions.c"
         return 3;
     }
     else if (decodedString[index] == '0' && decodedString[index+1] == '5') {
-# 563 "controllerActions.c"
+# 562 "controllerActions.c"
         return 4;
     }
     else if (decodedString[index] == '0' && decodedString[index+1] == '6') {
-# 574 "controllerActions.c"
+# 573 "controllerActions.c"
         return 5;
     }
     else if (decodedString[index] == '0' && decodedString[index+1] == '7') {
-# 585 "controllerActions.c"
+# 584 "controllerActions.c"
         return 6;
     }
     else if (decodedString[index] == '0' && decodedString[index+1] == '8') {
-# 596 "controllerActions.c"
+# 595 "controllerActions.c"
         return 7;
     }
     else if (decodedString[index] == '0' && decodedString[index+1] == '9') {
-# 607 "controllerActions.c"
+# 606 "controllerActions.c"
         return 8;
     }
     else if (decodedString[index] == '1' && decodedString[index+1] == '0') {
-# 618 "controllerActions.c"
+# 617 "controllerActions.c"
         return 9;
     }
     else if (decodedString[index] == '1' && decodedString[index+1] == '1') {
-# 629 "controllerActions.c"
+# 628 "controllerActions.c"
         return 10;
     }
     else if (decodedString[index] == '1' && decodedString[index+1] == '2') {
-# 640 "controllerActions.c"
+# 639 "controllerActions.c"
         return 11;
     }
     else {
-# 651 "controllerActions.c"
+# 650 "controllerActions.c"
         return 255;
     }
 
 }
-# 667 "controllerActions.c"
+# 666 "controllerActions.c"
 void extractReceivedSms(void) {
     unsigned char count = 0, onHour = 0, onMinute = 0;
     unsigned int digit = 0;
@@ -25268,13 +25333,14 @@ void extractReceivedSms(void) {
 
 
             strcpyCustom((char *)stringToDecode,(const char *)gsmResponse + 63);
-# 709 "controllerActions.c"
+# 707 "controllerActions.c"
+            deleteGsmResponse();
             if (isBase64String((char *)stringToDecode)) {
                 deleteDecodedString();
                 base64Decoder();
             }
             else {
-                deleteGsmResponse();
+
                 setBCDdigit(0x05,0);
                 myMsDelay(2000);
 
@@ -25299,7 +25365,7 @@ void extractReceivedSms(void) {
                     msgIndex = 0;
 
                     sendSms(SmsConnect, userMobileNo, 0);
-# 752 "controllerActions.c"
+# 751 "controllerActions.c"
                     return;
                 }
 
@@ -25311,14 +25377,14 @@ void extractReceivedSms(void) {
                         msgIndex = 0;
 
                         sendSms(SmsPwd1, userMobileNo, 0);
-# 776 "controllerActions.c"
+# 775 "controllerActions.c"
                         return;
                     }
                     else {
                         msgIndex = 0;
 
                         sendSms(SmsPwd3, userMobileNo, 0);
-# 795 "controllerActions.c"
+# 794 "controllerActions.c"
                         return;
                     }
                 }
@@ -25347,7 +25413,7 @@ void extractReceivedSms(void) {
                         else {
                             switch (count) {
                             case 1:
-                                fieldValve[iterator].onPeriod = (unsigned char)digit;
+                                fieldValve[iterator].onPeriod = digit;
                                 digit = 0;
                                 break;
                             case 2:
@@ -25425,7 +25491,7 @@ void extractReceivedSms(void) {
                     msgIndex = 0;
 
                     sendSms(SmsIrr1, userMobileNo, 2);
-# 914 "controllerActions.c"
+# 913 "controllerActions.c"
                     return;
                 }
 
@@ -25458,7 +25524,7 @@ void extractReceivedSms(void) {
                     msgIndex = 0;
 
                     sendSms(SmsIrr2, userMobileNo, 2);
-# 959 "controllerActions.c"
+# 958 "controllerActions.c"
                     return;
                 }
 
@@ -25484,7 +25550,7 @@ void extractReceivedSms(void) {
                         msgIndex = 0;
 
                         sendSms(SmsFert1, userMobileNo, 2);
-# 992 "controllerActions.c"
+# 991 "controllerActions.c"
                     }
                     else {
                         for (msgIndex = 9; count < 3 ; msgIndex++) {
@@ -25504,15 +25570,63 @@ void extractReceivedSms(void) {
                                 count++;
                                 switch (count) {
                                 case 1:
-                                    fieldValve[iterator].fertigationDelay = (unsigned char)digit;
+                                    fieldValve[iterator].fertigationDelay = digit;
                                     digit = 0;
                                     break;
                                 case 2:
-                                    fieldValve[iterator].fertigationONperiod = (unsigned char)digit;
+                                    fieldValve[iterator].fertigationONperiod = digit;
                                     digit = 0;
                                     break;
                                 case 3:
                                     fieldValve[iterator].fertigationInstance = (unsigned char)digit;
+                                    digit = 0;
+                                    break;
+                                case 4:
+                                    fieldValve[iterator].injector1OnPeriod = digit;
+                                    digit = 0;
+                                    break;
+                                case 5:
+                                    fieldValve[iterator].injector1OffPeriod = digit;
+                                    digit = 0;
+                                    break;
+                                case 6:
+                                    fieldValve[iterator].injector1Cycle = (unsigned char)digit;
+                                    digit = 0;
+                                    break;
+                                case 7:
+                                    fieldValve[iterator].injector2OnPeriod = digit;
+                                    digit = 0;
+                                    break;
+                                case 8:
+                                    fieldValve[iterator].injector2OffPeriod = digit;
+                                    digit = 0;
+                                    break;
+                                case 9:
+                                    fieldValve[iterator].injector2Cycle = (unsigned char)digit;
+                                    digit = 0;
+                                    break;
+                                case 10:
+                                    fieldValve[iterator].injector3OnPeriod = digit;
+                                    digit = 0;
+                                    break;
+                                case 11:
+                                    fieldValve[iterator].injector3OffPeriod = digit;
+                                    digit = 0;
+                                    break;
+                                case 12:
+                                    fieldValve[iterator].injector3Cycle = (unsigned char)digit;
+                                    digit = 0;
+                                    break;
+                                case 13:
+                                    fieldValve[iterator].injector4OnPeriod = digit;
+                                    digit = 0;
+                                    break;
+                                case 14:
+                                    fieldValve[iterator].injector4OffPeriod = digit;
+                                    digit = 0;
+                                    break;
+                                case 15:
+                                    fieldValve[iterator].injector4Cycle = (unsigned char)digit;
                                     fieldValve[iterator].fertigationStage = 0;
                                     fieldValve[iterator].fertigationValveInterrupted = 0;
                                     digit = 0;
@@ -25532,7 +25646,7 @@ void extractReceivedSms(void) {
                                         msgIndex = 0;
 
                                         sendSms(SmsFert2, userMobileNo, 2);
-# 1047 "controllerActions.c"
+# 1094 "controllerActions.c"
                                     }
                                     else {
                                         fieldValve[iterator].isFertigationEnabled = 1;
@@ -25559,7 +25673,7 @@ void extractReceivedSms(void) {
                             msgIndex = 0;
 
                             sendSms(SmsFert3, userMobileNo, 2);
-# 1081 "controllerActions.c"
+# 1128 "controllerActions.c"
                         }
                     }
 
@@ -25595,7 +25709,7 @@ void extractReceivedSms(void) {
                         msgIndex = 0;
 
                         sendSms(SmsFert4, userMobileNo, 2);
-# 1129 "controllerActions.c"
+# 1176 "controllerActions.c"
                         return;
                     }
                 }
@@ -25653,7 +25767,7 @@ void extractReceivedSms(void) {
                     msgIndex = 0;
 
                     sendSms(SmsFilt1, userMobileNo, 0);
-# 1199 "controllerActions.c"
+# 1246 "controllerActions.c"
                     return;
                 }
 
@@ -25666,7 +25780,7 @@ void extractReceivedSms(void) {
                     msgIndex = 0;
 
                     sendSms(SmsFilt2, userMobileNo, 0);
-# 1224 "controllerActions.c"
+# 1271 "controllerActions.c"
                     return;
                 }
 
@@ -25676,13 +25790,13 @@ void extractReceivedSms(void) {
                         msgIndex = 0;
 
                         sendSms(SmsFilt4, userMobileNo, 8);
-# 1241 "controllerActions.c"
+# 1288 "controllerActions.c"
                     }
                     else {
                         msgIndex = 0;
 
                         sendSms(SmsFilt3, userMobileNo, 0);
-# 1254 "controllerActions.c"
+# 1301 "controllerActions.c"
                     }
 
 
@@ -25740,7 +25854,7 @@ void extractReceivedSms(void) {
                             msgIndex = 0;
 
                             sendSms(SmsT1, userMobileNo, 0);
-# 1324 "controllerActions.c"
+# 1371 "controllerActions.c"
                             return;
                         }
                     }
@@ -25750,7 +25864,7 @@ void extractReceivedSms(void) {
                     msgIndex = 0;
 
                     sendSms(SmsRTC2, userMobileNo, 0);
-# 1346 "controllerActions.c"
+# 1393 "controllerActions.c"
                     return;
                 }
 
@@ -25777,7 +25891,7 @@ void extractReceivedSms(void) {
                     msgIndex = 0;
 
                     sendSms(SmsT2, userMobileNo, 3);
-# 1385 "controllerActions.c"
+# 1432 "controllerActions.c"
                     return;
                 }
 
@@ -25799,12 +25913,12 @@ void extractReceivedSms(void) {
                     if (fieldValve[iterator].isConfigured) {
 
                         sendSms(SmsIrr7, userMobileNo, 7);
-# 1414 "controllerActions.c"
+# 1461 "controllerActions.c"
                     }
                     else {
 
                         sendSms(SmsIrr3, userMobileNo, 2);
-# 1426 "controllerActions.c"
+# 1473 "controllerActions.c"
                     }
 
 
@@ -25820,7 +25934,7 @@ void extractReceivedSms(void) {
                         msgIndex = 0;
 
                         sendSms(SmsMotor4, userMobileNo, 0);
-# 1454 "controllerActions.c"
+# 1501 "controllerActions.c"
                         return;
                     }
                     digit = 0;
@@ -25859,7 +25973,7 @@ void extractReceivedSms(void) {
                     msgIndex = 0;
 
                     sendSms(SmsMotor2, userMobileNo, 0);
-# 1505 "controllerActions.c"
+# 1552 "controllerActions.c"
                     return;
                 }
 
@@ -25867,14 +25981,14 @@ void extractReceivedSms(void) {
                     msgIndex = 0;
 
                     sendSms(SmsMotor3, userMobileNo, 5);
-# 1525 "controllerActions.c"
+# 1572 "controllerActions.c"
                     return;
                 }
 
                 else if (strncmp((char*)(decodedString),(char*)(getfreq),(7)) == 0) {
                     iterator = fetchFieldNo(7);
                     myMsDelay(100);
-                    isFieldMoistureSensorWet(iterator);
+                    isFieldMoistureSensorWetLora(iterator);
 
 
                     if (iterator<9){
@@ -25890,14 +26004,14 @@ void extractReceivedSms(void) {
                         moistureSensorFailed = 0;
 
                         sendSms(SmsMS3, userMobileNo, 2);
-# 1555 "controllerActions.c"
+# 1602 "controllerActions.c"
                     }
                     else {
 
                         msgIndex = 0;
 
                         sendSms(SmsMS2, userMobileNo, 6);
-# 1570 "controllerActions.c"
+# 1617 "controllerActions.c"
                     }
 
 
@@ -25916,7 +26030,7 @@ void extractReceivedSms(void) {
                         msgIndex = 0;
 
                         sendSms(SmsMotor4, userMobileNo, 0);
-# 1601 "controllerActions.c"
+# 1648 "controllerActions.c"
                         return;
                     }
 
@@ -25939,7 +26053,7 @@ void extractReceivedSms(void) {
                     msgIndex = 0;
 
                     sendSms(SmsMotor3, userMobileNo, 5);
-# 1636 "controllerActions.c"
+# 1683 "controllerActions.c"
                     return;
                 }
 
@@ -26010,7 +26124,7 @@ void extractReceivedSms(void) {
                     msgIndex = 0;
 
                     sendSms(SmsTest, userMobileNo, 0);
-# 1719 "controllerActions.c"
+# 1766 "controllerActions.c"
                     return;
                 }
             }
@@ -26023,7 +26137,7 @@ void extractReceivedSms(void) {
                         msgIndex = 0;
 
                         sendSms(SmsAU2, userMobileNo, 1);
-# 1739 "controllerActions.c"
+# 1786 "controllerActions.c"
                     }
                     strncpy((char*)(pwd),(char*)(decodedString + 10),(6));
                     strncpy((char*)(userMobileNo),(char*)(temporaryBytesArray),(10));
@@ -26039,14 +26153,14 @@ void extractReceivedSms(void) {
                     msgIndex = 0;
 
                     sendSms(SmsAU1, userMobileNo, 0);
-# 1767 "controllerActions.c"
+# 1814 "controllerActions.c"
                     return;
                 }
                 else {
                     msgIndex = 0;
 
                     sendSms(SmsPwd3, temporaryBytesArray, 0);
-# 1786 "controllerActions.c"
+# 1833 "controllerActions.c"
                     strncpy((char*)(temporaryBytesArray),(char*)(null),(10));
                     return;
                 }
@@ -26056,7 +26170,7 @@ void extractReceivedSms(void) {
                 msgIndex = 0;
 
                 sendSms(SmsAU3, temporaryBytesArray, 0);
-# 1808 "controllerActions.c"
+# 1855 "controllerActions.c"
                 strncpy((char*)(temporaryBytesArray),(char*)(null),(10));
                 return;
             }
@@ -26065,7 +26179,7 @@ void extractReceivedSms(void) {
                 msgIndex = 0;
 
                 sendSms(SmsFact1, temporaryBytesArray, 4);
-# 1829 "controllerActions.c"
+# 1876 "controllerActions.c"
                 strncpy((char*)(temporaryBytesArray),(char*)(null),(10));
                 return;
             }
@@ -26107,7 +26221,7 @@ void extractReceivedSms(void) {
         return;
  }
 }
-# 1886 "controllerActions.c"
+# 1933 "controllerActions.c"
 _Bool isFieldMoistureSensorWet(unsigned char FieldNo) {
     unsigned long moistureLevelAvg = 0;
     unsigned long timer1Value = 0;
@@ -26115,12 +26229,12 @@ _Bool isFieldMoistureSensorWet(unsigned char FieldNo) {
     unsigned char itr = 0, avg = 20;
 
     moistureLevel = 0;
-# 1918 "controllerActions.c"
+# 1965 "controllerActions.c"
     setBCDdigit(0x09,0);
     moistureLevel = 0;
     checkMoistureSensor = 1;
     moistureSensorFailed = 0;
-    timer3Count = 15;
+    timer3Count = 5;
 
     for (itr = 1; itr <= avg && !moistureSensorFailed; itr++) {
         T1CONbits.TMR1ON = 0;
@@ -26412,6 +26526,24 @@ _Bool isFieldMoistureSensorWet(unsigned char FieldNo) {
     }
     checkMoistureSensor = 0;
     setBCDdigit(0x0F,0);
+    if (FieldNo == 11) {
+        if (moistureLevel >= 150) {
+
+
+
+
+
+            return 1;
+        }
+        else {
+
+
+
+
+
+            return 0;
+        }
+    }
     if (moistureLevel >= fieldValve[FieldNo].wetValue) {
 
 
@@ -26429,7 +26561,41 @@ _Bool isFieldMoistureSensorWet(unsigned char FieldNo) {
         return 0;
     }
 }
-# 2245 "controllerActions.c"
+# 2312 "controllerActions.c"
+_Bool isFieldMoistureSensorWetLora(unsigned char FieldNo) {
+    unsigned char action;
+    loraAttempt = 0;
+    action = 0x02;
+    setBCDdigit(0x09,0);
+    moistureSensorFailed = 0;
+# 2344 "controllerActions.c"
+    do {
+        sendCmdToLora(action,FieldNo);
+    } while(loraAttempt<2);
+    if (LoraConnectionFailed || moistureSensorFailed) {
+        moistureLevel = 0;
+        moistureSensorFailed = 1;
+    }
+    setBCDdigit(0x0F,0);
+    if ((moistureLevel/100) >= fieldValve[FieldNo].wetValue) {
+
+
+
+
+
+        return 1;
+    }
+    else {
+
+
+
+
+
+        return 0;
+    }
+# 2392 "controllerActions.c"
+}
+# 2407 "controllerActions.c"
 _Bool isMotorInNoLoad(void) {
     unsigned int ctOutput = 0;
     unsigned int temp = 0;
@@ -26473,7 +26639,7 @@ _Bool isMotorInNoLoad(void) {
         return 0;
     }
 }
-# 2304 "controllerActions.c"
+# 2466 "controllerActions.c"
 void calibrateMotorCurrent(unsigned char loadType, unsigned char FieldNo) {
     unsigned int ctOutput = 0;
     unsigned char itr = 0, limit = 30;
@@ -26626,7 +26792,7 @@ void calibrateMotorCurrent(unsigned char loadType, unsigned char FieldNo) {
 
 
 }
-# 2469 "controllerActions.c"
+# 2631 "controllerActions.c"
 void doDryRunAction(void) {
     unsigned char field_No = 0;
  unsigned int sleepCountVar = 0;
@@ -26688,7 +26854,7 @@ void doDryRunAction(void) {
 
 
      sendSms(SmsDR1, userMobileNo, 2);
-# 2538 "controllerActions.c"
+# 2700 "controllerActions.c"
     }
     else if (fieldValve[field_No].fertigationStage == 1) {
 
@@ -26713,7 +26879,7 @@ void doDryRunAction(void) {
 
 
                     sendSms(SmsDR2, userMobileNo, 2);
-# 2570 "controllerActions.c"
+# 2732 "controllerActions.c"
     }
    }
    else {
@@ -26740,7 +26906,7 @@ void doDryRunAction(void) {
 
 
      sendSms(SmsDR3, userMobileNo, 2);
-# 2604 "controllerActions.c"
+# 2766 "controllerActions.c"
                 }
                 else {
 
@@ -26757,28 +26923,28 @@ void doDryRunAction(void) {
 
 
      sendSms(SmsDR4, userMobileNo, 2);
-# 2628 "controllerActions.c"
+# 2790 "controllerActions.c"
                 }
             }
             if (PORTEbits.RE7) {
 
                 sendSms(SmsPh3, userMobileNo, 0);
-# 2641 "controllerActions.c"
+# 2803 "controllerActions.c"
             }
             else if (PORTEbits.RE6) {
 
                 sendSms(SmsPh4, userMobileNo, 0);
-# 2653 "controllerActions.c"
+# 2815 "controllerActions.c"
             }
             else if (PORTEbits.RE5) {
 
                 sendSms(SmsPh5, userMobileNo, 0);
-# 2665 "controllerActions.c"
+# 2827 "controllerActions.c"
             }
             else {
 
                 sendSms(SmsPh6, userMobileNo, 0);
-# 2677 "controllerActions.c"
+# 2839 "controllerActions.c"
             }
 
         }
@@ -26802,7 +26968,7 @@ void doDryRunAction(void) {
 
 
 }
-# 2713 "controllerActions.c"
+# 2875 "controllerActions.c"
 void doLowPhaseAction(void) {
     unsigned char field_No = 0;
 
@@ -26812,7 +26978,7 @@ void doLowPhaseAction(void) {
 
 
     sendSms(SmsPh2, userMobileNo, 0);
-# 2730 "controllerActions.c"
+# 2892 "controllerActions.c"
     if (valveDue) {
         for (field_No = 0; field_No < fieldCount; field_No++) {
             if (fieldValve[field_No].status == 1) {
@@ -26837,7 +27003,7 @@ void doLowPhaseAction(void) {
 
 
                     sendSms(SmsFert6, userMobileNo, 2);
-# 2762 "controllerActions.c"
+# 2924 "controllerActions.c"
                 }
             }
         }
@@ -26849,7 +27015,7 @@ void doLowPhaseAction(void) {
 
 
 }
-# 2786 "controllerActions.c"
+# 2948 "controllerActions.c"
 void doPhaseFailureAction(void) {
     unsigned char field_No = 0;
 
@@ -26859,7 +27025,7 @@ void doPhaseFailureAction(void) {
 
 
     sendSms(SmsPh1, userMobileNo, 0);
-# 2803 "controllerActions.c"
+# 2965 "controllerActions.c"
     if (valveDue) {
         for (field_No = 0; field_No < fieldCount; field_No++) {
             if (fieldValve[field_No].status == 1) {
@@ -26884,7 +27050,7 @@ void doPhaseFailureAction(void) {
 
 
                     sendSms(SmsFert6, userMobileNo, 2);
-# 2835 "controllerActions.c"
+# 2997 "controllerActions.c"
                 }
             }
         }
@@ -26896,7 +27062,7 @@ void doPhaseFailureAction(void) {
 
 
 }
-# 2862 "controllerActions.c"
+# 3024 "controllerActions.c"
 _Bool isRTCBatteryDrained(void) {
     unsigned int batteryVoltage = 0;
     unsigned int batteryVoltageCutoff = 555;
@@ -26931,7 +27097,7 @@ _Bool isRTCBatteryDrained(void) {
         return 0;
     }
 }
-# 2913 "controllerActions.c"
+# 3075 "controllerActions.c"
 _Bool phaseFailure(void) {
 
 
@@ -26961,7 +27127,7 @@ _Bool phaseFailure(void) {
         return 1;
     }
 }
-# 2954 "controllerActions.c"
+# 3116 "controllerActions.c"
 void powerOnMotor(void) {
 
 
@@ -26992,7 +27158,7 @@ void powerOnMotor(void) {
 
 
 }
-# 2997 "controllerActions.c"
+# 3159 "controllerActions.c"
 void powerOffMotor(void) {
 
 
@@ -27016,90 +27182,85 @@ void powerOffMotor(void) {
 
 
 }
-# 3032 "controllerActions.c"
+# 3194 "controllerActions.c"
 void activateValve(unsigned char FieldNo) {
 
 
 
 
 
+    unsigned char action;
+    loraAttempt = 0;
+    action = 0x00;
+    do {
+        sendCmdToLora(action,FieldNo);
+    } while(loraAttempt<2);
+    if (!LoraConnectionFailed && loraAttempt == 99) {
 
-    switch (FieldNo) {
-    case 0:
-        myMsDelay(1000);
-        PORTAbits.RA0 = 1;
-        break;
-    case 1:
-        myMsDelay(1000);
-        PORTAbits.RA1 = 1;
-        break;
-    case 2:
-        myMsDelay(1000);
-        PORTAbits.RA2 = 1;
-        break;
-    case 3:
-        myMsDelay(1000);
-        PORTAbits.RA3 = 1;
-        break;
-    case 4:
-        myMsDelay(1000);
-        PORTAbits.RA4 = 1;
-        break;
-    case 5:
-        myMsDelay(1000);
-        PORTAbits.RA5 = 1;
-        break;
-    case 6:
-        myMsDelay(1000);
-        PORTFbits.RF0 = 1;
-        break;
-    case 7:
-        myMsDelay(1000);
-        PORTFbits.RF1 = 1;
-        break;
-    case 8:
-        myMsDelay(1000);
-        PORTFbits.RF2 = 1;
-        break;
-    case 9:
-        myMsDelay(1000);
-        PORTFbits.RF3 = 1;
-        break;
-    case 10:
-        myMsDelay(1000);
-        PORTFbits.RF4 = 1;
-        break;
-    case 11:
-        myMsDelay(1000);
-        PORTFbits.RF5 = 1;
-        break;
-    }
-    fieldValve[FieldNo].status = 1;
-    valveDue = 1;
-    myMsDelay(100);
-    saveIrrigationValveOnOffStatusIntoEeprom(eepromAddress[FieldNo], &fieldValve[FieldNo]);
-    myMsDelay(100);
+        fieldValve[FieldNo].status = 1;
+        valveDue = 1;
+        loraAliveCount = 0;
+        loraAliveCountCheck = 0;
+        myMsDelay(100);
+        saveIrrigationValveOnOffStatusIntoEeprom(eepromAddress[FieldNo], &fieldValve[FieldNo]);
+        myMsDelay(100);
 
 
-    if (FieldNo<9){
-        temporaryBytesArray[0] = 48;
-        temporaryBytesArray[1] = FieldNo + 49;
-    }
-    else if (FieldNo > 8 && FieldNo < 12) {
-        temporaryBytesArray[0] = 49;
-        temporaryBytesArray[1] = FieldNo + 39;
-    }
-# 3113 "controllerActions.c"
-    if(moistureSensorFailed) {
-        moistureSensorFailed = 0;
+        if (FieldNo<9){
+            temporaryBytesArray[0] = 48;
+            temporaryBytesArray[1] = FieldNo + 49;
+        }
+        else if (FieldNo > 8 && FieldNo < 12) {
+            temporaryBytesArray[0] = 49;
+            temporaryBytesArray[1] = FieldNo + 39;
+        }
+# 3234 "controllerActions.c"
+        if(moistureSensorFailed) {
+            moistureSensorFailed = 0;
 
-        sendSms(SmsMS1, userMobileNo, 2);
-# 3125 "controllerActions.c"
+            sendSms(SmsMS1, userMobileNo, 2);
+# 3246 "controllerActions.c"
+        }
+        else {
+
+            sendSms(SmsIrr4, userMobileNo, 2);
+# 3258 "controllerActions.c"
+        }
     }
     else {
+        valveDue = 0;
+        fieldValve[FieldNo].status = 0;
+        fieldValve[FieldNo].cyclesExecuted = fieldValve[FieldNo].cycles;
+        startFieldNo = FieldNo+1;
+        myMsDelay(100);
+        getDueDate(fieldValve[FieldNo].offPeriod);
+        myMsDelay(100);
+        fieldValve[FieldNo].nextDueDD = (unsigned char)dueDD;
+        fieldValve[FieldNo].nextDueMM = dueMM;
+        fieldValve[FieldNo].nextDueYY = dueYY;
+        myMsDelay(100);
+        saveIrrigationValveOnOffStatusIntoEeprom(eepromAddress[FieldNo], &fieldValve[FieldNo]);
+        myMsDelay(100);
+        saveIrrigationValveCycleStatusIntoEeprom(eepromAddress[FieldNo], &fieldValve[FieldNo]);
+        myMsDelay(100);
+        saveIrrigationValveDueTimeIntoEeprom(eepromAddress[FieldNo], &fieldValve[FieldNo]);
+        myMsDelay(100);
 
-        sendSms(SmsIrr4, userMobileNo, 2);
-# 3137 "controllerActions.c"
+
+
+        if (FieldNo<9) {
+            temporaryBytesArray[0] = 48;
+            temporaryBytesArray[1] = FieldNo + 49;
+        }
+        else if (FieldNo > 8 && FieldNo < 12) {
+            temporaryBytesArray[0] = 49;
+            temporaryBytesArray[1] = FieldNo + 39;
+        }
+
+
+
+        sendSms(SmsIrr8, userMobileNo, 2);
+# 3301 "controllerActions.c"
     }
 
 
@@ -27107,7 +27268,7 @@ void activateValve(unsigned char FieldNo) {
 
 
 }
-# 3155 "controllerActions.c"
+# 3319 "controllerActions.c"
 void deActivateValve(unsigned char FieldNo) {
 
 
@@ -27115,56 +27276,12 @@ void deActivateValve(unsigned char FieldNo) {
 
 
 
-    switch (FieldNo) {
-    case 0:
-        myMsDelay(1000);
-        PORTAbits.RA0 = 0;
-        break;
-    case 1:
-        myMsDelay(1000);
-        PORTAbits.RA1 = 0;
-        break;
-    case 2:
-        myMsDelay(1000);
-        PORTAbits.RA2 = 0;
-        break;
-    case 3:
-        myMsDelay(1000);
-        PORTAbits.RA3 = 0;
-        break;
-    case 4:
-        myMsDelay(1000);
-        PORTAbits.RA4 = 0;
-        break;
-    case 5:
-        myMsDelay(1000);
-        PORTAbits.RA5 = 0;
-        break;
-    case 6:
-        myMsDelay(1000);
-        PORTFbits.RF0 = 0;
-        break;
-    case 7:
-        myMsDelay(1000);
-        PORTFbits.RF1 = 0;
-        break;
-    case 8:
-        myMsDelay(1000);
-        PORTFbits.RF2 = 0;
-        break;
-    case 9:
-        myMsDelay(1000);
-        PORTFbits.RF3 = 0;
-        break;
-    case 10:
-        myMsDelay(1000);
-        PORTFbits.RF4 = 0;
-        break;
-    case 11:
-        myMsDelay(1000);
-        PORTFbits.RF5 = 0;
-        break;
-    }
+    unsigned char action;
+    loraAttempt = 0;
+    action = 0x01;
+    do {
+        sendCmdToLora(action,FieldNo);
+    } while(loraAttempt<2);
 
 
     if (FieldNo<9){
@@ -27175,11 +27292,24 @@ void deActivateValve(unsigned char FieldNo) {
         temporaryBytesArray[0] = 49;
         temporaryBytesArray[1] = FieldNo + 39;
     }
-# 3231 "controllerActions.c"
-    sendSms(SmsIrr5, userMobileNo, 2);
-# 3245 "controllerActions.c"
+
+    if (!LoraConnectionFailed && loraAttempt == 99) {
+# 3354 "controllerActions.c"
+        sendSms(SmsIrr5, userMobileNo, 2);
+# 3363 "controllerActions.c"
+    }
+    else {
+
+        sendSms(SmsIrr9, userMobileNo, 2);
+# 3375 "controllerActions.c"
+    }
+
+
+
+
+
 }
-# 3257 "controllerActions.c"
+# 3393 "controllerActions.c"
 void deepSleep(void) {
 
     while (sleepCount > 0 && !newSMSRcvd) {
@@ -27240,7 +27370,7 @@ void deepSleep(void) {
     inSleepMode = 0;
 
 }
-# 3328 "controllerActions.c"
+# 3464 "controllerActions.c"
 void configureController(void) {
 
     BSR = 0x0f;
@@ -27361,16 +27491,16 @@ void configureController(void) {
 
 
     TX1STA = 0b00100100;
-    RC1STA = 0b10000000;
+    RC1STA = 0b10010000;
     BAUD1CON = 0b00001000;
     SP1BRG = 0x0681;
     RC7PPS = 0x17;
     RC6PPS = 0x0C;
     temp = RC1REG;
-    PIE3bits.RC1IE = 0;
+    PIE3bits.RC1IE = 1;
     PIE3bits.TX1IE = 0;
     IPR3bits.RC1IP = 1;
-# 3473 "controllerActions.c"
+# 3609 "controllerActions.c"
     TX3STA = 0b00100100;
     RC3STA = 0b10010000;
     BAUD3CON = 0b00001000;
@@ -27400,7 +27530,7 @@ void configureController(void) {
     INTCONbits.GIE = 1;
     CPUDOZEbits.IDLEN = 1;
 }
-# 3511 "controllerActions.c"
+# 3647 "controllerActions.c"
 void actionsOnSystemReset(void) {
     unsigned char resetType = 0;
 
@@ -27492,7 +27622,7 @@ void actionsOnSystemReset(void) {
                     msgIndex = 0;
 
                     sendSms(SmsMotor3, userMobileNo, 5);
-# 3615 "controllerActions.c"
+# 3751 "controllerActions.c"
                     break;
                 case 2:
                     resetCount = 0x00;
@@ -27507,7 +27637,7 @@ void actionsOnSystemReset(void) {
                     msgIndex = 0;
 
                     sendSms(SmsMotor3, userMobileNo, 5);
-# 3642 "controllerActions.c"
+# 3778 "controllerActions.c"
                     break;
                 case 3:
                     resetCount = 0x00;
@@ -27699,7 +27829,7 @@ void actionsOnSystemReset(void) {
                     break;
                 }
                 resetType = 0;
-# 3847 "controllerActions.c"
+# 3983 "controllerActions.c"
                 sleepCount = readActiveSleepCountFromEeprom();
             }
             else {
@@ -27724,7 +27854,7 @@ void actionsOnSystemReset(void) {
                     break;
                 }
                 resetType = 0;
-# 3885 "controllerActions.c"
+# 4021 "controllerActions.c"
             }
         }
     }
@@ -27734,40 +27864,6 @@ void actionsOnSystemReset(void) {
             setBCDdigit(0x01,0);
             strncpy((char*)(pwd),(char*)(factryPswrd),(6));
             sleepCount = 65500;
-
-            transmitStringToLora("#STATUSMASTER$\r\n");
-            setBCDdigit(0x01,1);
-
-            myMsDelay(50000);
-            transmitStringToLora("#STATUSSLAVE01$\r\n");
-            setBCDdigit(0x02,1);
-
-            myMsDelay(50000);
-            transmitStringToLora("#GETSENSOR01SLAVE01$\r\n");
-            setBCDdigit(0x03,1);
-
-            myMsDelay(50000);
-            transmitStringToLora("#ON01SLAVE01$\r\n");
-            setBCDdigit(0x04,1);
-
-            myMsDelay(50000);
-            transmitStringToLora("#GETVALVESTATUS01SLAVE01$\r\n");
-            setBCDdigit(0x05,1);
-
-            myMsDelay(50000);
-            transmitStringToLora("#OFF01SLAVE01$\r\n");
-            setBCDdigit(0x06,1);
-
-            myMsDelay(50000);
-            transmitStringToLora("#GETVALVESTATUS01SLAVE01$\r\n");
-            setBCDdigit(0x07,1);
-
-            myMsDelay(50000);
-            transmitStringToLora("#GARBAGE$\r\n");
-            setBCDdigit(0x08,1);
-
-            myMsDelay(50000);
-
             deepSleep();
 
             if (newSMSRcvd) {
@@ -27795,7 +27891,7 @@ void actionsOnSystemReset(void) {
     if (isRTCBatteryDrained()) {
 
         sendSms(SmsRTC1, userMobileNo, 0);
-# 3963 "controllerActions.c"
+# 4065 "controllerActions.c"
         if(gsmSetToLocalTime) {
             getDateFromGSM();
             myMsDelay(1000);
@@ -27815,12 +27911,12 @@ void actionsOnSystemReset(void) {
             myMsDelay(1000);
 
             sendSms(SmsRTC3, userMobileNo, 0);
-# 3990 "controllerActions.c"
+# 4092 "controllerActions.c"
         }
         else {
 
             sendSms(SmsRTC4, userMobileNo, 0);
-# 4002 "controllerActions.c"
+# 4104 "controllerActions.c"
         }
     }
     else if(gsmSetToLocalTime) {
@@ -27830,7 +27926,7 @@ void actionsOnSystemReset(void) {
         myMsDelay(1000);
     }
 }
-# 4020 "controllerActions.c"
+# 4123 "controllerActions.c"
 void actionsOnSleepCountFinish(void) {
     unsigned char field_No = 0;
     if (valveDue && sleepCount == 0 && !dryRunDetected && !phaseFailureDetected && !onHold && !lowPhaseCurrentDetected) {
@@ -27839,6 +27935,25 @@ void actionsOnSleepCountFinish(void) {
             if (fieldValve[field_No].status == 1 && fieldValve[field_No].isFertigationEnabled && fieldValve[field_No].fertigationStage == 1) {
                 myMsDelay(1000);
                 PORTFbits.RF6 = 1;
+                fertigationStart = 1;
+
+
+                injector1OnPeriod = fieldValve[field_No].injector1OnPeriod;
+                injector2OnPeriod = fieldValve[field_No].injector2OnPeriod;
+                injector3OnPeriod = fieldValve[field_No].injector3OnPeriod;
+                injector4OnPeriod = fieldValve[field_No].injector4OnPeriod;
+
+                injector1OffPeriod = fieldValve[field_No].injector1OffPeriod;
+                injector2OffPeriod = fieldValve[field_No].injector2OffPeriod;
+                injector3OffPeriod = fieldValve[field_No].injector3OffPeriod;
+                injector4OffPeriod = fieldValve[field_No].injector4OffPeriod;
+
+                injector1Cycle = fieldValve[field_No].injector1Cycle;
+                injector2Cycle = fieldValve[field_No].injector2Cycle;
+                injector3Cycle = fieldValve[field_No].injector3Cycle;
+                injector4Cycle = fieldValve[field_No].injector4Cycle;
+
+
                 fieldValve[field_No].fertigationStage = 2;
                 if (fieldValve[field_No].fertigationValveInterrupted) {
                     fieldValve[field_No].fertigationValveInterrupted = 0;
@@ -27868,13 +27983,20 @@ void actionsOnSleepCountFinish(void) {
 
 
                 sendSms(SmsFert5, userMobileNo, 2);
-# 4066 "controllerActions.c"
+# 4188 "controllerActions.c"
                 break;
             }
 
             else if (fieldValve[field_No].status == 1 && fieldValve[field_No].isFertigationEnabled && fieldValve[field_No].fertigationStage == 2) {
                 myMsDelay(1000);
                 PORTFbits.RF6 = 0;
+
+
+                PORTAbits.RA0 = 0;
+                PORTAbits.RA1 = 0;
+                PORTAbits.RA2 = 0;
+                PORTAbits.RA3 = 0;
+
                 fieldValve[field_No].fertigationStage = 3;
                 fieldValve[field_No].fertigationInstance--;
                 if(fieldValve[field_No].fertigationInstance == 0) {
@@ -27898,11 +28020,26 @@ void actionsOnSleepCountFinish(void) {
                     temporaryBytesArray[1] = field_No + 39;
                 }
 
+    if (fertigationDry) {
+                    fertigationDry = 0;
 
+                    sendSms(SmsFert8, userMobileNo, 2);
+# 4237 "controllerActions.c"
+                    break;
+                }
+                else if (moistureSensorFailed) {
+                    moistureSensorFailed = 0;
 
-                sendSms(SmsFert6, userMobileNo, 2);
-# 4107 "controllerActions.c"
-                break;
+                    sendSms(SmsFert7, userMobileNo, 2);
+# 4252 "controllerActions.c"
+                    break;
+                }
+                else {
+
+                    sendSms(SmsFert6, userMobileNo, 2);
+# 4266 "controllerActions.c"
+                    break;
+                }
             }
 
             else if (fieldValve[field_No].status == 1) {
@@ -27985,11 +28122,13 @@ void actionsOnSleepCountFinish(void) {
         }
     }
 }
-# 4199 "controllerActions.c"
+# 4359 "controllerActions.c"
 void actionsOnDueValve(unsigned char field_No) {
     unsigned char last_Field_No = 0;
+    wetSensor = 0;
 
-    if (isFieldMoistureSensorWet(field_No)) {
+    if (isFieldMoistureSensorWetLora(field_No)) {
+        wetSensor = 1;
         valveDue = 0;
         fieldValve[field_No].status = 0;
         fieldValve[field_No].cyclesExecuted = fieldValve[field_No].cycles;
@@ -28022,62 +28161,64 @@ void actionsOnDueValve(unsigned char field_No) {
 
 
         sendSms(SmsIrr6, userMobileNo, 2);
-# 4243 "controllerActions.c"
+# 4405 "controllerActions.c"
     }
 
     else if (!phaseFailure()){
         myMsDelay(100);
         activateValve(field_No);
-        myMsDelay(100);
-
-
-        if (fieldValve[field_No].fertigationStage == 2) {
-            myMsDelay(1000);
-            PORTFbits.RF6 = 1;
-
-
-
-            if (field_No<9){
-                temporaryBytesArray[0] = 48;
-                temporaryBytesArray[1] = field_No + 49;
-            }
-            else if (field_No > 8 && field_No < 12) {
-                temporaryBytesArray[0] = 49;
-                temporaryBytesArray[1] = field_No + 39;
-            }
-
-
-
-            sendSms(SmsFert5, userMobileNo, 2);
-# 4279 "controllerActions.c"
-        }
-        if (fieldValve[field_No].cyclesExecuted == fieldValve[field_No].cycles) {
-
-            getDueDate(fieldValve[field_No].offPeriod);
-            fieldValve[field_No].nextDueDD = (unsigned char)dueDD;
-            fieldValve[field_No].nextDueMM = dueMM;
-            fieldValve[field_No].nextDueYY = dueYY;
-            myMsDelay(100);
-            saveIrrigationValveDueTimeIntoEeprom(eepromAddress[field_No], &fieldValve[field_No]);
+        if (!LoraConnectionFailed) {
             myMsDelay(100);
 
-        }
+
+            if (fieldValve[field_No].fertigationStage == 2) {
+                myMsDelay(1000);
+                PORTFbits.RF6 = 1;
 
 
-        if (valveExecuted) {
-            last_Field_No = readFieldIrrigationValveNoFromEeprom();
-            if(last_Field_No != field_No) {
-               deActivateValve(last_Field_No);
+
+                if (field_No<9){
+                    temporaryBytesArray[0] = 48;
+                    temporaryBytesArray[1] = field_No + 49;
+                }
+                else if (field_No > 8 && field_No < 12) {
+                    temporaryBytesArray[0] = 49;
+                    temporaryBytesArray[1] = field_No + 39;
+                }
+
+
+
+                sendSms(SmsFert5, userMobileNo, 2);
+# 4442 "controllerActions.c"
             }
-            valveExecuted = 0;
-        }
+            if (fieldValve[field_No].cyclesExecuted == fieldValve[field_No].cycles) {
 
-        else {
-            powerOnMotor();
+                getDueDate(fieldValve[field_No].offPeriod);
+                fieldValve[field_No].nextDueDD = (unsigned char)dueDD;
+                fieldValve[field_No].nextDueMM = dueMM;
+                fieldValve[field_No].nextDueYY = dueYY;
+                myMsDelay(100);
+                saveIrrigationValveDueTimeIntoEeprom(eepromAddress[field_No], &fieldValve[field_No]);
+                myMsDelay(100);
+
+            }
+
+
+            if (valveExecuted) {
+                last_Field_No = readFieldIrrigationValveNoFromEeprom();
+                if(last_Field_No != field_No) {
+                   deActivateValve(last_Field_No);
+                }
+                valveExecuted = 0;
+            }
+
+            else {
+                powerOnMotor();
+            }
         }
     }
 }
-# 4316 "controllerActions.c"
+# 4480 "controllerActions.c"
 void deleteUserData(void) {
     sendSms(SmsSR14, userMobileNo, 0);
     systemAuthenticated = 0;
@@ -28087,7 +28228,7 @@ void deleteUserData(void) {
     }
     saveMobileNoIntoEeprom();
 }
-# 4335 "controllerActions.c"
+# 4499 "controllerActions.c"
 void deleteValveData(void) {
     sendSms(SmsSR14, userMobileNo, 0);
     filtrationDelay1 = 0;
@@ -28118,7 +28259,7 @@ void deleteValveData(void) {
         myMsDelay(100);
     }
 }
-# 4374 "controllerActions.c"
+# 4538 "controllerActions.c"
 void randomPasswordGeneration(void) {
 
 
@@ -28135,7 +28276,7 @@ void randomPasswordGeneration(void) {
     }
     factryPswrd[6] = '\0';
 }
-# 4398 "controllerActions.c"
+# 4562 "controllerActions.c"
 void deleteGsmResponse(void) {
 
 
@@ -28155,7 +28296,7 @@ void deleteGsmResponse(void) {
 
 
 }
-# 4425 "controllerActions.c"
+# 4589 "controllerActions.c"
 void deleteStringToDecode(void) {
 
 
@@ -28174,7 +28315,7 @@ void deleteStringToDecode(void) {
 
 
 }
-# 4451 "controllerActions.c"
+# 4615 "controllerActions.c"
 void deleteDecodedString(void) {
 
 

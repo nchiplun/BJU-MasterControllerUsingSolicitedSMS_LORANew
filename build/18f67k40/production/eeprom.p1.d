@@ -3,5 +3,4 @@ eeprom.c  \
 congfigBits.h  \
 variableDefinitions.h  \
 controllerActions.h  \
-eeprom.h  \
-serialMonitor.h 
+eeprom.h 

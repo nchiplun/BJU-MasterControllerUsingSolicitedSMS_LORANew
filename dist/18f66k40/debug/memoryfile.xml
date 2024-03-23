@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <executable name="dist/18f66k40/debug\BJU-MasterControllerUsingSolicitedSMS_LORANew.debug.hex">
+    <memory name="program">
+      <units>bytes</units>
+      <length>65536</length>
+      <used>55291</used>
+      <free>10245</free>
+    </memory>
+    <memory name="data">
+      <units>bytes</units>
+      <length>3562</length>
+      <used>3052</used>
+      <free>510</free>
+    </memory>
+  </executable>
+</project>
