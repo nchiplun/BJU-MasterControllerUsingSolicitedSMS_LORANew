@@ -84,11 +84,31 @@ LDLIBSOPTIONS=
 # fixDeps replaces a bunch of sed/cat/printf statements that slow down the build
 FIXDEPS=fixDeps
 
+# The following macros may be used in the pre and post step lines
+_/_=\\
+ShExtension=.bat
+Device=PIC18F67K40
+ProjectDir="D:\BJU\MPLabXProjects\ProductionCode\BJU-MasterControllerUsingSolicitedSMS_LORANew"
+ProjectName=AutoIrrigation_LoraNcDevBranch
+ConfName=18f67k40
+ImagePath="${DISTDIR}\BJU-MasterControllerUsingSolicitedSMS_LORANew.${IMAGE_TYPE}.${OUTPUT_SUFFIX}"
+ImageDir="${DISTDIR}"
+ImageName="BJU-MasterControllerUsingSolicitedSMS_LORANew.${IMAGE_TYPE}.${OUTPUT_SUFFIX}"
+ifeq ($(TYPE_IMAGE), DEBUG_RUN)
+IsDebug="true"
+else
+IsDebug="false"
+endif
+
 .build-conf:  ${BUILD_SUBPROJECTS}
 ifneq ($(INFORMATION_MESSAGE), )
 	@echo $(INFORMATION_MESSAGE)
 endif
 	${MAKE}  -f nbproject/Makefile-18f67k40.mk ${DISTDIR}/BJU-MasterControllerUsingSolicitedSMS_LORANew.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+	@echo "--------------------------------------"
+	@echo "User defined post-build step: [gnumkdir -p ${ProjectDir}\bin && cp ${ImagePath} ${ProjectDir}\bin\${PROJECTNAME}[${ConfName}]v1.0.hex ]"
+	@gnumkdir -p ${ProjectDir}\bin && cp ${ImagePath} ${ProjectDir}\bin\${PROJECTNAME}[${ConfName}]v1.0.hex 
+	@echo "--------------------------------------"
 
 MP_PROCESSOR_OPTION=18F67K40
 # ------------------------------------------------------------------------------------

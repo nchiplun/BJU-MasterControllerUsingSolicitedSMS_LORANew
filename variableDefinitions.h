@@ -42,6 +42,9 @@
 // include processor files - each processor file is guarded.  
 #include "congfigBits.h"
 
+#define Major "1"
+#define Minor "0"
+
 #define _XTAL_FREQ 64000000
 /** Macro definition for library functions that triggers "suspicious pointer conversion" warning#start **/
 #define strncpy(a,b,c)     strncpy((char*)(a),(char*)(b),(c)) 

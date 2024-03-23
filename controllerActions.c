@@ -3425,7 +3425,7 @@ void deepSleep(void) {
                 }
                 else if (lowPhaseCurrentDetected) {
                     doLowPhaseAction();
-                    sleepCount = 65500;
+                    sleepCount = 65500;  // undefined sleep until phase comes back
                 }
             }
             else {
